@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://learnenglishwithplay.app/schemas/item.schema.json",
+  "title": "ExerciseItem",
+  "description": "One playable exercise. See docs/09-EXERCISE-TYPE-CATALOGUE.md and docs/11 §2.2.",
+  "type": "object",
+  "required": ["id", "type_id", "node", "tier", "targets", "cefr",
+               "prompt", "answer", "status", "syllabus_version"],
+  "additionalProperties": false,
+  "properties": {
+    "id":      { "type": "string", "pattern": "^item\\.[0-9]{7}$" },
+    "type_id": { "enum": [
+      "tap_pairs","mcq_image","mcq_meaning_l2","mcq_word_from_definition",
+      "odd_one_out","sort_bins","type_from_definition","type_from_l1",
+      "spelling_bee","word_family_table","affix_builder","collocation_grid",
+      "near_synonym_choice","word_bank_build","type_translate_to_l2",
+      "sentence_reorder","gap_fill_bank","gap_fill_free","verb_form_gap",
+      "transform_sentence","keyword_transformation","error_correct",
+      "grammaticality_judgement","open_cloze","banked_cloze",
+      "minimal_pair_discrimination","phoneme_id","stress_tap",
+      "intonation_match","repeat_after","read_aloud","shadowing",
+      "listen_choose_image","listen_gist_mcq","listen_detail_gap",
+      "dictation_word","dictation_sentence","dictation_connected",
+      "listen_order_events","listen_speaker_match","listen_inference",
+      "note_taking","read_gist_mcq","read_scan_detail","read_gapped_text",
+      "read_multiple_matching","read_true_false_ng","read_heading_match",
+      "read_speed_drill","read_reference_resolution","speak_prompt",
+      "speak_picture_describe","speak_roleplay","speak_4_3_2",
+      "speak_impromptu","speak_retell","write_sentence","write_paragraph",
+      "write_extended_process","write_register_shift","write_email_task",
+      "pragmatics_choose","conversation_repair","summarise_text",
+      "explain_chart","relay_message","reconcile_sources","memory_match",
+      "word_race","story_branch","team_challenge"
+    ] },
+    "node": { "type": "string", "pattern": "^S[0-9]{2}U[0-9]{2}N[0-9]$" },
+    "tier": { "type": "integer", "minimum": 1, "maximum": 3 },
+    "targets": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "grammar":   { "type": "array", "items": { "type": "string" } },
+        "lexis":     { "type": "array", "items": { "type": "string" } },
+        "phonology": { "type": "array", "items": { "type": "string" } },
+        "functions": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "cefr": { "type": "string" },
+    "memory_items": { "type": "array", "items": { "type": "string" },
+      "description": "Which SRS memory items this exercise retrieves." },
+    "difficulty": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "irt_b": { "type": "number" }, "irt_a": { "type": "number" },
+        "p_correct_obs": { "type": "number" }, "n_obs": { "type": "integer" },
+        "authored_estimate": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "prompt": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "text":  { "type": "string" },
+        "text_uz": { "type": "string" },
+        "audio": { "type": ["string", "null"] },
+        "image": { "type": ["string", "null"] },
+        "instruction_key": { "type": "string" },
+        "options": { "type": "array", "items": { "type": "string" } },
+        "option_images": { "type": "array", "items": { "type": "string" } },
+        "option_audio":  { "type": "array", "items": { "type": "string" } },
+        "bank":    { "type": "array", "items": { "type": "string" } },
+        "bins":    { "type": "array", "items": { "type": "string" } },
+        "pairs":   { "type": "array", "items": {
+                      "type": "array", "minItems": 2, "maxItems": 2,
+                      "items": { "type": "string" } } },
+        "syllables": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "answer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "key":      { "type": "array", "items": { "type": "string" } },
+        "accepted": { "type": "array", "items": { "type": "string" } },
+        "index":    { "type": "integer", "minimum": 0 },
+        "indices":  { "type": "array", "items": { "type": "integer" } },
+        "mapping":  { "type": "object", "additionalProperties": { "type": "string" } },
+        "normalise": { "type": "array", "items": {
+          "enum": ["case","punct","spacing","spelling_variant",
+                   "contraction","typo1"] } },
+        "rejected_with_feedback": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["pattern", "feedback"],
+            "additionalProperties": false,
+            "properties": {
+              "pattern":  { "type": "string" },
+              "feedback": { "type": "string" },
+              "error_code": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "feedback": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "correct": { "type": "string" },
+        "incorrect_default": { "type": "string" },
+        "explain_ref": { "type": "string" }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_seconds":   { "type": "number" },
+        "hints_allowed": { "type": "integer", "minimum": 0 },
+        "plays_allowed": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "authoring": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "author": { "type": "string" }, "reviewed_by": { "type": "string" },
+        "corpus_checked": { "type": "boolean" }, "created": { "type": "string" },
+        "generator": { "type": "string" }
+      }
+    },
+    "status": { "enum": ["draft","review","published","deprecated"] },
+    "syllabus_version": { "type": "string" }
+  }
+}

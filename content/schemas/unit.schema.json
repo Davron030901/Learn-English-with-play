@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://learnenglishwithplay.app/schemas/unit.schema.json",
+  "title": "Unit",
+  "description": "A unit of 8 nodes. See docs/11-CONTENT-DATA-MODEL.md §2.1.",
+  "type": "object",
+  "required": ["id", "type", "section", "index", "cefr", "title", "theme",
+               "can_do", "syllabus", "nodes", "estimated_minutes",
+               "status", "syllabus_version"],
+  "additionalProperties": false,
+  "properties": {
+    "id":      { "type": "string", "pattern": "^S[0-9]{2}U[0-9]{2}$" },
+    "type":    { "const": "unit" },
+    "section": { "type": "string", "pattern": "^S[0-9]{2}$" },
+    "index":   { "type": "integer", "minimum": 1, "maximum": 168 },
+    "cefr":    { "enum": ["A1.1","A1.2","A2.1","A2.2","B1.1","B1.2",
+                          "B2.1","B2.2","C1","C2"] },
+    "title": {
+      "type": "object",
+      "required": ["en"],
+      "additionalProperties": { "type": "string" },
+      "properties": { "en": { "type": "string" }, "uz": { "type": "string" } }
+    },
+    "theme":  { "type": "string" },
+    "can_do": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "syllabus": {
+      "type": "object",
+      "required": ["grammar", "lexis"],
+      "additionalProperties": false,
+      "properties": {
+        "grammar":      { "type": "array",
+          "items": { "type": "string", "pattern": "^G-[0-9]{3}$" } },
+        "lexis":        { "type": "array",
+          "items": { "type": "string", "pattern": "^lex\\.[0-9]{5}$" } },
+        "phonology":    { "type": "array",
+          "items": { "type": "string", "pattern": "^P-[0-9]{3}$" } },
+        "functions":    { "type": "array",
+          "items": { "type": "string", "pattern": "^F-[0-9]{3}$" } },
+        "collocations": { "type": "array",
+          "items": { "type": "string", "pattern": "^lex\\.col\\.[0-9]{4}$" } }
+      }
+    },
+    "prerequisites": { "type": "array",
+      "items": { "type": "string", "pattern": "^S[0-9]{2}U[0-9]{2}$" } },
+    "nodes": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 9,
+      "items": {
+        "type": "object",
+        "required": ["id", "kind"],
+        "additionalProperties": false,
+        "properties": {
+          "id":    { "type": "string", "pattern": "^S[0-9]{2}U[0-9]{2}N[0-9]$" },
+          "kind":  { "enum": ["lesson","story","speak","immersion",
+                              "review","clinic","checkpoint"] },
+          "focus": { "enum": ["lexis","grammar","phonology","mixed",
+                              "function","skills"] },
+          "title": { "type": "string" },
+          "text_ref": { "type": "string", "pattern": "^txt\\.[0-9]{5}$" },
+          "task_ref": { "type": "string" },
+          "feed":     { "type": "string" },
+          "source":   { "enum": ["srs","authored"] },
+          "teaches":  {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "grammar":   { "type": "array", "items": { "type": "string" } },
+              "lexis":     { "type": "array", "items": { "type": "string" } },
+              "phonology": { "type": "array", "items": { "type": "string" } },
+              "functions": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "estimated_minutes": {
+      "type": "object",
+      "required": ["t1","t2","t3"],
+      "additionalProperties": false,
+      "properties": {
+        "t1": { "type": "number" }, "t2": { "type": "number" },
+        "t3": { "type": "number" }
+      }
+    },
+    "status": { "enum": ["draft","review","published","deprecated"] },
+    "syllabus_version": { "type": "string" }
+  }
+}

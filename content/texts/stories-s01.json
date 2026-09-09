@@ -1,0 +1,764 @@
+{
+ "_comment": "Serialised story for Section 1 (A1.1), one episode per unit. Recurring cast: Sarah (English teacher from England), Aziz (student), Kamola (Aziz's sister), Bobur (Aziz's friend), Mr Karimov (school director). Every episode uses only lexemes taught up to and including its unit.",
+ "series": "New in Tashkent",
+ "characters": [
+  "Sarah",
+  "Aziz",
+  "Kamola",
+  "Bobur",
+  "Mr Karimov"
+ ],
+ "texts": [
+  {
+   "id": "txt.00001",
+   "kind": "story",
+   "cefr": "A1.1",
+   "unit": "S01U01",
+   "episode": 1,
+   "title": "Nice to meet you",
+   "body": [
+    {
+     "speaker": "narrator",
+     "text": "It is morning.",
+     "chunk_note": "day name taught as a name"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Good morning. I am Sarah."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Hello! My name is Aziz."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Nice to meet you, Aziz."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Are you a teacher?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Yes, I am. And you?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "I am a student."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Nice! Thank you, Aziz."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Goodbye, Sarah!"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Goodbye!"
+    }
+   ],
+   "structures_used": [
+    "G-001",
+    "G-002",
+    "G-004",
+    "G-057",
+    "G-072"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00002",
+   "kind": "story",
+   "cefr": "A1.1",
+   "unit": "S01U02",
+   "episode": 2,
+   "title": "Where are you from?",
+   "body": [
+    {
+     "speaker": "Aziz",
+     "text": "Sarah, where are you from?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "I am from England. And you?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "I am from Uzbekistan. I live in Tashkent."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Tashkent is a very nice city."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Yes! This is my friend. Her name is Kamola."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "Hello! Sorry, I am not a student. I am a teacher too."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Nice to meet you, Kamola. Do you speak English?"
+    },
+    {
+     "speaker": "Kamola",
+     "text": "Yes, and I speak Russian and Uzbek."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Very good! What is your phone number?"
+    },
+    {
+     "speaker": "Kamola",
+     "text": "It is not my phone. It is his phone."
+    }
+   ],
+   "structures_used": [
+    "G-003",
+    "G-004",
+    "G-005",
+    "G-074",
+    "G-012"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00003",
+   "kind": "story",
+   "cefr": "A1.1",
+   "unit": "S01U03",
+   "episode": 3,
+   "title": "What is this?",
+   "body": [
+    {
+     "speaker": "narrator",
+     "text": "Sarah is here. Aziz is here too."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Aziz, what is this?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "It is a pencil. And these are books."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "And these books?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Twelve books and four pens."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Is that your bag?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "No, it is not. It is her bag."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "And this computer?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "It is my computer. This is my chair too."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Thank you. Now, please spell your name."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "A - Z - I - Z."
+    }
+   ],
+   "structures_used": [
+    "G-047",
+    "G-048",
+    "G-049",
+    "G-052",
+    "G-056"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00004",
+   "kind": "story",
+   "cefr": "A1.1",
+   "unit": "S01U04",
+   "episode": 4,
+   "title": "My family",
+   "body": [
+    {
+     "speaker": "Aziz",
+     "text": "Sarah, this is my family."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "A nice family! Who is this?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "That is my mother. She is forty-two."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "And your father?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "He is here. He is fifty. This is my grandmother."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "How old is she?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "She is seventy-nine. She is very nice."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Do you have brothers and sisters?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "I have one sister, Kamola, and two brothers."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "And this baby?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "That is my cousin. He is one year old."
+    }
+   ],
+   "structures_used": [
+    "G-009",
+    "G-010",
+    "G-012",
+    "G-005",
+    "G-074"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00005",
+   "kind": "story",
+   "cefr": "A1.1",
+   "unit": "S01U05",
+   "episode": 5,
+   "title": "The new flat",
+   "body": [
+    {
+     "speaker": "narrator",
+     "text": "Sarah has a new flat in Tashkent."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "Is it a big flat?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "No, it is small. But it is very nice."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "And the rooms?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "There are three rooms: a bedroom, a kitchen and a bathroom."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "Is there a table in the kitchen?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Yes, and there are four chairs. There is a fridge too."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "And the bedroom?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "There is a bed near the window. My books are on the shelf."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "Is there a garden?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "No, there is not. But there is a garden behind the house."
+    }
+   ],
+   "structures_used": [
+    "G-007",
+    "G-050",
+    "G-052",
+    "G-069",
+    "G-056"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00006",
+   "kind": "story",
+   "cefr": "A1.1",
+   "unit": "S01U06",
+   "episode": 6,
+   "title": "Every day",
+   "body": [
+    {
+     "speaker": "Sarah",
+     "text": "Aziz, what do you do every day?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "I get up at six. I always have breakfast at home."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "And then?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "I go to school. I study English and Russian."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Do you work too?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Yes, I work in the evening. I usually finish at nine."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "That is very late!"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "I go to bed late. And you, Sarah?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "I get up early too. I never eat breakfast."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "You do not eat breakfast? Every day I eat at home."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "I read my email in the morning."
+    }
+   ],
+   "structures_used": [
+    "G-015",
+    "G-017",
+    "G-019",
+    "G-021",
+    "G-022",
+    "G-071"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00007",
+   "kind": "story",
+   "cefr": "A1.1",
+   "unit": "S01U07",
+   "episode": 7,
+   "title": "What does she do?",
+   "body": [
+    {
+     "speaker": "Sarah",
+     "text": "Aziz, what does your mother do?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "She is a doctor. She works in a hospital."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Is her job good?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Yes, she does. But she is always very busy."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "And your father?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "He is a driver. He drives every day."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Where does he work?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "He works in the city. He knows every street."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Who works in the market?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "My uncle. He works there. He does not have a shop."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "And Kamola? She teaches, and she helps students."
+    }
+   ],
+   "structures_used": [
+    "G-016",
+    "G-017",
+    "G-018",
+    "G-019",
+    "G-020"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00008",
+   "kind": "story",
+   "cefr": "A1.1",
+   "unit": "S01U08",
+   "episode": 8,
+   "title": "What time is it?",
+   "body": [
+    {
+     "speaker": "Sarah",
+     "text": "Excuse me, Aziz. What time is it?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "It is a quarter past eight."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "My work is at nine o'clock on Monday."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "And on Tuesday?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "On Tuesday it is at half past ten."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Do you work on Saturday?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "No, I do not. I do not work at the weekend."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "January and February are winter months here."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "In England, winter is not nice. Spring is very good."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "In May it is very nice here. And in England?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "In August! It is summer in England then."
+    }
+   ],
+   "structures_used": [
+    "G-059",
+    "G-068",
+    "G-015",
+    "G-018"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00009",
+   "kind": "story",
+   "cefr": "A1.1",
+   "unit": "S01U09",
+   "episode": 9,
+   "title": "I really like it",
+   "body": [
+    {
+     "speaker": "Kamola",
+     "text": "Sarah, do you like Uzbek music?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Yes, I really like it. It is very beautiful."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "My brother loves music, but he hates football."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "That is not good! I like football, but football is not for me."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "What is your favourite film?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "I do not know. I like American films because they are funny."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "For me, films are boring. I like books."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Me too! English books are difficult for me, but they are good."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Kamola has a party on Saturday. Sarah, do you want to come?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Yes! Thank you. That is great."
+    }
+   ],
+   "structures_used": [
+    "G-058",
+    "G-063",
+    "G-073",
+    "G-017",
+    "G-018"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00010",
+   "kind": "story",
+   "cefr": "A1.1",
+   "unit": "S01U10",
+   "episode": 10,
+   "title": "At the café",
+   "body": [
+    {
+     "speaker": "narrator",
+     "text": "Sarah and Bobur are in a restaurant."
+    },
+    {
+     "speaker": "Bobur",
+     "text": "I am very hungry. Are you hungry, Sarah?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Yes, I am. Can I have the menu, please?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "The soup is very good here."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Can I have some soup and bread, please?"
+    },
+    {
+     "speaker": "Bobur",
+     "text": "And chicken with rice for me, please. And a lot of salad."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Is there any tea?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Yes, there is. Do you want sugar?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "No, thank you. I do not want sugar in my tea."
+    },
+    {
+     "speaker": "Bobur",
+     "text": "Two teas and one coffee, please."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "How much is it?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "It is not a lot. Can we have the bill, please?"
+    }
+   ],
+   "structures_used": [
+    "G-051",
+    "G-053",
+    "G-054",
+    "G-038",
+    "G-056"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00011",
+   "kind": "story",
+   "cefr": "A1.1",
+   "unit": "S01U11",
+   "episode": 11,
+   "title": "Can you play?",
+   "body": [
+    {
+     "speaker": "Bobur",
+     "text": "Sarah, can you play football?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "No, I cannot. But I can swim."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "I can swim too, but I cannot swim fast."
+    },
+    {
+     "speaker": "Bobur",
+     "text": "Kamola can play tennis very well."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "And I can sing! But I cannot dance."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Can you play the guitar, Aziz?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Not very well. My hands are not good."
+    },
+    {
+     "speaker": "Bobur",
+     "text": "Our team plays in the park on Sunday. Can you come?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Yes! Can Kamola come?"
+    },
+    {
+     "speaker": "Bobur",
+     "text": "Yes. Could you come at ten?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Ten is fine. Goodbye!"
+    }
+   ],
+   "structures_used": [
+    "G-037",
+    "G-038",
+    "G-039",
+    "G-018"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00012",
+   "kind": "story",
+   "cefr": "A1.1",
+   "unit": "S01U12",
+   "episode": 12,
+   "title": "What are you doing?",
+   "body": [
+    {
+     "speaker": "narrator",
+     "text": "It is Sunday. The weather is bad in Tashkent."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Hello, Aziz. What are you doing?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "I am sitting at home. I am reading a book."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Where is Kamola?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "She is in the kitchen. She is making lunch."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "And Bobur? Is he playing football?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "No, he is not. The weather is bad today. It is cold and it is raining."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "I am wearing a coat and a hat!"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Are you walking to the park now?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "No, I am waiting for my friend. We are going to the shop."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Look! The sun is here. It is not raining now."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Yes! I am walking!"
+    }
+   ],
+   "structures_used": [
+    "G-023",
+    "G-024",
+    "G-003",
+    "G-004"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  }
+ ]
+}

@@ -1,0 +1,3919 @@
+{
+ "_comment": "Compact lexeme source, Section 1 units 1-6 (198 lexemes). Expanded to full schema by tools/build_lexemes.py. Keys: u=unit, l=lemma, p=pos, ipa=General American, uz/ru=gloss, ex=example sentences, col=collocations, t=topic tags, b=frequency band, ch=chunk, fw=function word, unc=uncountable, pl=irregular plural, irr=irregular verb forms, P=phonology points, trap=L1 warning, int=interferes with (lemma)",
+ "section": "S01",
+ "lexemes": [
+  {
+   "u": 1,
+   "l": "hello",
+   "p": "interj",
+   "ipa": "həˈloʊ",
+   "uz": "salom",
+   "ru": "привет",
+   "ex": [
+    "Hello! My name is Aziz.",
+    "Hello, how are you?"
+   ],
+   "t": [
+    "greetings"
+   ],
+   "b": 1000,
+   "P": [
+    "P-018"
+   ]
+  },
+  {
+   "u": 1,
+   "l": "hi",
+   "p": "interj",
+   "ipa": "haɪ",
+   "uz": "salom (norasmiy)",
+   "ru": "привет",
+   "ex": [
+    "Hi! I'm Dilnoza.",
+    "Hi, nice to meet you."
+   ],
+   "t": [
+    "greetings"
+   ],
+   "b": 1000,
+   "reg": "informal"
+  },
+  {
+   "u": 1,
+   "l": "goodbye",
+   "p": "interj",
+   "ipa": "ɡʊdˈbaɪ",
+   "uz": "xayr",
+   "ru": "до свидания",
+   "ex": [
+    "Goodbye! See you tomorrow.",
+    "Goodbye, Mr Karimov."
+   ],
+   "t": [
+    "greetings"
+   ],
+   "b": 2000
+  },
+  {
+   "u": 1,
+   "l": "bye",
+   "p": "interj",
+   "ipa": "baɪ",
+   "uz": "xayr (norasmiy)",
+   "ru": "пока",
+   "ex": [
+    "Bye! See you later.",
+    "Bye, Aziz!"
+   ],
+   "t": [
+    "greetings"
+   ],
+   "b": 1000,
+   "reg": "informal"
+  },
+  {
+   "u": 1,
+   "l": "good morning",
+   "p": "phrase",
+   "ipa": "ɡʊd ˈmɔːrnɪŋ",
+   "uz": "xayrli tong",
+   "ru": "доброе утро",
+   "ex": [
+    "Good morning, class.",
+    "Good morning! How are you today?"
+   ],
+   "t": [
+    "greetings"
+   ],
+   "b": 1000,
+   "ch": true
+  },
+  {
+   "u": 1,
+   "l": "good afternoon",
+   "p": "phrase",
+   "ipa": "ɡʊd ˌæftərˈnuːn",
+   "uz": "xayrli kun",
+   "ru": "добрый день",
+   "ex": [
+    "Good afternoon, everyone.",
+    "Good afternoon, Mrs Yusupova."
+   ],
+   "t": [
+    "greetings"
+   ],
+   "b": 2000,
+   "ch": true
+  },
+  {
+   "u": 1,
+   "l": "good evening",
+   "p": "phrase",
+   "ipa": "ɡʊd ˈiːvnɪŋ",
+   "uz": "xayrli kech",
+   "ru": "добрый вечер",
+   "ex": [
+    "Good evening. Table for two, please.",
+    "Good evening, sir."
+   ],
+   "t": [
+    "greetings"
+   ],
+   "b": 2000,
+   "ch": true
+  },
+  {
+   "u": 1,
+   "l": "good night",
+   "p": "phrase",
+   "ipa": "ɡʊd ˈnaɪt",
+   "uz": "xayrli tun",
+   "ru": "спокойной ночи",
+   "ex": [
+    "Good night! Sleep well.",
+    "Good night, Mum."
+   ],
+   "t": [
+    "greetings"
+   ],
+   "b": 2000,
+   "ch": true,
+   "trap": {
+    "uz": "Bu salomlashish emas, xayrlashish — kechqurun ketayotganda aytiladi."
+   }
+  },
+  {
+   "u": 1,
+   "l": "please",
+   "p": "adv",
+   "ipa": "pliːz",
+   "uz": "iltimos",
+   "ru": "пожалуйста",
+   "ex": [
+    "Two coffees, please.",
+    "Please sit down."
+   ],
+   "t": [
+    "politeness"
+   ],
+   "b": 1000,
+   "col": [
+    "yes, please"
+   ],
+   "P": [
+    "P-020"
+   ]
+  },
+  {
+   "u": 1,
+   "l": "thank you",
+   "p": "phrase",
+   "ipa": "ˈθæŋk juː",
+   "uz": "rahmat",
+   "ru": "спасибо",
+   "ex": [
+    "Thank you very much.",
+    "Thank you for your help."
+   ],
+   "t": [
+    "politeness"
+   ],
+   "b": 1000,
+   "ch": true,
+   "col": [
+    "thank you very much",
+    "thank you so much"
+   ],
+   "P": [
+    "P-009"
+   ]
+  },
+  {
+   "u": 1,
+   "l": "thanks",
+   "p": "interj",
+   "ipa": "θæŋks",
+   "uz": "rahmat (norasmiy)",
+   "ru": "спасибо",
+   "ex": [
+    "Thanks! That's very kind.",
+    "Thanks a lot."
+   ],
+   "t": [
+    "politeness"
+   ],
+   "b": 1000,
+   "reg": "informal",
+   "P": [
+    "P-009"
+   ]
+  },
+  {
+   "u": 1,
+   "l": "sorry",
+   "p": "adj",
+   "ipa": "ˈsɑːri",
+   "uz": "kechirasiz",
+   "ru": "извините",
+   "ex": [
+    "Sorry, I'm late.",
+    "I'm sorry. What's your name again?"
+   ],
+   "t": [
+    "politeness"
+   ],
+   "b": 1000,
+   "col": [
+    "I'm sorry",
+    "sorry about that"
+   ]
+  },
+  {
+   "u": 1,
+   "l": "excuse me",
+   "p": "phrase",
+   "ipa": "ɪkˈskjuːz miː",
+   "uz": "kechirasiz (murojaat qilishda)",
+   "ru": "извините",
+   "ex": [
+    "Excuse me, are you Mr Aliyev?",
+    "Excuse me, where is the bank?"
+   ],
+   "t": [
+    "politeness"
+   ],
+   "b": 2000,
+   "ch": true,
+   "trap": {
+    "uz": "'Excuse me' — murojaat qilish uchun; 'Sorry' — uzr so'rash uchun."
+   }
+  },
+  {
+   "u": 1,
+   "l": "yes",
+   "p": "adv",
+   "ipa": "jes",
+   "uz": "ha",
+   "ru": "да",
+   "ex": [
+    "Yes, I am.",
+    "Yes, please."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 1,
+   "l": "no",
+   "p": "adv",
+   "ipa": "noʊ",
+   "uz": "yo'q",
+   "ru": "нет",
+   "ex": [
+    "No, I'm not.",
+    "No, thank you."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 1,
+   "l": "name",
+   "p": "noun",
+   "ipa": "neɪm",
+   "uz": "ism",
+   "ru": "имя",
+   "ex": [
+    "What's your name?",
+    "My name is Kamola."
+   ],
+   "t": [
+    "identity"
+   ],
+   "b": 1000,
+   "col": [
+    "first name",
+    "last name",
+    "full name"
+   ],
+   "cnt": true
+  },
+  {
+   "u": 1,
+   "l": "I",
+   "p": "pron",
+   "ipa": "aɪ",
+   "uz": "men",
+   "ru": "я",
+   "ex": [
+    "I am a student.",
+    "I'm from Uzbekistan."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "trap": {
+    "uz": "'I' har doim KATTA harf bilan yoziladi."
+   }
+  },
+  {
+   "u": 1,
+   "l": "you",
+   "p": "pron",
+   "ipa": "juː",
+   "uz": "sen / siz",
+   "ru": "ты / вы",
+   "ex": [
+    "You are my teacher.",
+    "Are you from Bukhara?"
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "trap": {
+    "uz": "Ingliz tilida 'sen' va 'siz' uchun bitta so'z — 'you'."
+   }
+  },
+  {
+   "u": 1,
+   "l": "he",
+   "p": "pron",
+   "ipa": "hiː",
+   "uz": "u (erkak)",
+   "ru": "он",
+   "ex": [
+    "He is my brother.",
+    "He's a doctor."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "int": "she",
+   "trap": {
+    "uz": "Faqat ERKAK uchun. O'zbekchada 'u' jinssiz, shuning uchun bu eng ko'p xato qilinadigan joy."
+   }
+  },
+  {
+   "u": 1,
+   "l": "she",
+   "p": "pron",
+   "ipa": "ʃiː",
+   "uz": "u (ayol)",
+   "ru": "она",
+   "ex": [
+    "She is my sister.",
+    "She's a teacher."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "int": "he",
+   "trap": {
+    "uz": "Faqat AYOL uchun."
+   }
+  },
+  {
+   "u": 1,
+   "l": "it",
+   "p": "pron",
+   "ipa": "ɪt",
+   "uz": "u (jonsiz)",
+   "ru": "оно",
+   "ex": [
+    "It is a book.",
+    "It's my bag."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 1,
+   "l": "we",
+   "p": "pron",
+   "ipa": "wiː",
+   "uz": "biz",
+   "ru": "мы",
+   "ex": [
+    "We are students.",
+    "We're from Tashkent."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "P": [
+    "P-010"
+   ]
+  },
+  {
+   "u": 1,
+   "l": "they",
+   "p": "pron",
+   "ipa": "ðeɪ",
+   "uz": "ular",
+   "ru": "они",
+   "ex": [
+    "They are my friends.",
+    "They're teachers."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "P": [
+    "P-008"
+   ]
+  },
+  {
+   "u": 1,
+   "l": "be",
+   "p": "verb",
+   "ipa": "biː",
+   "uz": "bo'lmoq (am/is/are)",
+   "ru": "быть",
+   "ex": [
+    "I am happy.",
+    "She is my friend."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "irr": [
+    "am/is/are",
+    "was/were",
+    "been"
+   ],
+   "col": [
+    "be from",
+    "be at home",
+    "be late"
+   ]
+  },
+  {
+   "u": 1,
+   "l": "a",
+   "p": "det",
+   "ipa": "eɪ",
+   "uz": "bir (noaniq artikl)",
+   "ru": "артикль",
+   "ex": [
+    "It's a book.",
+    "She is a teacher."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "weak": "ə",
+   "trap": {
+    "uz": "O'zbekchada artikl yo'q, lekin ingliz tilida kasb aytilganda SHART: 'I am a teacher'."
+   }
+  },
+  {
+   "u": 1,
+   "l": "my",
+   "p": "det",
+   "ipa": "maɪ",
+   "uz": "mening",
+   "ru": "мой",
+   "ex": [
+    "My name is Aziz.",
+    "This is my bag."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 1,
+   "l": "your",
+   "p": "det",
+   "ipa": "jʊr",
+   "uz": "sening / sizning",
+   "ru": "твой / ваш",
+   "ex": [
+    "What's your name?",
+    "Is this your book?"
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 1,
+   "l": "and",
+   "p": "conj",
+   "ipa": "ænd",
+   "uz": "va",
+   "ru": "и",
+   "ex": [
+    "Aziz and Kamola are students.",
+    "I'm a teacher and a mother."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "weak": "ənd, ən"
+  },
+  {
+   "u": 1,
+   "l": "nice",
+   "p": "adj",
+   "ipa": "naɪs",
+   "uz": "yoqimli, yaxshi",
+   "ru": "приятный",
+   "ex": [
+    "Nice to meet you.",
+    "She is a nice person."
+   ],
+   "t": [
+    "opinion"
+   ],
+   "b": 1000,
+   "col": [
+    "nice to meet you",
+    "a nice day"
+   ]
+  },
+  {
+   "u": 1,
+   "l": "meet",
+   "p": "verb",
+   "ipa": "miːt",
+   "uz": "uchrashmoq, tanishmoq",
+   "ru": "встречать",
+   "ex": [
+    "Nice to meet you.",
+    "I meet my friends on Sunday."
+   ],
+   "t": [
+    "social"
+   ],
+   "b": 1000,
+   "irr": [
+    "meet",
+    "met",
+    "met"
+   ],
+   "col": [
+    "meet a friend",
+    "nice to meet you"
+   ]
+  },
+  {
+   "u": 1,
+   "l": "teacher",
+   "p": "noun",
+   "ipa": "ˈtiːtʃər",
+   "uz": "o'qituvchi",
+   "ru": "учитель",
+   "ex": [
+    "She is a teacher.",
+    "My teacher is from England."
+   ],
+   "t": [
+    "jobs"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "English teacher",
+    "a good teacher"
+   ],
+   "P": [
+    "P-002"
+   ]
+  },
+  {
+   "u": 1,
+   "l": "student",
+   "p": "noun",
+   "ipa": "ˈstuːdənt",
+   "uz": "talaba, o'quvchi",
+   "ru": "студент",
+   "ex": [
+    "I am a student.",
+    "They are students."
+   ],
+   "t": [
+    "jobs",
+    "education"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "trap": {
+    "uz": "Ruscha 'студент' faqat oliy o'quv yurti talabasi; ingliz tilida 'student' maktab o'quvchisiga ham aytiladi."
+   }
+  },
+  {
+   "u": 2,
+   "l": "from",
+   "p": "prep",
+   "ipa": "frʌm",
+   "uz": "-dan",
+   "ru": "из",
+   "ex": [
+    "I'm from Uzbekistan.",
+    "Where are you from?"
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "weak": "frəm",
+   "col": [
+    "be from",
+    "come from"
+   ]
+  },
+  {
+   "u": 2,
+   "l": "where",
+   "p": "adv",
+   "ipa": "wer",
+   "uz": "qayerda, qayerdan",
+   "ru": "где, откуда",
+   "ex": [
+    "Where are you from?",
+    "Where is my bag?"
+   ],
+   "t": [
+    "questions"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 2,
+   "l": "what",
+   "p": "pron",
+   "ipa": "wʌt",
+   "uz": "nima",
+   "ru": "что",
+   "ex": [
+    "What is your name?",
+    "What is this?"
+   ],
+   "t": [
+    "questions"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 2,
+   "l": "who",
+   "p": "pron",
+   "ipa": "huː",
+   "uz": "kim",
+   "ru": "кто",
+   "ex": [
+    "Who is she?",
+    "Who is your teacher?"
+   ],
+   "t": [
+    "questions"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 2,
+   "l": "how",
+   "p": "adv",
+   "ipa": "haʊ",
+   "uz": "qanday",
+   "ru": "как",
+   "ex": [
+    "How are you?",
+    "How old is he?"
+   ],
+   "t": [
+    "questions"
+   ],
+   "b": 1000,
+   "fw": true,
+   "col": [
+    "how are you",
+    "how old"
+   ]
+  },
+  {
+   "u": 2,
+   "l": "country",
+   "p": "noun",
+   "ipa": "ˈkʌntri",
+   "uz": "mamlakat",
+   "ru": "страна",
+   "ex": [
+    "Uzbekistan is a beautiful country.",
+    "What country are you from?"
+   ],
+   "t": [
+    "geography"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "pl": "countries",
+   "P": [
+    "P-005"
+   ]
+  },
+  {
+   "u": 2,
+   "l": "city",
+   "p": "noun",
+   "ipa": "ˈsɪti",
+   "uz": "shahar",
+   "ru": "город",
+   "ex": [
+    "Tashkent is a big city.",
+    "I live in a small city."
+   ],
+   "t": [
+    "geography"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "pl": "cities",
+   "col": [
+    "a big city",
+    "the city centre"
+   ]
+  },
+  {
+   "u": 2,
+   "l": "Uzbekistan",
+   "p": "noun",
+   "ipa": "ʊzˈbekɪstæn",
+   "uz": "O'zbekiston",
+   "ru": "Узбекистан",
+   "ex": [
+    "I'm from Uzbekistan.",
+    "Uzbekistan is in Central Asia."
+   ],
+   "t": [
+    "geography"
+   ],
+   "b": 3000,
+   "prop": true
+  },
+  {
+   "u": 2,
+   "l": "Uzbek",
+   "p": "adj",
+   "ipa": "ˈʊzbek",
+   "uz": "o'zbek",
+   "ru": "узбекский",
+   "ex": [
+    "I'm Uzbek.",
+    "She speaks Uzbek and English."
+   ],
+   "t": [
+    "nationality"
+   ],
+   "b": 3000,
+   "prop": true
+  },
+  {
+   "u": 2,
+   "l": "England",
+   "p": "noun",
+   "ipa": "ˈɪŋɡlənd",
+   "uz": "Angliya",
+   "ru": "Англия",
+   "ex": [
+    "My teacher is from England.",
+    "London is in England."
+   ],
+   "t": [
+    "geography"
+   ],
+   "b": 2000,
+   "prop": true,
+   "P": [
+    "P-011"
+   ]
+  },
+  {
+   "u": 2,
+   "l": "English",
+   "p": "noun",
+   "ipa": "ˈɪŋɡlɪʃ",
+   "uz": "ingliz tili",
+   "ru": "английский",
+   "ex": [
+    "I speak English.",
+    "English is not easy."
+   ],
+   "t": [
+    "languages"
+   ],
+   "b": 1000,
+   "prop": true,
+   "unc": true,
+   "col": [
+    "speak English",
+    "learn English",
+    "in English"
+   ]
+  },
+  {
+   "u": 2,
+   "l": "America",
+   "p": "noun",
+   "ipa": "əˈmerɪkə",
+   "uz": "Amerika",
+   "ru": "Америка",
+   "ex": [
+    "He is from America.",
+    "America is a big country."
+   ],
+   "t": [
+    "geography"
+   ],
+   "b": 2000,
+   "prop": true
+  },
+  {
+   "u": 2,
+   "l": "American",
+   "p": "adj",
+   "ipa": "əˈmerɪkən",
+   "uz": "amerikalik",
+   "ru": "американский",
+   "ex": [
+    "She is American.",
+    "I like American films."
+   ],
+   "t": [
+    "nationality"
+   ],
+   "b": 1000,
+   "prop": true
+  },
+  {
+   "u": 2,
+   "l": "Russia",
+   "p": "noun",
+   "ipa": "ˈrʌʃə",
+   "uz": "Rossiya",
+   "ru": "Россия",
+   "ex": [
+    "My uncle lives in Russia.",
+    "Russia is very big."
+   ],
+   "t": [
+    "geography"
+   ],
+   "b": 2000,
+   "prop": true
+  },
+  {
+   "u": 2,
+   "l": "Russian",
+   "p": "adj",
+   "ipa": "ˈrʌʃən",
+   "uz": "rus",
+   "ru": "русский",
+   "ex": [
+    "I speak Russian.",
+    "She is Russian."
+   ],
+   "t": [
+    "nationality",
+    "languages"
+   ],
+   "b": 1000,
+   "prop": true
+  },
+  {
+   "u": 2,
+   "l": "Turkey",
+   "p": "noun",
+   "ipa": "ˈtɜːrki",
+   "uz": "Turkiya",
+   "ru": "Турция",
+   "ex": [
+    "They are from Turkey.",
+    "Turkey is not far."
+   ],
+   "t": [
+    "geography"
+   ],
+   "b": 2000,
+   "prop": true
+  },
+  {
+   "u": 2,
+   "l": "Turkish",
+   "p": "adj",
+   "ipa": "ˈtɜːrkɪʃ",
+   "uz": "turk",
+   "ru": "турецкий",
+   "ex": [
+    "He is Turkish.",
+    "I like Turkish food."
+   ],
+   "t": [
+    "nationality"
+   ],
+   "b": 2000,
+   "prop": true
+  },
+  {
+   "u": 2,
+   "l": "live",
+   "p": "verb",
+   "ipa": "lɪv",
+   "uz": "yashamoq",
+   "ru": "жить",
+   "ex": [
+    "I live in Tashkent.",
+    "Where do you live?"
+   ],
+   "t": [
+    "daily_life"
+   ],
+   "b": 1000,
+   "col": [
+    "live in",
+    "live with"
+   ],
+   "P": [
+    "P-001"
+   ],
+   "int": "leave"
+  },
+  {
+   "u": 2,
+   "l": "speak",
+   "p": "verb",
+   "ipa": "spiːk",
+   "uz": "gapirmoq",
+   "ru": "говорить",
+   "ex": [
+    "I speak two languages.",
+    "Do you speak English?"
+   ],
+   "t": [
+    "languages"
+   ],
+   "b": 1000,
+   "irr": [
+    "speak",
+    "spoke",
+    "spoken"
+   ],
+   "col": [
+    "speak English",
+    "speak to someone"
+   ]
+  },
+  {
+   "u": 2,
+   "l": "address",
+   "p": "noun",
+   "ipa": "ˈædres",
+   "uz": "manzil",
+   "ru": "адрес",
+   "ex": [
+    "What's your address?",
+    "My address is 12 Navoi Street."
+   ],
+   "t": [
+    "identity"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "col": [
+    "home address",
+    "email address"
+   ]
+  },
+  {
+   "u": 2,
+   "l": "phone",
+   "p": "noun",
+   "ipa": "foʊn",
+   "uz": "telefon",
+   "ru": "телефон",
+   "ex": [
+    "This is my phone.",
+    "What's your phone number?"
+   ],
+   "t": [
+    "technology"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "phone number",
+    "mobile phone"
+   ],
+   "P": [
+    "P-007"
+   ]
+  },
+  {
+   "u": 2,
+   "l": "number",
+   "p": "noun",
+   "ipa": "ˈnʌmbər",
+   "uz": "raqam, son",
+   "ru": "номер, число",
+   "ex": [
+    "What's your number?",
+    "My house number is nine."
+   ],
+   "t": [
+    "identity",
+    "numbers"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "phone number",
+    "a big number"
+   ]
+  },
+  {
+   "u": 2,
+   "l": "email",
+   "p": "noun",
+   "ipa": "ˈiːmeɪl",
+   "uz": "elektron pochta",
+   "ru": "электронная почта",
+   "ex": [
+    "What's your email?",
+    "I write an email every day."
+   ],
+   "t": [
+    "technology"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "col": [
+    "email address",
+    "send an email"
+   ]
+  },
+  {
+   "u": 2,
+   "l": "street",
+   "p": "noun",
+   "ipa": "striːt",
+   "uz": "ko'cha",
+   "ru": "улица",
+   "ex": [
+    "I live in Amir Temur Street.",
+    "The shop is on this street."
+   ],
+   "t": [
+    "places"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "in the street",
+    "street name"
+   ],
+   "P": [
+    "P-022"
+   ]
+  },
+  {
+   "u": 2,
+   "l": "not",
+   "p": "adv",
+   "ipa": "nɑːt",
+   "uz": "emas",
+   "ru": "не",
+   "ex": [
+    "I am not a teacher.",
+    "She is not here."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 2,
+   "l": "too",
+   "p": "adv",
+   "ipa": "tuː",
+   "uz": "ham",
+   "ru": "тоже",
+   "ex": [
+    "I'm a student too.",
+    "She is happy too."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "trap": {
+    "uz": "Bu ma'noda 'ham' — gap oxirida keladi."
+   }
+  },
+  {
+   "u": 2,
+   "l": "very",
+   "p": "adv",
+   "ipa": "ˈveri",
+   "uz": "juda",
+   "ru": "очень",
+   "ex": [
+    "She is very nice.",
+    "Thank you very much."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "col": [
+    "very good",
+    "very much",
+    "very nice"
+   ],
+   "P": [
+    "P-010"
+   ]
+  },
+  {
+   "u": 2,
+   "l": "fine",
+   "p": "adj",
+   "ipa": "faɪn",
+   "uz": "yaxshi (holat haqida)",
+   "ru": "хорошо",
+   "ex": [
+    "I'm fine, thanks.",
+    "Everything is fine."
+   ],
+   "t": [
+    "feelings"
+   ],
+   "b": 1000,
+   "col": [
+    "I'm fine",
+    "that's fine"
+   ]
+  },
+  {
+   "u": 2,
+   "l": "well",
+   "p": "adv",
+   "ipa": "wel",
+   "uz": "yaxshi",
+   "ru": "хорошо",
+   "ex": [
+    "I'm very well, thank you.",
+    "She speaks English well."
+   ],
+   "t": [
+    "feelings"
+   ],
+   "b": 1000,
+   "col": [
+    "very well",
+    "speak well"
+   ],
+   "P": [
+    "P-010"
+   ]
+  },
+  {
+   "u": 2,
+   "l": "friend",
+   "p": "noun",
+   "ipa": "frend",
+   "uz": "do'st",
+   "ru": "друг",
+   "ex": [
+    "He is my friend.",
+    "I have a lot of friends."
+   ],
+   "t": [
+    "people"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "a good friend",
+    "best friend",
+    "a friend of mine"
+   ]
+  },
+  {
+   "u": 2,
+   "l": "his",
+   "p": "det",
+   "ipa": "hɪz",
+   "uz": "uning (erkak)",
+   "ru": "его",
+   "ex": [
+    "His name is Bobur.",
+    "This is his bag."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "int": "her"
+  },
+  {
+   "u": 2,
+   "l": "her",
+   "p": "det",
+   "ipa": "hɜːr",
+   "uz": "uning (ayol)",
+   "ru": "её",
+   "ex": [
+    "Her name is Zilola.",
+    "This is her book."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "int": "his"
+  },
+  {
+   "u": 3,
+   "l": "zero",
+   "p": "num",
+   "ipa": "ˈzɪroʊ",
+   "uz": "nol",
+   "ru": "ноль",
+   "ex": [
+    "My number starts with zero.",
+    "Zero, one, two."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000
+  },
+  {
+   "u": 3,
+   "l": "one",
+   "p": "num",
+   "ipa": "wʌn",
+   "uz": "bir",
+   "ru": "один",
+   "ex": [
+    "I have one brother.",
+    "One coffee, please."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 1000,
+   "P": [
+    "P-010"
+   ]
+  },
+  {
+   "u": 3,
+   "l": "two",
+   "p": "num",
+   "ipa": "tuː",
+   "uz": "ikki",
+   "ru": "два",
+   "ex": [
+    "I have two sisters.",
+    "Two teas, please."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 1000
+  },
+  {
+   "u": 3,
+   "l": "three",
+   "p": "num",
+   "ipa": "θriː",
+   "uz": "uch",
+   "ru": "три",
+   "ex": [
+    "There are three books.",
+    "Three, please."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 1000,
+   "P": [
+    "P-009"
+   ]
+  },
+  {
+   "u": 3,
+   "l": "four",
+   "p": "num",
+   "ipa": "fɔːr",
+   "uz": "to'rt",
+   "ru": "четыре",
+   "ex": [
+    "I have four pens.",
+    "Four people are here."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 1000
+  },
+  {
+   "u": 3,
+   "l": "five",
+   "p": "num",
+   "ipa": "faɪv",
+   "uz": "besh",
+   "ru": "пять",
+   "ex": [
+    "Five students are in the class.",
+    "It's five o'clock."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 1000,
+   "P": [
+    "P-010"
+   ]
+  },
+  {
+   "u": 3,
+   "l": "six",
+   "p": "num",
+   "ipa": "sɪks",
+   "uz": "olti",
+   "ru": "шесть",
+   "ex": [
+    "Six chairs are in the room.",
+    "I get up at six."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 1000
+  },
+  {
+   "u": 3,
+   "l": "seven",
+   "p": "num",
+   "ipa": "ˈsevən",
+   "uz": "yetti",
+   "ru": "семь",
+   "ex": [
+    "Seven days are in a week.",
+    "I start work at seven."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 1000
+  },
+  {
+   "u": 3,
+   "l": "eight",
+   "p": "num",
+   "ipa": "eɪt",
+   "uz": "sakkiz",
+   "ru": "восемь",
+   "ex": [
+    "Eight students are here.",
+    "The class is at eight."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 1000
+  },
+  {
+   "u": 3,
+   "l": "nine",
+   "p": "num",
+   "ipa": "naɪn",
+   "uz": "to'qqiz",
+   "ru": "девять",
+   "ex": [
+    "Nine books are on the table.",
+    "I finish at nine."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 1000
+  },
+  {
+   "u": 3,
+   "l": "ten",
+   "p": "num",
+   "ipa": "ten",
+   "uz": "o'n",
+   "ru": "десять",
+   "ex": [
+    "Ten pens are in the bag.",
+    "Ten, please."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 1000
+  },
+  {
+   "u": 3,
+   "l": "eleven",
+   "p": "num",
+   "ipa": "ɪˈlevən",
+   "uz": "o'n bir",
+   "ru": "одиннадцать",
+   "ex": [
+    "Eleven people are in the room.",
+    "It's eleven o'clock."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000
+  },
+  {
+   "u": 3,
+   "l": "twelve",
+   "p": "num",
+   "ipa": "twelv",
+   "uz": "o'n ikki",
+   "ru": "двенадцать",
+   "ex": [
+    "Twelve months are in a year.",
+    "We eat at twelve."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000
+  },
+  {
+   "u": 3,
+   "l": "thirteen",
+   "p": "num",
+   "ipa": "ˌθɜːrˈtiːn",
+   "uz": "o'n uch",
+   "ru": "тринадцать",
+   "ex": [
+    "He is thirteen.",
+    "Thirteen students are here."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000,
+   "P": [
+    "P-009"
+   ],
+   "int": "thirty"
+  },
+  {
+   "u": 3,
+   "l": "fourteen",
+   "p": "num",
+   "ipa": "ˌfɔːrˈtiːn",
+   "uz": "o'n to'rt",
+   "ru": "четырнадцать",
+   "ex": [
+    "She is fourteen.",
+    "Fourteen books are here."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000,
+   "int": "forty"
+  },
+  {
+   "u": 3,
+   "l": "fifteen",
+   "p": "num",
+   "ipa": "ˌfɪfˈtiːn",
+   "uz": "o'n besh",
+   "ru": "пятнадцать",
+   "ex": [
+    "Fifteen minutes, please.",
+    "He is fifteen years old."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000,
+   "int": "fifty"
+  },
+  {
+   "u": 3,
+   "l": "sixteen",
+   "p": "num",
+   "ipa": "ˌsɪksˈtiːn",
+   "uz": "o'n olti",
+   "ru": "шестнадцать",
+   "ex": [
+    "My sister is sixteen.",
+    "Sixteen people are here."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000,
+   "int": "sixty"
+  },
+  {
+   "u": 3,
+   "l": "seventeen",
+   "p": "num",
+   "ipa": "ˌsevənˈtiːn",
+   "uz": "o'n yetti",
+   "ru": "семнадцать",
+   "ex": [
+    "He is seventeen.",
+    "Seventeen students are in the class."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000
+  },
+  {
+   "u": 3,
+   "l": "eighteen",
+   "p": "num",
+   "ipa": "ˌeɪˈtiːn",
+   "uz": "o'n sakkiz",
+   "ru": "восемнадцать",
+   "ex": [
+    "I am eighteen.",
+    "Eighteen people are here."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000
+  },
+  {
+   "u": 3,
+   "l": "nineteen",
+   "p": "num",
+   "ipa": "ˌnaɪnˈtiːn",
+   "uz": "o'n to'qqiz",
+   "ru": "девятнадцать",
+   "ex": [
+    "She is nineteen.",
+    "Nineteen books are on the shelf."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000
+  },
+  {
+   "u": 3,
+   "l": "twenty",
+   "p": "num",
+   "ipa": "ˈtwenti",
+   "uz": "yigirma",
+   "ru": "двадцать",
+   "ex": [
+    "I am twenty years old.",
+    "Twenty students are here."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000
+  },
+  {
+   "u": 3,
+   "l": "book",
+   "p": "noun",
+   "ipa": "bʊk",
+   "uz": "kitob",
+   "ru": "книга",
+   "ex": [
+    "This is my book.",
+    "I read a book every week."
+   ],
+   "t": [
+    "objects",
+    "education"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "read a book",
+    "a good book"
+   ],
+   "P": [
+    "P-013"
+   ]
+  },
+  {
+   "u": 3,
+   "l": "pen",
+   "p": "noun",
+   "ipa": "pen",
+   "uz": "ruchka",
+   "ru": "ручка",
+   "ex": [
+    "Is this your pen?",
+    "I have two pens."
+   ],
+   "t": [
+    "objects"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 3,
+   "l": "pencil",
+   "p": "noun",
+   "ipa": "ˈpensəl",
+   "uz": "qalam",
+   "ru": "карандаш",
+   "ex": [
+    "Where is my pencil?",
+    "She writes with a pencil."
+   ],
+   "t": [
+    "objects"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 3,
+   "l": "bag",
+   "p": "noun",
+   "ipa": "bæɡ",
+   "uz": "sumka",
+   "ru": "сумка",
+   "ex": [
+    "This is my bag.",
+    "Your book is in the bag."
+   ],
+   "t": [
+    "objects"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "P": [
+    "P-003"
+   ]
+  },
+  {
+   "u": 3,
+   "l": "chair",
+   "p": "noun",
+   "ipa": "tʃer",
+   "uz": "stul",
+   "ru": "стул",
+   "ex": [
+    "Sit on this chair.",
+    "There are four chairs."
+   ],
+   "t": [
+    "objects",
+    "furniture"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 3,
+   "l": "door",
+   "p": "noun",
+   "ipa": "dɔːr",
+   "uz": "eshik",
+   "ru": "дверь",
+   "ex": [
+    "Please close the door.",
+    "The door is open."
+   ],
+   "t": [
+    "objects",
+    "house"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "open the door",
+    "close the door"
+   ]
+  },
+  {
+   "u": 3,
+   "l": "window",
+   "p": "noun",
+   "ipa": "ˈwɪndoʊ",
+   "uz": "deraza",
+   "ru": "окно",
+   "ex": [
+    "There are two windows in my room.",
+    "Open the window, please."
+   ],
+   "t": [
+    "objects",
+    "house"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "P": [
+    "P-010"
+   ]
+  },
+  {
+   "u": 3,
+   "l": "computer",
+   "p": "noun",
+   "ipa": "kəmˈpjuːtər",
+   "uz": "kompyuter",
+   "ru": "компьютер",
+   "ex": [
+    "This is my computer.",
+    "I work on a computer."
+   ],
+   "t": [
+    "technology"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "on the computer",
+    "use a computer"
+   ]
+  },
+  {
+   "u": 3,
+   "l": "this",
+   "p": "det",
+   "ipa": "ðɪs",
+   "uz": "bu",
+   "ru": "это",
+   "ex": [
+    "This is my book.",
+    "What is this?"
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "P": [
+    "P-008"
+   ],
+   "int": "these"
+  },
+  {
+   "u": 3,
+   "l": "that",
+   "p": "det",
+   "ipa": "ðæt",
+   "uz": "u (uzoqdagi)",
+   "ru": "то",
+   "ex": [
+    "That is your bag.",
+    "What is that?"
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "P": [
+    "P-008"
+   ],
+   "int": "those"
+  },
+  {
+   "u": 3,
+   "l": "these",
+   "p": "det",
+   "ipa": "ðiːz",
+   "uz": "bular",
+   "ru": "эти",
+   "ex": [
+    "These are my books.",
+    "What are these?"
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "int": "this"
+  },
+  {
+   "u": 3,
+   "l": "those",
+   "p": "det",
+   "ipa": "ðoʊz",
+   "uz": "ular (uzoqdagi)",
+   "ru": "те",
+   "ex": [
+    "Those are her pens.",
+    "Are those your bags?"
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "int": "that"
+  },
+  {
+   "u": 3,
+   "l": "spell",
+   "p": "verb",
+   "ipa": "spel",
+   "uz": "harflab aytmoq",
+   "ru": "писать по буквам",
+   "ex": [
+    "How do you spell your name?",
+    "Can you spell it, please?"
+   ],
+   "t": [
+    "classroom"
+   ],
+   "b": 2000,
+   "col": [
+    "spell a word"
+   ],
+   "P": [
+    "P-022"
+   ]
+  },
+  {
+   "u": 4,
+   "l": "family",
+   "p": "noun",
+   "ipa": "ˈfæməli",
+   "uz": "oila",
+   "ru": "семья",
+   "ex": [
+    "I have a big family.",
+    "This is a photo of my family."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "pl": "families",
+   "col": [
+    "a big family",
+    "family name"
+   ],
+   "trap": {
+    "uz": "Ruscha 'фамилия' = 'surname'. 'Family' = 'oila'."
+   }
+  },
+  {
+   "u": 4,
+   "l": "mother",
+   "p": "noun",
+   "ipa": "ˈmʌðər",
+   "uz": "ona",
+   "ru": "мать",
+   "ex": [
+    "My mother is a doctor.",
+    "Her mother is from Andijan."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "P": [
+    "P-008"
+   ]
+  },
+  {
+   "u": 4,
+   "l": "father",
+   "p": "noun",
+   "ipa": "ˈfɑːðər",
+   "uz": "ota",
+   "ru": "отец",
+   "ex": [
+    "My father is a teacher.",
+    "His father works in a bank."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "P": [
+    "P-008"
+   ]
+  },
+  {
+   "u": 4,
+   "l": "parents",
+   "p": "noun",
+   "ipa": "ˈperənts",
+   "uz": "ota-ona",
+   "ru": "родители",
+   "ex": [
+    "My parents live in Samarkand.",
+    "Her parents are teachers."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 1000,
+   "col": [
+    "my parents",
+    "live with my parents"
+   ]
+  },
+  {
+   "u": 4,
+   "l": "brother",
+   "p": "noun",
+   "ipa": "ˈbrʌðər",
+   "uz": "aka, uka",
+   "ru": "брат",
+   "ex": [
+    "I have two brothers.",
+    "My brother is a student."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "P": [
+    "P-008"
+   ]
+  },
+  {
+   "u": 4,
+   "l": "sister",
+   "p": "noun",
+   "ipa": "ˈsɪstər",
+   "uz": "opa, singil",
+   "ru": "сестра",
+   "ex": [
+    "She is my sister.",
+    "I have one sister."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 4,
+   "l": "son",
+   "p": "noun",
+   "ipa": "sʌn",
+   "uz": "o'g'il",
+   "ru": "сын",
+   "ex": [
+    "They have two sons.",
+    "My son is five."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "int": "sun"
+  },
+  {
+   "u": 4,
+   "l": "daughter",
+   "p": "noun",
+   "ipa": "ˈdɔːtər",
+   "uz": "qiz (farzand)",
+   "ru": "дочь",
+   "ex": [
+    "My daughter is at school.",
+    "They have a daughter."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 4,
+   "l": "grandmother",
+   "p": "noun",
+   "ipa": "ˈɡrænmʌðər",
+   "uz": "buvi",
+   "ru": "бабушка",
+   "ex": [
+    "My grandmother is eighty.",
+    "Her grandmother lives with them."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 4,
+   "l": "grandfather",
+   "p": "noun",
+   "ipa": "ˈɡrænfɑːðər",
+   "uz": "bobo",
+   "ru": "дедушка",
+   "ex": [
+    "My grandfather was a farmer.",
+    "His grandfather is ninety."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 4,
+   "l": "wife",
+   "p": "noun",
+   "ipa": "waɪf",
+   "uz": "xotin",
+   "ru": "жена",
+   "ex": [
+    "This is my wife.",
+    "His wife is a nurse."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "pl": "wives",
+   "P": [
+    "P-010"
+   ]
+  },
+  {
+   "u": 4,
+   "l": "husband",
+   "p": "noun",
+   "ipa": "ˈhʌzbənd",
+   "uz": "er",
+   "ru": "муж",
+   "ex": [
+    "Her husband is a driver.",
+    "My husband works in a shop."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 4,
+   "l": "child",
+   "p": "noun",
+   "ipa": "tʃaɪld",
+   "uz": "bola",
+   "ru": "ребёнок",
+   "ex": [
+    "She has one child.",
+    "The child is happy."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "pl": "children"
+  },
+  {
+   "u": 4,
+   "l": "children",
+   "p": "noun",
+   "ipa": "ˈtʃɪldrən",
+   "uz": "bolalar",
+   "ru": "дети",
+   "ex": [
+    "They have three children.",
+    "The children are in the garden."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 1000,
+   "trap": {
+    "uz": "'child' ning ko'pligi 'children' — 'childs' EMAS."
+   }
+  },
+  {
+   "u": 4,
+   "l": "aunt",
+   "p": "noun",
+   "ipa": "ænt",
+   "uz": "xola, amma",
+   "ru": "тётя",
+   "ex": [
+    "My aunt lives in Nukus.",
+    "She is my aunt."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 4,
+   "l": "uncle",
+   "p": "noun",
+   "ipa": "ˈʌŋkəl",
+   "uz": "tog'a, amaki",
+   "ru": "дядя",
+   "ex": [
+    "My uncle is a businessman.",
+    "He is my uncle."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 4,
+   "l": "cousin",
+   "p": "noun",
+   "ipa": "ˈkʌzən",
+   "uz": "jiyan, amakivachcha",
+   "ru": "двоюродный брат/сестра",
+   "ex": [
+    "My cousin lives in Fergana.",
+    "I have many cousins."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "trap": {
+    "uz": "'cousin' erkak va ayol uchun bir xil."
+   }
+  },
+  {
+   "u": 4,
+   "l": "baby",
+   "p": "noun",
+   "ipa": "ˈbeɪbi",
+   "uz": "chaqaloq",
+   "ru": "ребёнок",
+   "ex": [
+    "The baby is sleeping.",
+    "They have a new baby."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "pl": "babies"
+  },
+  {
+   "u": 4,
+   "l": "boy",
+   "p": "noun",
+   "ipa": "bɔɪ",
+   "uz": "o'g'il bola",
+   "ru": "мальчик",
+   "ex": [
+    "That boy is my brother.",
+    "Two boys are in the room."
+   ],
+   "t": [
+    "people"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "P": [
+    "P-014"
+   ]
+  },
+  {
+   "u": 4,
+   "l": "girl",
+   "p": "noun",
+   "ipa": "ɡɜːrl",
+   "uz": "qiz bola",
+   "ru": "девочка",
+   "ex": [
+    "The girl is my sister.",
+    "Three girls are here."
+   ],
+   "t": [
+    "people"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 4,
+   "l": "have",
+   "p": "verb",
+   "ipa": "hæv",
+   "uz": "ega bo'lmoq",
+   "ru": "иметь",
+   "ex": [
+    "I have two brothers.",
+    "She has a big family."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "irr": [
+    "have",
+    "had",
+    "had"
+   ],
+   "col": [
+    "have breakfast",
+    "have a car",
+    "have time"
+   ],
+   "trap": {
+    "uz": "'Mening akam bor' → 'I have a brother' ('At me is a brother' EMAS)."
+   }
+  },
+  {
+   "u": 4,
+   "l": "old",
+   "p": "adj",
+   "ipa": "oʊld",
+   "uz": "qari, eski",
+   "ru": "старый",
+   "ex": [
+    "How old are you?",
+    "My grandfather is very old."
+   ],
+   "t": [
+    "description"
+   ],
+   "b": 1000,
+   "col": [
+    "how old",
+    "an old house"
+   ],
+   "trap": {
+    "uz": "Yosh 'be' bilan aytiladi: 'I am 20 years old', 'I have 20 years' EMAS."
+   }
+  },
+  {
+   "u": 4,
+   "l": "young",
+   "p": "adj",
+   "ipa": "jʌŋ",
+   "uz": "yosh",
+   "ru": "молодой",
+   "ex": [
+    "My sister is young.",
+    "He is a young teacher."
+   ],
+   "t": [
+    "description"
+   ],
+   "b": 1000,
+   "P": [
+    "P-011"
+   ]
+  },
+  {
+   "u": 4,
+   "l": "year",
+   "p": "noun",
+   "ipa": "jɪr",
+   "uz": "yil",
+   "ru": "год",
+   "ex": [
+    "I am twenty years old.",
+    "This year is 2026."
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "years old",
+    "this year",
+    "every year"
+   ]
+  },
+  {
+   "u": 4,
+   "l": "married",
+   "p": "adj",
+   "ipa": "ˈmerid",
+   "uz": "turmush qurgan",
+   "ru": "женат / замужем",
+   "ex": [
+    "My sister is married.",
+    "Are you married?"
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 2000,
+   "col": [
+    "get married",
+    "be married to"
+   ],
+   "trap": {
+    "uz": "'married with' EMAS — 'married to'."
+   }
+  },
+  {
+   "u": 4,
+   "l": "single",
+   "p": "adj",
+   "ipa": "ˈsɪŋɡəl",
+   "uz": "yolg'iz, turmush qurmagan",
+   "ru": "холост / не замужем",
+   "ex": [
+    "He is single.",
+    "I'm single."
+   ],
+   "t": [
+    "family"
+   ],
+   "b": 2000
+  },
+  {
+   "u": 4,
+   "l": "thirty",
+   "p": "num",
+   "ipa": "ˈθɜːrti",
+   "uz": "o'ttiz",
+   "ru": "тридцать",
+   "ex": [
+    "My mother is thirty-nine.",
+    "Thirty students are here."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000,
+   "int": "thirteen",
+   "P": [
+    "P-009"
+   ]
+  },
+  {
+   "u": 4,
+   "l": "forty",
+   "p": "num",
+   "ipa": "ˈfɔːrti",
+   "uz": "qirq",
+   "ru": "сорок",
+   "ex": [
+    "My father is forty-two.",
+    "Forty people are in the room."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000,
+   "int": "fourteen"
+  },
+  {
+   "u": 4,
+   "l": "fifty",
+   "p": "num",
+   "ipa": "ˈfɪfti",
+   "uz": "ellik",
+   "ru": "пятьдесят",
+   "ex": [
+    "He is fifty years old.",
+    "Fifty books are on the shelf."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000,
+   "int": "fifteen"
+  },
+  {
+   "u": 4,
+   "l": "sixty",
+   "p": "num",
+   "ipa": "ˈsɪksti",
+   "uz": "oltmish",
+   "ru": "шестьдесят",
+   "ex": [
+    "My uncle is sixty.",
+    "Sixty minutes are in an hour."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000,
+   "int": "sixteen"
+  },
+  {
+   "u": 4,
+   "l": "seventy",
+   "p": "num",
+   "ipa": "ˈsevənti",
+   "uz": "yetmish",
+   "ru": "семьдесят",
+   "ex": [
+    "My grandmother is seventy-four.",
+    "Seventy people were there."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000
+  },
+  {
+   "u": 4,
+   "l": "eighty",
+   "p": "num",
+   "ipa": "ˈeɪti",
+   "uz": "sakson",
+   "ru": "восемьдесят",
+   "ex": [
+    "He is eighty years old.",
+    "Eighty students study here."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000
+  },
+  {
+   "u": 4,
+   "l": "ninety",
+   "p": "num",
+   "ipa": "ˈnaɪnti",
+   "uz": "to'qson",
+   "ru": "девяносто",
+   "ex": [
+    "My grandfather is ninety.",
+    "Ninety people came."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 2000
+  },
+  {
+   "u": 4,
+   "l": "hundred",
+   "p": "num",
+   "ipa": "ˈhʌndrəd",
+   "uz": "yuz",
+   "ru": "сто",
+   "ex": [
+    "There are a hundred students.",
+    "Two hundred people live here."
+   ],
+   "t": [
+    "numbers"
+   ],
+   "b": 1000,
+   "trap": {
+    "uz": "Sondan keyin ko'plik qo'shilmaydi: 'two hundred', 'two hundreds' EMAS."
+   }
+  },
+  {
+   "u": 5,
+   "l": "house",
+   "p": "noun",
+   "ipa": "haʊs",
+   "uz": "uy",
+   "ru": "дом",
+   "ex": [
+    "We have a big house.",
+    "Their house is near the school."
+   ],
+   "t": [
+    "house"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "a big house",
+    "at my house"
+   ]
+  },
+  {
+   "u": 5,
+   "l": "flat",
+   "p": "noun",
+   "ipa": "flæt",
+   "uz": "kvartira",
+   "ru": "квартира",
+   "ex": [
+    "I live in a small flat.",
+    "Their flat is on the third floor."
+   ],
+   "t": [
+    "house"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "us": "apartment"
+  },
+  {
+   "u": 5,
+   "l": "room",
+   "p": "noun",
+   "ipa": "ruːm",
+   "uz": "xona",
+   "ru": "комната",
+   "ex": [
+    "My room is small.",
+    "There are four rooms in the house."
+   ],
+   "t": [
+    "house"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 5,
+   "l": "bedroom",
+   "p": "noun",
+   "ipa": "ˈbedruːm",
+   "uz": "yotoqxona",
+   "ru": "спальня",
+   "ex": [
+    "My bedroom is upstairs.",
+    "We have three bedrooms."
+   ],
+   "t": [
+    "house"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 5,
+   "l": "kitchen",
+   "p": "noun",
+   "ipa": "ˈkɪtʃən",
+   "uz": "oshxona",
+   "ru": "кухня",
+   "ex": [
+    "My mother is in the kitchen.",
+    "The kitchen is big."
+   ],
+   "t": [
+    "house"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "P": [
+    "P-001"
+   ]
+  },
+  {
+   "u": 5,
+   "l": "bathroom",
+   "p": "noun",
+   "ipa": "ˈbæθruːm",
+   "uz": "hammom",
+   "ru": "ванная",
+   "ex": [
+    "The bathroom is next to my room.",
+    "Where is the bathroom?"
+   ],
+   "t": [
+    "house"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "P": [
+    "P-009"
+   ]
+  },
+  {
+   "u": 5,
+   "l": "living room",
+   "p": "noun",
+   "ipa": "ˈlɪvɪŋ ruːm",
+   "uz": "mehmonxona",
+   "ru": "гостиная",
+   "ex": [
+    "We watch TV in the living room.",
+    "The living room is very big."
+   ],
+   "t": [
+    "house"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 5,
+   "l": "garden",
+   "p": "noun",
+   "ipa": "ˈɡɑːrdən",
+   "uz": "bog'",
+   "ru": "сад",
+   "ex": [
+    "We have a small garden.",
+    "The children are in the garden."
+   ],
+   "t": [
+    "house"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 5,
+   "l": "bed",
+   "p": "noun",
+   "ipa": "bed",
+   "uz": "karavot",
+   "ru": "кровать",
+   "ex": [
+    "My bed is near the window.",
+    "Go to bed now."
+   ],
+   "t": [
+    "furniture"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "go to bed",
+    "in bed",
+    "make the bed"
+   ],
+   "int": "bad"
+  },
+  {
+   "u": 5,
+   "l": "table",
+   "p": "noun",
+   "ipa": "ˈteɪbəl",
+   "uz": "stol",
+   "ru": "стол",
+   "ex": [
+    "The book is on the table.",
+    "We have a big table."
+   ],
+   "t": [
+    "furniture"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "on the table",
+    "a table for two"
+   ]
+  },
+  {
+   "u": 5,
+   "l": "sofa",
+   "p": "noun",
+   "ipa": "ˈsoʊfə",
+   "uz": "divan",
+   "ru": "диван",
+   "ex": [
+    "He is on the sofa.",
+    "Our sofa is old."
+   ],
+   "t": [
+    "furniture"
+   ],
+   "b": 3000,
+   "cnt": true
+  },
+  {
+   "u": 5,
+   "l": "TV",
+   "p": "noun",
+   "ipa": "ˌtiːˈviː",
+   "uz": "televizor",
+   "ru": "телевизор",
+   "ex": [
+    "The TV is in the living room.",
+    "I watch TV in the evening."
+   ],
+   "t": [
+    "furniture",
+    "technology"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "watch TV",
+    "on TV"
+   ]
+  },
+  {
+   "u": 5,
+   "l": "lamp",
+   "p": "noun",
+   "ipa": "læmp",
+   "uz": "chiroq",
+   "ru": "лампа",
+   "ex": [
+    "There is a lamp on the table.",
+    "The lamp is new."
+   ],
+   "t": [
+    "furniture"
+   ],
+   "b": 3000,
+   "cnt": true
+  },
+  {
+   "u": 5,
+   "l": "fridge",
+   "p": "noun",
+   "ipa": "frɪdʒ",
+   "uz": "muzlatgich",
+   "ru": "холодильник",
+   "ex": [
+    "The milk is in the fridge.",
+    "Our fridge is very big."
+   ],
+   "t": [
+    "furniture",
+    "kitchen"
+   ],
+   "b": 3000,
+   "cnt": true
+  },
+  {
+   "u": 5,
+   "l": "cupboard",
+   "p": "noun",
+   "ipa": "ˈkʌbərd",
+   "uz": "shkaf",
+   "ru": "шкаф",
+   "ex": [
+    "The cups are in the cupboard.",
+    "Open the cupboard, please."
+   ],
+   "t": [
+    "furniture"
+   ],
+   "b": 3000,
+   "cnt": true,
+   "trap": {
+    "uz": "Talaffuzda 'p' o'qilmaydi: /ˈkʌbərd/."
+   }
+  },
+  {
+   "u": 5,
+   "l": "shelf",
+   "p": "noun",
+   "ipa": "ʃelf",
+   "uz": "javon",
+   "ru": "полка",
+   "ex": [
+    "The books are on the shelf.",
+    "There are two shelves."
+   ],
+   "t": [
+    "furniture"
+   ],
+   "b": 3000,
+   "cnt": true,
+   "pl": "shelves"
+  },
+  {
+   "u": 5,
+   "l": "picture",
+   "p": "noun",
+   "ipa": "ˈpɪktʃər",
+   "uz": "rasm",
+   "ru": "картина",
+   "ex": [
+    "There is a picture on the wall.",
+    "Look at this picture."
+   ],
+   "t": [
+    "objects"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "in the picture",
+    "take a picture"
+   ],
+   "trap": {
+    "uz": "'in the picture' — 'on the picture' EMAS."
+   }
+  },
+  {
+   "u": 5,
+   "l": "floor",
+   "p": "noun",
+   "ipa": "flɔːr",
+   "uz": "pol, qavat",
+   "ru": "пол, этаж",
+   "ex": [
+    "The bag is on the floor.",
+    "We live on the third floor."
+   ],
+   "t": [
+    "house"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "on the floor",
+    "first floor"
+   ]
+  },
+  {
+   "u": 5,
+   "l": "wall",
+   "p": "noun",
+   "ipa": "wɔːl",
+   "uz": "devor",
+   "ru": "стена",
+   "ex": [
+    "The picture is on the wall.",
+    "The walls are white."
+   ],
+   "t": [
+    "house"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "on the wall"
+   ]
+  },
+  {
+   "u": 5,
+   "l": "in",
+   "p": "prep",
+   "ipa": "ɪn",
+   "uz": "ichida",
+   "ru": "в",
+   "ex": [
+    "The pen is in the bag.",
+    "I live in Tashkent."
+   ],
+   "t": [
+    "prepositions"
+   ],
+   "b": 1000,
+   "fw": true,
+   "int": "on"
+  },
+  {
+   "u": 5,
+   "l": "on",
+   "p": "prep",
+   "ipa": "ɑːn",
+   "uz": "ustida",
+   "ru": "на",
+   "ex": [
+    "The book is on the table.",
+    "The picture is on the wall."
+   ],
+   "t": [
+    "prepositions"
+   ],
+   "b": 1000,
+   "fw": true,
+   "int": "in"
+  },
+  {
+   "u": 5,
+   "l": "under",
+   "p": "prep",
+   "ipa": "ˈʌndər",
+   "uz": "tagida",
+   "ru": "под",
+   "ex": [
+    "The cat is under the table.",
+    "My shoes are under the bed."
+   ],
+   "t": [
+    "prepositions"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 5,
+   "l": "next to",
+   "p": "prep",
+   "ipa": "ˈnekst tuː",
+   "uz": "yonida",
+   "ru": "рядом с",
+   "ex": [
+    "The lamp is next to the bed.",
+    "She sits next to me."
+   ],
+   "t": [
+    "prepositions"
+   ],
+   "b": 2000,
+   "ch": true
+  },
+  {
+   "u": 5,
+   "l": "behind",
+   "p": "prep",
+   "ipa": "bɪˈhaɪnd",
+   "uz": "orqasida",
+   "ru": "за",
+   "ex": [
+    "The garden is behind the house.",
+    "He is behind me."
+   ],
+   "t": [
+    "prepositions"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 5,
+   "l": "in front of",
+   "p": "prep",
+   "ipa": "ɪn ˈfrʌnt əv",
+   "uz": "oldida",
+   "ru": "перед",
+   "ex": [
+    "The car is in front of the house.",
+    "She is in front of me."
+   ],
+   "t": [
+    "prepositions"
+   ],
+   "b": 2000,
+   "ch": true
+  },
+  {
+   "u": 5,
+   "l": "between",
+   "p": "prep",
+   "ipa": "bɪˈtwiːn",
+   "uz": "orasida",
+   "ru": "между",
+   "ex": [
+    "The shop is between the bank and the school.",
+    "Sit between us."
+   ],
+   "t": [
+    "prepositions"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 5,
+   "l": "near",
+   "p": "prep",
+   "ipa": "nɪr",
+   "uz": "yaqinida",
+   "ru": "около",
+   "ex": [
+    "My house is near the school.",
+    "Is there a shop near here?"
+   ],
+   "t": [
+    "prepositions"
+   ],
+   "b": 1000
+  },
+  {
+   "u": 5,
+   "l": "there",
+   "p": "adv",
+   "ipa": "ðer",
+   "uz": "u yerda; bor",
+   "ru": "там; есть",
+   "ex": [
+    "There is a book on the table.",
+    "My bag is there."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "P": [
+    "P-008"
+   ],
+   "trap": {
+    "uz": "'there is/are' — borlikni bildiradi; 'their' (ularning) bilan adashmang."
+   }
+  },
+  {
+   "u": 5,
+   "l": "the",
+   "p": "det",
+   "ipa": "ðə",
+   "uz": "aniq artikl",
+   "ru": "артикль",
+   "ex": [
+    "The book is on the table.",
+    "Close the door, please."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "weak": "ði",
+   "P": [
+    "P-008"
+   ]
+  },
+  {
+   "u": 5,
+   "l": "big",
+   "p": "adj",
+   "ipa": "bɪɡ",
+   "uz": "katta",
+   "ru": "большой",
+   "ex": [
+    "My room is big.",
+    "They have a big house."
+   ],
+   "t": [
+    "description"
+   ],
+   "b": 1000,
+   "cmp": "bigger",
+   "sup": "the biggest",
+   "int": "small"
+  },
+  {
+   "u": 5,
+   "l": "small",
+   "p": "adj",
+   "ipa": "smɔːl",
+   "uz": "kichik",
+   "ru": "маленький",
+   "ex": [
+    "This is a small flat.",
+    "My city is small."
+   ],
+   "t": [
+    "description"
+   ],
+   "b": 1000,
+   "cmp": "smaller",
+   "sup": "the smallest",
+   "int": "big"
+  },
+  {
+   "u": 5,
+   "l": "new",
+   "p": "adj",
+   "ipa": "nuː",
+   "uz": "yangi",
+   "ru": "новый",
+   "ex": [
+    "This is my new phone.",
+    "We have a new teacher."
+   ],
+   "t": [
+    "description"
+   ],
+   "b": 1000,
+   "int": "old"
+  },
+  {
+   "u": 6,
+   "l": "get up",
+   "p": "verb",
+   "ipa": "ɡet ˈʌp",
+   "uz": "turmoq (uyqudan)",
+   "ru": "вставать",
+   "ex": [
+    "I get up at six every day.",
+    "What time do you get up?"
+   ],
+   "t": [
+    "routine"
+   ],
+   "b": 1000,
+   "pv": true,
+   "col": [
+    "get up early",
+    "get up late"
+   ]
+  },
+  {
+   "u": 6,
+   "l": "wake up",
+   "p": "verb",
+   "ipa": "weɪk ˈʌp",
+   "uz": "uyg'onmoq",
+   "ru": "просыпаться",
+   "ex": [
+    "I wake up at five.",
+    "She wakes up early."
+   ],
+   "t": [
+    "routine"
+   ],
+   "b": 1000,
+   "pv": true,
+   "irr": [
+    "wake",
+    "woke",
+    "woken"
+   ]
+  },
+  {
+   "u": 6,
+   "l": "go",
+   "p": "verb",
+   "ipa": "ɡoʊ",
+   "uz": "bormoq",
+   "ru": "идти",
+   "ex": [
+    "I go to work at eight.",
+    "She goes to school every day."
+   ],
+   "t": [
+    "routine"
+   ],
+   "b": 1000,
+   "irr": [
+    "go",
+    "went",
+    "gone"
+   ],
+   "col": [
+    "go to work",
+    "go home",
+    "go to bed"
+   ],
+   "trap": {
+    "uz": "'go home' — 'go to home' EMAS."
+   }
+  },
+  {
+   "u": 6,
+   "l": "come",
+   "p": "verb",
+   "ipa": "kʌm",
+   "uz": "kelmoq",
+   "ru": "приходить",
+   "ex": [
+    "Come here, please.",
+    "She comes home at six."
+   ],
+   "t": [
+    "routine"
+   ],
+   "b": 1000,
+   "irr": [
+    "come",
+    "came",
+    "come"
+   ],
+   "col": [
+    "come home",
+    "come from",
+    "come here"
+   ]
+  },
+  {
+   "u": 6,
+   "l": "work",
+   "p": "verb",
+   "ipa": "wɜːrk",
+   "uz": "ishlamoq",
+   "ru": "работать",
+   "ex": [
+    "I work in a hospital.",
+    "He works every day."
+   ],
+   "t": [
+    "work"
+   ],
+   "b": 1000,
+   "col": [
+    "work in",
+    "work for",
+    "work hard"
+   ],
+   "unc": true
+  },
+  {
+   "u": 6,
+   "l": "study",
+   "p": "verb",
+   "ipa": "ˈstʌdi",
+   "uz": "o'qimoq",
+   "ru": "учиться",
+   "ex": [
+    "I study English every evening.",
+    "She studies at university."
+   ],
+   "t": [
+    "education"
+   ],
+   "b": 1000,
+   "col": [
+    "study English",
+    "study at university"
+   ]
+  },
+  {
+   "u": 6,
+   "l": "start",
+   "p": "verb",
+   "ipa": "stɑːrt",
+   "uz": "boshlamoq",
+   "ru": "начинать",
+   "ex": [
+    "I start work at nine.",
+    "The class starts at eight."
+   ],
+   "t": [
+    "routine"
+   ],
+   "b": 1000,
+   "col": [
+    "start work",
+    "start school"
+   ],
+   "int": "finish"
+  },
+  {
+   "u": 6,
+   "l": "finish",
+   "p": "verb",
+   "ipa": "ˈfɪnɪʃ",
+   "uz": "tugatmoq",
+   "ru": "заканчивать",
+   "ex": [
+    "I finish work at five.",
+    "When do you finish?"
+   ],
+   "t": [
+    "routine"
+   ],
+   "b": 1000,
+   "int": "start"
+  },
+  {
+   "u": 6,
+   "l": "eat",
+   "p": "verb",
+   "ipa": "iːt",
+   "uz": "yemoq",
+   "ru": "есть",
+   "ex": [
+    "We eat at seven.",
+    "I don't eat meat."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "irr": [
+    "eat",
+    "ate",
+    "eaten"
+   ],
+   "P": [
+    "P-001"
+   ]
+  },
+  {
+   "u": 6,
+   "l": "drink",
+   "p": "verb",
+   "ipa": "drɪŋk",
+   "uz": "ichmoq",
+   "ru": "пить",
+   "ex": [
+    "I drink tea every morning.",
+    "She drinks a lot of water."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "irr": [
+    "drink",
+    "drank",
+    "drunk"
+   ]
+  },
+  {
+   "u": 6,
+   "l": "sleep",
+   "p": "verb",
+   "ipa": "sliːp",
+   "uz": "uxlamoq",
+   "ru": "спать",
+   "ex": [
+    "I sleep eight hours.",
+    "The baby is sleeping."
+   ],
+   "t": [
+    "routine"
+   ],
+   "b": 1000,
+   "irr": [
+    "sleep",
+    "slept",
+    "slept"
+   ]
+  },
+  {
+   "u": 6,
+   "l": "read",
+   "p": "verb",
+   "ipa": "riːd",
+   "uz": "o'qimoq",
+   "ru": "читать",
+   "ex": [
+    "I read books in English.",
+    "He reads the news every day."
+   ],
+   "t": [
+    "free_time"
+   ],
+   "b": 1000,
+   "irr": [
+    "read",
+    "read",
+    "read"
+   ],
+   "trap": {
+    "uz": "Hozirgi zamonda /riːd/, o'tgan zamonda /red/ — yozuvi bir xil."
+   }
+  },
+  {
+   "u": 6,
+   "l": "write",
+   "p": "verb",
+   "ipa": "raɪt",
+   "uz": "yozmoq",
+   "ru": "писать",
+   "ex": [
+    "I write emails every day.",
+    "She writes very well."
+   ],
+   "t": [
+    "work"
+   ],
+   "b": 1000,
+   "irr": [
+    "write",
+    "wrote",
+    "written"
+   ],
+   "trap": {
+    "uz": "'w' o'qilmaydi: /raɪt/."
+   }
+  },
+  {
+   "u": 6,
+   "l": "watch",
+   "p": "verb",
+   "ipa": "wɑːtʃ",
+   "uz": "tomosha qilmoq",
+   "ru": "смотреть",
+   "ex": [
+    "We watch TV in the evening.",
+    "I watch films at the weekend."
+   ],
+   "t": [
+    "free_time"
+   ],
+   "b": 1000,
+   "col": [
+    "watch TV",
+    "watch a film"
+   ]
+  },
+  {
+   "u": 6,
+   "l": "listen",
+   "p": "verb",
+   "ipa": "ˈlɪsən",
+   "uz": "tinglamoq",
+   "ru": "слушать",
+   "ex": [
+    "I listen to music every day.",
+    "Listen to me, please."
+   ],
+   "t": [
+    "free_time"
+   ],
+   "b": 1000,
+   "col": [
+    "listen to music",
+    "listen to the teacher"
+   ],
+   "trap": {
+    "uz": "Doim 'listen TO' — 'listen music' EMAS. 't' o'qilmaydi."
+   }
+  },
+  {
+   "u": 6,
+   "l": "do",
+   "p": "verb",
+   "ipa": "duː",
+   "uz": "qilmoq",
+   "ru": "делать",
+   "ex": [
+    "What do you do?",
+    "I do my homework in the evening."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "irr": [
+    "do",
+    "did",
+    "done"
+   ],
+   "col": [
+    "do homework",
+    "do the shopping"
+   ],
+   "weak": "də"
+  },
+  {
+   "u": 6,
+   "l": "make",
+   "p": "verb",
+   "ipa": "meɪk",
+   "uz": "yasamoq, tayyorlamoq",
+   "ru": "делать",
+   "ex": [
+    "I make breakfast every morning.",
+    "She makes very good bread."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "irr": [
+    "make",
+    "made",
+    "made"
+   ],
+   "col": [
+    "make breakfast",
+    "make a mistake",
+    "make tea"
+   ],
+   "int": "do"
+  },
+  {
+   "u": 6,
+   "l": "morning",
+   "p": "noun",
+   "ipa": "ˈmɔːrnɪŋ",
+   "uz": "tong, ertalab",
+   "ru": "утро",
+   "ex": [
+    "I get up early in the morning.",
+    "Good morning!"
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "in the morning",
+    "this morning"
+   ],
+   "trap": {
+    "uz": "'in the morning' — 'on the morning' EMAS."
+   }
+  },
+  {
+   "u": 6,
+   "l": "afternoon",
+   "p": "noun",
+   "ipa": "ˌæftərˈnuːn",
+   "uz": "tushdan keyin",
+   "ru": "день",
+   "ex": [
+    "I work in the afternoon.",
+    "See you this afternoon."
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "in the afternoon"
+   ]
+  },
+  {
+   "u": 6,
+   "l": "evening",
+   "p": "noun",
+   "ipa": "ˈiːvnɪŋ",
+   "uz": "kechqurun",
+   "ru": "вечер",
+   "ex": [
+    "We watch TV in the evening.",
+    "Good evening!"
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "in the evening",
+    "this evening"
+   ]
+  },
+  {
+   "u": 6,
+   "l": "night",
+   "p": "noun",
+   "ipa": "naɪt",
+   "uz": "tun",
+   "ru": "ночь",
+   "ex": [
+    "I sleep eight hours at night.",
+    "Good night!"
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "at night",
+    "last night"
+   ],
+   "trap": {
+    "uz": "'AT night' — boshqa qismlarda 'in the'."
+   }
+  },
+  {
+   "u": 6,
+   "l": "day",
+   "p": "noun",
+   "ipa": "deɪ",
+   "uz": "kun",
+   "ru": "день",
+   "ex": [
+    "I study every day.",
+    "Have a nice day!"
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "every day",
+    "all day",
+    "one day"
+   ]
+  },
+  {
+   "u": 6,
+   "l": "today",
+   "p": "adv",
+   "ipa": "təˈdeɪ",
+   "uz": "bugun",
+   "ru": "сегодня",
+   "ex": [
+    "Today is Monday.",
+    "I'm very busy today."
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 1000
+  },
+  {
+   "u": 6,
+   "l": "always",
+   "p": "adv",
+   "ipa": "ˈɔːlweɪz",
+   "uz": "doim",
+   "ru": "всегда",
+   "ex": [
+    "I always get up at six.",
+    "She is always late."
+   ],
+   "t": [
+    "frequency"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 6,
+   "l": "usually",
+   "p": "adv",
+   "ipa": "ˈjuːʒuəli",
+   "uz": "odatda",
+   "ru": "обычно",
+   "ex": [
+    "I usually walk to work.",
+    "He usually eats at home."
+   ],
+   "t": [
+    "frequency"
+   ],
+   "b": 1000,
+   "fw": true,
+   "P": [
+    "P-016"
+   ]
+  },
+  {
+   "u": 6,
+   "l": "often",
+   "p": "adv",
+   "ipa": "ˈɔːfən",
+   "uz": "tez-tez",
+   "ru": "часто",
+   "ex": [
+    "We often go to the park.",
+    "Do you often read in English?"
+   ],
+   "t": [
+    "frequency"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 6,
+   "l": "sometimes",
+   "p": "adv",
+   "ipa": "ˈsʌmtaɪmz",
+   "uz": "ba'zan",
+   "ru": "иногда",
+   "ex": [
+    "I sometimes work on Saturday.",
+    "Sometimes we eat out."
+   ],
+   "t": [
+    "frequency"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 6,
+   "l": "never",
+   "p": "adv",
+   "ipa": "ˈnevər",
+   "uz": "hech qachon",
+   "ru": "никогда",
+   "ex": [
+    "I never drink coffee at night.",
+    "She is never late."
+   ],
+   "t": [
+    "frequency"
+   ],
+   "b": 1000,
+   "fw": true,
+   "trap": {
+    "uz": "'never' o'zi inkor — 'don't never' NOTO'G'RI."
+   }
+  },
+  {
+   "u": 6,
+   "l": "every",
+   "p": "det",
+   "ipa": "ˈevri",
+   "uz": "har",
+   "ru": "каждый",
+   "ex": [
+    "I study every day.",
+    "She calls me every evening."
+   ],
+   "t": [
+    "frequency"
+   ],
+   "b": 1000,
+   "fw": true,
+   "col": [
+    "every day",
+    "every week",
+    "every year"
+   ]
+  },
+  {
+   "u": 6,
+   "l": "home",
+   "p": "noun",
+   "ipa": "hoʊm",
+   "uz": "uy",
+   "ru": "дом",
+   "ex": [
+    "I go home at six.",
+    "She is at home now."
+   ],
+   "t": [
+    "house"
+   ],
+   "b": 1000,
+   "col": [
+    "at home",
+    "go home",
+    "come home"
+   ],
+   "trap": {
+    "uz": "'go home' va 'at home' — artikl va 'to' ISHLATILMAYDI."
+   }
+  },
+  {
+   "u": 6,
+   "l": "school",
+   "p": "noun",
+   "ipa": "skuːl",
+   "uz": "maktab",
+   "ru": "школа",
+   "ex": [
+    "My children go to school.",
+    "The school is near my house."
+   ],
+   "t": [
+    "education"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "go to school",
+    "at school",
+    "after school"
+   ]
+  },
+  {
+   "u": 6,
+   "l": "university",
+   "p": "noun",
+   "ipa": "ˌjuːnɪˈvɜːrsəti",
+   "uz": "universitet",
+   "ru": "университет",
+   "ex": [
+    "She studies at university.",
+    "The university is in the city centre."
+   ],
+   "t": [
+    "education"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "pl": "universities",
+   "trap": {
+    "uz": "'a university' — 'an university' EMAS, chunki /j/ tovushi bilan boshlanadi."
+   }
+  },
+  {
+   "u": 6,
+   "l": "early",
+   "p": "adv",
+   "ipa": "ˈɜːrli",
+   "uz": "erta",
+   "ru": "рано",
+   "ex": [
+    "I get up early.",
+    "She comes early every day."
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 1000,
+   "int": "late"
+  },
+  {
+   "u": 6,
+   "l": "late",
+   "p": "adj",
+   "ipa": "leɪt",
+   "uz": "kech",
+   "ru": "поздно",
+   "ex": [
+    "I'm sorry, I'm late.",
+    "He goes to bed late."
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 1000,
+   "int": "early",
+   "col": [
+    "be late",
+    "late for work"
+   ]
+  },
+  {
+   "u": 6,
+   "l": "breakfast",
+   "p": "noun",
+   "ipa": "ˈbrekfəst",
+   "uz": "nonushta",
+   "ru": "завтрак",
+   "ex": [
+    "I have breakfast at seven.",
+    "Breakfast is ready."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "col": [
+    "have breakfast",
+    "make breakfast"
+   ],
+   "trap": {
+    "uz": "'have breakfast' — artiklsiz."
+   }
+  },
+  {
+   "u": 6,
+   "l": "homework",
+   "p": "noun",
+   "ipa": "ˈhoʊmwɜːrk",
+   "uz": "uy vazifasi",
+   "ru": "домашнее задание",
+   "ex": [
+    "I do my homework in the evening.",
+    "The homework is easy."
+   ],
+   "t": [
+    "education"
+   ],
+   "b": 2000,
+   "unc": true,
+   "col": [
+    "do homework"
+   ],
+   "trap": {
+    "uz": "Sanalmaydi: 'homeworks' EMAS, 'a homework' EMAS."
+   }
+  }
+ ]
+}

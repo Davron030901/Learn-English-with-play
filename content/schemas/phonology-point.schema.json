@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://learnenglishwithplay.app/schemas/phonology-point.schema.json",
+  "title": "PhonologyPoint",
+  "description": "A phoneme, contrast, stress or prosody point. See docs/02-PHONOLOGY-SPEC.md.",
+  "type": "object",
+  "required": ["id", "level", "kind", "label", "status", "syllabus_version"],
+  "additionalProperties": false,
+  "properties": {
+    "id":    { "type": "string", "pattern": "^P-[0-9]{3}$" },
+    "level": { "type": "string" },
+    "kind":  { "enum": ["phoneme","contrast","allophone","cluster",
+                        "word_stress","sentence_stress","weak_form",
+                        "connected_speech","intonation","phonics"] },
+    "label": { "type": "string" },
+    "ipa":   { "type": "string" },
+    "articulation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "place":  { "type": "string" },
+        "manner": { "type": "string" },
+        "voice":  { "type": "boolean" },
+        "instruction_en": { "type": "string" },
+        "instruction_uz": { "type": "string" },
+        "self_check": { "type": "string" }
+      }
+    },
+    "minimal_pairs": { "type": "array", "items": {
+      "type": "array", "minItems": 2, "maxItems": 2,
+      "items": { "type": "string" } } },
+    "example_words": { "type": "array", "items": { "type": "string" } },
+    "l1_substitutions": { "type": "object",
+      "additionalProperties": { "type": "string" } },
+    "l1_priority": { "type": "object",
+      "additionalProperties": { "type": "integer", "minimum": 1, "maximum": 5 } },
+    "gate": {
+      "type": "object",
+      "description": "Perception gate before production is unlocked (docs/02 §9).",
+      "additionalProperties": false,
+      "properties": {
+        "trials":   { "type": "integer" },
+        "accuracy": { "type": "number" }
+      }
+    },
+    "first_taught_node": { "type": "string" },
+    "status": { "enum": ["draft","review","published","deprecated"] },
+    "syllabus_version": { "type": "string" }
+  }
+}

@@ -1,0 +1,3992 @@
+{
+ "_comment": "Compact lexeme source, Section 1 units 7-12 (201 lexemes). See src-s01-u01-u06.json for the key legend.",
+ "section": "S01",
+ "lexemes": [
+  {
+   "u": 7,
+   "l": "doctor",
+   "p": "noun",
+   "ipa": "ˈdɑːktər",
+   "uz": "shifokor",
+   "ru": "врач",
+   "ex": [
+    "My mother is a doctor.",
+    "The doctor works in a hospital."
+   ],
+   "t": [
+    "jobs"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "see a doctor",
+    "a good doctor"
+   ]
+  },
+  {
+   "u": 7,
+   "l": "nurse",
+   "p": "noun",
+   "ipa": "nɜːrs",
+   "uz": "hamshira",
+   "ru": "медсестра",
+   "ex": [
+    "She is a nurse.",
+    "The nurses work at night."
+   ],
+   "t": [
+    "jobs"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 7,
+   "l": "engineer",
+   "p": "noun",
+   "ipa": "ˌendʒɪˈnɪr",
+   "uz": "muhandis",
+   "ru": "инженер",
+   "ex": [
+    "My brother is an engineer.",
+    "She works as an engineer."
+   ],
+   "t": [
+    "jobs"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "trap": {
+    "uz": "Urg'u OXIRGI bo'g'inda: engin-EER."
+   }
+  },
+  {
+   "u": 7,
+   "l": "driver",
+   "p": "noun",
+   "ipa": "ˈdraɪvər",
+   "uz": "haydovchi",
+   "ru": "водитель",
+   "ex": [
+    "My father is a taxi driver.",
+    "The driver is very fast."
+   ],
+   "t": [
+    "jobs"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "taxi driver",
+    "bus driver"
+   ]
+  },
+  {
+   "u": 7,
+   "l": "cook",
+   "p": "noun",
+   "ipa": "kʊk",
+   "uz": "oshpaz",
+   "ru": "повар",
+   "ex": [
+    "He is a cook in a restaurant.",
+    "My mother is a very good cook."
+   ],
+   "t": [
+    "jobs"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "P": [
+    "P-013"
+   ]
+  },
+  {
+   "u": 7,
+   "l": "waiter",
+   "p": "noun",
+   "ipa": "ˈweɪtər",
+   "uz": "ofitsiant",
+   "ru": "официант",
+   "ex": [
+    "The waiter brings the menu.",
+    "He works as a waiter."
+   ],
+   "t": [
+    "jobs"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 7,
+   "l": "farmer",
+   "p": "noun",
+   "ipa": "ˈfɑːrmər",
+   "uz": "fermer, dehqon",
+   "ru": "фермер",
+   "ex": [
+    "My grandfather is a farmer.",
+    "Farmers work very hard."
+   ],
+   "t": [
+    "jobs"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 7,
+   "l": "dentist",
+   "p": "noun",
+   "ipa": "ˈdentɪst",
+   "uz": "tish shifokori",
+   "ru": "стоматолог",
+   "ex": [
+    "I go to the dentist every year.",
+    "She is a dentist."
+   ],
+   "t": [
+    "jobs",
+    "health"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 7,
+   "l": "lawyer",
+   "p": "noun",
+   "ipa": "ˈlɔːjər",
+   "uz": "advokat",
+   "ru": "юрист",
+   "ex": [
+    "His sister is a lawyer.",
+    "The lawyer is in the office."
+   ],
+   "t": [
+    "jobs"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 7,
+   "l": "businessman",
+   "p": "noun",
+   "ipa": "ˈbɪznəsmæn",
+   "uz": "tadbirkor",
+   "ru": "бизнесмен",
+   "ex": [
+    "My uncle is a businessman.",
+    "He is a young businessman."
+   ],
+   "t": [
+    "jobs"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "pl": "businessmen",
+   "trap": {
+    "uz": "'business' talaffuzi /ˈbɪznəs/ — 'busi' emas."
+   }
+  },
+  {
+   "u": 7,
+   "l": "police officer",
+   "p": "noun",
+   "ipa": "pəˈliːs ˌɔːfɪsər",
+   "uz": "politsiyachi",
+   "ru": "полицейский",
+   "ex": [
+    "My cousin is a police officer.",
+    "Ask that police officer."
+   ],
+   "t": [
+    "jobs"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "ch": true,
+   "trap": {
+    "uz": "'police' urg'usi ikkinchi bo'g'inda: po-LICE."
+   }
+  },
+  {
+   "u": 7,
+   "l": "shop assistant",
+   "p": "noun",
+   "ipa": "ˈʃɑːp əˌsɪstənt",
+   "uz": "sotuvchi",
+   "ru": "продавец",
+   "ex": [
+    "She is a shop assistant.",
+    "Ask the shop assistant."
+   ],
+   "t": [
+    "jobs"
+   ],
+   "b": 3000,
+   "cnt": true,
+   "ch": true,
+   "us": "sales assistant"
+  },
+  {
+   "u": 7,
+   "l": "manager",
+   "p": "noun",
+   "ipa": "ˈmænɪdʒər",
+   "uz": "menejer, rahbar",
+   "ru": "менеджер",
+   "ex": [
+    "He is the manager of the shop.",
+    "I want to speak to the manager."
+   ],
+   "t": [
+    "jobs",
+    "work"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 7,
+   "l": "hospital",
+   "p": "noun",
+   "ipa": "ˈhɑːspɪtəl",
+   "uz": "kasalxona",
+   "ru": "больница",
+   "ex": [
+    "My mother works in a hospital.",
+    "The hospital is near here."
+   ],
+   "t": [
+    "places",
+    "health"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "in hospital",
+    "go to hospital"
+   ]
+  },
+  {
+   "u": 7,
+   "l": "office",
+   "p": "noun",
+   "ipa": "ˈɔːfɪs",
+   "uz": "ofis",
+   "ru": "офис",
+   "ex": [
+    "I work in an office.",
+    "Her office is on the fourth floor."
+   ],
+   "t": [
+    "places",
+    "work"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "in the office",
+    "office worker"
+   ]
+  },
+  {
+   "u": 7,
+   "l": "shop",
+   "p": "noun",
+   "ipa": "ʃɑːp",
+   "uz": "do'kon",
+   "ru": "магазин",
+   "ex": [
+    "There is a shop near my house.",
+    "The shop opens at eight."
+   ],
+   "t": [
+    "places"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "us": "store",
+   "trap": {
+    "uz": "Ruscha 'магазин' — inglizcha 'magazine' EMAS ('jurnal'). To'g'risi: 'shop'."
+   }
+  },
+  {
+   "u": 7,
+   "l": "factory",
+   "p": "noun",
+   "ipa": "ˈfæktəri",
+   "uz": "zavod, fabrika",
+   "ru": "завод",
+   "ex": [
+    "He works in a car factory.",
+    "The factory is very big."
+   ],
+   "t": [
+    "places",
+    "work"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "pl": "factories"
+  },
+  {
+   "u": 7,
+   "l": "restaurant",
+   "p": "noun",
+   "ipa": "ˈrestrɑːnt",
+   "uz": "restoran",
+   "ru": "ресторан",
+   "ex": [
+    "We eat in a restaurant on Fridays.",
+    "This restaurant is very good."
+   ],
+   "t": [
+    "places",
+    "food"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "trap": {
+    "uz": "O'rtadagi 'au' odatda tushib qoladi: /ˈrestrɑːnt/."
+   }
+  },
+  {
+   "u": 7,
+   "l": "bank",
+   "p": "noun",
+   "ipa": "bæŋk",
+   "uz": "bank",
+   "ru": "банк",
+   "ex": [
+    "My father works in a bank.",
+    "The bank is next to the post office."
+   ],
+   "t": [
+    "places",
+    "money"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "P": [
+    "P-011"
+   ]
+  },
+  {
+   "u": 7,
+   "l": "market",
+   "p": "noun",
+   "ipa": "ˈmɑːrkɪt",
+   "uz": "bozor",
+   "ru": "рынок",
+   "ex": [
+    "I buy fruit at the market.",
+    "The market is open every day."
+   ],
+   "t": [
+    "places",
+    "shopping"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "at the market",
+    "go to the market"
+   ]
+  },
+  {
+   "u": 7,
+   "l": "help",
+   "p": "verb",
+   "ipa": "help",
+   "uz": "yordam bermoq",
+   "ru": "помогать",
+   "ex": [
+    "Can you help me, please?",
+    "She helps her mother every day."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "col": [
+    "help someone",
+    "help with"
+   ]
+  },
+  {
+   "u": 7,
+   "l": "sell",
+   "p": "verb",
+   "ipa": "sel",
+   "uz": "sotmoq",
+   "ru": "продавать",
+   "ex": [
+    "They sell bread and milk.",
+    "He sells cars."
+   ],
+   "t": [
+    "shopping",
+    "work"
+   ],
+   "b": 1000,
+   "irr": [
+    "sell",
+    "sold",
+    "sold"
+   ],
+   "int": "buy"
+  },
+  {
+   "u": 7,
+   "l": "buy",
+   "p": "verb",
+   "ipa": "baɪ",
+   "uz": "sotib olmoq",
+   "ru": "покупать",
+   "ex": [
+    "I buy fruit at the market.",
+    "She buys a newspaper every day."
+   ],
+   "t": [
+    "shopping"
+   ],
+   "b": 1000,
+   "irr": [
+    "buy",
+    "bought",
+    "bought"
+   ],
+   "int": "sell"
+  },
+  {
+   "u": 7,
+   "l": "drive",
+   "p": "verb",
+   "ipa": "draɪv",
+   "uz": "haydamoq",
+   "ru": "водить",
+   "ex": [
+    "My father drives a taxi.",
+    "Can you drive?"
+   ],
+   "t": [
+    "transport"
+   ],
+   "b": 1000,
+   "irr": [
+    "drive",
+    "drove",
+    "driven"
+   ],
+   "col": [
+    "drive a car",
+    "drive to work"
+   ]
+  },
+  {
+   "u": 7,
+   "l": "teach",
+   "p": "verb",
+   "ipa": "tiːtʃ",
+   "uz": "o'rgatmoq",
+   "ru": "преподавать",
+   "ex": [
+    "She teaches English.",
+    "My father teaches at a school."
+   ],
+   "t": [
+    "education"
+   ],
+   "b": 1000,
+   "irr": [
+    "teach",
+    "taught",
+    "taught"
+   ],
+   "int": "learn",
+   "trap": {
+    "uz": "'teach' — o'rgatmoq (boshqaga); 'learn' — o'rganmoq (o'zing)."
+   }
+  },
+  {
+   "u": 7,
+   "l": "learn",
+   "p": "verb",
+   "ipa": "lɜːrn",
+   "uz": "o'rganmoq",
+   "ru": "учить",
+   "ex": [
+    "I learn English every day.",
+    "Children learn very fast."
+   ],
+   "t": [
+    "education"
+   ],
+   "b": 1000,
+   "col": [
+    "learn English",
+    "learn to drive"
+   ],
+   "int": "teach"
+  },
+  {
+   "u": 7,
+   "l": "know",
+   "p": "verb",
+   "ipa": "noʊ",
+   "uz": "bilmoq",
+   "ru": "знать",
+   "ex": [
+    "I know her.",
+    "Do you know his name?"
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "irr": [
+    "know",
+    "knew",
+    "known"
+   ],
+   "state": true,
+   "trap": {
+    "uz": "'k' o'qilmaydi: /noʊ/. Davomiy shaklda ishlatilmaydi: 'I am knowing' NOTO'G'RI."
+   }
+  },
+  {
+   "u": 7,
+   "l": "want",
+   "p": "verb",
+   "ipa": "wɑːnt",
+   "uz": "xohlamoq",
+   "ru": "хотеть",
+   "ex": [
+    "I want a coffee.",
+    "She wants to be a doctor."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "state": true,
+   "col": [
+    "want to do",
+    "want something"
+   ]
+  },
+  {
+   "u": 7,
+   "l": "need",
+   "p": "verb",
+   "ipa": "niːd",
+   "uz": "kerak bo'lmoq",
+   "ru": "нуждаться",
+   "ex": [
+    "I need help.",
+    "We need more time."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "state": true,
+   "col": [
+    "need help",
+    "need to do"
+   ]
+  },
+  {
+   "u": 7,
+   "l": "job",
+   "p": "noun",
+   "ipa": "dʒɑːb",
+   "uz": "ish (kasb)",
+   "ru": "работа",
+   "ex": [
+    "She has a good job.",
+    "What is your job?"
+   ],
+   "t": [
+    "work"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "a good job",
+    "get a job",
+    "look for a job"
+   ],
+   "trap": {
+    "uz": "'job' sanaladi (a job), 'work' sanalmaydi (work)."
+   }
+  },
+  {
+   "u": 7,
+   "l": "people",
+   "p": "noun",
+   "ipa": "ˈpiːpəl",
+   "uz": "odamlar",
+   "ru": "люди",
+   "ex": [
+    "A lot of people work here.",
+    "People are very friendly here."
+   ],
+   "t": [
+    "people"
+   ],
+   "b": 1000,
+   "trap": {
+    "uz": "'people' KO'PLIK: 'people are' — 'people is' EMAS."
+   }
+  },
+  {
+   "u": 7,
+   "l": "money",
+   "p": "noun",
+   "ipa": "ˈmʌni",
+   "uz": "pul",
+   "ru": "деньги",
+   "ex": [
+    "I don't have much money.",
+    "Money is not everything."
+   ],
+   "t": [
+    "money"
+   ],
+   "b": 1000,
+   "unc": true,
+   "col": [
+    "a lot of money",
+    "make money",
+    "spend money"
+   ],
+   "trap": {
+    "uz": "Sanalmaydi: 'moneys' EMAS, 'many money' EMAS — 'much money'."
+   }
+  },
+  {
+   "u": 7,
+   "l": "busy",
+   "p": "adj",
+   "ipa": "ˈbɪzi",
+   "uz": "band",
+   "ru": "занятой",
+   "ex": [
+    "I'm very busy today.",
+    "She is busy at work."
+   ],
+   "t": [
+    "work",
+    "feelings"
+   ],
+   "b": 1000,
+   "col": [
+    "be busy",
+    "a busy day"
+   ],
+   "trap": {
+    "uz": "Talaffuzi /ˈbɪzi/ — 'byuzi' EMAS."
+   }
+  },
+  {
+   "u": 7,
+   "l": "boss",
+   "p": "noun",
+   "ipa": "bɔːs",
+   "uz": "boshliq",
+   "ru": "начальник",
+   "ex": [
+    "My boss is very nice.",
+    "I talk to my boss every morning."
+   ],
+   "t": [
+    "work"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 8,
+   "l": "Monday",
+   "p": "noun",
+   "ipa": "ˈmʌndeɪ",
+   "uz": "dushanba",
+   "ru": "понедельник",
+   "ex": [
+    "I start work on Monday.",
+    "Monday is a busy day."
+   ],
+   "t": [
+    "days"
+   ],
+   "b": 1000,
+   "prop": true,
+   "col": [
+    "on Monday",
+    "last Monday"
+   ]
+  },
+  {
+   "u": 8,
+   "l": "Tuesday",
+   "p": "noun",
+   "ipa": "ˈtuːzdeɪ",
+   "uz": "seshanba",
+   "ru": "вторник",
+   "ex": [
+    "We have English on Tuesday.",
+    "See you on Tuesday."
+   ],
+   "t": [
+    "days"
+   ],
+   "b": 1000,
+   "prop": true
+  },
+  {
+   "u": 8,
+   "l": "Wednesday",
+   "p": "noun",
+   "ipa": "ˈwenzdeɪ",
+   "uz": "chorshanba",
+   "ru": "среда",
+   "ex": [
+    "I go to the market on Wednesday.",
+    "Wednesday is my free day."
+   ],
+   "t": [
+    "days"
+   ],
+   "b": 1000,
+   "prop": true,
+   "trap": {
+    "uz": "Birinchi 'd' o'qilmaydi: /ˈwenzdeɪ/."
+   }
+  },
+  {
+   "u": 8,
+   "l": "Thursday",
+   "p": "noun",
+   "ipa": "ˈθɜːrzdeɪ",
+   "uz": "payshanba",
+   "ru": "четверг",
+   "ex": [
+    "The class is on Thursday.",
+    "I work late on Thursday."
+   ],
+   "t": [
+    "days"
+   ],
+   "b": 1000,
+   "prop": true,
+   "P": [
+    "P-009"
+   ]
+  },
+  {
+   "u": 8,
+   "l": "Friday",
+   "p": "noun",
+   "ipa": "ˈfraɪdeɪ",
+   "uz": "juma",
+   "ru": "пятница",
+   "ex": [
+    "We eat out on Friday.",
+    "Friday is my favourite day."
+   ],
+   "t": [
+    "days"
+   ],
+   "b": 1000,
+   "prop": true
+  },
+  {
+   "u": 8,
+   "l": "Saturday",
+   "p": "noun",
+   "ipa": "ˈsætərdeɪ",
+   "uz": "shanba",
+   "ru": "суббота",
+   "ex": [
+    "I don't work on Saturday.",
+    "We visit my parents on Saturday."
+   ],
+   "t": [
+    "days"
+   ],
+   "b": 1000,
+   "prop": true
+  },
+  {
+   "u": 8,
+   "l": "Sunday",
+   "p": "noun",
+   "ipa": "ˈsʌndeɪ",
+   "uz": "yakshanba",
+   "ru": "воскресенье",
+   "ex": [
+    "I sleep late on Sunday.",
+    "Sunday is a family day."
+   ],
+   "t": [
+    "days"
+   ],
+   "b": 1000,
+   "prop": true
+  },
+  {
+   "u": 8,
+   "l": "January",
+   "p": "noun",
+   "ipa": "ˈdʒænjueri",
+   "uz": "yanvar",
+   "ru": "январь",
+   "ex": [
+    "My birthday is in January.",
+    "January is very cold here."
+   ],
+   "t": [
+    "months"
+   ],
+   "b": 2000,
+   "prop": true,
+   "col": [
+    "in January"
+   ]
+  },
+  {
+   "u": 8,
+   "l": "February",
+   "p": "noun",
+   "ipa": "ˈfebrueri",
+   "uz": "fevral",
+   "ru": "февраль",
+   "ex": [
+    "February is a short month.",
+    "We start in February."
+   ],
+   "t": [
+    "months"
+   ],
+   "b": 2000,
+   "prop": true,
+   "trap": {
+    "uz": "Ko'pincha /ˈfebjueri/ deb ham aytiladi — ikkalasi ham normal."
+   }
+  },
+  {
+   "u": 8,
+   "l": "March",
+   "p": "noun",
+   "ipa": "mɑːrtʃ",
+   "uz": "mart",
+   "ru": "март",
+   "ex": [
+    "Navruz is in March.",
+    "March is a beautiful month."
+   ],
+   "t": [
+    "months"
+   ],
+   "b": 2000,
+   "prop": true
+  },
+  {
+   "u": 8,
+   "l": "April",
+   "p": "noun",
+   "ipa": "ˈeɪprəl",
+   "uz": "aprel",
+   "ru": "апрель",
+   "ex": [
+    "It rains a lot in April.",
+    "We go there in April."
+   ],
+   "t": [
+    "months"
+   ],
+   "b": 2000,
+   "prop": true
+  },
+  {
+   "u": 8,
+   "l": "May",
+   "p": "noun",
+   "ipa": "meɪ",
+   "uz": "may",
+   "ru": "май",
+   "ex": [
+    "My holiday is in May.",
+    "May is warm."
+   ],
+   "t": [
+    "months"
+   ],
+   "b": 2000,
+   "prop": true
+  },
+  {
+   "u": 8,
+   "l": "June",
+   "p": "noun",
+   "ipa": "dʒuːn",
+   "uz": "iyun",
+   "ru": "июнь",
+   "ex": [
+    "School finishes in June.",
+    "June is very hot."
+   ],
+   "t": [
+    "months"
+   ],
+   "b": 2000,
+   "prop": true
+  },
+  {
+   "u": 8,
+   "l": "July",
+   "p": "noun",
+   "ipa": "dʒuˈlaɪ",
+   "uz": "iyul",
+   "ru": "июль",
+   "ex": [
+    "We travel in July.",
+    "July is the hottest month."
+   ],
+   "t": [
+    "months"
+   ],
+   "b": 2000,
+   "prop": true,
+   "trap": {
+    "uz": "Urg'u oxirgi bo'g'inda: ju-LY."
+   }
+  },
+  {
+   "u": 8,
+   "l": "August",
+   "p": "noun",
+   "ipa": "ˈɔːɡəst",
+   "uz": "avgust",
+   "ru": "август",
+   "ex": [
+    "I was in Bukhara in August.",
+    "August is very hot."
+   ],
+   "t": [
+    "months"
+   ],
+   "b": 2000,
+   "prop": true
+  },
+  {
+   "u": 8,
+   "l": "September",
+   "p": "noun",
+   "ipa": "sepˈtembər",
+   "uz": "sentabr",
+   "ru": "сентябрь",
+   "ex": [
+    "School starts in September.",
+    "September is my favourite month."
+   ],
+   "t": [
+    "months"
+   ],
+   "b": 2000,
+   "prop": true
+  },
+  {
+   "u": 8,
+   "l": "October",
+   "p": "noun",
+   "ipa": "ɑːkˈtoʊbər",
+   "uz": "oktabr",
+   "ru": "октябрь",
+   "ex": [
+    "It's cool in October.",
+    "We start the course in October."
+   ],
+   "t": [
+    "months"
+   ],
+   "b": 2000,
+   "prop": true
+  },
+  {
+   "u": 8,
+   "l": "November",
+   "p": "noun",
+   "ipa": "noʊˈvembər",
+   "uz": "noyabr",
+   "ru": "ноябрь",
+   "ex": [
+    "November is cold.",
+    "Her birthday is in November."
+   ],
+   "t": [
+    "months"
+   ],
+   "b": 2000,
+   "prop": true
+  },
+  {
+   "u": 8,
+   "l": "December",
+   "p": "noun",
+   "ipa": "dɪˈsembər",
+   "uz": "dekabr",
+   "ru": "декабрь",
+   "ex": [
+    "We have a holiday in December.",
+    "December is the last month."
+   ],
+   "t": [
+    "months"
+   ],
+   "b": 2000,
+   "prop": true
+  },
+  {
+   "u": 8,
+   "l": "o'clock",
+   "p": "adv",
+   "ipa": "əˈklɑːk",
+   "uz": "soat (aniq)",
+   "ru": "часов",
+   "ex": [
+    "It's five o'clock.",
+    "The class starts at nine o'clock."
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 2000,
+   "trap": {
+    "uz": "Faqat aniq soat bilan: 'five o'clock', 'five thirty o'clock' EMAS."
+   }
+  },
+  {
+   "u": 8,
+   "l": "half",
+   "p": "noun",
+   "ipa": "hæf",
+   "uz": "yarim",
+   "ru": "половина",
+   "ex": [
+    "It's half past six.",
+    "I wait half an hour."
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 1000,
+   "pl": "halves",
+   "col": [
+    "half past",
+    "half an hour"
+   ],
+   "trap": {
+    "uz": "'l' o'qilmaydi: /hæf/."
+   }
+  },
+  {
+   "u": 8,
+   "l": "past",
+   "p": "prep",
+   "ipa": "pæst",
+   "uz": "o'tdi (soat)",
+   "ru": "после (о времени)",
+   "ex": [
+    "It's ten past three.",
+    "We start at half past eight."
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 1000,
+   "col": [
+    "half past",
+    "ten past"
+   ]
+  },
+  {
+   "u": 8,
+   "l": "quarter",
+   "p": "noun",
+   "ipa": "ˈkwɔːrtər",
+   "uz": "chorak",
+   "ru": "четверть",
+   "ex": [
+    "It's a quarter past two.",
+    "I finish at a quarter to five."
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "col": [
+    "a quarter past",
+    "a quarter to"
+   ]
+  },
+  {
+   "u": 8,
+   "l": "hour",
+   "p": "noun",
+   "ipa": "ˈaʊər",
+   "uz": "soat (davomiylik)",
+   "ru": "час",
+   "ex": [
+    "I work eight hours a day.",
+    "The film is two hours long."
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "trap": {
+    "uz": "'h' o'qilmaydi, shuning uchun 'AN hour' — 'a hour' EMAS."
+   }
+  },
+  {
+   "u": 8,
+   "l": "minute",
+   "p": "noun",
+   "ipa": "ˈmɪnɪt",
+   "uz": "daqiqa",
+   "ru": "минута",
+   "ex": [
+    "Wait a minute, please.",
+    "There are sixty minutes in an hour."
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "wait a minute",
+    "in five minutes"
+   ]
+  },
+  {
+   "u": 8,
+   "l": "time",
+   "p": "noun",
+   "ipa": "taɪm",
+   "uz": "vaqt",
+   "ru": "время",
+   "ex": [
+    "What time is it?",
+    "I don't have time today."
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 1000,
+   "col": [
+    "what time",
+    "have time",
+    "on time",
+    "free time"
+   ]
+  },
+  {
+   "u": 8,
+   "l": "week",
+   "p": "noun",
+   "ipa": "wiːk",
+   "uz": "hafta",
+   "ru": "неделя",
+   "ex": [
+    "I study three times a week.",
+    "This week is very busy."
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "this week",
+    "last week",
+    "a week"
+   ],
+   "int": "weak"
+  },
+  {
+   "u": 8,
+   "l": "month",
+   "p": "noun",
+   "ipa": "mʌnθ",
+   "uz": "oy",
+   "ru": "месяц",
+   "ex": [
+    "There are twelve months in a year.",
+    "I go there every month."
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "P": [
+    "P-009"
+   ]
+  },
+  {
+   "u": 8,
+   "l": "weekend",
+   "p": "noun",
+   "ipa": "ˈwiːkend",
+   "uz": "dam olish kunlari",
+   "ru": "выходные",
+   "ex": [
+    "What do you do at the weekend?",
+    "Have a nice weekend!"
+   ],
+   "t": [
+    "time"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "at the weekend",
+    "this weekend"
+   ],
+   "trap": {
+    "uz": "Britaniyada 'at the weekend', Amerikada 'on the weekend'."
+   }
+  },
+  {
+   "u": 8,
+   "l": "clock",
+   "p": "noun",
+   "ipa": "klɑːk",
+   "uz": "soat (asbob)",
+   "ru": "часы",
+   "ex": [
+    "The clock is on the wall.",
+    "Our clock is old."
+   ],
+   "t": [
+    "objects",
+    "time"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "trap": {
+    "uz": "'clock' — devor soati; 'watch' — qo'l soati."
+   }
+  },
+  {
+   "u": 8,
+   "l": "spring",
+   "p": "noun",
+   "ipa": "sprɪŋ",
+   "uz": "bahor",
+   "ru": "весна",
+   "ex": [
+    "Spring is beautiful in Uzbekistan.",
+    "We plant flowers in spring."
+   ],
+   "t": [
+    "seasons"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "in spring"
+   ]
+  },
+  {
+   "u": 8,
+   "l": "summer",
+   "p": "noun",
+   "ipa": "ˈsʌmər",
+   "uz": "yoz",
+   "ru": "лето",
+   "ex": [
+    "Summer is very hot here.",
+    "We go to the mountains in summer."
+   ],
+   "t": [
+    "seasons"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "in summer",
+    "last summer"
+   ]
+  },
+  {
+   "u": 8,
+   "l": "autumn",
+   "p": "noun",
+   "ipa": "ˈɔːtəm",
+   "uz": "kuz",
+   "ru": "осень",
+   "ex": [
+    "Autumn is my favourite season.",
+    "School starts in autumn."
+   ],
+   "t": [
+    "seasons"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "us": "fall",
+   "trap": {
+    "uz": "'n' o'qilmaydi: /ˈɔːtəm/. Amerikada 'fall' deyiladi."
+   }
+  },
+  {
+   "u": 8,
+   "l": "winter",
+   "p": "noun",
+   "ipa": "ˈwɪntər",
+   "uz": "qish",
+   "ru": "зима",
+   "ex": [
+    "Winter is cold in Tashkent.",
+    "We drink hot tea in winter."
+   ],
+   "t": [
+    "seasons"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "in winter"
+   ]
+  },
+  {
+   "u": 9,
+   "l": "music",
+   "p": "noun",
+   "ipa": "ˈmjuːzɪk",
+   "uz": "musiqa",
+   "ru": "музыка",
+   "ex": [
+    "I listen to music every day.",
+    "She loves Uzbek music."
+   ],
+   "t": [
+    "free_time"
+   ],
+   "b": 1000,
+   "unc": true,
+   "col": [
+    "listen to music",
+    "play music"
+   ],
+   "trap": {
+    "uz": "Sanalmaydi va artiklsiz: 'I like music', 'I like the music' EMAS."
+   }
+  },
+  {
+   "u": 9,
+   "l": "film",
+   "p": "noun",
+   "ipa": "fɪlm",
+   "uz": "kino",
+   "ru": "фильм",
+   "ex": [
+    "We watch a film every Friday.",
+    "This film is very good."
+   ],
+   "t": [
+    "free_time"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "us": "movie",
+   "col": [
+    "watch a film",
+    "a good film"
+   ]
+  },
+  {
+   "u": 9,
+   "l": "game",
+   "p": "noun",
+   "ipa": "ɡeɪm",
+   "uz": "o'yin",
+   "ru": "игра",
+   "ex": [
+    "My son plays computer games.",
+    "The game starts at seven."
+   ],
+   "t": [
+    "free_time"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "play a game",
+    "computer game"
+   ]
+  },
+  {
+   "u": 9,
+   "l": "football",
+   "p": "noun",
+   "ipa": "ˈfʊtbɔːl",
+   "uz": "futbol",
+   "ru": "футбол",
+   "ex": [
+    "I play football on Sunday.",
+    "He watches football on TV."
+   ],
+   "t": [
+    "sport"
+   ],
+   "b": 1000,
+   "unc": true,
+   "col": [
+    "play football",
+    "watch football"
+   ]
+  },
+  {
+   "u": 9,
+   "l": "sport",
+   "p": "noun",
+   "ipa": "spɔːrt",
+   "uz": "sport",
+   "ru": "спорт",
+   "ex": [
+    "My favourite sport is tennis.",
+    "Sport is good for you."
+   ],
+   "t": [
+    "sport"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "do sport",
+    "play sport"
+   ]
+  },
+  {
+   "u": 9,
+   "l": "party",
+   "p": "noun",
+   "ipa": "ˈpɑːrti",
+   "uz": "ziyofat",
+   "ru": "вечеринка",
+   "ex": [
+    "There is a party on Saturday.",
+    "We have a party every year."
+   ],
+   "t": [
+    "social"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "pl": "parties",
+   "col": [
+    "have a party",
+    "go to a party"
+   ]
+  },
+  {
+   "u": 9,
+   "l": "holiday",
+   "p": "noun",
+   "ipa": "ˈhɑːlədeɪ",
+   "uz": "ta'til",
+   "ru": "отпуск, праздник",
+   "ex": [
+    "We are on holiday in July.",
+    "Have a good holiday!"
+   ],
+   "t": [
+    "travel"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "us": "vacation",
+   "col": [
+    "on holiday",
+    "go on holiday"
+   ]
+  },
+  {
+   "u": 9,
+   "l": "photo",
+   "p": "noun",
+   "ipa": "ˈfoʊtoʊ",
+   "uz": "surat",
+   "ru": "фото",
+   "ex": [
+    "This is a photo of my family.",
+    "I take a lot of photos."
+   ],
+   "t": [
+    "free_time"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "take a photo",
+    "a photo of"
+   ],
+   "trap": {
+    "uz": "'take a photo' — 'make a photo' EMAS."
+   }
+  },
+  {
+   "u": 9,
+   "l": "song",
+   "p": "noun",
+   "ipa": "sɔːŋ",
+   "uz": "qo'shiq",
+   "ru": "песня",
+   "ex": [
+    "This song is beautiful.",
+    "I know a lot of English songs."
+   ],
+   "t": [
+    "free_time"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "sing a song",
+    "a good song"
+   ],
+   "P": [
+    "P-011"
+   ]
+  },
+  {
+   "u": 9,
+   "l": "hobby",
+   "p": "noun",
+   "ipa": "ˈhɑːbi",
+   "uz": "sevimli mashg'ulot",
+   "ru": "хобби",
+   "ex": [
+    "My hobby is reading.",
+    "What are your hobbies?"
+   ],
+   "t": [
+    "free_time"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "pl": "hobbies"
+  },
+  {
+   "u": 9,
+   "l": "like",
+   "p": "verb",
+   "ipa": "laɪk",
+   "uz": "yoqtirmoq",
+   "ru": "нравиться",
+   "ex": [
+    "I like coffee.",
+    "She likes English films."
+   ],
+   "t": [
+    "opinion"
+   ],
+   "b": 1000,
+   "state": true,
+   "col": [
+    "like doing",
+    "would like"
+   ],
+   "trap": {
+    "uz": "'I very like it' NOTO'G'RI — 'I like it very much'."
+   }
+  },
+  {
+   "u": 9,
+   "l": "love",
+   "p": "verb",
+   "ipa": "lʌv",
+   "uz": "sevmoq",
+   "ru": "любить",
+   "ex": [
+    "I love my family.",
+    "She loves music."
+   ],
+   "t": [
+    "opinion",
+    "feelings"
+   ],
+   "b": 1000,
+   "state": true,
+   "P": [
+    "P-010"
+   ]
+  },
+  {
+   "u": 9,
+   "l": "hate",
+   "p": "verb",
+   "ipa": "heɪt",
+   "uz": "yomon ko'rmoq",
+   "ru": "ненавидеть",
+   "ex": [
+    "I hate cold weather.",
+    "He hates waiting."
+   ],
+   "t": [
+    "opinion",
+    "feelings"
+   ],
+   "b": 1000,
+   "state": true
+  },
+  {
+   "u": 9,
+   "l": "good",
+   "p": "adj",
+   "ipa": "ɡʊd",
+   "uz": "yaxshi",
+   "ru": "хороший",
+   "ex": [
+    "This is a good book.",
+    "She is a good teacher."
+   ],
+   "t": [
+    "opinion"
+   ],
+   "b": 1000,
+   "cmp": "better",
+   "sup": "the best",
+   "int": "bad",
+   "col": [
+    "a good idea",
+    "good at"
+   ],
+   "P": [
+    "P-013"
+   ]
+  },
+  {
+   "u": 9,
+   "l": "bad",
+   "p": "adj",
+   "ipa": "bæd",
+   "uz": "yomon",
+   "ru": "плохой",
+   "ex": [
+    "The weather is bad today.",
+    "This is bad news."
+   ],
+   "t": [
+    "opinion"
+   ],
+   "b": 1000,
+   "cmp": "worse",
+   "sup": "the worst",
+   "int": "good",
+   "P": [
+    "P-003"
+   ]
+  },
+  {
+   "u": 9,
+   "l": "great",
+   "p": "adj",
+   "ipa": "ɡreɪt",
+   "uz": "ajoyib",
+   "ru": "отличный",
+   "ex": [
+    "That's a great idea!",
+    "The film was great."
+   ],
+   "t": [
+    "opinion"
+   ],
+   "b": 1000,
+   "col": [
+    "a great idea",
+    "that's great"
+   ]
+  },
+  {
+   "u": 9,
+   "l": "interesting",
+   "p": "adj",
+   "ipa": "ˈɪntrəstɪŋ",
+   "uz": "qiziqarli",
+   "ru": "интересный",
+   "ex": [
+    "This book is very interesting.",
+    "He is an interesting person."
+   ],
+   "t": [
+    "opinion"
+   ],
+   "b": 1000,
+   "int": "boring",
+   "trap": {
+    "uz": "Urg'u BIRINCHI bo'g'inda: IN-teresting. 'I am interesting' = 'men qiziqarli odamman'; 'men qiziqyapman' = 'I am interested'."
+   }
+  },
+  {
+   "u": 9,
+   "l": "boring",
+   "p": "adj",
+   "ipa": "ˈbɔːrɪŋ",
+   "uz": "zerikarli",
+   "ru": "скучный",
+   "ex": [
+    "The film is boring.",
+    "My job is not boring."
+   ],
+   "t": [
+    "opinion"
+   ],
+   "b": 2000,
+   "int": "interesting",
+   "trap": {
+    "uz": "'I am boring' = 'men zerikarliman'; 'men zerikyapman' = 'I am bored'."
+   }
+  },
+  {
+   "u": 9,
+   "l": "beautiful",
+   "p": "adj",
+   "ipa": "ˈbjuːtɪfəl",
+   "uz": "chiroyli",
+   "ru": "красивый",
+   "ex": [
+    "Samarkand is a beautiful city.",
+    "What a beautiful day!"
+   ],
+   "t": [
+    "description"
+   ],
+   "b": 1000
+  },
+  {
+   "u": 9,
+   "l": "favourite",
+   "p": "adj",
+   "ipa": "ˈfeɪvərɪt",
+   "uz": "sevimli",
+   "ru": "любимый",
+   "ex": [
+    "My favourite colour is blue.",
+    "What's your favourite food?"
+   ],
+   "t": [
+    "opinion"
+   ],
+   "b": 1000,
+   "us": "favorite",
+   "col": [
+    "my favourite"
+   ]
+  },
+  {
+   "u": 9,
+   "l": "funny",
+   "p": "adj",
+   "ipa": "ˈfʌni",
+   "uz": "kulgili",
+   "ru": "смешной",
+   "ex": [
+    "This film is very funny.",
+    "He is a funny man."
+   ],
+   "t": [
+    "opinion"
+   ],
+   "b": 1000,
+   "trap": {
+    "uz": "'funny' = kulgili; 'fun' = zavqli. 'It was fun' ≠ 'It was funny'."
+   }
+  },
+  {
+   "u": 9,
+   "l": "difficult",
+   "p": "adj",
+   "ipa": "ˈdɪfɪkəlt",
+   "uz": "qiyin",
+   "ru": "трудный",
+   "ex": [
+    "English is not difficult.",
+    "This is a difficult question."
+   ],
+   "t": [
+    "opinion"
+   ],
+   "b": 1000,
+   "int": "easy"
+  },
+  {
+   "u": 9,
+   "l": "easy",
+   "p": "adj",
+   "ipa": "ˈiːzi",
+   "uz": "oson",
+   "ru": "лёгкий",
+   "ex": [
+    "This exercise is easy.",
+    "It's easy for me."
+   ],
+   "t": [
+    "opinion"
+   ],
+   "b": 1000,
+   "int": "difficult"
+  },
+  {
+   "u": 9,
+   "l": "but",
+   "p": "conj",
+   "ipa": "bʌt",
+   "uz": "lekin",
+   "ru": "но",
+   "ex": [
+    "I like tea but I don't like coffee.",
+    "She is young but very clever."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "weak": "bət",
+   "trap": {
+    "uz": "'Although … but …' NOTO'G'RI — faqat bittasi ishlatiladi."
+   }
+  },
+  {
+   "u": 9,
+   "l": "or",
+   "p": "conj",
+   "ipa": "ɔːr",
+   "uz": "yoki",
+   "ru": "или",
+   "ex": [
+    "Tea or coffee?",
+    "Is he a doctor or a nurse?"
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 9,
+   "l": "so",
+   "p": "conj",
+   "ipa": "soʊ",
+   "uz": "shuning uchun",
+   "ru": "поэтому",
+   "ex": [
+    "I was tired, so I went to bed.",
+    "It's cold, so wear a coat."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 9,
+   "l": "because",
+   "p": "conj",
+   "ipa": "bɪˈkʌz",
+   "uz": "chunki",
+   "ru": "потому что",
+   "ex": [
+    "I like her because she is kind.",
+    "We stayed home because it was cold."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "trap": {
+    "uz": "'Because … so …' NOTO'G'RI — faqat bittasi."
+   }
+  },
+  {
+   "u": 9,
+   "l": "really",
+   "p": "adv",
+   "ipa": "ˈriːəli",
+   "uz": "rostdan, juda",
+   "ru": "действительно",
+   "ex": [
+    "I really like this song.",
+    "It's really cold today."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "col": [
+    "really good",
+    "really like"
+   ]
+  },
+  {
+   "u": 9,
+   "l": "me",
+   "p": "pron",
+   "ipa": "miː",
+   "uz": "menga, meni",
+   "ru": "мне, меня",
+   "ex": [
+    "Give it to me.",
+    "She knows me."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true
+  },
+  {
+   "u": 9,
+   "l": "him",
+   "p": "pron",
+   "ipa": "hɪm",
+   "uz": "unga, uni (erkak)",
+   "ru": "ему, его",
+   "ex": [
+    "I know him.",
+    "Tell him the news."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "weak": "ɪm",
+   "int": "her"
+  },
+  {
+   "u": 9,
+   "l": "us",
+   "p": "pron",
+   "ipa": "ʌs",
+   "uz": "bizga, bizni",
+   "ru": "нам, нас",
+   "ex": [
+    "Come with us.",
+    "He helps us every day."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "weak": "əs"
+  },
+  {
+   "u": 9,
+   "l": "them",
+   "p": "pron",
+   "ipa": "ðem",
+   "uz": "ularga, ularni",
+   "ru": "им, их",
+   "ex": [
+    "I like them.",
+    "Give the books to them."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "weak": "ðəm",
+   "P": [
+    "P-008"
+   ]
+  },
+  {
+   "u": 10,
+   "l": "bread",
+   "p": "noun",
+   "ipa": "bred",
+   "uz": "non",
+   "ru": "хлеб",
+   "ex": [
+    "We buy bread every morning.",
+    "I would like some bread, please."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "unc": true,
+   "col": [
+    "a piece of bread",
+    "fresh bread"
+   ],
+   "trap": {
+    "uz": "Sanalmaydi: 'two breads' EMAS — 'two loaves of bread'."
+   }
+  },
+  {
+   "u": 10,
+   "l": "rice",
+   "p": "noun",
+   "ipa": "raɪs",
+   "uz": "guruch, palov",
+   "ru": "рис",
+   "ex": [
+    "We eat rice with meat.",
+    "This rice is very good."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "unc": true
+  },
+  {
+   "u": 10,
+   "l": "meat",
+   "p": "noun",
+   "ipa": "miːt",
+   "uz": "go'sht",
+   "ru": "мясо",
+   "ex": [
+    "I don't eat meat.",
+    "The meat is on the table."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "unc": true,
+   "int": "meet"
+  },
+  {
+   "u": 10,
+   "l": "chicken",
+   "p": "noun",
+   "ipa": "ˈtʃɪkɪn",
+   "uz": "tovuq",
+   "ru": "курица",
+   "ex": [
+    "I would like chicken, please.",
+    "We have chicken and rice."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000
+  },
+  {
+   "u": 10,
+   "l": "fish",
+   "p": "noun",
+   "ipa": "fɪʃ",
+   "uz": "baliq",
+   "ru": "рыба",
+   "ex": [
+    "We eat fish on Fridays.",
+    "There are two fish in the water."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "pl": "fish"
+  },
+  {
+   "u": 10,
+   "l": "egg",
+   "p": "noun",
+   "ipa": "eɡ",
+   "uz": "tuxum",
+   "ru": "яйцо",
+   "ex": [
+    "I have two eggs for breakfast.",
+    "The eggs are in the fridge."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 10,
+   "l": "cheese",
+   "p": "noun",
+   "ipa": "tʃiːz",
+   "uz": "pishloq",
+   "ru": "сыр",
+   "ex": [
+    "I like cheese.",
+    "There is some cheese in the fridge."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "unc": true
+  },
+  {
+   "u": 10,
+   "l": "milk",
+   "p": "noun",
+   "ipa": "mɪlk",
+   "uz": "sut",
+   "ru": "молоко",
+   "ex": [
+    "Tea with milk, please.",
+    "We need some milk."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "unc": true,
+   "col": [
+    "a glass of milk",
+    "tea with milk"
+   ]
+  },
+  {
+   "u": 10,
+   "l": "butter",
+   "p": "noun",
+   "ipa": "ˈbʌtər",
+   "uz": "sariyog'",
+   "ru": "масло",
+   "ex": [
+    "Bread and butter, please.",
+    "The butter is in the fridge."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 2000,
+   "unc": true,
+   "P": [
+    "P-003"
+   ]
+  },
+  {
+   "u": 10,
+   "l": "soup",
+   "p": "noun",
+   "ipa": "suːp",
+   "uz": "sho'rva",
+   "ru": "суп",
+   "ex": [
+    "I would like some soup.",
+    "This soup is hot."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 2000,
+   "unc": true
+  },
+  {
+   "u": 10,
+   "l": "salad",
+   "p": "noun",
+   "ipa": "ˈsæləd",
+   "uz": "salat",
+   "ru": "салат",
+   "ex": [
+    "I eat salad every day.",
+    "A green salad, please."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 2000
+  },
+  {
+   "u": 10,
+   "l": "fruit",
+   "p": "noun",
+   "ipa": "fruːt",
+   "uz": "meva",
+   "ru": "фрукты",
+   "ex": [
+    "I buy fruit at the market.",
+    "Fruit is good for you."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "unc": true,
+   "trap": {
+    "uz": "Odatda sanalmaydi: 'a lot of fruit', 'many fruits' EMAS."
+   }
+  },
+  {
+   "u": 10,
+   "l": "apple",
+   "p": "noun",
+   "ipa": "ˈæpəl",
+   "uz": "olma",
+   "ru": "яблоко",
+   "ex": [
+    "I eat an apple every day.",
+    "These apples are from our garden."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "trap": {
+    "uz": "'AN apple' — unli tovush bilan boshlanadi."
+   }
+  },
+  {
+   "u": 10,
+   "l": "banana",
+   "p": "noun",
+   "ipa": "bəˈnænə",
+   "uz": "banan",
+   "ru": "банан",
+   "ex": [
+    "I would like two bananas.",
+    "Bananas are not expensive."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "trap": {
+    "uz": "Urg'u o'rtada, boshqa unlilar 'ə' bo'ladi: /bəˈnænə/."
+   }
+  },
+  {
+   "u": 10,
+   "l": "orange",
+   "p": "noun",
+   "ipa": "ˈɔːrɪndʒ",
+   "uz": "apelsin",
+   "ru": "апельсин",
+   "ex": [
+    "An orange, please.",
+    "I drink orange juice every morning."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "orange juice"
+   ]
+  },
+  {
+   "u": 10,
+   "l": "tomato",
+   "p": "noun",
+   "ipa": "təˈmeɪtoʊ",
+   "uz": "pomidor",
+   "ru": "помидор",
+   "ex": [
+    "We need three tomatoes.",
+    "Tomatoes are cheap in summer."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "pl": "tomatoes"
+  },
+  {
+   "u": 10,
+   "l": "potato",
+   "p": "noun",
+   "ipa": "pəˈteɪtoʊ",
+   "uz": "kartoshka",
+   "ru": "картошка",
+   "ex": [
+    "I buy potatoes at the market.",
+    "Potatoes with meat, please."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "pl": "potatoes"
+  },
+  {
+   "u": 10,
+   "l": "vegetable",
+   "p": "noun",
+   "ipa": "ˈvedʒtəbəl",
+   "uz": "sabzavot",
+   "ru": "овощ",
+   "ex": [
+    "Eat a lot of vegetables.",
+    "Vegetables are good for you."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "trap": {
+    "uz": "Uch bo'g'inda aytiladi: VEJ-tuh-buhl."
+   }
+  },
+  {
+   "u": 10,
+   "l": "water",
+   "p": "noun",
+   "ipa": "ˈwɔːtər",
+   "uz": "suv",
+   "ru": "вода",
+   "ex": [
+    "A glass of water, please.",
+    "I drink a lot of water."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "unc": true,
+   "col": [
+    "a glass of water",
+    "hot water"
+   ],
+   "P": [
+    "P-003"
+   ]
+  },
+  {
+   "u": 10,
+   "l": "tea",
+   "p": "noun",
+   "ipa": "tiː",
+   "uz": "choy",
+   "ru": "чай",
+   "ex": [
+    "I drink green tea.",
+    "Two teas, please."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "col": [
+    "a cup of tea",
+    "green tea"
+   ]
+  },
+  {
+   "u": 10,
+   "l": "coffee",
+   "p": "noun",
+   "ipa": "ˈkɔːfi",
+   "uz": "qahva",
+   "ru": "кофе",
+   "ex": [
+    "I don't drink coffee.",
+    "A coffee, please."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "col": [
+    "a cup of coffee",
+    "black coffee"
+   ]
+  },
+  {
+   "u": 10,
+   "l": "juice",
+   "p": "noun",
+   "ipa": "dʒuːs",
+   "uz": "sharbat",
+   "ru": "сок",
+   "ex": [
+    "Orange juice, please.",
+    "The children drink apple juice."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 2000,
+   "unc": true
+  },
+  {
+   "u": 10,
+   "l": "sugar",
+   "p": "noun",
+   "ipa": "ˈʃʊɡər",
+   "uz": "shakar",
+   "ru": "сахар",
+   "ex": [
+    "Two sugars, please.",
+    "I don't take sugar in my tea."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "unc": true,
+   "trap": {
+    "uz": "'s' /ʃ/ deb o'qiladi: /ˈʃʊɡər/."
+   }
+  },
+  {
+   "u": 10,
+   "l": "menu",
+   "p": "noun",
+   "ipa": "ˈmenjuː",
+   "uz": "menyu",
+   "ru": "меню",
+   "ex": [
+    "Can I see the menu, please?",
+    "The menu is in English too."
+   ],
+   "t": [
+    "food",
+    "restaurant"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 10,
+   "l": "bill",
+   "p": "noun",
+   "ipa": "bɪl",
+   "uz": "hisob",
+   "ru": "счёт",
+   "ex": [
+    "The bill, please.",
+    "Can we have the bill?"
+   ],
+   "t": [
+    "restaurant",
+    "money"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "us": "check",
+   "col": [
+    "the bill, please",
+    "pay the bill"
+   ]
+  },
+  {
+   "u": 10,
+   "l": "cup",
+   "p": "noun",
+   "ipa": "kʌp",
+   "uz": "piyola, chashka",
+   "ru": "чашка",
+   "ex": [
+    "A cup of tea, please.",
+    "The cups are in the cupboard."
+   ],
+   "t": [
+    "kitchen"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "a cup of tea",
+    "a cup of coffee"
+   ]
+  },
+  {
+   "u": 10,
+   "l": "glass",
+   "p": "noun",
+   "ipa": "ɡlæs",
+   "uz": "stakan",
+   "ru": "стакан",
+   "ex": [
+    "A glass of water, please.",
+    "There are six glasses on the table."
+   ],
+   "t": [
+    "kitchen"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "pl": "glasses",
+   "col": [
+    "a glass of water"
+   ]
+  },
+  {
+   "u": 10,
+   "l": "plate",
+   "p": "noun",
+   "ipa": "pleɪt",
+   "uz": "tarelka",
+   "ru": "тарелка",
+   "ex": [
+    "Put it on the plate.",
+    "The plates are clean."
+   ],
+   "t": [
+    "kitchen"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 10,
+   "l": "lunch",
+   "p": "noun",
+   "ipa": "lʌntʃ",
+   "uz": "tushlik",
+   "ru": "обед",
+   "ex": [
+    "I have lunch at one o'clock.",
+    "Lunch is ready."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "col": [
+    "have lunch",
+    "for lunch"
+   ]
+  },
+  {
+   "u": 10,
+   "l": "dinner",
+   "p": "noun",
+   "ipa": "ˈdɪnər",
+   "uz": "kechki ovqat",
+   "ru": "ужин",
+   "ex": [
+    "We have dinner at seven.",
+    "Dinner is at eight tonight."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "col": [
+    "have dinner",
+    "for dinner"
+   ]
+  },
+  {
+   "u": 10,
+   "l": "some",
+   "p": "det",
+   "ipa": "sʌm",
+   "uz": "biroz, bir necha",
+   "ru": "немного",
+   "ex": [
+    "I would like some bread.",
+    "There are some apples in the bag."
+   ],
+   "t": [
+    "quantity"
+   ],
+   "b": 1000,
+   "fw": true,
+   "weak": "səm",
+   "int": "any"
+  },
+  {
+   "u": 10,
+   "l": "any",
+   "p": "det",
+   "ipa": "ˈeni",
+   "uz": "hech, biror",
+   "ru": "какой-нибудь",
+   "ex": [
+    "I don't have any money.",
+    "Do you have any questions?"
+   ],
+   "t": [
+    "quantity"
+   ],
+   "b": 1000,
+   "fw": true,
+   "int": "some"
+  },
+  {
+   "u": 10,
+   "l": "much",
+   "p": "det",
+   "ipa": "mʌtʃ",
+   "uz": "ko'p (sanalmaydigan)",
+   "ru": "много",
+   "ex": [
+    "I don't have much time.",
+    "How much is it?"
+   ],
+   "t": [
+    "quantity"
+   ],
+   "b": 1000,
+   "fw": true,
+   "int": "many",
+   "trap": {
+    "uz": "Faqat sanalmaydigan otlar bilan: 'much water', 'much books' EMAS."
+   }
+  },
+  {
+   "u": 10,
+   "l": "many",
+   "p": "det",
+   "ipa": "ˈmeni",
+   "uz": "ko'p (sanaladigan)",
+   "ru": "много",
+   "ex": [
+    "How many brothers do you have?",
+    "There are many people here."
+   ],
+   "t": [
+    "quantity"
+   ],
+   "b": 1000,
+   "fw": true,
+   "int": "much",
+   "trap": {
+    "uz": "Faqat sanaladigan otlar bilan: 'many books', 'many money' EMAS."
+   }
+  },
+  {
+   "u": 10,
+   "l": "a lot of",
+   "p": "det",
+   "ipa": "ə ˈlɑːt əv",
+   "uz": "ko'p",
+   "ru": "много",
+   "ex": [
+    "There are a lot of people here.",
+    "I have a lot of work today."
+   ],
+   "t": [
+    "quantity"
+   ],
+   "b": 1000,
+   "ch": true,
+   "col": [
+    "a lot of people",
+    "a lot of time"
+   ]
+  },
+  {
+   "u": 10,
+   "l": "hungry",
+   "p": "adj",
+   "ipa": "ˈhʌŋɡri",
+   "uz": "och",
+   "ru": "голодный",
+   "ex": [
+    "I'm very hungry.",
+    "Are you hungry?"
+   ],
+   "t": [
+    "feelings",
+    "food"
+   ],
+   "b": 1000,
+   "col": [
+    "be hungry",
+    "very hungry"
+   ],
+   "trap": {
+    "uz": "'I have hunger' EMAS — 'I am hungry'."
+   }
+  },
+  {
+   "u": 10,
+   "l": "can",
+   "p": "modal",
+   "ipa": "kæn",
+   "uz": "-a olmoq",
+   "ru": "мочь",
+   "ex": [
+    "I can swim.",
+    "Can you help me?"
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "weak": "kən",
+   "trap": {
+    "uz": "'can' dan keyin 'to' YO'Q: 'can swim', 'can to swim' EMAS. Tasdiqda kuchsiz /kən/, inkorda kuchli /kænt/."
+   },
+   "ch": true
+  },
+  {
+   "u": 11,
+   "l": "could",
+   "p": "modal",
+   "ipa": "kʊd",
+   "uz": "-a olardim; iltimos",
+   "ru": "мог бы",
+   "ex": [
+    "Could you help me, please?",
+    "Could I have a coffee?"
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "fw": true,
+   "weak": "kəd",
+   "trap": {
+    "uz": "'l' o'qilmaydi: /kʊd/."
+   }
+  },
+  {
+   "u": 11,
+   "l": "swim",
+   "p": "verb",
+   "ipa": "swɪm",
+   "uz": "suzmoq",
+   "ru": "плавать",
+   "ex": [
+    "I can swim very well.",
+    "We swim in the river in summer."
+   ],
+   "t": [
+    "sport"
+   ],
+   "b": 1000,
+   "irr": [
+    "swim",
+    "swam",
+    "swum"
+   ]
+  },
+  {
+   "u": 11,
+   "l": "run",
+   "p": "verb",
+   "ipa": "rʌn",
+   "uz": "yugurmoq",
+   "ru": "бегать",
+   "ex": [
+    "He runs every morning.",
+    "I can't run fast."
+   ],
+   "t": [
+    "sport"
+   ],
+   "b": 1000,
+   "irr": [
+    "run",
+    "ran",
+    "run"
+   ]
+  },
+  {
+   "u": 11,
+   "l": "play",
+   "p": "verb",
+   "ipa": "pleɪ",
+   "uz": "o'ynamoq, chalmoq",
+   "ru": "играть",
+   "ex": [
+    "I play football on Sunday.",
+    "She plays the guitar."
+   ],
+   "t": [
+    "sport",
+    "free_time"
+   ],
+   "b": 1000,
+   "col": [
+    "play football",
+    "play the guitar",
+    "play with"
+   ],
+   "trap": {
+    "uz": "Sport: 'play football' (artiklsiz); cholg'u: 'play THE guitar'."
+   }
+  },
+  {
+   "u": 11,
+   "l": "ride",
+   "p": "verb",
+   "ipa": "raɪd",
+   "uz": "minmoq",
+   "ru": "ездить",
+   "ex": [
+    "I can ride a bike.",
+    "He rides a horse very well."
+   ],
+   "t": [
+    "sport",
+    "transport"
+   ],
+   "b": 1000,
+   "irr": [
+    "ride",
+    "rode",
+    "ridden"
+   ],
+   "col": [
+    "ride a bike",
+    "ride a horse"
+   ]
+  },
+  {
+   "u": 11,
+   "l": "cook",
+   "p": "verb",
+   "ipa": "kʊk",
+   "uz": "ovqat pishirmoq",
+   "ru": "готовить",
+   "ex": [
+    "My father cooks very well.",
+    "I cook dinner every evening."
+   ],
+   "t": [
+    "food"
+   ],
+   "b": 1000,
+   "col": [
+    "cook dinner",
+    "cook for"
+   ]
+  },
+  {
+   "u": 11,
+   "l": "sing",
+   "p": "verb",
+   "ipa": "sɪŋ",
+   "uz": "qo'shiq aytmoq",
+   "ru": "петь",
+   "ex": [
+    "She sings beautifully.",
+    "Can you sing?"
+   ],
+   "t": [
+    "free_time"
+   ],
+   "b": 1000,
+   "irr": [
+    "sing",
+    "sang",
+    "sung"
+   ],
+   "P": [
+    "P-011"
+   ]
+  },
+  {
+   "u": 11,
+   "l": "dance",
+   "p": "verb",
+   "ipa": "dæns",
+   "uz": "raqsga tushmoq",
+   "ru": "танцевать",
+   "ex": [
+    "They dance at the party.",
+    "I can't dance."
+   ],
+   "t": [
+    "free_time"
+   ],
+   "b": 1000
+  },
+  {
+   "u": 11,
+   "l": "draw",
+   "p": "verb",
+   "ipa": "drɔː",
+   "uz": "chizmoq",
+   "ru": "рисовать",
+   "ex": [
+    "My daughter draws very well.",
+    "Can you draw a map?"
+   ],
+   "t": [
+    "free_time"
+   ],
+   "b": 1000,
+   "irr": [
+    "draw",
+    "drew",
+    "drawn"
+   ]
+  },
+  {
+   "u": 11,
+   "l": "head",
+   "p": "noun",
+   "ipa": "hed",
+   "uz": "bosh",
+   "ru": "голова",
+   "ex": [
+    "My head hurts.",
+    "Put your hands on your head."
+   ],
+   "t": [
+    "body"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 11,
+   "l": "hand",
+   "p": "noun",
+   "ipa": "hænd",
+   "uz": "qo'l (panja)",
+   "ru": "рука",
+   "ex": [
+    "Wash your hands.",
+    "She has small hands."
+   ],
+   "t": [
+    "body"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "wash your hands",
+    "give me a hand"
+   ]
+  },
+  {
+   "u": 11,
+   "l": "arm",
+   "p": "noun",
+   "ipa": "ɑːrm",
+   "uz": "qo'l (yelkadan)",
+   "ru": "рука",
+   "ex": [
+    "My arm hurts.",
+    "He has strong arms."
+   ],
+   "t": [
+    "body"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 11,
+   "l": "leg",
+   "p": "noun",
+   "ipa": "leɡ",
+   "uz": "oyoq",
+   "ru": "нога",
+   "ex": [
+    "My legs are tired.",
+    "The table has four legs."
+   ],
+   "t": [
+    "body"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 11,
+   "l": "foot",
+   "p": "noun",
+   "ipa": "fʊt",
+   "uz": "oyoq (panja)",
+   "ru": "ступня",
+   "ex": [
+    "My feet are cold.",
+    "I go to work on foot."
+   ],
+   "t": [
+    "body"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "pl": "feet",
+   "col": [
+    "on foot"
+   ]
+  },
+  {
+   "u": 11,
+   "l": "eye",
+   "p": "noun",
+   "ipa": "aɪ",
+   "uz": "ko'z",
+   "ru": "глаз",
+   "ex": [
+    "She has beautiful eyes.",
+    "Close your eyes."
+   ],
+   "t": [
+    "body"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "blue eyes",
+    "brown eyes"
+   ]
+  },
+  {
+   "u": 11,
+   "l": "ear",
+   "p": "noun",
+   "ipa": "ɪr",
+   "uz": "quloq",
+   "ru": "ухо",
+   "ex": [
+    "My ears are cold.",
+    "He has big ears."
+   ],
+   "t": [
+    "body"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 11,
+   "l": "nose",
+   "p": "noun",
+   "ipa": "noʊz",
+   "uz": "burun",
+   "ru": "нос",
+   "ex": [
+    "She has a small nose.",
+    "My nose is cold."
+   ],
+   "t": [
+    "body"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 11,
+   "l": "mouth",
+   "p": "noun",
+   "ipa": "maʊθ",
+   "uz": "og'iz",
+   "ru": "рот",
+   "ex": [
+    "Open your mouth, please.",
+    "Don't talk with your mouth full."
+   ],
+   "t": [
+    "body"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "P": [
+    "P-009"
+   ]
+  },
+  {
+   "u": 11,
+   "l": "hair",
+   "p": "noun",
+   "ipa": "her",
+   "uz": "soch",
+   "ru": "волосы",
+   "ex": [
+    "She has long hair.",
+    "My hair is black."
+   ],
+   "t": [
+    "body"
+   ],
+   "b": 1000,
+   "unc": true,
+   "col": [
+    "long hair",
+    "short hair",
+    "black hair"
+   ],
+   "trap": {
+    "uz": "Sanalmaydi: 'hairs' EMAS. 'Her hair IS long'."
+   }
+  },
+  {
+   "u": 11,
+   "l": "face",
+   "p": "noun",
+   "ipa": "feɪs",
+   "uz": "yuz",
+   "ru": "лицо",
+   "ex": [
+    "Wash your face.",
+    "She has a nice face."
+   ],
+   "t": [
+    "body"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 11,
+   "l": "bike",
+   "p": "noun",
+   "ipa": "baɪk",
+   "uz": "velosiped",
+   "ru": "велосипед",
+   "ex": [
+    "I go to school by bike.",
+    "My bike is new."
+   ],
+   "t": [
+    "transport"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "col": [
+    "ride a bike",
+    "by bike"
+   ]
+  },
+  {
+   "u": 11,
+   "l": "ball",
+   "p": "noun",
+   "ipa": "bɔːl",
+   "uz": "to'p",
+   "ru": "мяч",
+   "ex": [
+    "The children play with a ball.",
+    "Where is my ball?"
+   ],
+   "t": [
+    "sport"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 11,
+   "l": "team",
+   "p": "noun",
+   "ipa": "tiːm",
+   "uz": "jamoa",
+   "ru": "команда",
+   "ex": [
+    "My team is very good.",
+    "There are eleven players in a football team."
+   ],
+   "t": [
+    "sport"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "a football team",
+    "join a team"
+   ]
+  },
+  {
+   "u": 11,
+   "l": "tennis",
+   "p": "noun",
+   "ipa": "ˈtenɪs",
+   "uz": "tennis",
+   "ru": "теннис",
+   "ex": [
+    "I play tennis on Saturday.",
+    "Tennis is my favourite sport."
+   ],
+   "t": [
+    "sport"
+   ],
+   "b": 2000,
+   "unc": true,
+   "col": [
+    "play tennis"
+   ]
+  },
+  {
+   "u": 11,
+   "l": "guitar",
+   "p": "noun",
+   "ipa": "ɡɪˈtɑːr",
+   "uz": "gitara",
+   "ru": "гитара",
+   "ex": [
+    "He plays the guitar.",
+    "My guitar is old."
+   ],
+   "t": [
+    "music"
+   ],
+   "b": 2000,
+   "cnt": true,
+   "col": [
+    "play the guitar"
+   ],
+   "trap": {
+    "uz": "Urg'u ikkinchi bo'g'inda: gui-TAR."
+   }
+  },
+  {
+   "u": 11,
+   "l": "park",
+   "p": "noun",
+   "ipa": "pɑːrk",
+   "uz": "bog'",
+   "ru": "парк",
+   "ex": [
+    "We walk in the park on Sunday.",
+    "The park is near my house."
+   ],
+   "t": [
+    "places"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "col": [
+    "in the park",
+    "go to the park"
+   ]
+  },
+  {
+   "u": 11,
+   "l": "fast",
+   "p": "adj",
+   "ipa": "fæst",
+   "uz": "tez",
+   "ru": "быстрый",
+   "ex": [
+    "He is a fast runner.",
+    "She speaks very fast."
+   ],
+   "t": [
+    "description"
+   ],
+   "b": 1000,
+   "int": "slow",
+   "trap": {
+    "uz": "Ravish shakli ham 'fast' — 'fastly' YO'Q."
+   }
+  },
+  {
+   "u": 11,
+   "l": "slow",
+   "p": "adj",
+   "ipa": "sloʊ",
+   "uz": "sekin",
+   "ru": "медленный",
+   "ex": [
+    "This computer is very slow.",
+    "Please speak slowly."
+   ],
+   "t": [
+    "description"
+   ],
+   "b": 1000,
+   "int": "fast"
+  },
+  {
+   "u": 11,
+   "l": "again",
+   "p": "adv",
+   "ipa": "əˈɡen",
+   "uz": "yana",
+   "ru": "снова",
+   "ex": [
+    "Say it again, please.",
+    "See you again soon."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "col": [
+    "say it again",
+    "once again"
+   ]
+  },
+  {
+   "u": 11,
+   "l": "together",
+   "p": "adv",
+   "ipa": "təˈɡeðər",
+   "uz": "birga",
+   "ru": "вместе",
+   "ex": [
+    "We study together.",
+    "Let's go together."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "P": [
+    "P-008"
+   ]
+  },
+  {
+   "u": 12,
+   "l": "clothes",
+   "p": "noun",
+   "ipa": "kloʊz",
+   "uz": "kiyim",
+   "ru": "одежда",
+   "ex": [
+    "I buy clothes at the market.",
+    "These clothes are new."
+   ],
+   "t": [
+    "clothes"
+   ],
+   "b": 1000,
+   "trap": {
+    "uz": "Doim ko'plik: 'a clothes' EMAS. Talaffuzi /kloʊz/ — 'th' deyarli eshitilmaydi."
+   }
+  },
+  {
+   "u": 12,
+   "l": "shirt",
+   "p": "noun",
+   "ipa": "ʃɜːrt",
+   "uz": "ko'ylak (erkaklar)",
+   "ru": "рубашка",
+   "ex": [
+    "He is wearing a white shirt.",
+    "This shirt is too big."
+   ],
+   "t": [
+    "clothes"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 12,
+   "l": "T-shirt",
+   "p": "noun",
+   "ipa": "ˈtiː ʃɜːrt",
+   "uz": "futbolka",
+   "ru": "футболка",
+   "ex": [
+    "I wear a T-shirt in summer.",
+    "That's a nice T-shirt."
+   ],
+   "t": [
+    "clothes"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 12,
+   "l": "trousers",
+   "p": "noun",
+   "ipa": "ˈtraʊzərz",
+   "uz": "shim",
+   "ru": "брюки",
+   "ex": [
+    "These trousers are new.",
+    "He is wearing black trousers."
+   ],
+   "t": [
+    "clothes"
+   ],
+   "b": 2000,
+   "us": "pants",
+   "trap": {
+    "uz": "Doim ko'plik: 'a trousers' EMAS — 'a pair of trousers'."
+   }
+  },
+  {
+   "u": 12,
+   "l": "dress",
+   "p": "noun",
+   "ipa": "dres",
+   "uz": "ko'ylak (ayollar)",
+   "ru": "платье",
+   "ex": [
+    "She is wearing a red dress.",
+    "This dress is beautiful."
+   ],
+   "t": [
+    "clothes"
+   ],
+   "b": 1000,
+   "cnt": true,
+   "pl": "dresses"
+  },
+  {
+   "u": 12,
+   "l": "skirt",
+   "p": "noun",
+   "ipa": "skɜːrt",
+   "uz": "yubka",
+   "ru": "юбка",
+   "ex": [
+    "Her skirt is blue.",
+    "I don't like this skirt."
+   ],
+   "t": [
+    "clothes"
+   ],
+   "b": 2000,
+   "cnt": true
+  },
+  {
+   "u": 12,
+   "l": "shoes",
+   "p": "noun",
+   "ipa": "ʃuːz",
+   "uz": "tufli, poyabzal",
+   "ru": "обувь",
+   "ex": [
+    "My shoes are under the bed.",
+    "These shoes are very comfortable."
+   ],
+   "t": [
+    "clothes"
+   ],
+   "b": 1000,
+   "col": [
+    "a pair of shoes"
+   ]
+  },
+  {
+   "u": 12,
+   "l": "jacket",
+   "p": "noun",
+   "ipa": "ˈdʒækɪt",
+   "uz": "kurtka, pidjak",
+   "ru": "куртка",
+   "ex": [
+    "Take your jacket, it's cold.",
+    "This jacket is too small."
+   ],
+   "t": [
+    "clothes"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 12,
+   "l": "coat",
+   "p": "noun",
+   "ipa": "koʊt",
+   "uz": "palto",
+   "ru": "пальто",
+   "ex": [
+    "Wear a coat, it's cold outside.",
+    "Her coat is black."
+   ],
+   "t": [
+    "clothes"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 12,
+   "l": "hat",
+   "p": "noun",
+   "ipa": "hæt",
+   "uz": "shlyapa, do'ppi",
+   "ru": "шапка",
+   "ex": [
+    "He is wearing a hat.",
+    "I need a hat in summer."
+   ],
+   "t": [
+    "clothes"
+   ],
+   "b": 1000,
+   "cnt": true
+  },
+  {
+   "u": 12,
+   "l": "jeans",
+   "p": "noun",
+   "ipa": "dʒiːnz",
+   "uz": "jinsi shim",
+   "ru": "джинсы",
+   "ex": [
+    "I wear jeans every day.",
+    "These jeans are new."
+   ],
+   "t": [
+    "clothes"
+   ],
+   "b": 2000,
+   "trap": {
+    "uz": "Doim ko'plik: 'a jeans' EMAS — 'a pair of jeans'."
+   }
+  },
+  {
+   "u": 12,
+   "l": "socks",
+   "p": "noun",
+   "ipa": "sɑːks",
+   "uz": "paypoq",
+   "ru": "носки",
+   "ex": [
+    "My socks are white.",
+    "Where are my socks?"
+   ],
+   "t": [
+    "clothes"
+   ],
+   "b": 2000
+  },
+  {
+   "u": 12,
+   "l": "weather",
+   "p": "noun",
+   "ipa": "ˈweðər",
+   "uz": "ob-havo",
+   "ru": "погода",
+   "ex": [
+    "The weather is nice today.",
+    "What's the weather like?"
+   ],
+   "t": [
+    "weather"
+   ],
+   "b": 1000,
+   "unc": true,
+   "col": [
+    "good weather",
+    "bad weather"
+   ],
+   "P": [
+    "P-008"
+   ],
+   "trap": {
+    "uz": "Sanalmaydi: 'a weather' EMAS. 'The weather IS nice'."
+   }
+  },
+  {
+   "u": 12,
+   "l": "rain",
+   "p": "noun",
+   "ipa": "reɪn",
+   "uz": "yomg'ir",
+   "ru": "дождь",
+   "ex": [
+    "It's raining now.",
+    "We need rain."
+   ],
+   "t": [
+    "weather"
+   ],
+   "b": 1000,
+   "unc": true,
+   "col": [
+    "heavy rain",
+    "in the rain"
+   ]
+  },
+  {
+   "u": 12,
+   "l": "snow",
+   "p": "noun",
+   "ipa": "snoʊ",
+   "uz": "qor",
+   "ru": "снег",
+   "ex": [
+    "It's snowing.",
+    "There is a lot of snow in winter."
+   ],
+   "t": [
+    "weather"
+   ],
+   "b": 1000,
+   "unc": true
+  },
+  {
+   "u": 12,
+   "l": "sun",
+   "p": "noun",
+   "ipa": "sʌn",
+   "uz": "quyosh",
+   "ru": "солнце",
+   "ex": [
+    "The sun is very hot today.",
+    "I sit in the sun."
+   ],
+   "t": [
+    "weather"
+   ],
+   "b": 1000,
+   "col": [
+    "the sun",
+    "in the sun",
+    "sunny"
+   ],
+   "int": "son",
+   "trap": {
+    "uz": "Doim 'THE sun' — yagona narsa."
+   }
+  },
+  {
+   "u": 12,
+   "l": "wind",
+   "p": "noun",
+   "ipa": "wɪnd",
+   "uz": "shamol",
+   "ru": "ветер",
+   "ex": [
+    "The wind is very strong today.",
+    "There is no wind."
+   ],
+   "t": [
+    "weather"
+   ],
+   "b": 1000,
+   "unc": true,
+   "col": [
+    "strong wind"
+   ]
+  },
+  {
+   "u": 12,
+   "l": "hot",
+   "p": "adj",
+   "ipa": "hɑːt",
+   "uz": "issiq",
+   "ru": "жаркий",
+   "ex": [
+    "It's very hot today.",
+    "The soup is too hot."
+   ],
+   "t": [
+    "weather",
+    "description"
+   ],
+   "b": 1000,
+   "int": "cold"
+  },
+  {
+   "u": 12,
+   "l": "cold",
+   "p": "adj",
+   "ipa": "koʊld",
+   "uz": "sovuq",
+   "ru": "холодный",
+   "ex": [
+    "It's cold in winter.",
+    "My hands are cold."
+   ],
+   "t": [
+    "weather",
+    "description"
+   ],
+   "b": 1000,
+   "int": "hot"
+  },
+  {
+   "u": 12,
+   "l": "warm",
+   "p": "adj",
+   "ipa": "wɔːrm",
+   "uz": "iliq",
+   "ru": "тёплый",
+   "ex": [
+    "It's warm in spring.",
+    "Wear something warm."
+   ],
+   "t": [
+    "weather"
+   ],
+   "b": 1000,
+   "int": "cool"
+  },
+  {
+   "u": 12,
+   "l": "wear",
+   "p": "verb",
+   "ipa": "wer",
+   "uz": "kiymoq",
+   "ru": "носить",
+   "ex": [
+    "She is wearing a red dress.",
+    "I wear a coat in winter."
+   ],
+   "t": [
+    "clothes"
+   ],
+   "b": 1000,
+   "irr": [
+    "wear",
+    "wore",
+    "worn"
+   ],
+   "trap": {
+    "uz": "'wear' — kiyib turmoq; 'put on' — kiymoq (harakat)."
+   }
+  },
+  {
+   "u": 12,
+   "l": "sit",
+   "p": "verb",
+   "ipa": "sɪt",
+   "uz": "o'tirmoq",
+   "ru": "сидеть",
+   "ex": [
+    "Please sit down.",
+    "She is sitting near the window."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "irr": [
+    "sit",
+    "sat",
+    "sat"
+   ],
+   "col": [
+    "sit down",
+    "sit next to"
+   ]
+  },
+  {
+   "u": 12,
+   "l": "stand",
+   "p": "verb",
+   "ipa": "stænd",
+   "uz": "turmoq",
+   "ru": "стоять",
+   "ex": [
+    "He is standing at the door.",
+    "Please stand up."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "irr": [
+    "stand",
+    "stood",
+    "stood"
+   ],
+   "col": [
+    "stand up"
+   ]
+  },
+  {
+   "u": 12,
+   "l": "walk",
+   "p": "verb",
+   "ipa": "wɔːk",
+   "uz": "yurmoq",
+   "ru": "ходить",
+   "ex": [
+    "I walk to work every day.",
+    "They are walking in the park."
+   ],
+   "t": [
+    "transport"
+   ],
+   "b": 1000,
+   "col": [
+    "walk to work",
+    "go for a walk"
+   ],
+   "trap": {
+    "uz": "'l' o'qilmaydi: /wɔːk/."
+   }
+  },
+  {
+   "u": 12,
+   "l": "talk",
+   "p": "verb",
+   "ipa": "tɔːk",
+   "uz": "gaplashmoq",
+   "ru": "разговаривать",
+   "ex": [
+    "They are talking about the film.",
+    "I talk to my mother every day."
+   ],
+   "t": [
+    "communication"
+   ],
+   "b": 1000,
+   "col": [
+    "talk to",
+    "talk about"
+   ],
+   "trap": {
+    "uz": "'l' o'qilmaydi: /tɔːk/. 'talk TO someone', 'talk ABOUT something'."
+   }
+  },
+  {
+   "u": 12,
+   "l": "wait",
+   "p": "verb",
+   "ipa": "weɪt",
+   "uz": "kutmoq",
+   "ru": "ждать",
+   "ex": [
+    "Wait a minute, please.",
+    "I'm waiting for the bus."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "col": [
+    "wait for",
+    "wait a minute"
+   ],
+   "trap": {
+    "uz": "Doim 'wait FOR': 'wait for the bus', 'wait the bus' EMAS."
+   }
+  },
+  {
+   "u": 12,
+   "l": "look",
+   "p": "verb",
+   "ipa": "lʊk",
+   "uz": "qaramoq",
+   "ru": "смотреть",
+   "ex": [
+    "Look at this photo!",
+    "She is looking out of the window."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "col": [
+    "look at",
+    "look for",
+    "look like"
+   ],
+   "trap": {
+    "uz": "'look AT' — qaramoq; 'watch' — tomosha qilmoq (uzoq)."
+   }
+  },
+  {
+   "u": 12,
+   "l": "open",
+   "p": "verb",
+   "ipa": "ˈoʊpən",
+   "uz": "ochmoq",
+   "ru": "открывать",
+   "ex": [
+    "Open the window, please.",
+    "The shop opens at nine."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "int": "close"
+  },
+  {
+   "u": 12,
+   "l": "close",
+   "p": "verb",
+   "ipa": "kloʊz",
+   "uz": "yopmoq",
+   "ru": "закрывать",
+   "ex": [
+    "Close the door, please.",
+    "The shop closes at eight."
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000,
+   "int": "open"
+  },
+  {
+   "u": 12,
+   "l": "carry",
+   "p": "verb",
+   "ipa": "ˈkeri",
+   "uz": "ko'tarib yurmoq",
+   "ru": "нести",
+   "ex": [
+    "She is carrying a big bag.",
+    "Can you carry this for me?"
+   ],
+   "t": [
+    "core"
+   ],
+   "b": 1000
+  },
+  {
+   "u": 12,
+   "l": "smile",
+   "p": "verb",
+   "ipa": "smaɪl",
+   "uz": "jilmaymoq",
+   "ru": "улыбаться",
+   "ex": [
+    "She is smiling.",
+    "He smiles at everyone."
+   ],
+   "t": [
+    "feelings"
+   ],
+   "b": 1000
+  },
+  {
+   "u": 12,
+   "l": "laugh",
+   "p": "verb",
+   "ipa": "læf",
+   "uz": "kulmoq",
+   "ru": "смеяться",
+   "ex": [
+    "The children are laughing.",
+    "We laughed a lot."
+   ],
+   "t": [
+    "feelings"
+   ],
+   "b": 1000,
+   "trap": {
+    "uz": "'gh' /f/ deb o'qiladi: /læf/."
+   }
+  },
+  {
+   "u": 12,
+   "l": "rain",
+   "p": "verb",
+   "ipa": "reɪn",
+   "uz": "yomg'ir yog'moq",
+   "ru": "идти (о дожде)",
+   "ex": [
+    "It is raining now.",
+    "It rains a lot in April."
+   ],
+   "t": [
+    "weather"
+   ],
+   "b": 1000
+  }
+ ]
+}

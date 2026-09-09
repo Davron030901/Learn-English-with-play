@@ -1,0 +1,187 @@
+{
+  "_comment": "Unit specification for Section 1 (A1.1). tools/build_units.py expands this into one full unit file per unit, filling `syllabus.lexis` from build/lexeme_index.json.",
+  "section": "S01",
+  "cefr": "A1.1",
+  "units": [
+    {
+      "n": 1, "title_en": "Hello", "title_uz": "Salom", "theme": "greetings_identity",
+      "can_do": ["I can greet someone and say goodbye.", "I can say my name and ask for someone else's.", "I can say I am a student or a teacher."],
+      "grammar": ["G-001", "G-002", "G-057", "G-072"],
+      "phonology": ["P-002", "P-007", "P-008", "P-010", "P-017", "P-018", "P-022"],
+      "functions": ["F-001", "F-002", "F-003", "F-004", "F-005", "F-006", "F-007", "F-008"],
+      "story": "txt.00001",
+      "nodes": [
+        {"focus": "lexis", "title": "Greetings"},
+        {"focus": "grammar", "title": "I am, you are"},
+        {"focus": "mixed", "title": "Who are you?"},
+        {"focus": "mixed", "title": "Nice to meet you"},
+        {"focus": "speak", "title": "Say hello"}
+      ]
+    },
+    {
+      "n": 2, "title_en": "Who are you?", "title_uz": "Siz kimsiz?", "theme": "personal_information",
+      "can_do": ["I can ask and say where I am from.", "I can ask basic questions with what, where, who and how.", "I can say that something is not true."],
+      "grammar": ["G-003", "G-004", "G-005", "G-074"],
+      "phonology": ["P-011", "P-012", "P-020", "P-021", "P-023"],
+      "functions": ["F-009", "F-010", "F-012", "F-026", "F-027"],
+      "story": "txt.00002",
+      "nodes": [
+        {"focus": "lexis", "title": "Countries and languages"},
+        {"focus": "grammar", "title": "Questions with be"},
+        {"focus": "mixed", "title": "Where are you from?"},
+        {"focus": "mixed", "title": "I'm not…"},
+        {"focus": "speak", "title": "Meeting people"}
+      ]
+    },
+    {
+      "n": 3, "title_en": "Numbers and things", "title_uz": "Sonlar va narsalar", "theme": "objects_numbers",
+      "can_do": ["I can count from zero to twenty.", "I can name everyday objects and use a and an.", "I can spell my name aloud."],
+      "grammar": ["G-047", "G-048", "G-049", "G-052"],
+      "phonology": ["P-001", "P-003", "P-004", "P-009", "P-013", "P-019", "P-030"],
+      "functions": ["F-013", "F-014", "F-028", "F-029"],
+      "story": "txt.00003",
+      "nodes": [
+        {"focus": "lexis", "title": "Zero to twenty"},
+        {"focus": "lexis", "title": "Things around me"},
+        {"focus": "grammar", "title": "One book, two books"},
+        {"focus": "mixed", "title": "This, that, these, those"},
+        {"focus": "speak", "title": "What's this?"}
+      ]
+    },
+    {
+      "n": 4, "title_en": "My family", "title_uz": "Mening oilam", "theme": "family",
+      "can_do": ["I can talk about my family.", "I can say how old someone is.", "I can use his and her correctly."],
+      "grammar": ["G-009", "G-010", "G-012"],
+      "phonology": ["P-005", "P-014", "P-008"],
+      "functions": ["F-011", "F-015"],
+      "story": "txt.00004",
+      "nodes": [
+        {"focus": "lexis", "title": "Family words"},
+        {"focus": "grammar", "title": "I have, she has"},
+        {"focus": "mixed", "title": "His mother, her father"},
+        {"focus": "mixed", "title": "How old are you?"},
+        {"focus": "speak", "title": "Talk about your family"}
+      ]
+    },
+    {
+      "n": 5, "title_en": "Where things are", "title_uz": "Narsalar qayerda", "theme": "home_places",
+      "can_do": ["I can describe a room.", "I can say where something is.", "I can use there is and there are."],
+      "grammar": ["G-007", "G-050", "G-069"],
+      "phonology": ["P-006", "P-015", "P-025", "P-026"],
+      "functions": ["F-016", "F-017"],
+      "story": "txt.00005",
+      "nodes": [
+        {"focus": "lexis", "title": "Rooms and furniture"},
+        {"focus": "grammar", "title": "There is, there are"},
+        {"focus": "mixed", "title": "In, on, under"},
+        {"focus": "mixed", "title": "My room"},
+        {"focus": "speak", "title": "Describe your home"}
+      ]
+    },
+    {
+      "n": 6, "title_en": "Every day", "title_uz": "Har kuni", "theme": "daily_routine",
+      "can_do": ["I can describe my daily routine.", "I can say what I do not do.", "I can say how often I do things."],
+      "grammar": ["G-015", "G-017", "G-021", "G-022", "G-071"],
+      "phonology": ["P-016", "P-029", "P-017"],
+      "functions": ["F-018", "F-019"],
+      "story": "txt.00006",
+      "nodes": [
+        {"focus": "lexis", "title": "My day"},
+        {"focus": "grammar", "title": "I work, I don't work"},
+        {"focus": "mixed", "title": "Always, usually, never"},
+        {"focus": "mixed", "title": "Morning, afternoon, evening"},
+        {"focus": "speak", "title": "Your routine"}
+      ]
+    },
+    {
+      "n": 7, "title_en": "He, she, they", "title_uz": "U, ular", "theme": "jobs_workplaces",
+      "can_do": ["I can talk about other people's jobs.", "I can ask what someone does.", "I can use the -s ending correctly."],
+      "grammar": ["G-016", "G-018", "G-019", "G-020"],
+      "phonology": ["P-019", "P-018"],
+      "functions": ["F-020"],
+      "story": "txt.00007",
+      "nodes": [
+        {"focus": "lexis", "title": "Jobs and places"},
+        {"focus": "grammar", "title": "He works, she studies"},
+        {"focus": "grammar", "title": "Does he…?"},
+        {"focus": "mixed", "title": "Who works here?"},
+        {"focus": "speak", "title": "What do they do?"}
+      ]
+    },
+    {
+      "n": 8, "title_en": "Time and days", "title_uz": "Vaqt va kunlar", "theme": "time",
+      "can_do": ["I can ask and tell the time.", "I can say the days of the week and the months.", "I can say when something happens."],
+      "grammar": ["G-059", "G-068"],
+      "phonology": ["P-020", "P-021"],
+      "functions": ["F-021", "F-022"],
+      "story": "txt.00008",
+      "nodes": [
+        {"focus": "lexis", "title": "Days of the week"},
+        {"focus": "lexis", "title": "Months and seasons"},
+        {"focus": "grammar", "title": "It's five o'clock"},
+        {"focus": "mixed", "title": "At, on, in"},
+        {"focus": "speak", "title": "What time?"}
+      ]
+    },
+    {
+      "n": 9, "title_en": "I like it", "title_uz": "Menga yoqadi", "theme": "free_time_opinions",
+      "can_do": ["I can say what I like and dislike.", "I can give a simple opinion.", "I can join two ideas with and, but, because."],
+      "grammar": ["G-058", "G-063", "G-073"],
+      "phonology": ["P-017", "P-020"],
+      "functions": ["F-030", "F-031", "F-032"],
+      "story": "txt.00009",
+      "nodes": [
+        {"focus": "lexis", "title": "Free time"},
+        {"focus": "lexis", "title": "Good, bad, interesting"},
+        {"focus": "grammar", "title": "I like it, I know him"},
+        {"focus": "mixed", "title": "…because it's interesting"},
+        {"focus": "speak", "title": "What do you like?"}
+      ]
+    },
+    {
+      "n": 10, "title_en": "Food and drink", "title_uz": "Ovqat va ichimlik", "theme": "food",
+      "can_do": ["I can order food and drink.", "I can use some and any.", "I can ask how much something costs."],
+      "grammar": ["G-051", "G-053", "G-054"],
+      "phonology": ["P-024", "P-019"],
+      "functions": ["F-023", "F-034"],
+      "story": "txt.00010",
+      "nodes": [
+        {"focus": "lexis", "title": "Food"},
+        {"focus": "lexis", "title": "Drinks and the café"},
+        {"focus": "grammar", "title": "Some and any"},
+        {"focus": "mixed", "title": "A cup of tea"},
+        {"focus": "speak", "title": "Order a meal"}
+      ]
+    },
+    {
+      "n": 11, "title_en": "Can you?", "title_uz": "Qila olasizmi?", "theme": "ability_sport_body",
+      "can_do": ["I can say what I can and can't do.", "I can ask for permission and for help.", "I can name the parts of the body."],
+      "grammar": ["G-037", "G-038", "G-039"],
+      "phonology": ["P-010", "P-022"],
+      "functions": ["F-024", "F-025", "F-033"],
+      "story": "txt.00011",
+      "nodes": [
+        {"focus": "lexis", "title": "Sports and activities"},
+        {"focus": "lexis", "title": "The body"},
+        {"focus": "grammar", "title": "I can, I can't"},
+        {"focus": "mixed", "title": "Can I…? Could you…?"},
+        {"focus": "speak", "title": "What can you do?"}
+      ]
+    },
+    {
+      "n": 12, "title_en": "Right now", "title_uz": "Hozir", "theme": "clothes_weather_now",
+      "can_do": ["I can say what is happening now.", "I can talk about the weather.", "I can describe what people are wearing."],
+      "grammar": ["G-023", "G-024"],
+      "phonology": ["P-011", "P-019"],
+      "functions": ["F-014", "F-017"],
+      "story": "txt.00012",
+      "nodes": [
+        {"focus": "lexis", "title": "Clothes"},
+        {"focus": "lexis", "title": "Weather"},
+        {"focus": "grammar", "title": "I'm reading"},
+        {"focus": "mixed", "title": "What are they doing?"},
+        {"focus": "speak", "title": "Describe the picture"}
+      ]
+    }
+  ]
+}

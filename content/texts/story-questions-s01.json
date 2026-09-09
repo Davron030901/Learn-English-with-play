@@ -1,0 +1,461 @@
+{
+ "_comment": "Hand-authored comprehension questions for the Section 1 story episodes. 3 per episode: one gist, one detail, one inference-lite. Distractors are diagnostic (each maps to a plausible misreading), per docs/09 §4.1.",
+ "questions": {
+  "txt.00001": [
+   {
+    "type": "read_gist_mcq",
+    "q": "Who is the teacher?",
+    "options": [
+     "Sarah",
+     "Aziz",
+     "Both of them",
+     "Nobody"
+    ],
+    "answer": 0,
+    "why": "Sarah says 'Yes, I am' when Aziz asks if she is a teacher."
+   },
+   {
+    "type": "read_scan_detail",
+    "q": "What is the student's name?",
+    "options": [
+     "Aziz",
+     "Sarah",
+     "Kamola",
+     "Bobur"
+    ],
+    "answer": 0,
+    "why": "'I am a student.' — Aziz."
+   },
+   {
+    "type": "listen_gist_mcq",
+    "q": "When does the story happen?",
+    "options": [
+     "In the morning",
+     "In the evening",
+     "At night",
+     "At the weekend"
+    ],
+    "answer": 0,
+    "why": "'Good morning' and 'It is Monday morning.'"
+   }
+  ],
+  "txt.00002": [
+   {
+    "type": "read_gist_mcq",
+    "q": "Where is Sarah from?",
+    "options": [
+     "England",
+     "Uzbekistan",
+     "Russia",
+     "Tashkent"
+    ],
+    "answer": 0,
+    "why": "'I am from England.'"
+   },
+   {
+    "type": "read_scan_detail",
+    "q": "Kamola speaks English and Uzbek. And?",
+    "options": [
+     "Russian",
+     "Turkish",
+     "Uzbek",
+     "English"
+    ],
+    "answer": 0,
+    "why": "'I speak Russian and Uzbek.'"
+   },
+   {
+    "type": "listen_gist_mcq",
+    "q": "Is Kamola a student?",
+    "options": [
+     "No, she is a teacher",
+     "Yes, she is",
+     "She is a student too",
+     "We do not know"
+    ],
+    "answer": 0,
+    "why": "'I am not a student. I am a teacher too.'"
+   }
+  ],
+  "txt.00003": [
+   {
+    "type": "read_scan_detail",
+    "q": "How many books are there?",
+    "options": [
+     "Twelve",
+     "Four",
+     "Two",
+     "Twenty"
+    ],
+    "answer": 0,
+    "why": "'Twelve books and four pens.'"
+   },
+   {
+    "type": "read_gist_mcq",
+    "q": "The bag is …",
+    "options": [
+     "her bag",
+     "his bag",
+     "my bag",
+     "your bag"
+    ],
+    "answer": 0,
+    "why": "'It is her bag.'"
+   },
+   {
+    "type": "listen_gist_mcq",
+    "q": "What does Sarah ask Aziz to do at the end?",
+    "options": [
+     "Spell his name",
+     "Spell her name",
+     "Meet Kamola",
+     "Say goodbye"
+    ],
+    "answer": 0,
+    "why": "'Now, please spell your name.'"
+   }
+  ],
+  "txt.00004": [
+   {
+    "type": "read_scan_detail",
+    "q": "How old is Aziz's grandmother?",
+    "options": [
+     "Seventy-nine",
+     "Forty-two",
+     "Fifty",
+     "One"
+    ],
+    "answer": 0,
+    "why": "'She is seventy-nine.'"
+   },
+   {
+    "type": "read_gist_mcq",
+    "q": "How many brothers and sisters does he have?",
+    "options": [
+     "Three",
+     "One",
+     "Two",
+     "Four"
+    ],
+    "answer": 0,
+    "why": "One sister and two brothers."
+   },
+   {
+    "type": "listen_gist_mcq",
+    "q": "Who is one year old?",
+    "options": [
+     "His cousin",
+     "His brother",
+     "His sister",
+     "His mother"
+    ],
+    "answer": 0,
+    "why": "'That is my cousin. He is one year old.'"
+   }
+  ],
+  "txt.00005": [
+   {
+    "type": "read_gist_mcq",
+    "q": "The flat is …",
+    "options": [
+     "small but nice",
+     "big and new",
+     "old and small",
+     "big but not nice"
+    ],
+    "answer": 0,
+    "why": "'No, it is small. But it is very nice.'"
+   },
+   {
+    "type": "read_scan_detail",
+    "q": "How many chairs are in the kitchen?",
+    "options": [
+     "Four",
+     "Three",
+     "Two",
+     "One"
+    ],
+    "answer": 0,
+    "why": "'there are four chairs'"
+   },
+   {
+    "type": "listen_detail_gap",
+    "q": "What is behind the house?",
+    "options": [
+     "A garden",
+     "A room",
+     "A house",
+     "A window"
+    ],
+    "answer": 0,
+    "why": "'there is a garden behind the house'"
+   }
+  ],
+  "txt.00006": [
+   {
+    "type": "read_scan_detail",
+    "q": "What time does Aziz get up?",
+    "options": [
+     "At six",
+     "At seven",
+     "At nine",
+     "Early"
+    ],
+    "answer": 0,
+    "why": "'I get up at six.'"
+   },
+   {
+    "type": "read_gist_mcq",
+    "q": "Who never eats breakfast?",
+    "options": [
+     "Sarah",
+     "Aziz",
+     "Both of them",
+     "Nobody"
+    ],
+    "answer": 0,
+    "why": "'I never eat breakfast.' — Sarah."
+   },
+   {
+    "type": "listen_gist_mcq",
+    "q": "When does Aziz work?",
+    "options": [
+     "In the evening",
+     "In the morning",
+     "At the weekend",
+     "He does not work"
+    ],
+    "answer": 0,
+    "why": "'I work in the evening.'"
+   }
+  ],
+  "txt.00007": [
+   {
+    "type": "read_gist_mcq",
+    "q": "What does his mother do?",
+    "options": [
+     "She is a doctor",
+     "She is a teacher",
+     "She is a driver",
+     "She works in a market"
+    ],
+    "answer": 0,
+    "why": "'She is a doctor. She works in a hospital.'"
+   },
+   {
+    "type": "read_scan_detail",
+    "q": "Where does his uncle work?",
+    "options": [
+     "In the market",
+     "In a shop",
+     "In a hospital",
+     "In an office"
+    ],
+    "answer": 0,
+    "why": "'My uncle. He works there.'"
+   },
+   {
+    "type": "listen_gist_mcq",
+    "q": "Is her job good?",
+    "options": [
+     "Yes, but she is busy",
+     "No, it is not",
+     "She does not work",
+     "We do not know"
+    ],
+    "answer": 0,
+    "why": "'Yes, she does. But she is always very busy.'"
+   }
+  ],
+  "txt.00008": [
+   {
+    "type": "read_scan_detail",
+    "q": "What time is her work on Tuesday?",
+    "options": [
+     "Half past ten",
+     "Nine o'clock",
+     "A quarter past eight",
+     "At the weekend"
+    ],
+    "answer": 0,
+    "why": "'On Tuesday it is at half past ten.'"
+   },
+   {
+    "type": "read_gist_mcq",
+    "q": "When is it very nice in Uzbekistan?",
+    "options": [
+     "In May",
+     "In August",
+     "In January",
+     "In winter"
+    ],
+    "answer": 0,
+    "why": "'In May it is very nice here.'"
+   },
+   {
+    "type": "listen_gist_mcq",
+    "q": "Does Sarah work at the weekend?",
+    "options": [
+     "No",
+     "Yes",
+     "Only on Saturday",
+     "Only in summer"
+    ],
+    "answer": 0,
+    "why": "'I do not work at the weekend.'"
+   }
+  ],
+  "txt.00009": [
+   {
+    "type": "read_gist_mcq",
+    "q": "What does Kamola like?",
+    "options": [
+     "Books",
+     "Films",
+     "Football",
+     "Nothing"
+    ],
+    "answer": 0,
+    "why": "'For me, films are boring. I like books.'"
+   },
+   {
+    "type": "read_scan_detail",
+    "q": "Why does Aziz like American films?",
+    "options": [
+     "Because they are funny",
+     "Because they are easy",
+     "Because they are difficult",
+     "He does not like them"
+    ],
+    "answer": 0,
+    "why": "'…because they are funny.'"
+   },
+   {
+    "type": "listen_gist_mcq",
+    "q": "What is on Saturday?",
+    "options": [
+     "A party",
+     "A film",
+     "A book",
+     "A song"
+    ],
+    "answer": 0,
+    "why": "'Kamola has a party on Saturday.'"
+   }
+  ],
+  "txt.00010": [
+   {
+    "type": "read_scan_detail",
+    "q": "What does Sarah want?",
+    "options": [
+     "Soup and bread",
+     "Chicken and rice",
+     "Salad",
+     "Only tea"
+    ],
+    "answer": 0,
+    "why": "'Can I have some soup and bread, please?'"
+   },
+   {
+    "type": "read_gist_mcq",
+    "q": "Does Sarah want sugar?",
+    "options": [
+     "No",
+     "Yes",
+     "Only in coffee",
+     "We do not know"
+    ],
+    "answer": 0,
+    "why": "'I do not want sugar in my tea.'"
+   },
+   {
+    "type": "listen_gist_mcq",
+    "q": "Is it a lot of money?",
+    "options": [
+     "No",
+     "Yes",
+     "Very",
+     "We do not know"
+    ],
+    "answer": 0,
+    "why": "'It is not a lot.'"
+   }
+  ],
+  "txt.00011": [
+   {
+    "type": "read_gist_mcq",
+    "q": "What can Sarah do?",
+    "options": [
+     "Swim",
+     "Play football",
+     "Dance",
+     "Play the guitar"
+    ],
+    "answer": 0,
+    "why": "'No, I cannot. But I can swim.'"
+   },
+   {
+    "type": "read_scan_detail",
+    "q": "What can Kamola not do?",
+    "options": [
+     "Dance",
+     "Sing",
+     "Play tennis",
+     "Swim"
+    ],
+    "answer": 0,
+    "why": "'And I can sing! But I cannot dance.'"
+   },
+   {
+    "type": "listen_detail_gap",
+    "q": "What time is the football on Sunday?",
+    "options": [
+     "Ten",
+     "Nine",
+     "Eleven",
+     "In the evening"
+    ],
+    "answer": 0,
+    "why": "'Could you come at ten?'"
+   }
+  ],
+  "txt.00012": [
+   {
+    "type": "read_gist_mcq",
+    "q": "What is Kamola doing?",
+    "options": [
+     "Making lunch",
+     "Reading a book",
+     "Playing football",
+     "Walking to the park"
+    ],
+    "answer": 0,
+    "why": "'She is in the kitchen. She is making lunch.'"
+   },
+   {
+    "type": "read_scan_detail",
+    "q": "Why is Bobur not playing football?",
+    "options": [
+     "The weather is bad",
+     "He is at school",
+     "He is at home",
+     "He is with Sarah"
+    ],
+    "answer": 0,
+    "why": "'The weather is bad today.'"
+   },
+   {
+    "type": "listen_gist_mcq",
+    "q": "What is Sarah doing at the end?",
+    "options": [
+     "She is walking",
+     "She is waiting",
+     "She is sitting",
+     "She is reading"
+    ],
+    "answer": 0,
+    "why": "The sun comes out, so she says 'I am walking!'"
+   }
+  ]
+ }
+}

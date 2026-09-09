@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://learnenglishwithplay.app/schemas/text.schema.json",
+  "title": "Text",
+  "description": "A reading or listening source. See docs/11-CONTENT-DATA-MODEL.md §2.3.",
+  "type": "object",
+  "required": ["id", "kind", "cefr", "title", "word_count", "body",
+               "audio", "status", "syllabus_version"],
+  "additionalProperties": false,
+  "properties": {
+    "id":   { "type": "string", "pattern": "^txt\\.[0-9]{5}$" },
+    "kind": { "enum": ["story","dialogue","article","notice","message",
+                       "monologue","announcement","podcast"] },
+    "cefr": { "type": "string" },
+    "unit": { "type": "string", "pattern": "^S[0-9]{2}U[0-9]{2}$" },
+    "episode": { "type": "integer", "minimum": 1 },
+    "title": { "type": "string" },
+    "word_count": { "type": "integer", "minimum": 1 },
+    "readability": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fk_grade": { "type": "number" },
+        "mean_sentence_len": { "type": "number" },
+        "type_token_ratio": { "type": "number" },
+        "max_sentence_len": { "type": "integer" }
+      }
+    },
+    "coverage": { "type": "object", "additionalProperties": { "type": "number" } },
+    "new_lexemes": { "type": "array",
+      "items": { "type": "string", "pattern": "^lex\\.[0-9]{5}$" } },
+    "structures_used": { "type": "array",
+      "items": { "type": "string", "pattern": "^G-[0-9]{3}$" } },
+    "characters": { "type": "array", "items": { "type": "string" } },
+    "body": { "type": "array", "minItems": 1, "items": {
+      "type": "object",
+      "required": ["text"],
+      "additionalProperties": false,
+      "properties": {
+        "speaker": { "type": "string" },
+        "text":    { "type": "string" },
+        "uz":      { "type": "string" },
+        "audio":   { "type": "string" },
+        "image":   { "type": "string" }
+      }
+    } },
+    "audio": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ga":   { "type": "object", "additionalProperties": true },
+        "sbe":  { "type": "object", "additionalProperties": true },
+        "slow": { "type": "object", "additionalProperties": true }
+      }
+    },
+    "questions": { "type": "array",
+      "items": { "type": "string", "pattern": "^item\\.[0-9]{7}$" } },
+    "content_flags": { "type": "object", "additionalProperties": true },
+    "status": { "enum": ["draft","review","published","deprecated"] },
+    "syllabus_version": { "type": "string" }
+  }
+}
