@@ -1,0 +1,236 @@
+{
+ "id": "S01U01",
+ "type": "unit",
+ "section": "S01",
+ "index": 1,
+ "cefr": "A1.1",
+ "title": {
+  "en": "Hello",
+  "uz": "Salom"
+ },
+ "theme": "greetings_identity",
+ "can_do": [
+  "I can greet someone and say goodbye.",
+  "I can say my name and ask for someone else's.",
+  "I can say I am a student or a teacher."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-001",
+   "G-002",
+   "G-057",
+   "G-072"
+  ],
+  "lexis": [
+   "lex.00001",
+   "lex.00002",
+   "lex.00003",
+   "lex.00004",
+   "lex.00005",
+   "lex.00006",
+   "lex.00007",
+   "lex.00008",
+   "lex.00009",
+   "lex.00010",
+   "lex.00011",
+   "lex.00012",
+   "lex.00013",
+   "lex.00014",
+   "lex.00015",
+   "lex.00016",
+   "lex.00017",
+   "lex.00018",
+   "lex.00019",
+   "lex.00020",
+   "lex.00021",
+   "lex.00022",
+   "lex.00023",
+   "lex.00024",
+   "lex.00025",
+   "lex.00026",
+   "lex.00027",
+   "lex.00028",
+   "lex.00029",
+   "lex.00030",
+   "lex.00031",
+   "lex.00032"
+  ],
+  "phonology": [
+   "P-002",
+   "P-007",
+   "P-008",
+   "P-010",
+   "P-017",
+   "P-018",
+   "P-022"
+  ],
+  "functions": [
+   "F-001",
+   "F-002",
+   "F-003",
+   "F-004",
+   "F-005",
+   "F-006",
+   "F-007",
+   "F-008"
+  ]
+ },
+ "prerequisites": [],
+ "nodes": [
+  {
+   "id": "S01U01N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Greetings",
+   "teaches": {
+    "lexis": [
+     "lex.00001",
+     "lex.00004",
+     "lex.00007",
+     "lex.00010",
+     "lex.00013",
+     "lex.00016",
+     "lex.00019",
+     "lex.00022",
+     "lex.00025",
+     "lex.00028",
+     "lex.00031"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-002",
+     "P-017"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U01N2",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "I am, you are",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-001",
+     "G-072"
+    ],
+    "phonology": [
+     "P-007",
+     "P-018"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U01N3",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "Who are you?",
+   "teaches": {
+    "lexis": [
+     "lex.00002",
+     "lex.00005",
+     "lex.00008",
+     "lex.00011",
+     "lex.00014",
+     "lex.00017",
+     "lex.00020",
+     "lex.00023",
+     "lex.00026",
+     "lex.00029",
+     "lex.00032"
+    ],
+    "grammar": [
+     "G-002"
+    ],
+    "phonology": [
+     "P-008",
+     "P-022"
+    ],
+    "functions": [
+     "F-001",
+     "F-003",
+     "F-005",
+     "F-007"
+    ]
+   }
+  },
+  {
+   "id": "S01U01N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00001"
+  },
+  {
+   "id": "S01U01N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "Nice to meet you",
+   "teaches": {
+    "lexis": [
+     "lex.00003",
+     "lex.00006",
+     "lex.00009",
+     "lex.00012",
+     "lex.00015",
+     "lex.00018",
+     "lex.00021",
+     "lex.00024",
+     "lex.00027",
+     "lex.00030"
+    ],
+    "grammar": [
+     "G-057"
+    ],
+    "phonology": [
+     "P-010"
+    ],
+    "functions": [
+     "F-002",
+     "F-004",
+     "F-006",
+     "F-008"
+    ]
+   }
+  },
+  {
+   "id": "S01U01N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "Say hello",
+   "task_ref": "task.S01U01",
+   "teaches": {
+    "functions": [
+     "F-001",
+     "F-002",
+     "F-003",
+     "F-004",
+     "F-005",
+     "F-006",
+     "F-007",
+     "F-008"
+    ]
+   }
+  },
+  {
+   "id": "S01U01N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s01"
+  },
+  {
+   "id": "S01U01N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

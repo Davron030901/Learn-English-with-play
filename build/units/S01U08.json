@@ -1,0 +1,206 @@
+{
+ "id": "S01U08",
+ "type": "unit",
+ "section": "S01",
+ "index": 8,
+ "cefr": "A1.1",
+ "title": {
+  "en": "Time and days",
+  "uz": "Vaqt va kunlar"
+ },
+ "theme": "time",
+ "can_do": [
+  "I can ask and tell the time.",
+  "I can say the days of the week and the months.",
+  "I can say when something happens."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-059",
+   "G-068"
+  ],
+  "lexis": [
+   "lex.00235",
+   "lex.00236",
+   "lex.00237",
+   "lex.00238",
+   "lex.00239",
+   "lex.00240",
+   "lex.00241",
+   "lex.00242",
+   "lex.00243",
+   "lex.00244",
+   "lex.00245",
+   "lex.00246",
+   "lex.00247",
+   "lex.00248",
+   "lex.00249",
+   "lex.00250",
+   "lex.00251",
+   "lex.00252",
+   "lex.00253",
+   "lex.00254",
+   "lex.00255",
+   "lex.00256",
+   "lex.00257",
+   "lex.00258",
+   "lex.00259",
+   "lex.00260",
+   "lex.00261",
+   "lex.00262",
+   "lex.00263",
+   "lex.00264",
+   "lex.00265",
+   "lex.00266",
+   "lex.00267",
+   "lex.00268"
+  ],
+  "phonology": [
+   "P-020",
+   "P-021"
+  ],
+  "functions": [
+   "F-021",
+   "F-022"
+  ]
+ },
+ "prerequisites": [
+  "S01U07"
+ ],
+ "nodes": [
+  {
+   "id": "S01U08N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Days of the week",
+   "teaches": {
+    "lexis": [
+     "lex.00235",
+     "lex.00238",
+     "lex.00241",
+     "lex.00244",
+     "lex.00247",
+     "lex.00250",
+     "lex.00253",
+     "lex.00256",
+     "lex.00259",
+     "lex.00262",
+     "lex.00265",
+     "lex.00268"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-020"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U08N2",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Months and seasons",
+   "teaches": {
+    "lexis": [
+     "lex.00236",
+     "lex.00239",
+     "lex.00242",
+     "lex.00245",
+     "lex.00248",
+     "lex.00251",
+     "lex.00254",
+     "lex.00257",
+     "lex.00260",
+     "lex.00263",
+     "lex.00266"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-021"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U08N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "It's five o'clock",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-059"
+    ],
+    "phonology": [],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U08N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00008"
+  },
+  {
+   "id": "S01U08N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "At, on, in",
+   "teaches": {
+    "lexis": [
+     "lex.00237",
+     "lex.00240",
+     "lex.00243",
+     "lex.00246",
+     "lex.00249",
+     "lex.00252",
+     "lex.00255",
+     "lex.00258",
+     "lex.00261",
+     "lex.00264",
+     "lex.00267"
+    ],
+    "grammar": [
+     "G-068"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-021",
+     "F-022"
+    ]
+   }
+  },
+  {
+   "id": "S01U08N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "What time?",
+   "task_ref": "task.S01U08",
+   "teaches": {
+    "functions": [
+     "F-021",
+     "F-022"
+    ]
+   }
+  },
+  {
+   "id": "S01U08N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s01"
+  },
+  {
+   "id": "S01U08N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

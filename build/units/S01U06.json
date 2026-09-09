@@ -1,0 +1,221 @@
+{
+ "id": "S01U06",
+ "type": "unit",
+ "section": "S01",
+ "index": 6,
+ "cefr": "A1.1",
+ "title": {
+  "en": "Every day",
+  "uz": "Har kuni"
+ },
+ "theme": "daily_routine",
+ "can_do": [
+  "I can describe my daily routine.",
+  "I can say what I do not do.",
+  "I can say how often I do things."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-015",
+   "G-017",
+   "G-021",
+   "G-022",
+   "G-071"
+  ],
+  "lexis": [
+   "lex.00165",
+   "lex.00166",
+   "lex.00167",
+   "lex.00168",
+   "lex.00169",
+   "lex.00170",
+   "lex.00171",
+   "lex.00172",
+   "lex.00173",
+   "lex.00174",
+   "lex.00175",
+   "lex.00176",
+   "lex.00177",
+   "lex.00178",
+   "lex.00179",
+   "lex.00180",
+   "lex.00181",
+   "lex.00182",
+   "lex.00183",
+   "lex.00184",
+   "lex.00185",
+   "lex.00186",
+   "lex.00187",
+   "lex.00188",
+   "lex.00189",
+   "lex.00190",
+   "lex.00191",
+   "lex.00192",
+   "lex.00193",
+   "lex.00194",
+   "lex.00195",
+   "lex.00196",
+   "lex.00197",
+   "lex.00198",
+   "lex.00199",
+   "lex.00200"
+  ],
+  "phonology": [
+   "P-016",
+   "P-029",
+   "P-017"
+  ],
+  "functions": [
+   "F-018",
+   "F-019"
+  ]
+ },
+ "prerequisites": [
+  "S01U05"
+ ],
+ "nodes": [
+  {
+   "id": "S01U06N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "My day",
+   "teaches": {
+    "lexis": [
+     "lex.00165",
+     "lex.00168",
+     "lex.00171",
+     "lex.00174",
+     "lex.00177",
+     "lex.00180",
+     "lex.00183",
+     "lex.00186",
+     "lex.00189",
+     "lex.00192",
+     "lex.00195",
+     "lex.00198"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-016"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U06N2",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "I work, I don't work",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-015",
+     "G-022"
+    ],
+    "phonology": [
+     "P-029"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U06N3",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "Always, usually, never",
+   "teaches": {
+    "lexis": [
+     "lex.00166",
+     "lex.00169",
+     "lex.00172",
+     "lex.00175",
+     "lex.00178",
+     "lex.00181",
+     "lex.00184",
+     "lex.00187",
+     "lex.00190",
+     "lex.00193",
+     "lex.00196",
+     "lex.00199"
+    ],
+    "grammar": [
+     "G-017",
+     "G-071"
+    ],
+    "phonology": [
+     "P-017"
+    ],
+    "functions": [
+     "F-018"
+    ]
+   }
+  },
+  {
+   "id": "S01U06N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00006"
+  },
+  {
+   "id": "S01U06N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "Morning, afternoon, evening",
+   "teaches": {
+    "lexis": [
+     "lex.00167",
+     "lex.00170",
+     "lex.00173",
+     "lex.00176",
+     "lex.00179",
+     "lex.00182",
+     "lex.00185",
+     "lex.00188",
+     "lex.00191",
+     "lex.00194",
+     "lex.00197",
+     "lex.00200"
+    ],
+    "grammar": [
+     "G-021"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-019"
+    ]
+   }
+  },
+  {
+   "id": "S01U06N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "Your routine",
+   "task_ref": "task.S01U06",
+   "teaches": {
+    "functions": [
+     "F-018",
+     "F-019"
+    ]
+   }
+  },
+  {
+   "id": "S01U06N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s01"
+  },
+  {
+   "id": "S01U06N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

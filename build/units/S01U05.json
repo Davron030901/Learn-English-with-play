@@ -1,0 +1,212 @@
+{
+ "id": "S01U05",
+ "type": "unit",
+ "section": "S01",
+ "index": 5,
+ "cefr": "A1.1",
+ "title": {
+  "en": "Where things are",
+  "uz": "Narsalar qayerda"
+ },
+ "theme": "home_places",
+ "can_do": [
+  "I can describe a room.",
+  "I can say where something is.",
+  "I can use there is and there are."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-007",
+   "G-050",
+   "G-069"
+  ],
+  "lexis": [
+   "lex.00133",
+   "lex.00134",
+   "lex.00135",
+   "lex.00136",
+   "lex.00137",
+   "lex.00138",
+   "lex.00139",
+   "lex.00140",
+   "lex.00141",
+   "lex.00142",
+   "lex.00143",
+   "lex.00144",
+   "lex.00145",
+   "lex.00146",
+   "lex.00147",
+   "lex.00148",
+   "lex.00149",
+   "lex.00150",
+   "lex.00151",
+   "lex.00152",
+   "lex.00153",
+   "lex.00154",
+   "lex.00155",
+   "lex.00156",
+   "lex.00157",
+   "lex.00158",
+   "lex.00159",
+   "lex.00160",
+   "lex.00161",
+   "lex.00162",
+   "lex.00163",
+   "lex.00164"
+  ],
+  "phonology": [
+   "P-006",
+   "P-015",
+   "P-025",
+   "P-026"
+  ],
+  "functions": [
+   "F-016",
+   "F-017"
+  ]
+ },
+ "prerequisites": [
+  "S01U04"
+ ],
+ "nodes": [
+  {
+   "id": "S01U05N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Rooms and furniture",
+   "teaches": {
+    "lexis": [
+     "lex.00133",
+     "lex.00136",
+     "lex.00139",
+     "lex.00142",
+     "lex.00145",
+     "lex.00148",
+     "lex.00151",
+     "lex.00154",
+     "lex.00157",
+     "lex.00160",
+     "lex.00163"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-006"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U05N2",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "There is, there are",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-007"
+    ],
+    "phonology": [
+     "P-015"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U05N3",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "In, on, under",
+   "teaches": {
+    "lexis": [
+     "lex.00134",
+     "lex.00137",
+     "lex.00140",
+     "lex.00143",
+     "lex.00146",
+     "lex.00149",
+     "lex.00152",
+     "lex.00155",
+     "lex.00158",
+     "lex.00161",
+     "lex.00164"
+    ],
+    "grammar": [
+     "G-050"
+    ],
+    "phonology": [
+     "P-025"
+    ],
+    "functions": [
+     "F-016"
+    ]
+   }
+  },
+  {
+   "id": "S01U05N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00005"
+  },
+  {
+   "id": "S01U05N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "My room",
+   "teaches": {
+    "lexis": [
+     "lex.00135",
+     "lex.00138",
+     "lex.00141",
+     "lex.00144",
+     "lex.00147",
+     "lex.00150",
+     "lex.00153",
+     "lex.00156",
+     "lex.00159",
+     "lex.00162"
+    ],
+    "grammar": [
+     "G-069"
+    ],
+    "phonology": [
+     "P-026"
+    ],
+    "functions": [
+     "F-017"
+    ]
+   }
+  },
+  {
+   "id": "S01U05N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "Describe your home",
+   "task_ref": "task.S01U05",
+   "teaches": {
+    "functions": [
+     "F-016",
+     "F-017"
+    ]
+   }
+  },
+  {
+   "id": "S01U05N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s01"
+  },
+  {
+   "id": "S01U05N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

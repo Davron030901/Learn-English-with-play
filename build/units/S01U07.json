@@ -1,0 +1,207 @@
+{
+ "id": "S01U07",
+ "type": "unit",
+ "section": "S01",
+ "index": 7,
+ "cefr": "A1.1",
+ "title": {
+  "en": "He, she, they",
+  "uz": "U, ular"
+ },
+ "theme": "jobs_workplaces",
+ "can_do": [
+  "I can talk about other people's jobs.",
+  "I can ask what someone does.",
+  "I can use the -s ending correctly."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-016",
+   "G-018",
+   "G-019",
+   "G-020"
+  ],
+  "lexis": [
+   "lex.00201",
+   "lex.00202",
+   "lex.00203",
+   "lex.00204",
+   "lex.00205",
+   "lex.00206",
+   "lex.00207",
+   "lex.00208",
+   "lex.00209",
+   "lex.00210",
+   "lex.00211",
+   "lex.00212",
+   "lex.00213",
+   "lex.00214",
+   "lex.00215",
+   "lex.00216",
+   "lex.00217",
+   "lex.00218",
+   "lex.00219",
+   "lex.00220",
+   "lex.00221",
+   "lex.00222",
+   "lex.00223",
+   "lex.00224",
+   "lex.00225",
+   "lex.00226",
+   "lex.00227",
+   "lex.00228",
+   "lex.00229",
+   "lex.00230",
+   "lex.00231",
+   "lex.00232",
+   "lex.00233",
+   "lex.00234"
+  ],
+  "phonology": [
+   "P-019",
+   "P-018"
+  ],
+  "functions": [
+   "F-020"
+  ]
+ },
+ "prerequisites": [
+  "S01U06"
+ ],
+ "nodes": [
+  {
+   "id": "S01U07N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Jobs and places",
+   "teaches": {
+    "lexis": [
+     "lex.00201",
+     "lex.00203",
+     "lex.00205",
+     "lex.00207",
+     "lex.00209",
+     "lex.00211",
+     "lex.00213",
+     "lex.00215",
+     "lex.00217",
+     "lex.00219",
+     "lex.00221",
+     "lex.00223",
+     "lex.00225",
+     "lex.00227",
+     "lex.00229",
+     "lex.00231",
+     "lex.00233"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-019"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U07N2",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "He works, she studies",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-016",
+     "G-020"
+    ],
+    "phonology": [
+     "P-018"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U07N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "Does he…?",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-018"
+    ],
+    "phonology": [],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U07N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00007"
+  },
+  {
+   "id": "S01U07N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "Who works here?",
+   "teaches": {
+    "lexis": [
+     "lex.00202",
+     "lex.00204",
+     "lex.00206",
+     "lex.00208",
+     "lex.00210",
+     "lex.00212",
+     "lex.00214",
+     "lex.00216",
+     "lex.00218",
+     "lex.00220",
+     "lex.00222",
+     "lex.00224",
+     "lex.00226",
+     "lex.00228",
+     "lex.00230",
+     "lex.00232",
+     "lex.00234"
+    ],
+    "grammar": [
+     "G-019"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-020"
+    ]
+   }
+  },
+  {
+   "id": "S01U07N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "What do they do?",
+   "task_ref": "task.S01U07",
+   "teaches": {
+    "functions": [
+     "F-020"
+    ]
+   }
+  },
+  {
+   "id": "S01U07N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s01"
+  },
+  {
+   "id": "S01U07N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

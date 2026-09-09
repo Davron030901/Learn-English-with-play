@@ -1,0 +1,214 @@
+{
+ "id": "S01U10",
+ "type": "unit",
+ "section": "S01",
+ "index": 10,
+ "cefr": "A1.1",
+ "title": {
+  "en": "Food and drink",
+  "uz": "Ovqat va ichimlik"
+ },
+ "theme": "food",
+ "can_do": [
+  "I can order food and drink.",
+  "I can use some and any.",
+  "I can ask how much something costs."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-051",
+   "G-053",
+   "G-054"
+  ],
+  "lexis": [
+   "lex.00301",
+   "lex.00302",
+   "lex.00303",
+   "lex.00304",
+   "lex.00305",
+   "lex.00306",
+   "lex.00307",
+   "lex.00308",
+   "lex.00309",
+   "lex.00310",
+   "lex.00311",
+   "lex.00312",
+   "lex.00313",
+   "lex.00314",
+   "lex.00315",
+   "lex.00316",
+   "lex.00317",
+   "lex.00318",
+   "lex.00319",
+   "lex.00320",
+   "lex.00321",
+   "lex.00322",
+   "lex.00323",
+   "lex.00324",
+   "lex.00325",
+   "lex.00326",
+   "lex.00327",
+   "lex.00328",
+   "lex.00329",
+   "lex.00330",
+   "lex.00331",
+   "lex.00332",
+   "lex.00333",
+   "lex.00334",
+   "lex.00335",
+   "lex.00336",
+   "lex.00337"
+  ],
+  "phonology": [
+   "P-024",
+   "P-019"
+  ],
+  "functions": [
+   "F-023",
+   "F-034"
+  ]
+ },
+ "prerequisites": [
+  "S01U09"
+ ],
+ "nodes": [
+  {
+   "id": "S01U10N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Food",
+   "teaches": {
+    "lexis": [
+     "lex.00301",
+     "lex.00304",
+     "lex.00307",
+     "lex.00310",
+     "lex.00313",
+     "lex.00316",
+     "lex.00319",
+     "lex.00322",
+     "lex.00325",
+     "lex.00328",
+     "lex.00331",
+     "lex.00334",
+     "lex.00337"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-024"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U10N2",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Drinks and the café",
+   "teaches": {
+    "lexis": [
+     "lex.00302",
+     "lex.00305",
+     "lex.00308",
+     "lex.00311",
+     "lex.00314",
+     "lex.00317",
+     "lex.00320",
+     "lex.00323",
+     "lex.00326",
+     "lex.00329",
+     "lex.00332",
+     "lex.00335"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-019"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U10N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "Some and any",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-051",
+     "G-054"
+    ],
+    "phonology": [],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U10N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00010"
+  },
+  {
+   "id": "S01U10N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "A cup of tea",
+   "teaches": {
+    "lexis": [
+     "lex.00303",
+     "lex.00306",
+     "lex.00309",
+     "lex.00312",
+     "lex.00315",
+     "lex.00318",
+     "lex.00321",
+     "lex.00324",
+     "lex.00327",
+     "lex.00330",
+     "lex.00333",
+     "lex.00336"
+    ],
+    "grammar": [
+     "G-053"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-023",
+     "F-034"
+    ]
+   }
+  },
+  {
+   "id": "S01U10N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "Order a meal",
+   "task_ref": "task.S01U10",
+   "teaches": {
+    "functions": [
+     "F-023",
+     "F-034"
+    ]
+   }
+  },
+  {
+   "id": "S01U10N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s01"
+  },
+  {
+   "id": "S01U10N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

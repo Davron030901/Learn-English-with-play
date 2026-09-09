@@ -1,0 +1,225 @@
+{
+ "id": "S01U02",
+ "type": "unit",
+ "section": "S01",
+ "index": 2,
+ "cefr": "A1.1",
+ "title": {
+  "en": "Who are you?",
+  "uz": "Siz kimsiz?"
+ },
+ "theme": "personal_information",
+ "can_do": [
+  "I can ask and say where I am from.",
+  "I can ask basic questions with what, where, who and how.",
+  "I can say that something is not true."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-003",
+   "G-004",
+   "G-005",
+   "G-074"
+  ],
+  "lexis": [
+   "lex.00033",
+   "lex.00034",
+   "lex.00035",
+   "lex.00036",
+   "lex.00037",
+   "lex.00038",
+   "lex.00039",
+   "lex.00040",
+   "lex.00041",
+   "lex.00042",
+   "lex.00043",
+   "lex.00044",
+   "lex.00045",
+   "lex.00046",
+   "lex.00047",
+   "lex.00048",
+   "lex.00049",
+   "lex.00050",
+   "lex.00051",
+   "lex.00052",
+   "lex.00053",
+   "lex.00054",
+   "lex.00055",
+   "lex.00056",
+   "lex.00057",
+   "lex.00058",
+   "lex.00059",
+   "lex.00060",
+   "lex.00061",
+   "lex.00062",
+   "lex.00063",
+   "lex.00064"
+  ],
+  "phonology": [
+   "P-011",
+   "P-012",
+   "P-020",
+   "P-021",
+   "P-023"
+  ],
+  "functions": [
+   "F-009",
+   "F-010",
+   "F-012",
+   "F-026",
+   "F-027"
+  ]
+ },
+ "prerequisites": [
+  "S01U01"
+ ],
+ "nodes": [
+  {
+   "id": "S01U02N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Countries and languages",
+   "teaches": {
+    "lexis": [
+     "lex.00033",
+     "lex.00036",
+     "lex.00039",
+     "lex.00042",
+     "lex.00045",
+     "lex.00048",
+     "lex.00051",
+     "lex.00054",
+     "lex.00057",
+     "lex.00060",
+     "lex.00063"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-011",
+     "P-023"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U02N2",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "Questions with be",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-003",
+     "G-074"
+    ],
+    "phonology": [
+     "P-012"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U02N3",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "Where are you from?",
+   "teaches": {
+    "lexis": [
+     "lex.00034",
+     "lex.00037",
+     "lex.00040",
+     "lex.00043",
+     "lex.00046",
+     "lex.00049",
+     "lex.00052",
+     "lex.00055",
+     "lex.00058",
+     "lex.00061",
+     "lex.00064"
+    ],
+    "grammar": [
+     "G-004"
+    ],
+    "phonology": [
+     "P-020"
+    ],
+    "functions": [
+     "F-009",
+     "F-012",
+     "F-027"
+    ]
+   }
+  },
+  {
+   "id": "S01U02N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00002"
+  },
+  {
+   "id": "S01U02N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "I'm not…",
+   "teaches": {
+    "lexis": [
+     "lex.00035",
+     "lex.00038",
+     "lex.00041",
+     "lex.00044",
+     "lex.00047",
+     "lex.00050",
+     "lex.00053",
+     "lex.00056",
+     "lex.00059",
+     "lex.00062"
+    ],
+    "grammar": [
+     "G-005"
+    ],
+    "phonology": [
+     "P-021"
+    ],
+    "functions": [
+     "F-010",
+     "F-026"
+    ]
+   }
+  },
+  {
+   "id": "S01U02N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "Meeting people",
+   "task_ref": "task.S01U02",
+   "teaches": {
+    "functions": [
+     "F-009",
+     "F-010",
+     "F-012",
+     "F-026",
+     "F-027"
+    ]
+   }
+  },
+  {
+   "id": "S01U02N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s01"
+  },
+  {
+   "id": "S01U02N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

@@ -1,0 +1,204 @@
+{
+ "id": "S01U12",
+ "type": "unit",
+ "section": "S01",
+ "index": 12,
+ "cefr": "A1.1",
+ "title": {
+  "en": "Right now",
+  "uz": "Hozir"
+ },
+ "theme": "clothes_weather_now",
+ "can_do": [
+  "I can say what is happening now.",
+  "I can talk about the weather.",
+  "I can describe what people are wearing."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-023",
+   "G-024"
+  ],
+  "lexis": [
+   "lex.00368",
+   "lex.00369",
+   "lex.00370",
+   "lex.00371",
+   "lex.00372",
+   "lex.00373",
+   "lex.00374",
+   "lex.00375",
+   "lex.00376",
+   "lex.00377",
+   "lex.00378",
+   "lex.00379",
+   "lex.00380",
+   "lex.00381",
+   "lex.00382",
+   "lex.00383",
+   "lex.00384",
+   "lex.00385",
+   "lex.00386",
+   "lex.00387",
+   "lex.00388",
+   "lex.00389",
+   "lex.00390",
+   "lex.00391",
+   "lex.00392",
+   "lex.00393",
+   "lex.00394",
+   "lex.00395",
+   "lex.00396",
+   "lex.00397",
+   "lex.00398",
+   "lex.00399",
+   "lex.00400"
+  ],
+  "phonology": [
+   "P-011",
+   "P-019"
+  ],
+  "functions": [
+   "F-014",
+   "F-017"
+  ]
+ },
+ "prerequisites": [
+  "S01U11"
+ ],
+ "nodes": [
+  {
+   "id": "S01U12N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Clothes",
+   "teaches": {
+    "lexis": [
+     "lex.00368",
+     "lex.00371",
+     "lex.00374",
+     "lex.00377",
+     "lex.00380",
+     "lex.00383",
+     "lex.00386",
+     "lex.00389",
+     "lex.00392",
+     "lex.00395",
+     "lex.00398"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-011"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U12N2",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Weather",
+   "teaches": {
+    "lexis": [
+     "lex.00369",
+     "lex.00372",
+     "lex.00375",
+     "lex.00378",
+     "lex.00381",
+     "lex.00384",
+     "lex.00387",
+     "lex.00390",
+     "lex.00393",
+     "lex.00396",
+     "lex.00399"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-019"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U12N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "I'm reading",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-023"
+    ],
+    "phonology": [],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U12N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00012"
+  },
+  {
+   "id": "S01U12N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "What are they doing?",
+   "teaches": {
+    "lexis": [
+     "lex.00370",
+     "lex.00373",
+     "lex.00376",
+     "lex.00379",
+     "lex.00382",
+     "lex.00385",
+     "lex.00388",
+     "lex.00391",
+     "lex.00394",
+     "lex.00397",
+     "lex.00400"
+    ],
+    "grammar": [
+     "G-024"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-014",
+     "F-017"
+    ]
+   }
+  },
+  {
+   "id": "S01U12N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "Describe the picture",
+   "task_ref": "task.S01U12",
+   "teaches": {
+    "functions": [
+     "F-014",
+     "F-017"
+    ]
+   }
+  },
+  {
+   "id": "S01U12N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s01"
+  },
+  {
+   "id": "S01U12N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

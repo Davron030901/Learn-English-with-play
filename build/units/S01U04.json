@@ -1,0 +1,213 @@
+{
+ "id": "S01U04",
+ "type": "unit",
+ "section": "S01",
+ "index": 4,
+ "cefr": "A1.1",
+ "title": {
+  "en": "My family",
+  "uz": "Mening oilam"
+ },
+ "theme": "family",
+ "can_do": [
+  "I can talk about my family.",
+  "I can say how old someone is.",
+  "I can use his and her correctly."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-009",
+   "G-010",
+   "G-012"
+  ],
+  "lexis": [
+   "lex.00099",
+   "lex.00100",
+   "lex.00101",
+   "lex.00102",
+   "lex.00103",
+   "lex.00104",
+   "lex.00105",
+   "lex.00106",
+   "lex.00107",
+   "lex.00108",
+   "lex.00109",
+   "lex.00110",
+   "lex.00111",
+   "lex.00112",
+   "lex.00113",
+   "lex.00114",
+   "lex.00115",
+   "lex.00116",
+   "lex.00117",
+   "lex.00118",
+   "lex.00119",
+   "lex.00120",
+   "lex.00121",
+   "lex.00122",
+   "lex.00123",
+   "lex.00124",
+   "lex.00125",
+   "lex.00126",
+   "lex.00127",
+   "lex.00128",
+   "lex.00129",
+   "lex.00130",
+   "lex.00131",
+   "lex.00132"
+  ],
+  "phonology": [
+   "P-005",
+   "P-014",
+   "P-008"
+  ],
+  "functions": [
+   "F-011",
+   "F-015"
+  ]
+ },
+ "prerequisites": [
+  "S01U03"
+ ],
+ "nodes": [
+  {
+   "id": "S01U04N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Family words",
+   "teaches": {
+    "lexis": [
+     "lex.00099",
+     "lex.00102",
+     "lex.00105",
+     "lex.00108",
+     "lex.00111",
+     "lex.00114",
+     "lex.00117",
+     "lex.00120",
+     "lex.00123",
+     "lex.00126",
+     "lex.00129",
+     "lex.00132"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-005"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U04N2",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "I have, she has",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-009"
+    ],
+    "phonology": [
+     "P-014"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U04N3",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "His mother, her father",
+   "teaches": {
+    "lexis": [
+     "lex.00100",
+     "lex.00103",
+     "lex.00106",
+     "lex.00109",
+     "lex.00112",
+     "lex.00115",
+     "lex.00118",
+     "lex.00121",
+     "lex.00124",
+     "lex.00127",
+     "lex.00130"
+    ],
+    "grammar": [
+     "G-010"
+    ],
+    "phonology": [
+     "P-008"
+    ],
+    "functions": [
+     "F-011"
+    ]
+   }
+  },
+  {
+   "id": "S01U04N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00004"
+  },
+  {
+   "id": "S01U04N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "How old are you?",
+   "teaches": {
+    "lexis": [
+     "lex.00101",
+     "lex.00104",
+     "lex.00107",
+     "lex.00110",
+     "lex.00113",
+     "lex.00116",
+     "lex.00119",
+     "lex.00122",
+     "lex.00125",
+     "lex.00128",
+     "lex.00131"
+    ],
+    "grammar": [
+     "G-012"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-015"
+    ]
+   }
+  },
+  {
+   "id": "S01U04N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "Talk about your family",
+   "task_ref": "task.S01U04",
+   "teaches": {
+    "functions": [
+     "F-011",
+     "F-015"
+    ]
+   }
+  },
+  {
+   "id": "S01U04N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s01"
+  },
+  {
+   "id": "S01U04N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

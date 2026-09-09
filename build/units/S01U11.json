@@ -1,0 +1,203 @@
+{
+ "id": "S01U11",
+ "type": "unit",
+ "section": "S01",
+ "index": 11,
+ "cefr": "A1.1",
+ "title": {
+  "en": "Can you?",
+  "uz": "Qila olasizmi?"
+ },
+ "theme": "ability_sport_body",
+ "can_do": [
+  "I can say what I can and can't do.",
+  "I can ask for permission and for help.",
+  "I can name the parts of the body."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-037",
+   "G-038",
+   "G-039"
+  ],
+  "lexis": [
+   "lex.00338",
+   "lex.00339",
+   "lex.00340",
+   "lex.00341",
+   "lex.00342",
+   "lex.00343",
+   "lex.00344",
+   "lex.00345",
+   "lex.00346",
+   "lex.00347",
+   "lex.00348",
+   "lex.00349",
+   "lex.00350",
+   "lex.00351",
+   "lex.00352",
+   "lex.00353",
+   "lex.00354",
+   "lex.00355",
+   "lex.00356",
+   "lex.00357",
+   "lex.00358",
+   "lex.00359",
+   "lex.00360",
+   "lex.00361",
+   "lex.00362",
+   "lex.00363",
+   "lex.00364",
+   "lex.00365",
+   "lex.00366",
+   "lex.00367"
+  ],
+  "phonology": [
+   "P-010",
+   "P-022"
+  ],
+  "functions": [
+   "F-024",
+   "F-025",
+   "F-033"
+  ]
+ },
+ "prerequisites": [
+  "S01U10"
+ ],
+ "nodes": [
+  {
+   "id": "S01U11N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Sports and activities",
+   "teaches": {
+    "lexis": [
+     "lex.00338",
+     "lex.00341",
+     "lex.00344",
+     "lex.00347",
+     "lex.00350",
+     "lex.00353",
+     "lex.00356",
+     "lex.00359",
+     "lex.00362",
+     "lex.00365"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-010"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U11N2",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "The body",
+   "teaches": {
+    "lexis": [
+     "lex.00339",
+     "lex.00342",
+     "lex.00345",
+     "lex.00348",
+     "lex.00351",
+     "lex.00354",
+     "lex.00357",
+     "lex.00360",
+     "lex.00363",
+     "lex.00366"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-022"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U11N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "I can, I can't",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-037",
+     "G-039"
+    ],
+    "phonology": [],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U11N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00011"
+  },
+  {
+   "id": "S01U11N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "Can I…? Could you…?",
+   "teaches": {
+    "lexis": [
+     "lex.00340",
+     "lex.00343",
+     "lex.00346",
+     "lex.00349",
+     "lex.00352",
+     "lex.00355",
+     "lex.00358",
+     "lex.00361",
+     "lex.00364",
+     "lex.00367"
+    ],
+    "grammar": [
+     "G-038"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-024",
+     "F-025",
+     "F-033"
+    ]
+   }
+  },
+  {
+   "id": "S01U11N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "What can you do?",
+   "task_ref": "task.S01U11",
+   "teaches": {
+    "functions": [
+     "F-024",
+     "F-025",
+     "F-033"
+    ]
+   }
+  },
+  {
+   "id": "S01U11N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s01"
+  },
+  {
+   "id": "S01U11N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

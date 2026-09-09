@@ -1,0 +1,207 @@
+{
+ "id": "S01U09",
+ "type": "unit",
+ "section": "S01",
+ "index": 9,
+ "cefr": "A1.1",
+ "title": {
+  "en": "I like it",
+  "uz": "Menga yoqadi"
+ },
+ "theme": "free_time_opinions",
+ "can_do": [
+  "I can say what I like and dislike.",
+  "I can give a simple opinion.",
+  "I can join two ideas with and, but, because."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-058",
+   "G-063",
+   "G-073"
+  ],
+  "lexis": [
+   "lex.00269",
+   "lex.00270",
+   "lex.00271",
+   "lex.00272",
+   "lex.00273",
+   "lex.00274",
+   "lex.00275",
+   "lex.00276",
+   "lex.00277",
+   "lex.00278",
+   "lex.00279",
+   "lex.00280",
+   "lex.00281",
+   "lex.00282",
+   "lex.00283",
+   "lex.00284",
+   "lex.00285",
+   "lex.00286",
+   "lex.00287",
+   "lex.00288",
+   "lex.00289",
+   "lex.00290",
+   "lex.00291",
+   "lex.00292",
+   "lex.00293",
+   "lex.00294",
+   "lex.00295",
+   "lex.00296",
+   "lex.00297",
+   "lex.00298",
+   "lex.00299",
+   "lex.00300"
+  ],
+  "phonology": [
+   "P-017",
+   "P-020"
+  ],
+  "functions": [
+   "F-030",
+   "F-031",
+   "F-032"
+  ]
+ },
+ "prerequisites": [
+  "S01U08"
+ ],
+ "nodes": [
+  {
+   "id": "S01U09N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Free time",
+   "teaches": {
+    "lexis": [
+     "lex.00269",
+     "lex.00272",
+     "lex.00275",
+     "lex.00278",
+     "lex.00281",
+     "lex.00284",
+     "lex.00287",
+     "lex.00290",
+     "lex.00293",
+     "lex.00296",
+     "lex.00299"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-017"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U09N2",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Good, bad, interesting",
+   "teaches": {
+    "lexis": [
+     "lex.00270",
+     "lex.00273",
+     "lex.00276",
+     "lex.00279",
+     "lex.00282",
+     "lex.00285",
+     "lex.00288",
+     "lex.00291",
+     "lex.00294",
+     "lex.00297",
+     "lex.00300"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-020"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U09N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "I like it, I know him",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-058",
+     "G-073"
+    ],
+    "phonology": [],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U09N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00009"
+  },
+  {
+   "id": "S01U09N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "…because it's interesting",
+   "teaches": {
+    "lexis": [
+     "lex.00271",
+     "lex.00274",
+     "lex.00277",
+     "lex.00280",
+     "lex.00283",
+     "lex.00286",
+     "lex.00289",
+     "lex.00292",
+     "lex.00295",
+     "lex.00298"
+    ],
+    "grammar": [
+     "G-063"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-030",
+     "F-031",
+     "F-032"
+    ]
+   }
+  },
+  {
+   "id": "S01U09N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "What do you like?",
+   "task_ref": "task.S01U09",
+   "teaches": {
+    "functions": [
+     "F-030",
+     "F-031",
+     "F-032"
+    ]
+   }
+  },
+  {
+   "id": "S01U09N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s01"
+  },
+  {
+   "id": "S01U09N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

@@ -1,0 +1,146 @@
+[
+ {
+  "id": "S01U01",
+  "index": 1,
+  "title": "Hello",
+  "lexis": 32,
+  "grammar": 4,
+  "minutes": {
+   "t1": 53.0,
+   "t2": 46.0,
+   "t3": 40.0
+  }
+ },
+ {
+  "id": "S01U02",
+  "index": 2,
+  "title": "Who are you?",
+  "lexis": 32,
+  "grammar": 4,
+  "minutes": {
+   "t1": 53.0,
+   "t2": 46.0,
+   "t3": 40.0
+  }
+ },
+ {
+  "id": "S01U03",
+  "index": 3,
+  "title": "Numbers and things",
+  "lexis": 34,
+  "grammar": 4,
+  "minutes": {
+   "t1": 53.0,
+   "t2": 46.0,
+   "t3": 40.0
+  }
+ },
+ {
+  "id": "S01U04",
+  "index": 4,
+  "title": "My family",
+  "lexis": 34,
+  "grammar": 3,
+  "minutes": {
+   "t1": 53.0,
+   "t2": 46.0,
+   "t3": 40.0
+  }
+ },
+ {
+  "id": "S01U05",
+  "index": 5,
+  "title": "Where things are",
+  "lexis": 32,
+  "grammar": 3,
+  "minutes": {
+   "t1": 53.0,
+   "t2": 46.0,
+   "t3": 40.0
+  }
+ },
+ {
+  "id": "S01U06",
+  "index": 6,
+  "title": "Every day",
+  "lexis": 36,
+  "grammar": 5,
+  "minutes": {
+   "t1": 53.0,
+   "t2": 46.0,
+   "t3": 40.0
+  }
+ },
+ {
+  "id": "S01U07",
+  "index": 7,
+  "title": "He, she, they",
+  "lexis": 34,
+  "grammar": 4,
+  "minutes": {
+   "t1": 53.0,
+   "t2": 46.0,
+   "t3": 40.0
+  }
+ },
+ {
+  "id": "S01U08",
+  "index": 8,
+  "title": "Time and days",
+  "lexis": 34,
+  "grammar": 2,
+  "minutes": {
+   "t1": 53.0,
+   "t2": 46.0,
+   "t3": 40.0
+  }
+ },
+ {
+  "id": "S01U09",
+  "index": 9,
+  "title": "I like it",
+  "lexis": 32,
+  "grammar": 3,
+  "minutes": {
+   "t1": 53.0,
+   "t2": 46.0,
+   "t3": 40.0
+  }
+ },
+ {
+  "id": "S01U10",
+  "index": 10,
+  "title": "Food and drink",
+  "lexis": 37,
+  "grammar": 3,
+  "minutes": {
+   "t1": 53.0,
+   "t2": 46.0,
+   "t3": 40.0
+  }
+ },
+ {
+  "id": "S01U11",
+  "index": 11,
+  "title": "Can you?",
+  "lexis": 30,
+  "grammar": 3,
+  "minutes": {
+   "t1": 53.0,
+   "t2": 46.0,
+   "t3": 40.0
+  }
+ },
+ {
+  "id": "S01U12",
+  "index": 12,
+  "title": "Right now",
+  "lexis": 33,
+  "grammar": 2,
+  "minutes": {
+   "t1": 53.0,
+   "t2": 46.0,
+   "t3": 40.0
+  }
+ }
+]

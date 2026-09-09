@@ -1,0 +1,228 @@
+{
+ "id": "S01U03",
+ "type": "unit",
+ "section": "S01",
+ "index": 3,
+ "cefr": "A1.1",
+ "title": {
+  "en": "Numbers and things",
+  "uz": "Sonlar va narsalar"
+ },
+ "theme": "objects_numbers",
+ "can_do": [
+  "I can count from zero to twenty.",
+  "I can name everyday objects and use a and an.",
+  "I can spell my name aloud."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-047",
+   "G-048",
+   "G-049",
+   "G-052"
+  ],
+  "lexis": [
+   "lex.00065",
+   "lex.00066",
+   "lex.00067",
+   "lex.00068",
+   "lex.00069",
+   "lex.00070",
+   "lex.00071",
+   "lex.00072",
+   "lex.00073",
+   "lex.00074",
+   "lex.00075",
+   "lex.00076",
+   "lex.00077",
+   "lex.00078",
+   "lex.00079",
+   "lex.00080",
+   "lex.00081",
+   "lex.00082",
+   "lex.00083",
+   "lex.00084",
+   "lex.00085",
+   "lex.00086",
+   "lex.00087",
+   "lex.00088",
+   "lex.00089",
+   "lex.00090",
+   "lex.00091",
+   "lex.00092",
+   "lex.00093",
+   "lex.00094",
+   "lex.00095",
+   "lex.00096",
+   "lex.00097",
+   "lex.00098"
+  ],
+  "phonology": [
+   "P-001",
+   "P-003",
+   "P-004",
+   "P-009",
+   "P-013",
+   "P-019",
+   "P-030"
+  ],
+  "functions": [
+   "F-013",
+   "F-014",
+   "F-028",
+   "F-029"
+  ]
+ },
+ "prerequisites": [
+  "S01U02"
+ ],
+ "nodes": [
+  {
+   "id": "S01U03N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Zero to twenty",
+   "teaches": {
+    "lexis": [
+     "lex.00065",
+     "lex.00068",
+     "lex.00071",
+     "lex.00074",
+     "lex.00077",
+     "lex.00080",
+     "lex.00083",
+     "lex.00086",
+     "lex.00089",
+     "lex.00092",
+     "lex.00095",
+     "lex.00098"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-001",
+     "P-013"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U03N2",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Things around me",
+   "teaches": {
+    "lexis": [
+     "lex.00066",
+     "lex.00069",
+     "lex.00072",
+     "lex.00075",
+     "lex.00078",
+     "lex.00081",
+     "lex.00084",
+     "lex.00087",
+     "lex.00090",
+     "lex.00093",
+     "lex.00096"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-003",
+     "P-019"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U03N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "One book, two books",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-047",
+     "G-049"
+    ],
+    "phonology": [
+     "P-004",
+     "P-030"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S01U03N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00003"
+  },
+  {
+   "id": "S01U03N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "This, that, these, those",
+   "teaches": {
+    "lexis": [
+     "lex.00067",
+     "lex.00070",
+     "lex.00073",
+     "lex.00076",
+     "lex.00079",
+     "lex.00082",
+     "lex.00085",
+     "lex.00088",
+     "lex.00091",
+     "lex.00094",
+     "lex.00097"
+    ],
+    "grammar": [
+     "G-048",
+     "G-052"
+    ],
+    "phonology": [
+     "P-009"
+    ],
+    "functions": [
+     "F-013",
+     "F-014",
+     "F-028",
+     "F-029"
+    ]
+   }
+  },
+  {
+   "id": "S01U03N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "What's this?",
+   "task_ref": "task.S01U03",
+   "teaches": {
+    "functions": [
+     "F-013",
+     "F-014",
+     "F-028",
+     "F-029"
+    ]
+   }
+  },
+  {
+   "id": "S01U03N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s01"
+  },
+  {
+   "id": "S01U03N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}
