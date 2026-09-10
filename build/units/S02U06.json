@@ -1,0 +1,212 @@
+{
+ "id": "S02U06",
+ "type": "unit",
+ "section": "S02",
+ "index": 18,
+ "cefr": "A1.2",
+ "title": {
+  "en": "Yesterday",
+  "uz": "Kecha"
+ },
+ "theme": "past_states_feelings",
+ "can_do": [
+  "I can say where I was and how I felt.",
+  "I can describe a past scene.",
+  "I can say exactly when something happened."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-006",
+   "G-008",
+   "G-028",
+   "G-033"
+  ],
+  "lexis": [
+   "lex.00568",
+   "lex.00569",
+   "lex.00570",
+   "lex.00571",
+   "lex.00572",
+   "lex.00573",
+   "lex.00574",
+   "lex.00575",
+   "lex.00576",
+   "lex.00577",
+   "lex.00578",
+   "lex.00579",
+   "lex.00580",
+   "lex.00581",
+   "lex.00582",
+   "lex.00583",
+   "lex.00584",
+   "lex.00585",
+   "lex.00586",
+   "lex.00587",
+   "lex.00588",
+   "lex.00589",
+   "lex.00590",
+   "lex.00591",
+   "lex.00592",
+   "lex.00593",
+   "lex.00594",
+   "lex.00595",
+   "lex.00596",
+   "lex.00597",
+   "lex.00598",
+   "lex.00599",
+   "lex.00600",
+   "lex.00601",
+   "lex.00602"
+  ],
+  "phonology": [
+   "P-025",
+   "P-020"
+  ],
+  "functions": [
+   "F-031",
+   "F-042"
+  ]
+ },
+ "prerequisites": [
+  "S02U05"
+ ],
+ "nodes": [
+  {
+   "id": "S02U06N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Feelings",
+   "teaches": {
+    "lexis": [
+     "lex.00568",
+     "lex.00571",
+     "lex.00574",
+     "lex.00577",
+     "lex.00580",
+     "lex.00583",
+     "lex.00586",
+     "lex.00589",
+     "lex.00592",
+     "lex.00595",
+     "lex.00598",
+     "lex.00601"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-025"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U06N2",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Events",
+   "teaches": {
+    "lexis": [
+     "lex.00569",
+     "lex.00572",
+     "lex.00575",
+     "lex.00578",
+     "lex.00581",
+     "lex.00584",
+     "lex.00587",
+     "lex.00590",
+     "lex.00593",
+     "lex.00596",
+     "lex.00599",
+     "lex.00602"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-020"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U06N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "I was, they were",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-006",
+     "G-028"
+    ],
+    "phonology": [],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U06N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00018"
+  },
+  {
+   "id": "S02U06N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "Yesterday, last week, two days ago",
+   "teaches": {
+    "lexis": [
+     "lex.00570",
+     "lex.00573",
+     "lex.00576",
+     "lex.00579",
+     "lex.00582",
+     "lex.00585",
+     "lex.00588",
+     "lex.00591",
+     "lex.00594",
+     "lex.00597",
+     "lex.00600"
+    ],
+    "grammar": [
+     "G-008",
+     "G-033"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-031",
+     "F-042"
+    ]
+   }
+  },
+  {
+   "id": "S02U06N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "How was your day?",
+   "task_ref": "task.S02U06",
+   "teaches": {
+    "functions": [
+     "F-031",
+     "F-042"
+    ]
+   }
+  },
+  {
+   "id": "S02U06N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s02"
+  },
+  {
+   "id": "S02U06N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

@@ -1,0 +1,202 @@
+{
+ "id": "S02U08",
+ "type": "unit",
+ "section": "S02",
+ "index": 20,
+ "cefr": "A1.2",
+ "title": {
+  "en": "Did you?",
+  "uz": "Qildingizmi?"
+ },
+ "theme": "past_questions_travel",
+ "can_do": [
+  "I can ask someone about their weekend.",
+  "I can say what I did not do.",
+  "I can talk about a journey I made."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-031",
+   "G-032"
+  ],
+  "lexis": [
+   "lex.00639",
+   "lex.00640",
+   "lex.00641",
+   "lex.00642",
+   "lex.00643",
+   "lex.00644",
+   "lex.00645",
+   "lex.00646",
+   "lex.00647",
+   "lex.00648",
+   "lex.00649",
+   "lex.00650",
+   "lex.00651",
+   "lex.00652",
+   "lex.00653",
+   "lex.00654",
+   "lex.00655",
+   "lex.00656",
+   "lex.00657",
+   "lex.00658",
+   "lex.00659",
+   "lex.00660",
+   "lex.00661",
+   "lex.00662",
+   "lex.00663",
+   "lex.00664",
+   "lex.00665",
+   "lex.00666",
+   "lex.00667",
+   "lex.00668",
+   "lex.00669",
+   "lex.00670"
+  ],
+  "phonology": [
+   "P-027",
+   "P-029"
+  ],
+  "functions": [
+   "F-036",
+   "F-010"
+  ]
+ },
+ "prerequisites": [
+  "S02U07"
+ ],
+ "nodes": [
+  {
+   "id": "S02U08N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Travel",
+   "teaches": {
+    "lexis": [
+     "lex.00639",
+     "lex.00642",
+     "lex.00645",
+     "lex.00648",
+     "lex.00651",
+     "lex.00654",
+     "lex.00657",
+     "lex.00660",
+     "lex.00663",
+     "lex.00666",
+     "lex.00669"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-027"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U08N2",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Places and nature",
+   "teaches": {
+    "lexis": [
+     "lex.00640",
+     "lex.00643",
+     "lex.00646",
+     "lex.00649",
+     "lex.00652",
+     "lex.00655",
+     "lex.00658",
+     "lex.00661",
+     "lex.00664",
+     "lex.00667",
+     "lex.00670"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-029"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U08N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "Did you go?",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-031"
+    ],
+    "phonology": [],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U08N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00020"
+  },
+  {
+   "id": "S02U08N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "I didn't go",
+   "teaches": {
+    "lexis": [
+     "lex.00641",
+     "lex.00644",
+     "lex.00647",
+     "lex.00650",
+     "lex.00653",
+     "lex.00656",
+     "lex.00659",
+     "lex.00662",
+     "lex.00665",
+     "lex.00668"
+    ],
+    "grammar": [
+     "G-032"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-036",
+     "F-010"
+    ]
+   }
+  },
+  {
+   "id": "S02U08N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "Where did you go?",
+   "task_ref": "task.S02U08",
+   "teaches": {
+    "functions": [
+     "F-036",
+     "F-010"
+    ]
+   }
+  },
+  {
+   "id": "S02U08N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s02"
+  },
+  {
+   "id": "S02U08N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

@@ -1,0 +1,210 @@
+{
+ "id": "S02U07",
+ "type": "unit",
+ "section": "S02",
+ "index": 19,
+ "cefr": "A1.2",
+ "title": {
+  "en": "What happened",
+  "uz": "Nima bo'ldi"
+ },
+ "theme": "past_narrative",
+ "can_do": [
+  "I can say what I did yesterday.",
+  "I can use the thirty most common past verbs.",
+  "I can tell a short story about the past."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-029",
+   "G-030"
+  ],
+  "lexis": [
+   "lex.00603",
+   "lex.00604",
+   "lex.00605",
+   "lex.00606",
+   "lex.00607",
+   "lex.00608",
+   "lex.00609",
+   "lex.00610",
+   "lex.00611",
+   "lex.00612",
+   "lex.00613",
+   "lex.00614",
+   "lex.00615",
+   "lex.00616",
+   "lex.00617",
+   "lex.00618",
+   "lex.00619",
+   "lex.00620",
+   "lex.00621",
+   "lex.00622",
+   "lex.00623",
+   "lex.00624",
+   "lex.00625",
+   "lex.00626",
+   "lex.00627",
+   "lex.00628",
+   "lex.00629",
+   "lex.00630",
+   "lex.00631",
+   "lex.00632",
+   "lex.00633",
+   "lex.00634",
+   "lex.00635",
+   "lex.00636",
+   "lex.00637",
+   "lex.00638"
+  ],
+  "phonology": [
+   "P-027",
+   "P-019"
+  ],
+  "functions": [
+   "F-018",
+   "F-042"
+  ]
+ },
+ "prerequisites": [
+  "S02U06"
+ ],
+ "nodes": [
+  {
+   "id": "S02U07N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Everyday past verbs",
+   "teaches": {
+    "lexis": [
+     "lex.00603",
+     "lex.00606",
+     "lex.00609",
+     "lex.00612",
+     "lex.00615",
+     "lex.00618",
+     "lex.00621",
+     "lex.00624",
+     "lex.00627",
+     "lex.00630",
+     "lex.00633",
+     "lex.00636"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-027"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U07N2",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Telling a story",
+   "teaches": {
+    "lexis": [
+     "lex.00604",
+     "lex.00607",
+     "lex.00610",
+     "lex.00613",
+     "lex.00616",
+     "lex.00619",
+     "lex.00622",
+     "lex.00625",
+     "lex.00628",
+     "lex.00631",
+     "lex.00634",
+     "lex.00637"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-019"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U07N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "Worked, played, wanted",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-029"
+    ],
+    "phonology": [],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U07N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00019"
+  },
+  {
+   "id": "S02U07N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "Went, saw, took",
+   "teaches": {
+    "lexis": [
+     "lex.00605",
+     "lex.00608",
+     "lex.00611",
+     "lex.00614",
+     "lex.00617",
+     "lex.00620",
+     "lex.00623",
+     "lex.00626",
+     "lex.00629",
+     "lex.00632",
+     "lex.00635",
+     "lex.00638"
+    ],
+    "grammar": [
+     "G-030"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-018",
+     "F-042"
+    ]
+   }
+  },
+  {
+   "id": "S02U07N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "Tell me about your weekend",
+   "task_ref": "task.S02U07",
+   "teaches": {
+    "functions": [
+     "F-018",
+     "F-042"
+    ]
+   }
+  },
+  {
+   "id": "S02U07N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s02"
+  },
+  {
+   "id": "S02U07N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

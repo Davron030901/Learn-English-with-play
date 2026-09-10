@@ -9,8 +9,8 @@ content/
   schemas/      JSON Schemas — the contract for every content object
   syllabus/     grammar-a1.json (74 points) · phonology-a1.json (30) · functions-a1.json (42)
   lexemes/      src-*.json — the compact lexeme sources (800 A1 lexemes)
-  units/        spec-s01.json — the unit specification for Section 1
-  texts/        stories-s01.json (12 episodes) · story-questions-s01.json
+  units/        spec-s01.json, spec-s02.json — unit specifications
+  texts/        stories-s*.json (24 episodes) · story-questions-s*.json
 tools/
   build_lexemes.py   compact sources        -> build/lexemes.json
   build_units.py     unit spec + lexicon    -> build/units/*.json
@@ -64,18 +64,36 @@ honest, and its drop list is the authoring backlog.
 
 ## Adding the next section
 
-1. Add the unit spec to `content/units/spec-s02.json` (same shape as `spec-s01.json`).
-2. Write the story episodes and their comprehension questions.
-3. `./build.sh` — the 400 Section 2 lexemes are already in `content/lexemes/`.
-4. Fix whatever the gates report, then commit.
+1. Author the section's lexemes as `content/lexemes/src-s03-*.json`.
+2. Extend the syllabus files with the section's grammar, phonology and functions.
+3. Add `content/units/spec-s03.json` (same shape as the existing specs).
+4. Write the story episodes and their comprehension questions.
+5. `./build.sh`, fix whatever the gates report, then commit.
 
-The pipeline is section-agnostic; nothing above assumes Section 1.
+The pipeline is section-agnostic: every tool globs `content/**` and nothing
+assumes a particular section. Sections 1 and 2 were built with exactly these
+five steps.
+
+## The vocabulary gate's exemptions
+
+Three categories of word are legitimately allowed ahead of their unit, and the
+gate encodes each one rather than being loosened:
+
+- **Metalanguage** — the fixed question and rubric frame (*what, who, how many,
+  the, of, at*). Taught as classroom chunks from unit 1.
+- **Structural chunks** — *do/does*, *there*, *let's*, *at*, *would*, the
+  possessive *'s*. A learner meets "Do you have…?" long before do-support is
+  analysed (docs/00 §4.1 rule 3).
+- **A point's own targets** — the words a grammar point introduces cannot be
+  "above level" in that point's own example sentence.
+
+Everything else is blocked, and the drop count is printed on every build.
 
 ---
 
 ## Current state
 
 See `build/BUILD-REPORT.md` — regenerated on every build. In short: the full A1
-lexicon (800 lexemes) plus Section 1 built end-to-end into **2,661 exercise items**
-across 12 units, 96 nodes and 3 mastery tiers, with all blocking gates passing and
-19 warnings recorded as the authoring backlog.
+lexicon (800 lexemes), all 74 A1 grammar points, 30 phonology points and 42
+functions, built end-to-end into **5,568 exercise items** across 24 units, 192
+nodes and 3 mastery tiers, with all blocking gates passing.

@@ -29,8 +29,12 @@ LEX_BY_ID = {l["id"]: l for l in LEX}
 GRAM = {g["id"]: g for g in json.load(open("content/syllabus/grammar-a1.json", encoding="utf-8"))}
 PHON = {p["id"]: p for p in json.load(open("content/syllabus/phonology-a1.json", encoding="utf-8"))}
 FUNC = {f["id"]: f for f in json.load(open("content/syllabus/functions-a1.json", encoding="utf-8"))}
-STORIES = {t["id"]: t for t in json.load(open("content/texts/stories-s01.json", encoding="utf-8"))["texts"]}
-SQ = json.load(open("content/texts/story-questions-s01.json", encoding="utf-8"))["questions"]
+STORIES, SQ = {}, {}
+for _p in sorted(glob.glob("content/texts/stories-*.json")):
+    for _t in json.load(open(_p, encoding="utf-8"))["texts"]:
+        STORIES[_t["id"]] = _t
+for _p in sorted(glob.glob("content/texts/story-questions-*.json")):
+    SQ.update(json.load(open(_p, encoding="utf-8"))["questions"])
 UNITS = [json.load(open(p, encoding="utf-8")) for p in sorted(glob.glob("build/units/*.json"))]
 
 # lexemes available at or before a given unit index (the vocabulary gate)
@@ -50,6 +54,12 @@ METALANGUAGE = {"what","who","when","where","why","how","which","whose","many","
  "three","four","five","six","seven","eight","nine","ten","twelve","us","this",
  "that","these","those","there","here","his","her","my","your","our","their"}
 
+# Structural function words the learner meets as chunks from unit 1 ("Do you
+# have…?", "There is…", "at home", "I'd like…") and analyses later. They are
+# scaffolding, not vocabulary to be gated (docs/00 §4.1 rule 3).
+STRUCTURAL = {"'s","s'","let","let's","do","does","did","don't","doesn't","didn't","there","at","would",
+              "d","have","has","had","be","been","am","is","are","was","were"}
+
 NAMES = {"sarah","aziz","kamola","bobur","karimov","tashkent","samarkand","bukhara",
          "khiva","andijan","nukus","navoi","temur","amir","uzbekistan","england",
          "america","russia","turkey","london","istanbul","japan","navruz","chimgan",
@@ -63,7 +73,8 @@ def forms_upto(uid):
     for lid in AVAILABLE[uid]:
         l = LEX_BY_ID[lid]
         f.add(l["lemma"].lower())
-        f.update(x.lower() for x in l["spelling"]["inflections"])
+        for x in l["spelling"]["inflections"]:
+            f.add(x.lower()); f.update(x.lower().split())
         f.update({l["spelling"]["us"].lower(), l["spelling"]["uk"].lower()})
         f.update(l["lemma"].lower().split())
     f |= {"i'm","you're","he's","she's","it's","we're","they're","isn't","aren't",
@@ -74,14 +85,27 @@ def forms_upto(uid):
     _FORMS[uid] = f
     return f
 
-def vocab_ok(texts, uid, allow=0):
-    f = forms_upto(uid)
+def target_words(gids):
+    """Words a grammar point itself introduces: they cannot be 'above level'
+    in the point's own example (do/does for do-support, there for existentials,
+    the irregular plurals in the plural rule, and so on)."""
+    out = set()
+    for gid in gids or []:
+        g = GRAM.get(gid)
+        if not g: continue
+        for src in (g.get("form", ""), g.get("label", "")):
+            out |= {w.lower() for w in re.findall(r"[A-Za-z']+", src)}
+    return out
+
+def vocab_ok(texts, uid, allow=0, gids=None):
+    f = forms_upto(uid) | target_words(gids)
     unknown = set()
     for t in texts:
         if not isinstance(t, str): continue
         for w in _WORD.findall(t):
             lw = w.lower()
-            if lw in f or lw in NAMES or lw in METALANGUAGE: continue
+            if lw in f or lw in NAMES or lw in METALANGUAGE or lw in STRUCTURAL: continue
+            if lw.endswith("'s") and lw[:-2] in f: continue
             if lw.rstrip("s") in f: continue
             unknown.add(lw)
     return len(unknown) <= allow
@@ -89,9 +113,15 @@ def vocab_ok(texts, uid, allow=0):
 # Types whose visible words are vehicles for something else (a sound, a taught
 # formula) rather than vocabulary the learner must already know. The word is
 # always glossed on screen, so the +1 rule does not apply to them.
+UI_CHROME = {"correct", "not correct", "true", "false"}
+
 VOCAB_EXEMPT = {"minimal_pair_discrimination", "phoneme_id", "pragmatics_choose",
                 "speak_prompt", "speak_roleplay", "speak_retell", "repeat_after",
-                "stress_tap", "write_sentence"}
+                "stress_tap", "write_sentence",
+                # the prompt of an error item is wrong ON PURPOSE; only its
+                # answer key has to obey the vocabulary sequence, and that is
+                # checked because `key` is scanned below
+                "grammaticality_judgement"}
 
 DROPPED = defaultdict(int)
 OUT_OF_SEQUENCE = defaultdict(set)   # grammar/function id -> words above level
@@ -708,9 +738,11 @@ def build():
                 items = [i for i in items if i]
                 kept = []
                 for it in items:
-                    texts = [it["prompt"].get("text")]
+                    texts = ([] if it["type_id"] == "error_correct"
+                             else [it["prompt"].get("text")])
                     for k in ("options", "bank"):
-                        texts += [x for x in (it["prompt"].get(k) or []) if isinstance(x, str)]
+                        texts += [x for x in (it["prompt"].get(k) or [])
+                                  if isinstance(x, str) and x.lower() not in UI_CHROME]
                     for pr in (it["prompt"].get("pairs") or []): texts.append(pr[0])
                     texts += [x for x in (it["answer"].get("key") or []) if isinstance(x, str)]
                     if it["type_id"] in VOCAB_EXEMPT:
@@ -719,12 +751,16 @@ def build():
                     # A grammar point's canonical example IS the taught material;
                     # allow it but record any out-of-sequence words for the author.
                     allow = 3 if gids else 0
-                    if vocab_ok(texts, unit["id"], allow=allow):
+                    if vocab_ok(texts, unit["id"], allow=allow, gids=gids):
                         if gids:
-                            f = forms_upto(unit["id"])
+                            f = forms_upto(unit["id"]) | target_words(gids)
                             bad = {w.lower() for t in texts if isinstance(t, str)
                                    for w in _WORD.findall(t)
                                    if w.lower() not in f and w.lower() not in NAMES
+                                   and w.lower() not in METALANGUAGE
+                                   and w.lower() not in STRUCTURAL
+                                   and not (w.lower().endswith("'s")
+                                            and w.lower()[:-2] in f)
                                    and w.lower().rstrip("s") not in f}
                             if bad: OUT_OF_SEQUENCE[gids[0]] |= bad
                         kept.append(it)

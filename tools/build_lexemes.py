@@ -96,6 +96,17 @@ def inflections(rec):
         out = [lemma]
         if rec.get("cmp"):
             out += [rec["cmp"], rec.get("sup", "")]
+        elif len(lemma) <= 8 and lemma.isalpha():
+            # regular -er/-est, with the doubling and y->i spellings
+            if lemma.endswith("e"):
+                stem = lemma[:-1]
+            elif re.search(r"[^aeiou]y$", lemma):
+                stem = lemma[:-1] + "i"
+            elif re.search(r"[^aeiou][aeiou][bdgmnprt]$", lemma):
+                stem = lemma + lemma[-1]
+            else:
+                stem = lemma
+            out += [stem + "er", "the " + stem + "est", stem + "est"]
     return [x for x in out if x]
 
 def build():

@@ -1,0 +1,212 @@
+{
+ "id": "S02U03",
+ "type": "unit",
+ "section": "S02",
+ "index": 15,
+ "cefr": "A1.2",
+ "title": {
+  "en": "Shopping",
+  "uz": "Xarid"
+ },
+ "theme": "shopping_colours",
+ "can_do": [
+  "I can ask the price and pay.",
+  "I can say how much or how many of something there is.",
+  "I can choose between things in a shop."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-055",
+   "G-056",
+   "G-060"
+  ],
+  "lexis": [
+   "lex.00467",
+   "lex.00468",
+   "lex.00469",
+   "lex.00470",
+   "lex.00471",
+   "lex.00472",
+   "lex.00473",
+   "lex.00474",
+   "lex.00475",
+   "lex.00476",
+   "lex.00477",
+   "lex.00478",
+   "lex.00479",
+   "lex.00480",
+   "lex.00481",
+   "lex.00482",
+   "lex.00483",
+   "lex.00484",
+   "lex.00485",
+   "lex.00486",
+   "lex.00487",
+   "lex.00488",
+   "lex.00489",
+   "lex.00490",
+   "lex.00491",
+   "lex.00492",
+   "lex.00493",
+   "lex.00494",
+   "lex.00495",
+   "lex.00496",
+   "lex.00497",
+   "lex.00498",
+   "lex.00499",
+   "lex.00500",
+   "lex.00501",
+   "lex.00502"
+  ],
+  "phonology": [
+   "P-019",
+   "P-024"
+  ],
+  "functions": [
+   "F-035",
+   "F-023"
+  ]
+ },
+ "prerequisites": [
+  "S02U02"
+ ],
+ "nodes": [
+  {
+   "id": "S02U03N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Colours",
+   "teaches": {
+    "lexis": [
+     "lex.00467",
+     "lex.00470",
+     "lex.00473",
+     "lex.00476",
+     "lex.00479",
+     "lex.00482",
+     "lex.00485",
+     "lex.00488",
+     "lex.00491",
+     "lex.00494",
+     "lex.00497",
+     "lex.00500"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-019"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U03N2",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Prices and paying",
+   "teaches": {
+    "lexis": [
+     "lex.00468",
+     "lex.00471",
+     "lex.00474",
+     "lex.00477",
+     "lex.00480",
+     "lex.00483",
+     "lex.00486",
+     "lex.00489",
+     "lex.00492",
+     "lex.00495",
+     "lex.00498",
+     "lex.00501"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-024"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U03N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "How much? How many?",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-055",
+     "G-060"
+    ],
+    "phonology": [],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U03N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00015"
+  },
+  {
+   "id": "S02U03N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "The blue one, please",
+   "teaches": {
+    "lexis": [
+     "lex.00469",
+     "lex.00472",
+     "lex.00475",
+     "lex.00478",
+     "lex.00481",
+     "lex.00484",
+     "lex.00487",
+     "lex.00490",
+     "lex.00493",
+     "lex.00496",
+     "lex.00499",
+     "lex.00502"
+    ],
+    "grammar": [
+     "G-056"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-035",
+     "F-023"
+    ]
+   }
+  },
+  {
+   "id": "S02U03N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "Buy something",
+   "task_ref": "task.S02U03",
+   "teaches": {
+    "functions": [
+     "F-035",
+     "F-023"
+    ]
+   }
+  },
+  {
+   "id": "S02U03N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s02"
+  },
+  {
+   "id": "S02U03N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

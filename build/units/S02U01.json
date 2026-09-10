@@ -1,0 +1,210 @@
+{
+ "id": "S02U01",
+ "type": "unit",
+ "section": "S02",
+ "index": 13,
+ "cefr": "A1.2",
+ "title": {
+  "en": "Now or always",
+  "uz": "Hozir yoki doim"
+ },
+ "theme": "present_contrast",
+ "can_do": [
+  "I can choose correctly between 'I work' and 'I'm working'.",
+  "I can talk about a temporary situation in my life.",
+  "I can avoid the -ing form with verbs like know and want."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-025",
+   "G-026",
+   "G-027"
+  ],
+  "lexis": [
+   "lex.00401",
+   "lex.00402",
+   "lex.00403",
+   "lex.00404",
+   "lex.00405",
+   "lex.00406",
+   "lex.00407",
+   "lex.00408",
+   "lex.00409",
+   "lex.00410",
+   "lex.00411",
+   "lex.00412",
+   "lex.00413",
+   "lex.00414",
+   "lex.00415",
+   "lex.00416",
+   "lex.00417",
+   "lex.00418",
+   "lex.00419",
+   "lex.00420",
+   "lex.00421",
+   "lex.00422",
+   "lex.00423",
+   "lex.00424",
+   "lex.00425",
+   "lex.00426",
+   "lex.00427",
+   "lex.00428",
+   "lex.00429",
+   "lex.00430",
+   "lex.00431",
+   "lex.00432"
+  ],
+  "phonology": [
+   "P-029",
+   "P-020",
+   "P-017"
+  ],
+  "functions": [
+   "F-018",
+   "F-026",
+   "F-032"
+  ]
+ },
+ "prerequisites": [],
+ "nodes": [
+  {
+   "id": "S02U01N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Thinking and knowing",
+   "teaches": {
+    "lexis": [
+     "lex.00401",
+     "lex.00404",
+     "lex.00407",
+     "lex.00410",
+     "lex.00413",
+     "lex.00416",
+     "lex.00419",
+     "lex.00422",
+     "lex.00425",
+     "lex.00428",
+     "lex.00431"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-029"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U01N2",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "I work / I'm working",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-025"
+    ],
+    "phonology": [
+     "P-020"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U01N3",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "These days",
+   "teaches": {
+    "lexis": [
+     "lex.00402",
+     "lex.00405",
+     "lex.00408",
+     "lex.00411",
+     "lex.00414",
+     "lex.00417",
+     "lex.00420",
+     "lex.00423",
+     "lex.00426",
+     "lex.00429",
+     "lex.00432"
+    ],
+    "grammar": [
+     "G-026"
+    ],
+    "phonology": [
+     "P-017"
+    ],
+    "functions": [
+     "F-018",
+     "F-032"
+    ]
+   }
+  },
+  {
+   "id": "S02U01N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00013"
+  },
+  {
+   "id": "S02U01N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "Slowly, carefully, well",
+   "teaches": {
+    "lexis": [
+     "lex.00403",
+     "lex.00406",
+     "lex.00409",
+     "lex.00412",
+     "lex.00415",
+     "lex.00418",
+     "lex.00421",
+     "lex.00424",
+     "lex.00427",
+     "lex.00430"
+    ],
+    "grammar": [
+     "G-027"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-026"
+    ]
+   }
+  },
+  {
+   "id": "S02U01N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "What are you doing these days?",
+   "task_ref": "task.S02U01",
+   "teaches": {
+    "functions": [
+     "F-018",
+     "F-026",
+     "F-032"
+    ]
+   }
+  },
+  {
+   "id": "S02U01N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s02"
+  },
+  {
+   "id": "S02U01N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

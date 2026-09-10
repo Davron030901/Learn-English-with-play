@@ -1,0 +1,205 @@
+{
+ "id": "S02U10",
+ "type": "unit",
+ "section": "S02",
+ "index": 22,
+ "cefr": "A1.2",
+ "title": {
+  "en": "Let's",
+  "uz": "Keling"
+ },
+ "theme": "invitations_arrangements",
+ "can_do": [
+  "I can suggest doing something together.",
+  "I can invite someone and accept or decline politely.",
+  "I can order politely in a café or a shop."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-040",
+   "G-044"
+  ],
+  "lexis": [
+   "lex.00705",
+   "lex.00706",
+   "lex.00707",
+   "lex.00708",
+   "lex.00709",
+   "lex.00710",
+   "lex.00711",
+   "lex.00712",
+   "lex.00713",
+   "lex.00714",
+   "lex.00715",
+   "lex.00716",
+   "lex.00717",
+   "lex.00718",
+   "lex.00719",
+   "lex.00720",
+   "lex.00721",
+   "lex.00722",
+   "lex.00723",
+   "lex.00724",
+   "lex.00725",
+   "lex.00726",
+   "lex.00727",
+   "lex.00728",
+   "lex.00729",
+   "lex.00730",
+   "lex.00731",
+   "lex.00732",
+   "lex.00733",
+   "lex.00734",
+   "lex.00735",
+   "lex.00736"
+  ],
+  "phonology": [
+   "P-021",
+   "P-023"
+  ],
+  "functions": [
+   "F-039",
+   "F-040",
+   "F-042"
+  ]
+ },
+ "prerequisites": [
+  "S02U09"
+ ],
+ "nodes": [
+  {
+   "id": "S02U10N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Going out",
+   "teaches": {
+    "lexis": [
+     "lex.00705",
+     "lex.00708",
+     "lex.00711",
+     "lex.00714",
+     "lex.00717",
+     "lex.00720",
+     "lex.00723",
+     "lex.00726",
+     "lex.00729",
+     "lex.00732",
+     "lex.00735"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-021"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U10N2",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Celebrating",
+   "teaches": {
+    "lexis": [
+     "lex.00706",
+     "lex.00709",
+     "lex.00712",
+     "lex.00715",
+     "lex.00718",
+     "lex.00721",
+     "lex.00724",
+     "lex.00727",
+     "lex.00730",
+     "lex.00733",
+     "lex.00736"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-023"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U10N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "Let's go / I'd like",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-040"
+    ],
+    "phonology": [],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U10N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00022"
+  },
+  {
+   "id": "S02U10N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "How about Saturday?",
+   "teaches": {
+    "lexis": [
+     "lex.00707",
+     "lex.00710",
+     "lex.00713",
+     "lex.00716",
+     "lex.00719",
+     "lex.00722",
+     "lex.00725",
+     "lex.00728",
+     "lex.00731",
+     "lex.00734"
+    ],
+    "grammar": [
+     "G-044"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-039",
+     "F-040",
+     "F-042"
+    ]
+   }
+  },
+  {
+   "id": "S02U10N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "Make a plan together",
+   "task_ref": "task.S02U10",
+   "teaches": {
+    "functions": [
+     "F-039",
+     "F-040",
+     "F-042"
+    ]
+   }
+  },
+  {
+   "id": "S02U10N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s02"
+  },
+  {
+   "id": "S02U10N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

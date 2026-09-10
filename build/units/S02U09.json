@@ -1,0 +1,208 @@
+{
+ "id": "S02U09",
+ "type": "unit",
+ "section": "S02",
+ "index": 21,
+ "cefr": "A1.2",
+ "title": {
+  "en": "Plans",
+  "uz": "Rejalar"
+ },
+ "theme": "future_plans",
+ "can_do": [
+  "I can talk about my plans.",
+  "I can predict what is about to happen.",
+  "I can talk about my arrangements for tomorrow."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-034",
+   "G-035",
+   "G-036"
+  ],
+  "lexis": [
+   "lex.00671",
+   "lex.00672",
+   "lex.00673",
+   "lex.00674",
+   "lex.00675",
+   "lex.00676",
+   "lex.00677",
+   "lex.00678",
+   "lex.00679",
+   "lex.00680",
+   "lex.00681",
+   "lex.00682",
+   "lex.00683",
+   "lex.00684",
+   "lex.00685",
+   "lex.00686",
+   "lex.00687",
+   "lex.00688",
+   "lex.00689",
+   "lex.00690",
+   "lex.00691",
+   "lex.00692",
+   "lex.00693",
+   "lex.00694",
+   "lex.00695",
+   "lex.00696",
+   "lex.00697",
+   "lex.00698",
+   "lex.00699",
+   "lex.00700",
+   "lex.00701",
+   "lex.00702",
+   "lex.00703",
+   "lex.00704"
+  ],
+  "phonology": [
+   "P-029",
+   "P-017"
+  ],
+  "functions": [
+   "F-018",
+   "F-039"
+  ]
+ },
+ "prerequisites": [
+  "S02U08"
+ ],
+ "nodes": [
+  {
+   "id": "S02U09N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Time ahead",
+   "teaches": {
+    "lexis": [
+     "lex.00671",
+     "lex.00674",
+     "lex.00677",
+     "lex.00680",
+     "lex.00683",
+     "lex.00686",
+     "lex.00689",
+     "lex.00692",
+     "lex.00695",
+     "lex.00698",
+     "lex.00701",
+     "lex.00704"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-029"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U09N2",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Hopes and goals",
+   "teaches": {
+    "lexis": [
+     "lex.00672",
+     "lex.00675",
+     "lex.00678",
+     "lex.00681",
+     "lex.00684",
+     "lex.00687",
+     "lex.00690",
+     "lex.00693",
+     "lex.00696",
+     "lex.00699",
+     "lex.00702"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-017"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U09N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "I'm going to…",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-034",
+     "G-036"
+    ],
+    "phonology": [],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U09N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00021"
+  },
+  {
+   "id": "S02U09N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "I'm meeting him at six",
+   "teaches": {
+    "lexis": [
+     "lex.00673",
+     "lex.00676",
+     "lex.00679",
+     "lex.00682",
+     "lex.00685",
+     "lex.00688",
+     "lex.00691",
+     "lex.00694",
+     "lex.00697",
+     "lex.00700",
+     "lex.00703"
+    ],
+    "grammar": [
+     "G-035"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-018",
+     "F-039"
+    ]
+   }
+  },
+  {
+   "id": "S02U09N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "What are your plans?",
+   "task_ref": "task.S02U09",
+   "teaches": {
+    "functions": [
+     "F-018",
+     "F-039"
+    ]
+   }
+  },
+  {
+   "id": "S02U09N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s02"
+  },
+  {
+   "id": "S02U09N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

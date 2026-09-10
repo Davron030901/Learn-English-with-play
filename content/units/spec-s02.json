@@ -1,0 +1,187 @@
+{
+  "_comment": "Unit specification for Section 2 (A1.2, course units 13-24). Same shape as spec-s01.json; tools/build_units.py expands it. All 34 A1.2 grammar points have exactly one home unit here. Phonology points revisit the A1.1 set with the two new A1.2 points (P-027 past -ed, P-028 linking) landing in units 19 and 14 as their records specify.",
+  "section": "S02",
+  "cefr": "A1.2",
+  "units": [
+    {
+      "n": 1, "title_en": "Now or always", "title_uz": "Hozir yoki doim", "theme": "present_contrast",
+      "can_do": ["I can choose correctly between 'I work' and 'I'm working'.", "I can talk about a temporary situation in my life.", "I can avoid the -ing form with verbs like know and want."],
+      "grammar": ["G-025", "G-026", "G-027"],
+      "phonology": ["P-029", "P-020", "P-017"],
+      "functions": ["F-018", "F-026", "F-032"],
+      "story": "txt.00013",
+      "nodes": [
+        {"focus": "lexis", "title": "Thinking and knowing"},
+        {"focus": "grammar", "title": "I work / I'm working"},
+        {"focus": "mixed", "title": "These days"},
+        {"focus": "mixed", "title": "Slowly, carefully, well"},
+        {"focus": "speak", "title": "What are you doing these days?"}
+      ]
+    },
+    {
+      "n": 2, "title_en": "In town", "title_uz": "Shaharda", "theme": "town_directions",
+      "can_do": ["I can ask for and follow simple directions.", "I can give simple instructions.", "I can name the places in a town and the ways to travel."],
+      "grammar": ["G-045", "G-046", "G-070"],
+      "phonology": ["P-028", "P-022", "P-021"],
+      "functions": ["F-037", "F-038", "F-036"],
+      "story": "txt.00014",
+      "nodes": [
+        {"focus": "lexis", "title": "Places in town"},
+        {"focus": "lexis", "title": "Getting around"},
+        {"focus": "grammar", "title": "Turn left, don't stop"},
+        {"focus": "mixed", "title": "Along, across, through"},
+        {"focus": "speak", "title": "Ask the way"}
+      ]
+    },
+    {
+      "n": 3, "title_en": "Shopping", "title_uz": "Xarid", "theme": "shopping_colours",
+      "can_do": ["I can ask the price and pay.", "I can say how much or how many of something there is.", "I can choose between things in a shop."],
+      "grammar": ["G-055", "G-056", "G-060"],
+      "phonology": ["P-019", "P-024"],
+      "functions": ["F-035", "F-023"],
+      "story": "txt.00015",
+      "nodes": [
+        {"focus": "lexis", "title": "Colours"},
+        {"focus": "lexis", "title": "Prices and paying"},
+        {"focus": "grammar", "title": "How much? How many?"},
+        {"focus": "mixed", "title": "The blue one, please"},
+        {"focus": "speak", "title": "Buy something"}
+      ]
+    },
+    {
+      "n": 4, "title_en": "Describing people", "title_uz": "Odamlarni tasvirlash", "theme": "appearance_personality",
+      "can_do": ["I can describe what someone looks like.", "I can describe someone's character.", "I can use two or three adjectives in the right order."],
+      "grammar": ["G-061", "G-062"],
+      "phonology": ["P-003", "P-005", "P-018"],
+      "functions": ["F-015", "F-031"],
+      "story": "txt.00016",
+      "nodes": [
+        {"focus": "lexis", "title": "What people look like"},
+        {"focus": "lexis", "title": "What people are like"},
+        {"focus": "grammar", "title": "A nice big red bag"},
+        {"focus": "mixed", "title": "He looks like his father"},
+        {"focus": "speak", "title": "Describe someone you know"}
+      ]
+    },
+    {
+      "n": 5, "title_en": "My home", "title_uz": "Mening uyim", "theme": "home_possession",
+      "can_do": ["I can say who something belongs to.", "I can answer the question 'Whose is this?'", "I can describe the place where I live in detail."],
+      "grammar": ["G-011", "G-013", "G-014"],
+      "phonology": ["P-026", "P-025"],
+      "functions": ["F-016", "F-017"],
+      "story": "txt.00017",
+      "nodes": [
+        {"focus": "lexis", "title": "Around the house"},
+        {"focus": "lexis", "title": "Jobs at home"},
+        {"focus": "grammar", "title": "My sister's room"},
+        {"focus": "mixed", "title": "Mine, yours, theirs"},
+        {"focus": "speak", "title": "Show me your home"}
+      ]
+    },
+    {
+      "n": 6, "title_en": "Yesterday", "title_uz": "Kecha", "theme": "past_states_feelings",
+      "can_do": ["I can say where I was and how I felt.", "I can describe a past scene.", "I can say exactly when something happened."],
+      "grammar": ["G-006", "G-008", "G-028", "G-033"],
+      "phonology": ["P-025", "P-020"],
+      "functions": ["F-031", "F-042"],
+      "story": "txt.00018",
+      "nodes": [
+        {"focus": "lexis", "title": "Feelings"},
+        {"focus": "lexis", "title": "Events"},
+        {"focus": "grammar", "title": "I was, they were"},
+        {"focus": "mixed", "title": "Yesterday, last week, two days ago"},
+        {"focus": "speak", "title": "How was your day?"}
+      ]
+    },
+    {
+      "n": 7, "title_en": "What happened", "title_uz": "Nima bo'ldi", "theme": "past_narrative",
+      "can_do": ["I can say what I did yesterday.", "I can use the thirty most common past verbs.", "I can tell a short story about the past."],
+      "grammar": ["G-029", "G-030"],
+      "phonology": ["P-027", "P-019"],
+      "functions": ["F-018", "F-042"],
+      "story": "txt.00019",
+      "nodes": [
+        {"focus": "lexis", "title": "Everyday past verbs"},
+        {"focus": "lexis", "title": "Telling a story"},
+        {"focus": "grammar", "title": "Worked, played, wanted"},
+        {"focus": "mixed", "title": "Went, saw, took"},
+        {"focus": "speak", "title": "Tell me about your weekend"}
+      ]
+    },
+    {
+      "n": 8, "title_en": "Did you?", "title_uz": "Qildingizmi?", "theme": "past_questions_travel",
+      "can_do": ["I can ask someone about their weekend.", "I can say what I did not do.", "I can talk about a journey I made."],
+      "grammar": ["G-031", "G-032"],
+      "phonology": ["P-027", "P-029"],
+      "functions": ["F-036", "F-010"],
+      "story": "txt.00020",
+      "nodes": [
+        {"focus": "lexis", "title": "Travel"},
+        {"focus": "lexis", "title": "Places and nature"},
+        {"focus": "grammar", "title": "Did you go?"},
+        {"focus": "mixed", "title": "I didn't go"},
+        {"focus": "speak", "title": "Where did you go?"}
+      ]
+    },
+    {
+      "n": 9, "title_en": "Plans", "title_uz": "Rejalar", "theme": "future_plans",
+      "can_do": ["I can talk about my plans.", "I can predict what is about to happen.", "I can talk about my arrangements for tomorrow."],
+      "grammar": ["G-034", "G-035", "G-036"],
+      "phonology": ["P-029", "P-017"],
+      "functions": ["F-018", "F-039"],
+      "story": "txt.00021",
+      "nodes": [
+        {"focus": "lexis", "title": "Time ahead"},
+        {"focus": "lexis", "title": "Hopes and goals"},
+        {"focus": "grammar", "title": "I'm going to…"},
+        {"focus": "mixed", "title": "I'm meeting him at six"},
+        {"focus": "speak", "title": "What are your plans?"}
+      ]
+    },
+    {
+      "n": 10, "title_en": "Let's", "title_uz": "Keling", "theme": "invitations_arrangements",
+      "can_do": ["I can suggest doing something together.", "I can invite someone and accept or decline politely.", "I can order politely in a café or a shop."],
+      "grammar": ["G-040", "G-044"],
+      "phonology": ["P-021", "P-023"],
+      "functions": ["F-039", "F-040", "F-042"],
+      "story": "txt.00022",
+      "nodes": [
+        {"focus": "lexis", "title": "Going out"},
+        {"focus": "lexis", "title": "Celebrating"},
+        {"focus": "grammar", "title": "Let's go / I'd like"},
+        {"focus": "mixed", "title": "How about Saturday?"},
+        {"focus": "speak", "title": "Make a plan together"}
+      ]
+    },
+    {
+      "n": 11, "title_en": "Rules and advice", "title_uz": "Qoidalar va maslahat", "theme": "obligation_health",
+      "can_do": ["I can understand and give rules.", "I can say what I have to do and what is not necessary.", "I can give simple advice."],
+      "grammar": ["G-041", "G-042", "G-043"],
+      "phonology": ["P-029", "P-024"],
+      "functions": ["F-041", "F-037"],
+      "story": "txt.00023",
+      "nodes": [
+        {"focus": "lexis", "title": "Health"},
+        {"focus": "lexis", "title": "Signs and rules"},
+        {"focus": "grammar", "title": "Must and mustn't"},
+        {"focus": "mixed", "title": "You should rest"},
+        {"focus": "speak", "title": "Give advice to a friend"}
+      ]
+    },
+    {
+      "n": 12, "title_en": "Comparing", "title_uz": "Taqqoslash", "theme": "comparison_geography",
+      "can_do": ["I can compare two things.", "I can say which is the biggest or the best.", "I can say two things are the same or not the same."],
+      "grammar": ["G-064", "G-065", "G-066", "G-067"],
+      "phonology": ["P-009", "P-018"],
+      "functions": ["F-017", "F-030"],
+      "story": "txt.00024",
+      "nodes": [
+        {"focus": "lexis", "title": "Places and land"},
+        {"focus": "lexis", "title": "High, low, wide, deep"},
+        {"focus": "grammar", "title": "Bigger than"},
+        {"focus": "mixed", "title": "The biggest in the world"},
+        {"focus": "speak", "title": "Compare two cities"}
+      ]
+    }
+  ]
+}

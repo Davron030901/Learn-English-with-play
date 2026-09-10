@@ -570,7 +570,10 @@
    "us": "sorry",
    "uk": "sorry",
    "inflections": [
-    "sorry"
+    "sorry",
+    "sorrier",
+    "the sorriest",
+    "sorriest"
    ]
   },
   "audio": {
@@ -1463,7 +1466,10 @@
    "us": "nice",
    "uk": "nice",
    "inflections": [
-    "nice"
+    "nice",
+    "nicer",
+    "the nicest",
+    "nicest"
    ]
   },
   "audio": {
@@ -2110,7 +2116,10 @@
    "us": "Uzbek",
    "uk": "Uzbek",
    "inflections": [
-    "Uzbek"
+    "Uzbek",
+    "Uzbeker",
+    "the Uzbekest",
+    "Uzbekest"
    ]
   },
   "audio": {
@@ -2320,7 +2329,10 @@
    "us": "American",
    "uk": "American",
    "inflections": [
-    "American"
+    "American",
+    "Americanner",
+    "the Americannest",
+    "Americannest"
    ]
   },
   "audio": {
@@ -2420,7 +2432,10 @@
    "us": "Russian",
    "uk": "Russian",
    "inflections": [
-    "Russian"
+    "Russian",
+    "Russianer",
+    "the Russianest",
+    "Russianest"
    ]
   },
   "audio": {
@@ -2521,7 +2536,10 @@
    "us": "Turkish",
    "uk": "Turkish",
    "inflections": [
-    "Turkish"
+    "Turkish",
+    "Turkisher",
+    "the Turkishest",
+    "Turkishest"
    ]
   },
   "audio": {
@@ -3147,7 +3165,10 @@
    "us": "fine",
    "uk": "fine",
    "inflections": [
-    "fine"
+    "fine",
+    "finer",
+    "the finest",
+    "finest"
    ]
   },
   "audio": {
@@ -6373,7 +6394,10 @@
    "us": "old",
    "uk": "old",
    "inflections": [
-    "old"
+    "old",
+    "older",
+    "the oldest",
+    "oldest"
    ]
   },
   "audio": {
@@ -6432,7 +6456,10 @@
    "us": "young",
    "uk": "young",
    "inflections": [
-    "young"
+    "young",
+    "younger",
+    "the youngest",
+    "youngest"
    ]
   },
   "audio": {
@@ -6540,7 +6567,10 @@
    "us": "married",
    "uk": "married",
    "inflections": [
-    "married"
+    "married",
+    "marrieder",
+    "the marriedest",
+    "marriedest"
    ]
   },
   "audio": {
@@ -6596,7 +6626,10 @@
    "us": "single",
    "uk": "single",
    "inflections": [
-    "single"
+    "single",
+    "singler",
+    "the singlest",
+    "singlest"
    ]
   },
   "audio": {
@@ -8753,7 +8786,10 @@
    "us": "new",
    "uk": "new",
    "inflections": [
-    "new"
+    "new",
+    "newer",
+    "the newest",
+    "newest"
    ]
   },
   "audio": {
@@ -10699,7 +10735,10 @@
    "us": "late",
    "uk": "late",
    "inflections": [
-    "late"
+    "late",
+    "later",
+    "the latest",
+    "latest"
    ]
   },
   "audio": {
@@ -12723,7 +12762,10 @@
    "us": "busy",
    "uk": "busy",
    "inflections": [
-    "busy"
+    "busy",
+    "busier",
+    "the busiest",
+    "busiest"
    ]
   },
   "audio": {
@@ -15535,7 +15577,10 @@
    "us": "great",
    "uk": "great",
    "inflections": [
-    "great"
+    "great",
+    "greater",
+    "the greatest",
+    "greatest"
    ]
   },
   "audio": {
@@ -15646,7 +15691,10 @@
    "us": "boring",
    "uk": "boring",
    "inflections": [
-    "boring"
+    "boring",
+    "boringer",
+    "the boringest",
+    "boringest"
    ]
   },
   "audio": {
@@ -15806,7 +15854,10 @@
    "us": "funny",
    "uk": "funny",
    "inflections": [
-    "funny"
+    "funny",
+    "funnier",
+    "the funniest",
+    "funniest"
    ]
   },
   "audio": {
@@ -15914,7 +15965,10 @@
    "us": "easy",
    "uk": "easy",
    "inflections": [
-    "easy"
+    "easy",
+    "easier",
+    "the easiest",
+    "easiest"
    ]
   },
   "audio": {
@@ -18356,7 +18410,10 @@
    "us": "hungry",
    "uk": "hungry",
    "inflections": [
-    "hungry"
+    "hungry",
+    "hungrier",
+    "the hungriest",
+    "hungriest"
    ]
   },
   "audio": {
@@ -19939,7 +19996,10 @@
    "us": "fast",
    "uk": "fast",
    "inflections": [
-    "fast"
+    "fast",
+    "faster",
+    "the fastest",
+    "fastest"
    ]
   },
   "audio": {
@@ -19997,7 +20057,10 @@
    "us": "slow",
    "uk": "slow",
    "inflections": [
-    "slow"
+    "slow",
+    "slower",
+    "the slowest",
+    "slowest"
    ]
   },
   "audio": {
@@ -21088,7 +21151,10 @@
    "us": "hot",
    "uk": "hot",
    "inflections": [
-    "hot"
+    "hot",
+    "hotter",
+    "the hottest",
+    "hottest"
    ]
   },
   "audio": {
@@ -21144,7 +21210,10 @@
    "us": "cold",
    "uk": "cold",
    "inflections": [
-    "cold"
+    "cold",
+    "colder",
+    "the coldest",
+    "coldest"
    ]
   },
   "audio": {
@@ -21200,7 +21269,10 @@
    "us": "warm",
    "uk": "warm",
    "inflections": [
-    "warm"
+    "warm",
+    "warmer",
+    "the warmest",
+    "warmest"
    ]
   },
   "audio": {
@@ -25718,7 +25790,10 @@
    "us": "red",
    "uk": "red",
    "inflections": [
-    "red"
+    "red",
+    "redder",
+    "the reddest",
+    "reddest"
    ]
   },
   "audio": {
@@ -25768,7 +25843,10 @@
    "us": "blue",
    "uk": "blue",
    "inflections": [
-    "blue"
+    "blue",
+    "bluer",
+    "the bluest",
+    "bluest"
    ]
   },
   "audio": {
@@ -25818,7 +25896,10 @@
    "us": "green",
    "uk": "green",
    "inflections": [
-    "green"
+    "green",
+    "greener",
+    "the greenest",
+    "greenest"
    ]
   },
   "audio": {
@@ -25868,7 +25949,10 @@
    "us": "yellow",
    "uk": "yellow",
    "inflections": [
-    "yellow"
+    "yellow",
+    "yellower",
+    "the yellowest",
+    "yellowest"
    ]
   },
   "audio": {
@@ -25918,7 +26002,10 @@
    "us": "black",
    "uk": "black",
    "inflections": [
-    "black"
+    "black",
+    "blacker",
+    "the blackest",
+    "blackest"
    ]
   },
   "audio": {
@@ -25973,7 +26060,10 @@
    "us": "white",
    "uk": "white",
    "inflections": [
-    "white"
+    "white",
+    "whiter",
+    "the whitest",
+    "whitest"
    ]
   },
   "audio": {
@@ -26028,7 +26118,10 @@
    "us": "brown",
    "uk": "brown",
    "inflections": [
-    "brown"
+    "brown",
+    "browner",
+    "the brownest",
+    "brownest"
    ]
   },
   "audio": {
@@ -26078,7 +26171,10 @@
    "us": "gray",
    "uk": "grey",
    "inflections": [
-    "grey"
+    "grey",
+    "greyer",
+    "the greyest",
+    "greyest"
    ]
   },
   "audio": {
@@ -26128,7 +26224,10 @@
    "us": "pink",
    "uk": "pink",
    "inflections": [
-    "pink"
+    "pink",
+    "pinker",
+    "the pinkest",
+    "pinkest"
    ]
   },
   "audio": {
@@ -26235,7 +26334,10 @@
    "us": "cheap",
    "uk": "cheap",
    "inflections": [
-    "cheap"
+    "cheap",
+    "cheaper",
+    "the cheapest",
+    "cheapest"
    ]
   },
   "audio": {
@@ -27508,7 +27610,10 @@
    "us": "long",
    "uk": "long",
    "inflections": [
-    "long"
+    "long",
+    "longer",
+    "the longest",
+    "longest"
    ]
   },
   "audio": {
@@ -27563,7 +27668,10 @@
    "us": "short",
    "uk": "short",
    "inflections": [
-    "short"
+    "short",
+    "shorter",
+    "the shortest",
+    "shortest"
    ]
   },
   "audio": {
@@ -27618,7 +27726,10 @@
    "us": "dark",
    "uk": "dark",
    "inflections": [
-    "dark"
+    "dark",
+    "darker",
+    "the darkest",
+    "darkest"
    ]
   },
   "audio": {
@@ -27674,7 +27785,10 @@
    "us": "tall",
    "uk": "tall",
    "inflections": [
-    "tall"
+    "tall",
+    "taller",
+    "the tallest",
+    "tallest"
    ]
   },
   "audio": {
@@ -27732,7 +27846,10 @@
    "us": "thin",
    "uk": "thin",
    "inflections": [
-    "thin"
+    "thin",
+    "thinner",
+    "the thinnest",
+    "thinnest"
    ]
   },
   "audio": {
@@ -27787,7 +27904,10 @@
    "us": "fat",
    "uk": "fat",
    "inflections": [
-    "fat"
+    "fat",
+    "fatter",
+    "the fattest",
+    "fattest"
    ]
   },
   "audio": {
@@ -27848,7 +27968,10 @@
    "us": "strong",
    "uk": "strong",
    "inflections": [
-    "strong"
+    "strong",
+    "stronger",
+    "the strongest",
+    "strongest"
    ]
   },
   "audio": {
@@ -27901,7 +28024,10 @@
    "us": "handsome",
    "uk": "handsome",
    "inflections": [
-    "handsome"
+    "handsome",
+    "handsomer",
+    "the handsomest",
+    "handsomest"
    ]
   },
   "audio": {
@@ -27954,7 +28080,10 @@
    "us": "pretty",
    "uk": "pretty",
    "inflections": [
-    "pretty"
+    "pretty",
+    "prettier",
+    "the prettiest",
+    "prettiest"
    ]
   },
   "audio": {
@@ -28004,7 +28133,10 @@
    "us": "blonde",
    "uk": "blonde",
    "inflections": [
-    "blonde"
+    "blonde",
+    "blonder",
+    "the blondest",
+    "blondest"
    ]
   },
   "audio": {
@@ -28266,7 +28398,10 @@
    "us": "curly",
    "uk": "curly",
    "inflections": [
-    "curly"
+    "curly",
+    "curlier",
+    "the curliest",
+    "curliest"
    ]
   },
   "audio": {
@@ -28316,7 +28451,10 @@
    "us": "kind",
    "uk": "kind",
    "inflections": [
-    "kind"
+    "kind",
+    "kinder",
+    "the kindest",
+    "kindest"
    ]
   },
   "audio": {
@@ -28369,7 +28507,10 @@
    "us": "friendly",
    "uk": "friendly",
    "inflections": [
-    "friendly"
+    "friendly",
+    "friendlier",
+    "the friendliest",
+    "friendliest"
    ]
   },
   "audio": {
@@ -28422,7 +28563,10 @@
    "us": "smart",
    "uk": "clever",
    "inflections": [
-    "clever"
+    "clever",
+    "cleverrer",
+    "the cleverrest",
+    "cleverrest"
    ]
   },
   "audio": {
@@ -28472,7 +28616,10 @@
    "us": "polite",
    "uk": "polite",
    "inflections": [
-    "polite"
+    "polite",
+    "politer",
+    "the politest",
+    "politest"
    ]
   },
   "audio": {
@@ -28527,7 +28674,10 @@
    "us": "rude",
    "uk": "rude",
    "inflections": [
-    "rude"
+    "rude",
+    "ruder",
+    "the rudest",
+    "rudest"
    ]
   },
   "audio": {
@@ -28582,7 +28732,10 @@
    "us": "quiet",
    "uk": "quiet",
    "inflections": [
-    "quiet"
+    "quiet",
+    "quieter",
+    "the quietest",
+    "quietest"
    ]
   },
   "audio": {
@@ -28640,7 +28793,10 @@
    "us": "shy",
    "uk": "shy",
    "inflections": [
-    "shy"
+    "shy",
+    "shier",
+    "the shiest",
+    "shiest"
    ]
   },
   "audio": {
@@ -28690,7 +28846,10 @@
    "us": "serious",
    "uk": "serious",
    "inflections": [
-    "serious"
+    "serious",
+    "seriouser",
+    "the seriousest",
+    "seriousest"
    ]
   },
   "audio": {
@@ -28740,7 +28899,10 @@
    "us": "lazy",
    "uk": "lazy",
    "inflections": [
-    "lazy"
+    "lazy",
+    "lazier",
+    "the laziest",
+    "laziest"
    ]
   },
   "audio": {
@@ -28850,7 +29012,10 @@
    "us": "honest",
    "uk": "honest",
    "inflections": [
-    "honest"
+    "honest",
+    "honester",
+    "the honestest",
+    "honestest"
    ]
   },
   "audio": {
@@ -28903,7 +29068,10 @@
    "us": "patient",
    "uk": "patient",
    "inflections": [
-    "patient"
+    "patient",
+    "patienter",
+    "the patientest",
+    "patientest"
    ]
   },
   "audio": {
@@ -28953,7 +29121,10 @@
    "us": "happy",
    "uk": "happy",
    "inflections": [
-    "happy"
+    "happy",
+    "happier",
+    "the happiest",
+    "happiest"
    ]
   },
   "audio": {
@@ -29008,7 +29179,10 @@
    "us": "sad",
    "uk": "sad",
    "inflections": [
-    "sad"
+    "sad",
+    "sadder",
+    "the saddest",
+    "saddest"
    ]
   },
   "audio": {
@@ -29063,7 +29237,10 @@
    "us": "tired",
    "uk": "tired",
    "inflections": [
-    "tired"
+    "tired",
+    "tiredder",
+    "the tireddest",
+    "tireddest"
    ]
   },
   "audio": {
@@ -29116,7 +29293,10 @@
    "us": "angry",
    "uk": "angry",
    "inflections": [
-    "angry"
+    "angry",
+    "angrier",
+    "the angriest",
+    "angriest"
    ]
   },
   "audio": {
@@ -29169,7 +29349,10 @@
    "us": "afraid",
    "uk": "afraid",
    "inflections": [
-    "afraid"
+    "afraid",
+    "afraider",
+    "the afraidest",
+    "afraidest"
    ]
   },
   "audio": {
@@ -29225,7 +29408,10 @@
    "us": "worried",
    "uk": "worried",
    "inflections": [
-    "worried"
+    "worried",
+    "worrieder",
+    "the worriedest",
+    "worriedest"
    ]
   },
   "audio": {
@@ -30201,7 +30387,7 @@
   "syllabus_version": "1.0",
   "related": {
    "interferes_with": [
-    "lex.00564"
+    "lex.00568"
    ]
   }
  },
@@ -30755,7 +30941,10 @@
    "us": "own",
    "uk": "own",
    "inflections": [
-    "own"
+    "own",
+    "owner",
+    "the ownest",
+    "ownest"
    ]
   },
   "audio": {
@@ -30861,7 +31050,10 @@
    "us": "noisy",
    "uk": "noisy",
    "inflections": [
-    "noisy"
+    "noisy",
+    "noisier",
+    "the noisiest",
+    "noisiest"
    ]
   },
   "audio": {
@@ -30916,7 +31108,10 @@
    "us": "modern",
    "uk": "modern",
    "inflections": [
-    "modern"
+    "modern",
+    "moderner",
+    "the modernest",
+    "modernest"
    ]
   },
   "audio": {
@@ -30955,61 +31150,6 @@
  },
  {
   "id": "lex.00564",
-  "lemma": "dirty",
-  "sense_id": 1,
-  "pos": "adj",
-  "cefr": "A1.2",
-  "frequency": {
-   "band": 1000
-  },
-  "phonology": {
-   "ipa_ga": "ˈdɜːrti",
-   "syllables": 2,
-   "stress": "1"
-  },
-  "spelling": {
-   "us": "dirty",
-   "uk": "dirty",
-   "inflections": [
-    "dirty"
-   ]
-  },
-  "audio": {
-   "word_ga": "a/lex.00564_ga.opus",
-   "word_sbe": "a/lex.00564_sbe.opus",
-   "slow_ga": "a/lex.00564_slow.opus"
-  },
-  "collocations": [],
-  "register": "neutral",
-  "connotation": "neutral",
-  "examples": [
-   {
-    "text": "The kitchen is dirty.",
-    "audio": "a/lex.00564_ex1.opus"
-   },
-   {
-    "text": "My shoes are dirty.",
-    "audio": "a/lex.00564_ex2.opus"
-   }
-  ],
-  "l1_gloss": {
-   "uz": "iflos",
-   "ru": "грязный"
-  },
-  "topic_tags": [
-   "description"
-  ],
-  "first_taught_node": "S02U05N1",
-  "status": "published",
-  "syllabus_version": "1.0",
-  "related": {
-   "interferes_with": [
-    "lex.00549"
-   ]
-  }
- },
- {
-  "id": "lex.00565",
   "lemma": "move",
   "sense_id": 1,
   "pos": "verb",
@@ -31033,9 +31173,9 @@
    ]
   },
   "audio": {
-   "word_ga": "a/lex.00565_ga.opus",
-   "word_sbe": "a/lex.00565_sbe.opus",
-   "slow_ga": "a/lex.00565_slow.opus"
+   "word_ga": "a/lex.00564_ga.opus",
+   "word_sbe": "a/lex.00564_sbe.opus",
+   "slow_ga": "a/lex.00564_slow.opus"
   },
   "grammar": {
    "irregular": false
@@ -31049,11 +31189,11 @@
   "examples": [
    {
     "text": "We moved to Tashkent last year.",
-    "audio": "a/lex.00565_ex1.opus"
+    "audio": "a/lex.00564_ex1.opus"
    },
    {
     "text": "They are moving next month.",
-    "audio": "a/lex.00565_ex2.opus"
+    "audio": "a/lex.00564_ex2.opus"
    }
   ],
   "l1_gloss": {
@@ -31068,7 +31208,7 @@
   "syllabus_version": "1.0"
  },
  {
-  "id": "lex.00566",
+  "id": "lex.00565",
   "lemma": "stay",
   "sense_id": 1,
   "pos": "verb",
@@ -31092,9 +31232,9 @@
    ]
   },
   "audio": {
-   "word_ga": "a/lex.00566_ga.opus",
-   "word_sbe": "a/lex.00566_sbe.opus",
-   "slow_ga": "a/lex.00566_slow.opus"
+   "word_ga": "a/lex.00565_ga.opus",
+   "word_sbe": "a/lex.00565_sbe.opus",
+   "slow_ga": "a/lex.00565_slow.opus"
   },
   "grammar": {
    "irregular": false
@@ -31108,11 +31248,11 @@
   "examples": [
    {
     "text": "I stayed at home yesterday.",
-    "audio": "a/lex.00566_ex1.opus"
+    "audio": "a/lex.00565_ex1.opus"
    },
    {
     "text": "We stayed in a small hotel.",
-    "audio": "a/lex.00566_ex2.opus"
+    "audio": "a/lex.00565_ex2.opus"
    }
   ],
   "l1_gloss": {
@@ -31127,7 +31267,7 @@
   "syllabus_version": "1.0"
  },
  {
-  "id": "lex.00567",
+  "id": "lex.00566",
   "lemma": "upstairs",
   "sense_id": 1,
   "pos": "adv",
@@ -31146,9 +31286,9 @@
    "inflections": []
   },
   "audio": {
-   "word_ga": "a/lex.00567_ga.opus",
-   "word_sbe": "a/lex.00567_sbe.opus",
-   "slow_ga": "a/lex.00567_slow.opus"
+   "word_ga": "a/lex.00566_ga.opus",
+   "word_sbe": "a/lex.00566_sbe.opus",
+   "slow_ga": "a/lex.00566_slow.opus"
   },
   "collocations": [],
   "register": "neutral",
@@ -31156,11 +31296,11 @@
   "examples": [
    {
     "text": "The bedrooms are upstairs.",
-    "audio": "a/lex.00567_ex1.opus"
+    "audio": "a/lex.00566_ex1.opus"
    },
    {
     "text": "She went upstairs.",
-    "audio": "a/lex.00567_ex2.opus"
+    "audio": "a/lex.00566_ex2.opus"
    }
   ],
   "l1_gloss": {
@@ -31175,12 +31315,12 @@
   "syllabus_version": "1.0",
   "related": {
    "interferes_with": [
-    "lex.00568"
+    "lex.00567"
    ]
   }
  },
  {
-  "id": "lex.00568",
+  "id": "lex.00567",
   "lemma": "downstairs",
   "sense_id": 1,
   "pos": "adv",
@@ -31199,9 +31339,9 @@
    "inflections": []
   },
   "audio": {
-   "word_ga": "a/lex.00568_ga.opus",
-   "word_sbe": "a/lex.00568_sbe.opus",
-   "slow_ga": "a/lex.00568_slow.opus"
+   "word_ga": "a/lex.00567_ga.opus",
+   "word_sbe": "a/lex.00567_sbe.opus",
+   "slow_ga": "a/lex.00567_slow.opus"
   },
   "collocations": [],
   "register": "neutral",
@@ -31209,11 +31349,11 @@
   "examples": [
    {
     "text": "The kitchen is downstairs.",
-    "audio": "a/lex.00568_ex1.opus"
+    "audio": "a/lex.00567_ex1.opus"
    },
    {
     "text": "Come downstairs, please.",
-    "audio": "a/lex.00568_ex2.opus"
+    "audio": "a/lex.00567_ex2.opus"
    }
   ],
   "l1_gloss": {
@@ -31228,7 +31368,65 @@
   "syllabus_version": "1.0",
   "related": {
    "interferes_with": [
-    "lex.00567"
+    "lex.00566"
+   ]
+  }
+ },
+ {
+  "id": "lex.00568",
+  "lemma": "dirty",
+  "sense_id": 1,
+  "pos": "adj",
+  "cefr": "A1.2",
+  "frequency": {
+   "band": 1000
+  },
+  "phonology": {
+   "ipa_ga": "ˈdɜːrti",
+   "syllables": 2,
+   "stress": "1"
+  },
+  "spelling": {
+   "us": "dirty",
+   "uk": "dirty",
+   "inflections": [
+    "dirty",
+    "dirtier",
+    "the dirtiest",
+    "dirtiest"
+   ]
+  },
+  "audio": {
+   "word_ga": "a/lex.00568_ga.opus",
+   "word_sbe": "a/lex.00568_sbe.opus",
+   "slow_ga": "a/lex.00568_slow.opus"
+  },
+  "collocations": [],
+  "register": "neutral",
+  "connotation": "neutral",
+  "examples": [
+   {
+    "text": "The kitchen is dirty.",
+    "audio": "a/lex.00568_ex1.opus"
+   },
+   {
+    "text": "My shoes are dirty.",
+    "audio": "a/lex.00568_ex2.opus"
+   }
+  ],
+  "l1_gloss": {
+   "uz": "iflos",
+   "ru": "грязный"
+  },
+  "topic_tags": [
+   "description"
+  ],
+  "first_taught_node": "S02U06N1",
+  "status": "published",
+  "syllabus_version": "1.0",
+  "related": {
+   "interferes_with": [
+    "lex.00549"
    ]
   }
  },
@@ -31663,7 +31861,10 @@
    "us": "excited",
    "uk": "excited",
    "inflections": [
-    "excited"
+    "excited",
+    "excitedder",
+    "the exciteddest",
+    "exciteddest"
    ]
   },
   "audio": {
@@ -31765,7 +31966,10 @@
    "us": "nervous",
    "uk": "nervous",
    "inflections": [
-    "nervous"
+    "nervous",
+    "nervouser",
+    "the nervousest",
+    "nervousest"
    ]
   },
   "audio": {
@@ -31817,7 +32021,10 @@
    "us": "bored",
    "uk": "bored",
    "inflections": [
-    "bored"
+    "bored",
+    "boredder",
+    "the boreddest",
+    "boreddest"
    ]
   },
   "audio": {
@@ -31925,7 +32132,10 @@
    "us": "glad",
    "uk": "glad",
    "inflections": [
-    "glad"
+    "glad",
+    "gladder",
+    "the gladdest",
+    "gladdest"
    ]
   },
   "audio": {
@@ -34489,7 +34699,10 @@
    "us": "next",
    "uk": "next",
    "inflections": [
-    "next"
+    "next",
+    "nexter",
+    "the nextest",
+    "nextest"
    ]
   },
   "audio": {
@@ -34794,7 +35007,10 @@
    "us": "ready",
    "uk": "ready",
    "inflections": [
-    "ready"
+    "ready",
+    "readier",
+    "the readiest",
+    "readiest"
    ]
   },
   "audio": {
@@ -36215,7 +36431,10 @@
    "us": "foreign",
    "uk": "foreign",
    "inflections": [
-    "foreign"
+    "foreign",
+    "foreigner",
+    "the foreignest",
+    "foreignest"
    ]
   },
   "audio": {
@@ -36268,7 +36487,10 @@
    "us": "safe",
    "uk": "safe",
    "inflections": [
-    "safe"
+    "safe",
+    "safer",
+    "the safest",
+    "safest"
    ]
   },
   "audio": {
@@ -36433,7 +36655,10 @@
    "us": "terrible",
    "uk": "terrible",
    "inflections": [
-    "terrible"
+    "terrible",
+    "terribler",
+    "the terriblest",
+    "terriblest"
    ]
   },
   "audio": {
@@ -37845,7 +38070,10 @@
    "us": "free",
    "uk": "free",
    "inflections": [
-    "free"
+    "free",
+    "freer",
+    "the freest",
+    "freest"
    ]
   },
   "audio": {
@@ -37898,7 +38126,10 @@
    "us": "possible",
    "uk": "possible",
    "inflections": [
-    "possible"
+    "possible",
+    "possibler",
+    "the possiblest",
+    "possiblest"
    ]
   },
   "audio": {
@@ -38001,7 +38232,10 @@
    "us": "sure",
    "uk": "sure",
    "inflections": [
-    "sure"
+    "sure",
+    "surer",
+    "the surest",
+    "surest"
    ]
   },
   "audio": {
@@ -40500,7 +40734,10 @@
    "us": "sick",
    "uk": "ill",
    "inflections": [
-    "ill"
+    "ill",
+    "iller",
+    "the illest",
+    "illest"
    ]
   },
   "audio": {
@@ -40550,7 +40787,10 @@
    "us": "sick",
    "uk": "sick",
    "inflections": [
-    "sick"
+    "sick",
+    "sicker",
+    "the sickest",
+    "sickest"
    ]
   },
   "audio": {
@@ -41108,7 +41348,10 @@
    "us": "healthy",
    "uk": "healthy",
    "inflections": [
-    "healthy"
+    "healthy",
+    "healthier",
+    "the healthiest",
+    "healthiest"
    ]
   },
   "audio": {
@@ -41330,7 +41573,10 @@
    "us": "allowed",
    "uk": "allowed",
    "inflections": [
-    "allowed"
+    "allowed",
+    "allowedder",
+    "the alloweddest",
+    "alloweddest"
    ]
   },
   "audio": {
@@ -41553,7 +41799,10 @@
    "us": "careful",
    "uk": "careful",
    "inflections": [
-    "careful"
+    "careful",
+    "carefuler",
+    "the carefulest",
+    "carefulest"
    ]
   },
   "audio": {
@@ -42835,7 +43084,10 @@
    "us": "high",
    "uk": "high",
    "inflections": [
-    "high"
+    "high",
+    "higher",
+    "the highest",
+    "highest"
    ]
   },
   "audio": {
@@ -42893,7 +43145,10 @@
    "us": "low",
    "uk": "low",
    "inflections": [
-    "low"
+    "low",
+    "lower",
+    "the lowest",
+    "lowest"
    ]
   },
   "audio": {
@@ -42948,7 +43203,10 @@
    "us": "wide",
    "uk": "wide",
    "inflections": [
-    "wide"
+    "wide",
+    "wider",
+    "the widest",
+    "widest"
    ]
   },
   "audio": {
@@ -42998,7 +43256,10 @@
    "us": "deep",
    "uk": "deep",
    "inflections": [
-    "deep"
+    "deep",
+    "deeper",
+    "the deepest",
+    "deepest"
    ]
   },
   "audio": {
@@ -43048,7 +43309,10 @@
    "us": "heavy",
    "uk": "heavy",
    "inflections": [
-    "heavy"
+    "heavy",
+    "heavier",
+    "the heaviest",
+    "heaviest"
    ]
   },
   "audio": {
@@ -43106,7 +43370,10 @@
    "us": "light",
    "uk": "light",
    "inflections": [
-    "light"
+    "light",
+    "lighter",
+    "the lightest",
+    "lightest"
    ]
   },
   "audio": {
@@ -43161,7 +43428,10 @@
    "us": "popular",
    "uk": "popular",
    "inflections": [
-    "popular"
+    "popular",
+    "popularrer",
+    "the popularrest",
+    "popularrest"
    ]
   },
   "audio": {
@@ -43213,7 +43483,10 @@
    "us": "famous",
    "uk": "famous",
    "inflections": [
-    "famous"
+    "famous",
+    "famouser",
+    "the famousest",
+    "famousest"
    ]
   },
   "audio": {
@@ -43265,7 +43538,10 @@
    "us": "crowded",
    "uk": "crowded",
    "inflections": [
-    "crowded"
+    "crowded",
+    "crowdedder",
+    "the crowdeddest",
+    "crowdeddest"
    ]
   },
   "audio": {
@@ -43634,7 +43910,10 @@
    "us": "same",
    "uk": "same",
    "inflections": [
-    "same"
+    "same",
+    "samer",
+    "the samest",
+    "samest"
    ]
   },
   "audio": {

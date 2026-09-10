@@ -1,0 +1,715 @@
+{
+ "_comment": "Serialised story for Section 2 (A1.2), episodes 13-24. Continues 'New in Tashkent': Sarah's first year, Aziz's exams, Kamola's new flat, Bobur's football team. Every episode uses only lexemes taught up to and including its unit.",
+ "series": "New in Tashkent",
+ "characters": [
+  "Sarah",
+  "Aziz",
+  "Kamola",
+  "Bobur",
+  "Mr Karimov"
+ ],
+ "texts": [
+  {
+   "id": "txt.00013",
+   "kind": "story",
+   "cefr": "A1.2",
+   "unit": "S02U01",
+   "episode": 13,
+   "title": "These days",
+   "body": [
+    {
+     "speaker": "Kamola",
+     "text": "Sarah, what are you doing these days?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "I am working in two schools this month."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "Two schools? That is a lot!"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "I know. I usually work in one, but Mr Karimov is not well."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "I understand. And Aziz?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "He is studying every evening. He is working very hard."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "He always studies hard."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Yes, but he is not sleeping well now."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "Do you want some tea? I am making it now."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Yes, please. I think tea is very good."
+    }
+   ],
+   "structures_used": [
+    "G-025",
+    "G-026",
+    "G-027"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00014",
+   "kind": "story",
+   "cefr": "A1.2",
+   "unit": "S02U02",
+   "episode": 14,
+   "title": "Which way?",
+   "body": [
+    {
+     "speaker": "Sarah",
+     "text": "Excuse me. Where is the post office?"
+    },
+    {
+     "speaker": "Bobur",
+     "text": "Go straight on and turn left at the bank."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Turn left at the bank. And then?"
+    },
+    {
+     "speaker": "Bobur",
+     "text": "Cross the road. The post office is on the corner."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Is it far?"
+    },
+    {
+     "speaker": "Bobur",
+     "text": "No, it is not far. Do not take a taxi."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Thank you! Sarah — from the school. And you are Bobur?"
+    },
+    {
+     "speaker": "Bobur",
+     "text": "Yes! Aziz is my friend. The bus stop is here too."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Good. Which bus goes to the station?"
+    },
+    {
+     "speaker": "Bobur",
+     "text": "Number nine. But do not take it now — walk."
+    }
+   ],
+   "structures_used": [
+    "G-045",
+    "G-046",
+    "G-070"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00015",
+   "kind": "story",
+   "cefr": "A1.2",
+   "unit": "S02U03",
+   "episode": 15,
+   "title": "How much is it?",
+   "body": [
+    {
+     "speaker": "Sarah",
+     "text": "Excuse me, how much is this scarf?"
+    },
+    {
+     "speaker": "Bobur",
+     "text": "The red one is fifty thousand som."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "And the blue one?"
+    },
+    {
+     "speaker": "Bobur",
+     "text": "The blue one is cheap — thirty thousand."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Do you have many scarves?"
+    },
+    {
+     "speaker": "Bobur",
+     "text": "Yes, we have a lot. Green, black, white and brown."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "I would like the green one. Can I try it on?"
+    },
+    {
+     "speaker": "Bobur",
+     "text": "Yes. It is a good size for you."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "I take it. Can I pay by credit card?"
+    },
+    {
+     "speaker": "Bobur",
+     "text": "Yes. Here is your receipt and your change."
+    }
+   ],
+   "structures_used": [
+    "G-055",
+    "G-056",
+    "G-060"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00016",
+   "kind": "story",
+   "cefr": "A1.2",
+   "unit": "S02U04",
+   "episode": 16,
+   "title": "What is he like?",
+   "body": [
+    {
+     "speaker": "Kamola",
+     "text": "Sarah, we have a new teacher at school."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Really? What does he look like?"
+    },
+    {
+     "speaker": "Kamola",
+     "text": "He is tall and thin. He has short dark hair."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Does he wear glasses?"
+    },
+    {
+     "speaker": "Kamola",
+     "text": "Yes, and he has a small black beard."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "And what is he like?"
+    },
+    {
+     "speaker": "Kamola",
+     "text": "He is very kind and patient. But he is quiet."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Quiet is good. Our old teacher was not quiet!"
+    },
+    {
+     "speaker": "Kamola",
+     "text": "The students like him. He is not lazy — he is hard-working."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "He looks like a good teacher."
+    }
+   ],
+   "structures_used": [
+    "G-061",
+    "G-062"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00017",
+   "kind": "story",
+   "cefr": "A1.2",
+   "unit": "S02U05",
+   "episode": 17,
+   "title": "Kamola's new flat",
+   "body": [
+    {
+     "speaker": "narrator",
+     "text": "Kamola has a new flat. Sarah is there today."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "It is very comfortable! Is this your sofa?"
+    },
+    {
+     "speaker": "Kamola",
+     "text": "No, it is not mine. It is my mother's sofa."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "And whose picture is that?"
+    },
+    {
+     "speaker": "Kamola",
+     "text": "It is my brother's. Aziz draws very well."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "The bedrooms are upstairs?"
+    },
+    {
+     "speaker": "Kamola",
+     "text": "Yes. My room is the small one. The big one is my sister's."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Are your neighbours quiet?"
+    },
+    {
+     "speaker": "Kamola",
+     "text": "Very quiet. But the street is noisy in the morning."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "My flat is noisy too. Ours is near the market."
+    }
+   ],
+   "structures_used": [
+    "G-011",
+    "G-013",
+    "G-014"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00018",
+   "kind": "story",
+   "cefr": "A1.2",
+   "unit": "S02U06",
+   "episode": 18,
+   "title": "Where were you?",
+   "body": [
+    {
+     "speaker": "Aziz",
+     "text": "Sarah, where were you yesterday?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "I was at home all day. I was very tired."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Were you at work?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "No, but the week was very long."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "There was a party at his house."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "A party? Were there many people?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "There were twenty people! It was his birthday."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "No! I am sorry. I was not there."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "It is not a problem. He was happy — his team was there too."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Two days ago he was nervous. Now he is glad!"
+    }
+   ],
+   "structures_used": [
+    "G-006",
+    "G-008",
+    "G-028",
+    "G-033"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00019",
+   "kind": "story",
+   "cefr": "A1.2",
+   "unit": "S02U07",
+   "episode": 19,
+   "title": "The exam",
+   "body": [
+    {
+     "speaker": "narrator",
+     "text": "Aziz had his exam last Monday."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Aziz! How was it?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "I studied for three weeks. I did not sleep much."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "And?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "I finished early. Then I waited for two hours."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Two hours! What did you do?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "I walked in the park. I called my mother."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "What did she say?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "She said, 'Come home and eat.' So I went home."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "And then?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "It came this morning. It was very good!"
+    }
+   ],
+   "structures_used": [
+    "G-029",
+    "G-030"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00020",
+   "kind": "story",
+   "cefr": "A1.2",
+   "unit": "S02U08",
+   "episode": 20,
+   "title": "Did you like Samarkand?",
+   "body": [
+    {
+     "speaker": "Kamola",
+     "text": "Sarah, did you go to Samarkand last week?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Yes, I did! I went by train."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "Did you like it?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "I loved it. But I did not have much time."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "How long was the journey?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Two hours. It was fast and very comfortable."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "Did you take photos?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "A lot! But I did not take my camera — only my phone."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "Did you buy any souvenirs?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "I bought a small one for my mother. It was not expensive."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "Did you go alone?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "No, I did not. A tourist guide helped me all day."
+    }
+   ],
+   "structures_used": [
+    "G-031",
+    "G-032"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00021",
+   "kind": "story",
+   "cefr": "A1.2",
+   "unit": "S02U09",
+   "episode": 21,
+   "title": "Next year",
+   "body": [
+    {
+     "speaker": "Sarah",
+     "text": "Aziz, what are you going to do next year?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "I am going to study at university."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "That is a good plan. What are you going to study?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "My dream is to be a doctor. I hope to study here."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "You are going to be a very good doctor."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "And you? Are you going to stay in Tashkent?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "I think so. I am meeting Mr Karimov on Friday."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Look! It is going to rain."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "We are going to be cold! Let us walk fast."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "The bus is coming. We are not going to walk!"
+    }
+   ],
+   "structures_used": [
+    "G-034",
+    "G-035",
+    "G-036"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00022",
+   "kind": "story",
+   "cefr": "A1.2",
+   "unit": "S02U10",
+   "episode": 22,
+   "title": "Let's celebrate",
+   "body": [
+    {
+     "speaker": "Bobur",
+     "text": "Aziz finished his exam. Let us celebrate!"
+    },
+    {
+     "speaker": "Kamola",
+     "text": "Good idea. How about Saturday evening?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Saturday is good for me. Where?"
+    },
+    {
+     "speaker": "Bobur",
+     "text": "Why don't we go to the new restaurant near the park?"
+    },
+    {
+     "speaker": "Kamola",
+     "text": "I would like that. I am going to reserve a table for six."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Would you like to invite Mr Karimov?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Yes! He helped me every week."
+    },
+    {
+     "speaker": "Bobur",
+     "text": "I am going to buy flowers and a small gift."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "Sarah, can you pick up Mr Karimov at seven?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "I would love to. Let us meet at the restaurant at half past seven."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "That sounds good. Thank you!"
+    }
+   ],
+   "structures_used": [
+    "G-040",
+    "G-044"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00023",
+   "kind": "story",
+   "cefr": "A1.2",
+   "unit": "S02U11",
+   "episode": 23,
+   "title": "You should rest",
+   "body": [
+    {
+     "speaker": "narrator",
+     "text": "Mr Karimov is at the doctor. Sarah is with him."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "How do you feel today?"
+    },
+    {
+     "speaker": "Mr Karimov",
+     "text": "I have a headache and a cough. I am not well."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "You should stay at home. You must not work this week."
+    },
+    {
+     "speaker": "Mr Karimov",
+     "text": "But I have to teach! There are thirty students."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "You do not have to teach. I can do it."
+    },
+    {
+     "speaker": "Mr Karimov",
+     "text": "Are you sure? That is a lot of work for you."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "I am sure. You should stay at home and rest."
+    },
+    {
+     "speaker": "Kamola",
+     "text": "And you must not smoke. The doctor said that too."
+    },
+    {
+     "speaker": "Mr Karimov",
+     "text": "You are right. Thank you. That is very kind of you."
+    }
+   ],
+   "structures_used": [
+    "G-041",
+    "G-042",
+    "G-043"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  },
+  {
+   "id": "txt.00024",
+   "kind": "story",
+   "cefr": "A1.2",
+   "unit": "S02U12",
+   "episode": 24,
+   "title": "The biggest city",
+   "body": [
+    {
+     "speaker": "Aziz",
+     "text": "Sarah, is London bigger than Tashkent?"
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Yes, it is. But Tashkent is bigger than my town."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Tashkent is the biggest city in Uzbekistan."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "And Samarkand? Is it as big as Tashkent?"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "No, it is not as big. But it is much older."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Samarkand is more famous than Tashkent, I think."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "That is true. It is the most famous city here."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "In England the weather is worse. Here it is better!"
+    },
+    {
+     "speaker": "Aziz",
+     "text": "Summer here is hotter than summer in England."
+    },
+    {
+     "speaker": "Sarah",
+     "text": "Much hotter! But the winter is not as cold as ours."
+    },
+    {
+     "speaker": "Aziz",
+     "text": "So this is the best country. Now you have to stay!"
+    }
+   ],
+   "structures_used": [
+    "G-064",
+    "G-065",
+    "G-066",
+    "G-067"
+   ],
+   "status": "published",
+   "syllabus_version": "1.0"
+  }
+ ]
+}

@@ -1,0 +1,202 @@
+{
+ "id": "S02U12",
+ "type": "unit",
+ "section": "S02",
+ "index": 24,
+ "cefr": "A1.2",
+ "title": {
+  "en": "Comparing",
+  "uz": "Taqqoslash"
+ },
+ "theme": "comparison_geography",
+ "can_do": [
+  "I can compare two things.",
+  "I can say which is the biggest or the best.",
+  "I can say two things are the same or not the same."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-064",
+   "G-065",
+   "G-066",
+   "G-067"
+  ],
+  "lexis": [
+   "lex.00771",
+   "lex.00772",
+   "lex.00773",
+   "lex.00774",
+   "lex.00775",
+   "lex.00776",
+   "lex.00777",
+   "lex.00778",
+   "lex.00779",
+   "lex.00780",
+   "lex.00781",
+   "lex.00782",
+   "lex.00783",
+   "lex.00784",
+   "lex.00785",
+   "lex.00786",
+   "lex.00787",
+   "lex.00788",
+   "lex.00789",
+   "lex.00790",
+   "lex.00791",
+   "lex.00792",
+   "lex.00793",
+   "lex.00794",
+   "lex.00795",
+   "lex.00796",
+   "lex.00797",
+   "lex.00798",
+   "lex.00799",
+   "lex.00800"
+  ],
+  "phonology": [
+   "P-009",
+   "P-018"
+  ],
+  "functions": [
+   "F-017",
+   "F-030"
+  ]
+ },
+ "prerequisites": [
+  "S02U11"
+ ],
+ "nodes": [
+  {
+   "id": "S02U12N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Places and land",
+   "teaches": {
+    "lexis": [
+     "lex.00771",
+     "lex.00774",
+     "lex.00777",
+     "lex.00780",
+     "lex.00783",
+     "lex.00786",
+     "lex.00789",
+     "lex.00792",
+     "lex.00795",
+     "lex.00798"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-009"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U12N2",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "High, low, wide, deep",
+   "teaches": {
+    "lexis": [
+     "lex.00772",
+     "lex.00775",
+     "lex.00778",
+     "lex.00781",
+     "lex.00784",
+     "lex.00787",
+     "lex.00790",
+     "lex.00793",
+     "lex.00796",
+     "lex.00799"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-018"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U12N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "Bigger than",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-064",
+     "G-066"
+    ],
+    "phonology": [],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U12N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00024"
+  },
+  {
+   "id": "S02U12N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "The biggest in the world",
+   "teaches": {
+    "lexis": [
+     "lex.00773",
+     "lex.00776",
+     "lex.00779",
+     "lex.00782",
+     "lex.00785",
+     "lex.00788",
+     "lex.00791",
+     "lex.00794",
+     "lex.00797",
+     "lex.00800"
+    ],
+    "grammar": [
+     "G-065",
+     "G-067"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-017",
+     "F-030"
+    ]
+   }
+  },
+  {
+   "id": "S02U12N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "Compare two cities",
+   "task_ref": "task.S02U12",
+   "teaches": {
+    "functions": [
+     "F-017",
+     "F-030"
+    ]
+   }
+  },
+  {
+   "id": "S02U12N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s02"
+  },
+  {
+   "id": "S02U12N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

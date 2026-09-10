@@ -1,0 +1,202 @@
+{
+ "id": "S02U05",
+ "type": "unit",
+ "section": "S02",
+ "index": 17,
+ "cefr": "A1.2",
+ "title": {
+  "en": "My home",
+  "uz": "Mening uyim"
+ },
+ "theme": "home_possession",
+ "can_do": [
+  "I can say who something belongs to.",
+  "I can answer the question 'Whose is this?'",
+  "I can describe the place where I live in detail."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-011",
+   "G-013",
+   "G-014"
+  ],
+  "lexis": [
+   "lex.00537",
+   "lex.00538",
+   "lex.00539",
+   "lex.00540",
+   "lex.00541",
+   "lex.00542",
+   "lex.00543",
+   "lex.00544",
+   "lex.00545",
+   "lex.00546",
+   "lex.00547",
+   "lex.00548",
+   "lex.00549",
+   "lex.00550",
+   "lex.00551",
+   "lex.00552",
+   "lex.00553",
+   "lex.00554",
+   "lex.00555",
+   "lex.00556",
+   "lex.00557",
+   "lex.00558",
+   "lex.00559",
+   "lex.00560",
+   "lex.00561",
+   "lex.00562",
+   "lex.00563",
+   "lex.00564",
+   "lex.00565",
+   "lex.00566",
+   "lex.00567"
+  ],
+  "phonology": [
+   "P-026",
+   "P-025"
+  ],
+  "functions": [
+   "F-016",
+   "F-017"
+  ]
+ },
+ "prerequisites": [
+  "S02U04"
+ ],
+ "nodes": [
+  {
+   "id": "S02U05N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Around the house",
+   "teaches": {
+    "lexis": [
+     "lex.00537",
+     "lex.00540",
+     "lex.00543",
+     "lex.00546",
+     "lex.00549",
+     "lex.00552",
+     "lex.00555",
+     "lex.00558",
+     "lex.00561",
+     "lex.00564",
+     "lex.00567"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-026"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U05N2",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Jobs at home",
+   "teaches": {
+    "lexis": [
+     "lex.00538",
+     "lex.00541",
+     "lex.00544",
+     "lex.00547",
+     "lex.00550",
+     "lex.00553",
+     "lex.00556",
+     "lex.00559",
+     "lex.00562",
+     "lex.00565"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-025"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U05N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "My sister's room",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-011",
+     "G-014"
+    ],
+    "phonology": [],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U05N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00017"
+  },
+  {
+   "id": "S02U05N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "Mine, yours, theirs",
+   "teaches": {
+    "lexis": [
+     "lex.00539",
+     "lex.00542",
+     "lex.00545",
+     "lex.00548",
+     "lex.00551",
+     "lex.00554",
+     "lex.00557",
+     "lex.00560",
+     "lex.00563",
+     "lex.00566"
+    ],
+    "grammar": [
+     "G-013"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-016",
+     "F-017"
+    ]
+   }
+  },
+  {
+   "id": "S02U05N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "Show me your home",
+   "task_ref": "task.S02U05",
+   "teaches": {
+    "functions": [
+     "F-016",
+     "F-017"
+    ]
+   }
+  },
+  {
+   "id": "S02U05N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s02"
+  },
+  {
+   "id": "S02U05N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

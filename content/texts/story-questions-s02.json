@@ -1,0 +1,65 @@
+{
+  "_comment": "Comprehension questions for the Section 2 story episodes. 3 per episode: gist, detail, inference-lite. The key is authored first and shuffled at generation time. Distractors are diagnostic — each corresponds to a plausible misreading, per docs/09 §4.1.",
+  "questions": {
+    "txt.00013": [
+      {"type": "read_gist_mcq", "q": "Why is Sarah working in two schools?", "options": ["Mr Karimov is ill", "She likes it", "She needs money", "She is a new teacher"], "answer": 0, "why": "'I usually work in one, but Mr Karimov is ill.'"},
+      {"type": "read_scan_detail", "q": "What is Aziz doing every evening?", "options": ["Studying", "Working", "Sleeping", "Playing football"], "answer": 0, "why": "'He is studying every evening. He has an exam.'"},
+      {"type": "listen_gist_mcq", "q": "Is working in two schools normal for Sarah?", "options": ["No, only this month", "Yes, always", "Yes, every year", "We do not know"], "answer": 0, "why": "'I am working in two schools this month' — a temporary situation."}
+    ],
+    "txt.00014": [
+      {"type": "read_scan_detail", "q": "Where does Sarah turn left?", "options": ["At the bank", "At the post office", "At the bus stop", "At the corner"], "answer": 0, "why": "'Go straight on and turn left at the bank.'"},
+      {"type": "read_gist_mcq", "q": "What does Bobur tell Sarah to do?", "options": ["Walk", "Take a taxi", "Take bus number nine", "Wait"], "answer": 0, "why": "'Do not take it now — walk.'"},
+      {"type": "listen_gist_mcq", "q": "Is the post office far?", "options": ["No", "Yes", "Very far", "We do not know"], "answer": 0, "why": "'No, it is not far.'"}
+    ],
+    "txt.00015": [
+      {"type": "read_scan_detail", "q": "How much is the blue scarf?", "options": ["Thirty thousand", "Fifty thousand", "Twenty thousand", "It is not for sale"], "answer": 0, "why": "'The blue one is cheap — thirty thousand.'"},
+      {"type": "read_gist_mcq", "q": "Which scarf does Sarah take?", "options": ["The green one", "The red one", "The blue one", "The black one"], "answer": 0, "why": "'I would like the green one.'"},
+      {"type": "listen_gist_mcq", "q": "How does Sarah pay?", "options": ["By credit card", "In cash", "She does not pay", "We do not know"], "answer": 0, "why": "'Can I pay by credit card?' — 'Yes.'"}
+    ],
+    "txt.00016": [
+      {"type": "read_scan_detail", "q": "What does the new teacher look like?", "options": ["Tall and thin", "Short and fat", "Tall and strong", "Young and small"], "answer": 0, "why": "'He is tall and thin.'"},
+      {"type": "read_gist_mcq", "q": "What is the new teacher like?", "options": ["Kind and quiet", "Loud and funny", "Lazy", "Rude"], "answer": 0, "why": "'He is very kind and patient. But he is quiet.'"},
+      {"type": "listen_gist_mcq", "q": "Do the students like him?", "options": ["Yes", "No", "Only some of them", "We do not know"], "answer": 0, "why": "'The students like him.'"}
+    ],
+    "txt.00017": [
+      {"type": "read_scan_detail", "q": "Whose sofa is it?", "options": ["Her mother's", "Kamola's", "Her sister's", "Aziz's"], "answer": 0, "why": "'It is my mother's sofa.'"},
+      {"type": "read_gist_mcq", "q": "Whose picture is on the wall?", "options": ["Her brother's", "Her mother's", "Sarah's", "Her sister's"], "answer": 0, "why": "'It is my brother's. Aziz is very good at art.'"},
+      {"type": "listen_gist_mcq", "q": "What is noisy?", "options": ["The street", "The neighbours", "Kamola's room", "The market"], "answer": 0, "why": "'But the street is noisy in the morning.'"}
+    ],
+    "txt.00018": [
+      {"type": "read_gist_mcq", "q": "Where was Sarah yesterday?", "options": ["At home", "At the party", "At school", "At Bobur's house"], "answer": 0, "why": "'I was at home all day.'"},
+      {"type": "read_scan_detail", "q": "How many people were at the party?", "options": ["Twenty", "Two", "Twelve", "Ten"], "answer": 0, "why": "'There were twenty people!'"},
+      {"type": "listen_gist_mcq", "q": "Why was there a party?", "options": ["It was Bobur's birthday", "Aziz had an exam", "Sarah was ill", "The team won"], "answer": 0, "why": "'It was his birthday.'"}
+    ],
+    "txt.00019": [
+      {"type": "read_scan_detail", "q": "How long did Aziz study?", "options": ["Three weeks", "Three days", "Two hours", "One month"], "answer": 0, "why": "'I studied for three weeks.'"},
+      {"type": "read_gist_mcq", "q": "What did Aziz do after the exam?", "options": ["He walked in the park", "He went to school", "He slept", "He played football"], "answer": 0, "why": "'I walked in the park. I called my mother.'"},
+      {"type": "listen_gist_mcq", "q": "When did the result come?", "options": ["This morning", "Last Monday", "Two hours later", "It did not come"], "answer": 0, "why": "'It came this morning.'"}
+    ],
+    "txt.00020": [
+      {"type": "read_scan_detail", "q": "How did Sarah travel to Samarkand?", "options": ["By train", "By plane", "By bus", "By car"], "answer": 0, "why": "'I travelled by train.'"},
+      {"type": "read_gist_mcq", "q": "What did Sarah not take?", "options": ["Her camera", "Her phone", "A souvenir", "A guide"], "answer": 0, "why": "'I did not take my camera — only my phone.'"},
+      {"type": "listen_gist_mcq", "q": "Did Sarah go alone?", "options": ["No, a guide helped her", "Yes", "No, Kamola went too", "We do not know"], "answer": 0, "why": "'No, I did not. A tourist guide helped me all day.'"}
+    ],
+    "txt.00021": [
+      {"type": "read_gist_mcq", "q": "What is Aziz going to study?", "options": ["Medicine", "English", "Art", "He is not going to study"], "answer": 0, "why": "'I hope to study medicine.'"},
+      {"type": "read_scan_detail", "q": "Who is Sarah meeting on Friday?", "options": ["Mr Karimov", "Aziz", "Kamola", "Bobur"], "answer": 0, "why": "'I am meeting Mr Karimov on Friday.'"},
+      {"type": "listen_gist_mcq", "q": "Why does Aziz say it is going to rain?", "options": ["He can see the clouds", "It always rains", "It is winter", "Sarah told him"], "answer": 0, "why": "'Look at those clouds. It is going to rain.'"}
+    ],
+    "txt.00022": [
+      {"type": "read_scan_detail", "q": "When are they going to celebrate?", "options": ["Saturday evening", "Friday evening", "Sunday", "Next week"], "answer": 0, "why": "'How about Saturday evening?' — 'Saturday is good for me.'"},
+      {"type": "read_gist_mcq", "q": "Why are they celebrating?", "options": ["Aziz got a good result", "It is a birthday", "Sarah is going home", "The team won"], "answer": 0, "why": "'Aziz got a good result. Let us celebrate!'"},
+      {"type": "listen_detail_gap", "q": "What is Sarah going to do at seven?", "options": ["Pick up Mr Karimov", "Reserve a table", "Buy flowers", "Meet Bobur"], "answer": 0, "why": "'Sarah, can you pick up Mr Karimov at seven?' — 'I would love to.'"}
+    ],
+    "txt.00023": [
+      {"type": "read_gist_mcq", "q": "What is the matter with Mr Karimov?", "options": ["He has a headache and a cough", "He is tired", "He has a temperature", "He hurt his arm"], "answer": 0, "why": "'I have a headache and a cough.'"},
+      {"type": "read_scan_detail", "q": "Who is going to teach this week?", "options": ["Sarah", "Mr Karimov", "Kamola", "Nobody"], "answer": 0, "why": "'You do not have to teach. I can do it.'"},
+      {"type": "listen_gist_mcq", "q": "What must Mr Karimov not do?", "options": ["Smoke", "Rest", "Take his medicine", "Stay at home"], "answer": 0, "why": "'And you must not smoke. The doctor said that too.'"}
+    ],
+    "txt.00024": [
+      {"type": "read_scan_detail", "q": "Which city is older?", "options": ["Samarkand", "Tashkent", "London", "They are the same"], "answer": 0, "why": "'No, it is not as big. But it is much older.'"},
+      {"type": "read_gist_mcq", "q": "Which is the biggest city in Uzbekistan?", "options": ["Tashkent", "Samarkand", "London", "Bukhara"], "answer": 0, "why": "'Tashkent is the biggest city in Uzbekistan.'"},
+      {"type": "listen_gist_mcq", "q": "How is winter in Uzbekistan?", "options": ["Not as cold as in England", "Colder than in England", "The same as in England", "Hotter than summer"], "answer": 0, "why": "'But the winter is not as cold as ours.'"}
+    ]
+  }
+}

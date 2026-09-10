@@ -1,0 +1,208 @@
+{
+ "id": "S02U11",
+ "type": "unit",
+ "section": "S02",
+ "index": 23,
+ "cefr": "A1.2",
+ "title": {
+  "en": "Rules and advice",
+  "uz": "Qoidalar va maslahat"
+ },
+ "theme": "obligation_health",
+ "can_do": [
+  "I can understand and give rules.",
+  "I can say what I have to do and what is not necessary.",
+  "I can give simple advice."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-041",
+   "G-042",
+   "G-043"
+  ],
+  "lexis": [
+   "lex.00737",
+   "lex.00738",
+   "lex.00739",
+   "lex.00740",
+   "lex.00741",
+   "lex.00742",
+   "lex.00743",
+   "lex.00744",
+   "lex.00745",
+   "lex.00746",
+   "lex.00747",
+   "lex.00748",
+   "lex.00749",
+   "lex.00750",
+   "lex.00751",
+   "lex.00752",
+   "lex.00753",
+   "lex.00754",
+   "lex.00755",
+   "lex.00756",
+   "lex.00757",
+   "lex.00758",
+   "lex.00759",
+   "lex.00760",
+   "lex.00761",
+   "lex.00762",
+   "lex.00763",
+   "lex.00764",
+   "lex.00765",
+   "lex.00766",
+   "lex.00767",
+   "lex.00768",
+   "lex.00769",
+   "lex.00770"
+  ],
+  "phonology": [
+   "P-029",
+   "P-024"
+  ],
+  "functions": [
+   "F-041",
+   "F-037"
+  ]
+ },
+ "prerequisites": [
+  "S02U10"
+ ],
+ "nodes": [
+  {
+   "id": "S02U11N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Health",
+   "teaches": {
+    "lexis": [
+     "lex.00737",
+     "lex.00740",
+     "lex.00743",
+     "lex.00746",
+     "lex.00749",
+     "lex.00752",
+     "lex.00755",
+     "lex.00758",
+     "lex.00761",
+     "lex.00764",
+     "lex.00767",
+     "lex.00770"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-029"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U11N2",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Signs and rules",
+   "teaches": {
+    "lexis": [
+     "lex.00738",
+     "lex.00741",
+     "lex.00744",
+     "lex.00747",
+     "lex.00750",
+     "lex.00753",
+     "lex.00756",
+     "lex.00759",
+     "lex.00762",
+     "lex.00765",
+     "lex.00768"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-024"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U11N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "Must and mustn't",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-041",
+     "G-043"
+    ],
+    "phonology": [],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U11N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00023"
+  },
+  {
+   "id": "S02U11N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "You should rest",
+   "teaches": {
+    "lexis": [
+     "lex.00739",
+     "lex.00742",
+     "lex.00745",
+     "lex.00748",
+     "lex.00751",
+     "lex.00754",
+     "lex.00757",
+     "lex.00760",
+     "lex.00763",
+     "lex.00766",
+     "lex.00769"
+    ],
+    "grammar": [
+     "G-042"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-041",
+     "F-037"
+    ]
+   }
+  },
+  {
+   "id": "S02U11N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "Give advice to a friend",
+   "task_ref": "task.S02U11",
+   "teaches": {
+    "functions": [
+     "F-041",
+     "F-037"
+    ]
+   }
+  },
+  {
+   "id": "S02U11N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s02"
+  },
+  {
+   "id": "S02U11N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

@@ -1,0 +1,214 @@
+{
+ "id": "S02U02",
+ "type": "unit",
+ "section": "S02",
+ "index": 14,
+ "cefr": "A1.2",
+ "title": {
+  "en": "In town",
+  "uz": "Shaharda"
+ },
+ "theme": "town_directions",
+ "can_do": [
+  "I can ask for and follow simple directions.",
+  "I can give simple instructions.",
+  "I can name the places in a town and the ways to travel."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-045",
+   "G-046",
+   "G-070"
+  ],
+  "lexis": [
+   "lex.00433",
+   "lex.00434",
+   "lex.00435",
+   "lex.00436",
+   "lex.00437",
+   "lex.00438",
+   "lex.00439",
+   "lex.00440",
+   "lex.00441",
+   "lex.00442",
+   "lex.00443",
+   "lex.00444",
+   "lex.00445",
+   "lex.00446",
+   "lex.00447",
+   "lex.00448",
+   "lex.00449",
+   "lex.00450",
+   "lex.00451",
+   "lex.00452",
+   "lex.00453",
+   "lex.00454",
+   "lex.00455",
+   "lex.00456",
+   "lex.00457",
+   "lex.00458",
+   "lex.00459",
+   "lex.00460",
+   "lex.00461",
+   "lex.00462",
+   "lex.00463",
+   "lex.00464",
+   "lex.00465",
+   "lex.00466"
+  ],
+  "phonology": [
+   "P-028",
+   "P-022",
+   "P-021"
+  ],
+  "functions": [
+   "F-037",
+   "F-038",
+   "F-036"
+  ]
+ },
+ "prerequisites": [
+  "S02U01"
+ ],
+ "nodes": [
+  {
+   "id": "S02U02N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Places in town",
+   "teaches": {
+    "lexis": [
+     "lex.00433",
+     "lex.00436",
+     "lex.00439",
+     "lex.00442",
+     "lex.00445",
+     "lex.00448",
+     "lex.00451",
+     "lex.00454",
+     "lex.00457",
+     "lex.00460",
+     "lex.00463",
+     "lex.00466"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-028"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U02N2",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "Getting around",
+   "teaches": {
+    "lexis": [
+     "lex.00434",
+     "lex.00437",
+     "lex.00440",
+     "lex.00443",
+     "lex.00446",
+     "lex.00449",
+     "lex.00452",
+     "lex.00455",
+     "lex.00458",
+     "lex.00461",
+     "lex.00464"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-022"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U02N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "Turn left, don't stop",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-045",
+     "G-070"
+    ],
+    "phonology": [
+     "P-021"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U02N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00014"
+  },
+  {
+   "id": "S02U02N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "Along, across, through",
+   "teaches": {
+    "lexis": [
+     "lex.00435",
+     "lex.00438",
+     "lex.00441",
+     "lex.00444",
+     "lex.00447",
+     "lex.00450",
+     "lex.00453",
+     "lex.00456",
+     "lex.00459",
+     "lex.00462",
+     "lex.00465"
+    ],
+    "grammar": [
+     "G-046"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-037",
+     "F-038",
+     "F-036"
+    ]
+   }
+  },
+  {
+   "id": "S02U02N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "Ask the way",
+   "task_ref": "task.S02U02",
+   "teaches": {
+    "functions": [
+     "F-037",
+     "F-038",
+     "F-036"
+    ]
+   }
+  },
+  {
+   "id": "S02U02N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s02"
+  },
+  {
+   "id": "S02U02N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}

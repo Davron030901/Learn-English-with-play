@@ -1,0 +1,209 @@
+{
+ "id": "S02U04",
+ "type": "unit",
+ "section": "S02",
+ "index": 16,
+ "cefr": "A1.2",
+ "title": {
+  "en": "Describing people",
+  "uz": "Odamlarni tasvirlash"
+ },
+ "theme": "appearance_personality",
+ "can_do": [
+  "I can describe what someone looks like.",
+  "I can describe someone's character.",
+  "I can use two or three adjectives in the right order."
+ ],
+ "syllabus": {
+  "grammar": [
+   "G-061",
+   "G-062"
+  ],
+  "lexis": [
+   "lex.00503",
+   "lex.00504",
+   "lex.00505",
+   "lex.00506",
+   "lex.00507",
+   "lex.00508",
+   "lex.00509",
+   "lex.00510",
+   "lex.00511",
+   "lex.00512",
+   "lex.00513",
+   "lex.00514",
+   "lex.00515",
+   "lex.00516",
+   "lex.00517",
+   "lex.00518",
+   "lex.00519",
+   "lex.00520",
+   "lex.00521",
+   "lex.00522",
+   "lex.00523",
+   "lex.00524",
+   "lex.00525",
+   "lex.00526",
+   "lex.00527",
+   "lex.00528",
+   "lex.00529",
+   "lex.00530",
+   "lex.00531",
+   "lex.00532",
+   "lex.00533",
+   "lex.00534",
+   "lex.00535",
+   "lex.00536"
+  ],
+  "phonology": [
+   "P-003",
+   "P-005",
+   "P-018"
+  ],
+  "functions": [
+   "F-015",
+   "F-031"
+  ]
+ },
+ "prerequisites": [
+  "S02U03"
+ ],
+ "nodes": [
+  {
+   "id": "S02U04N1",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "What people look like",
+   "teaches": {
+    "lexis": [
+     "lex.00503",
+     "lex.00506",
+     "lex.00509",
+     "lex.00512",
+     "lex.00515",
+     "lex.00518",
+     "lex.00521",
+     "lex.00524",
+     "lex.00527",
+     "lex.00530",
+     "lex.00533",
+     "lex.00536"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-003"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U04N2",
+   "kind": "lesson",
+   "focus": "lexis",
+   "title": "What people are like",
+   "teaches": {
+    "lexis": [
+     "lex.00504",
+     "lex.00507",
+     "lex.00510",
+     "lex.00513",
+     "lex.00516",
+     "lex.00519",
+     "lex.00522",
+     "lex.00525",
+     "lex.00528",
+     "lex.00531",
+     "lex.00534"
+    ],
+    "grammar": [],
+    "phonology": [
+     "P-005"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U04N3",
+   "kind": "lesson",
+   "focus": "grammar",
+   "title": "A nice big red bag",
+   "teaches": {
+    "lexis": [],
+    "grammar": [
+     "G-061"
+    ],
+    "phonology": [
+     "P-018"
+    ],
+    "functions": []
+   }
+  },
+  {
+   "id": "S02U04N4",
+   "kind": "story",
+   "title": "Story",
+   "text_ref": "txt.00016"
+  },
+  {
+   "id": "S02U04N5",
+   "kind": "lesson",
+   "focus": "mixed",
+   "title": "He looks like his father",
+   "teaches": {
+    "lexis": [
+     "lex.00505",
+     "lex.00508",
+     "lex.00511",
+     "lex.00514",
+     "lex.00517",
+     "lex.00520",
+     "lex.00523",
+     "lex.00526",
+     "lex.00529",
+     "lex.00532",
+     "lex.00535"
+    ],
+    "grammar": [
+     "G-062"
+    ],
+    "phonology": [],
+    "functions": [
+     "F-015",
+     "F-031"
+    ]
+   }
+  },
+  {
+   "id": "S02U04N6",
+   "kind": "speak",
+   "focus": "function",
+   "title": "Describe someone you know",
+   "task_ref": "task.S02U04",
+   "teaches": {
+    "functions": [
+     "F-015",
+     "F-031"
+    ]
+   }
+  },
+  {
+   "id": "S02U04N7",
+   "kind": "immersion",
+   "title": "Read and listen",
+   "feed": "reader_a1_s02"
+  },
+  {
+   "id": "S02U04N8",
+   "kind": "review",
+   "title": "Review",
+   "source": "srs"
+  }
+ ],
+ "estimated_minutes": {
+  "t1": 53.0,
+  "t2": 46.0,
+  "t3": 40.0
+ },
+ "status": "published",
+ "syllabus_version": "1.0"
+}
