@@ -1,0 +1,849 @@
+<meta charset="utf-8">
+<title>New in Tashkent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
+<style>
+:root{
+  --bg:#eef1f4; --surface:#fff; --surface-2:#f6f8fa; --line:#d5dde5; --line-2:#e6ecf1;
+  --ink:#17222e; --ink-2:#4b5c6c; --ink-3:#7d8d9c;
+  --accent:#1668a8; --accent-ink:#fff; --accent-soft:#dbe9f4; --accent-line:#a9cbe6;
+  --ok:#1a7a4f; --ok-soft:#dcefe4; --no:#ab382d; --no-soft:#f7e0dd; --gold:#9a6f0d;
+  --r:10px; --pad:16px;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Literata",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e1620; --surface:#16212e; --surface-2:#1c2937; --line:#2b3c4e; --line-2:#22303f;
+  --ink:#e7eef4; --ink-2:#a5b5c4; --ink-3:#71849a;
+  --accent:#63acdf; --accent-ink:#0b1219; --accent-soft:#183750; --accent-line:#2e5c80;
+  --ok:#4cc38a; --ok-soft:#133426; --no:#ef7a70; --no-soft:#3a1f1d; --gold:#d6a33e;
+}}
+:root[data-theme="dark"]{
+  --bg:#0e1620; --surface:#16212e; --surface-2:#1c2937; --line:#2b3c4e; --line-2:#22303f;
+  --ink:#e7eef4; --ink-2:#a5b5c4; --ink-3:#71849a;
+  --accent:#63acdf; --accent-ink:#0b1219; --accent-soft:#183750; --accent-line:#2e5c80;
+  --ok:#4cc38a; --ok-soft:#133426; --no:#ef7a70; --no-soft:#3a1f1d; --gold:#d6a33e;
+}
+*{box-sizing:border-box}
+/* the publish skeleton supplies this; the offline bundle has no skeleton, and
+   without it `hidden` loses to `display:flex` on the lesson overlay. */
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:15px;line-height:1.5;-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:none;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+h1,h2,h3{margin:0;font-weight:600;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* ---------- chrome ---------- */
+#top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--surface);
+  border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;
+  padding:10px var(--pad)}
+#brand{display:flex;align-items:baseline;gap:8px;min-width:0}
+#brand b{font-weight:600;font-size:15px;white-space:nowrap}
+#brand span{color:var(--ink-3);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#top .sp{margin-left:auto}
+.chip{border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12.5px;
+  color:var(--ink-2);background:var(--surface-2);white-space:nowrap}
+.chip:hover{border-color:var(--accent-line);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent-line);color:var(--ink)}
+main{padding:0 var(--pad) 64px;max-width:1120px;margin:0 auto}
+
+/* ---------- map ---------- */
+.hero{padding-block:22px 18px;display:grid;gap:10px}
+.hero h1{font-family:var(--serif);font-size:clamp(25px,5vw,36px);line-height:1.15}
+.hero p{color:var(--ink-2);max-width:62ch}
+.stats{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:4px}
+.stat{display:flex;align-items:baseline;gap:6px}
+.stat b{font-family:var(--mono);font-size:18px;font-weight:500;font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em}
+.band{border-top:1px solid var(--line);padding-block:18px}
+.band>header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.band h2{font-size:14px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-2)}
+.cefr{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--accent-ink);
+  background:var(--accent);padding:2px 7px;border-radius:5px}
+.band .meta{color:var(--ink-3);font-size:12.5px;margin-left:auto}
+.units{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+.unit{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:11px 12px;display:grid;gap:5px;text-align:left;transition:border-color .12s}
+.unit:hover{border-color:var(--accent-line)}
+.unit .n{font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.unit .t{font-size:13.5px;line-height:1.35;font-weight:500}
+.unit .bar{height:3px;border-radius:2px;background:var(--line-2);overflow:hidden}
+.unit .bar i{display:block;height:100%;background:var(--accent);border-radius:2px}
+.unit.done .bar i{background:var(--ok)}
+
+/* ---------- unit sheet ---------- */
+.crumb{display:flex;align-items:center;gap:8px;padding-block:14px 0;font-size:13px;color:var(--ink-3)}
+.uhead{padding-block:6px 16px;display:grid;gap:8px}
+.uhead h1{font-family:var(--serif);font-size:clamp(21px,4vw,28px)}
+.cando{display:grid;gap:5px;margin-top:2px}
+.cando li{color:var(--ink-2);font-size:13.5px;padding-left:17px;position:relative;list-style:none}
+.cando li::before{content:"";position:absolute;left:2px;top:.62em;width:6px;height:6px;
+  border-radius:50%;background:var(--accent-line)}
+.cando{padding:0;margin:0}
+.cols{display:grid;gap:18px;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);align-items:start}
+@media (max-width:760px){.cols{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.panel>h3{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);
+  padding:11px 14px;border-bottom:1px solid var(--line-2)}
+.node{display:flex;align-items:center;gap:11px;padding:11px 14px;border-bottom:1px solid var(--line-2);
+  width:100%;text-align:left}
+.node:last-child{border-bottom:none}
+.node:hover{background:var(--surface-2)}
+.node .ix{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);width:2ch}
+.node .nm{flex:1;min-width:0}
+.node .nm b{display:block;font-weight:500;font-size:14px}
+.node .nm span{font-size:12px;color:var(--ink-3)}
+.tiers{display:flex;gap:4px}
+.tier{width:26px;height:26px;border-radius:7px;border:1px solid var(--line);
+  font-family:var(--mono);font-size:11px;color:var(--ink-3);display:grid;place-items:center}
+.tier:hover{border-color:var(--accent-line);color:var(--ink)}
+.tier.on{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);font-weight:500}
+.vocab{max-height:340px;overflow:auto}
+.lex{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;padding:9px 14px;
+  border-bottom:1px solid var(--line-2)}
+.lex:last-child{border-bottom:none}
+.lex .w{font-weight:500}
+.lex .ipa{font-family:var(--mono);font-size:12px;color:var(--ink-3);grid-column:2}
+.lex .g{grid-column:1/-1;font-size:13px;color:var(--ink-2)}
+.lex .pos{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);text-transform:uppercase;
+  align-self:center}
+.say{color:var(--accent);font-size:13px;padding:0 3px}
+.story{padding:14px}
+.story .line{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;margin-bottom:9px}
+.story .sp{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);padding-top:3px;white-space:nowrap}
+.story .tx{font-family:var(--serif);font-size:14.5px;line-height:1.55}
+.gram{padding:12px 14px;border-bottom:1px solid var(--line-2)}
+.gram:last-child{border-bottom:none}
+.gram b{display:block;font-weight:500;margin-bottom:3px}
+.gram code{font-family:var(--mono);font-size:12px;background:var(--surface-2);
+  padding:1px 5px;border-radius:4px;color:var(--ink-2)}
+.gram p{font-size:13px;color:var(--ink-2);margin-top:5px}
+
+/* ---------- lesson ---------- */
+#lesson{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;flex-direction:column;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+#lbar{display:flex;align-items:center;gap:12px;padding:10px var(--pad);border-bottom:1px solid var(--line);
+  background:var(--surface)}
+#prog{flex:1;height:5px;border-radius:3px;background:var(--line-2);overflow:hidden}
+#prog i{display:block;height:100%;background:var(--accent);transition:width .25s}
+#lcount{font-family:var(--mono);font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+#lwrap{flex:1;overflow:auto;display:grid}
+#lstage{max-width:620px;width:100%;margin:0 auto;padding:22px var(--pad) 20px;display:grid;gap:16px;align-content:safe center}
+.q-instr{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3)}
+.q-instr em{display:block;text-transform:none;letter-spacing:0;font-style:normal;
+  color:var(--ink-3);font-size:12.5px;margin-top:2px}
+.q-text{font-family:var(--serif);font-size:clamp(18px,3.4vw,23px);line-height:1.4}
+.q-sub{color:var(--ink-2);font-size:14px}
+.q-passage{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:12px 14px;max-height:230px;overflow:auto}
+.opts{display:grid;gap:8px}
+.opt{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r);
+  padding:12px 14px;text-align:left;display:flex;align-items:center;gap:10px;transition:.12s}
+.opt:hover:not(:disabled){border-color:var(--accent-line)}
+.opt .k{font-family:var(--mono);font-size:11px;color:var(--ink-3);border:1px solid var(--line);
+  border-radius:5px;width:20px;height:20px;display:grid;place-items:center;flex:none}
+.opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.opt.good{border-color:var(--ok);background:var(--ok-soft)}
+.opt.bad{border-color:var(--no);background:var(--no-soft)}
+.opt:disabled{cursor:default}
+input.ans,textarea.ans{width:100%;background:var(--surface);border:1.5px solid var(--line);
+  border-radius:var(--r);padding:12px 14px;font-size:16px}
+textarea.ans{min-height:92px;resize:vertical;font-family:var(--serif)}
+input.ans:focus,textarea.ans:focus{border-color:var(--accent);outline:none}
+.bank{display:flex;flex-wrap:wrap;gap:7px}
+.tok{border:1.5px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 12px;
+  font-size:15px}
+.tok:hover:not(:disabled){border-color:var(--accent-line)}
+.tok.used{opacity:.32;pointer-events:none}
+.slot{min-height:52px;border:1.5px dashed var(--line);border-radius:var(--r);padding:9px;
+  display:flex;flex-wrap:wrap;gap:7px;align-content:flex-start;background:var(--surface-2)}
+.slot.good{border-style:solid;border-color:var(--ok);background:var(--ok-soft)}
+.slot.bad{border-style:solid;border-color:var(--no);background:var(--no-soft)}
+.pairs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pill{border:1.5px solid var(--line);background:var(--surface);border-radius:9px;padding:11px 10px;
+  font-size:14px;text-align:center;min-height:46px;display:grid;place-items:center}
+.pill:hover:not(:disabled){border-color:var(--accent-line)}
+.pill[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.pill.gone{opacity:.28;pointer-events:none;border-style:dashed}
+.pill.bad{border-color:var(--no);background:var(--no-soft)}
+.bins{display:grid;gap:10px}
+.bin{border:1.5px solid var(--line);border-radius:var(--r);background:var(--surface);padding:10px}
+.bin>b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--ink-3);margin-bottom:7px}
+.bin .drop{min-height:40px;display:flex;flex-wrap:wrap;gap:6px}
+.bin.good{border-color:var(--ok)}.bin.bad{border-color:var(--no)}
+#lfoot{border-top:1px solid var(--line);background:var(--surface);padding:12px var(--pad)}
+#lfoot .in{max-width:620px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.btn{background:var(--accent);color:var(--accent-ink);border-radius:var(--r);padding:11px 22px;
+  font-weight:500;font-size:15px}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.ghost{background:none;color:var(--ink-2);border:1px solid var(--line)}
+.fb{flex:1;min-width:0;font-size:13.5px;line-height:1.4}
+.fb b{display:block}
+.fb.good b{color:var(--ok)}.fb.bad b{color:var(--no)}
+.fb span{color:var(--ink-2)}
+.done{display:grid;gap:14px;place-items:center;text-align:center;padding-block:40px}
+.done .sc{font-family:var(--mono);font-size:46px;font-weight:500}
+.audio-note{font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:6px}
+
+/* ---------- dialog ---------- */
+dialog{border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);
+  padding:0;max-width:520px;width:calc(100% - 32px)}
+dialog::backdrop{background:#0b131bcc}
+.dh{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line-2)}
+.dh h2{font-size:15px}
+.db{padding:16px;display:grid;gap:16px}
+.field{display:grid;gap:6px}
+.field label{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3)}
+.field input,.field select{background:var(--surface-2);border:1px solid var(--line);
+  border-radius:8px;padding:9px 11px;width:100%;font-size:14px}
+.field small{color:var(--ink-3);font-size:12px;line-height:1.45}
+.seg{display:flex;gap:6px}
+.seg button{flex:1;border:1px solid var(--line);border-radius:8px;padding:8px;font-size:13.5px;
+  color:var(--ink-2);background:var(--surface-2)}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent-line);color:var(--ink)}
+.note{background:var(--surface-2);border:1px solid var(--line-2);border-radius:8px;padding:10px 12px;
+  font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.note b{color:var(--ink)}
+.df{display:flex;justify-content:flex-end;gap:8px;padding:12px 16px;border-top:1px solid var(--line-2)}
+#loading{padding:40px var(--pad);text-align:center;color:var(--ink-3)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header id="top">
+  <button id="back" class="chip" hidden>&larr; Map</button>
+  <div id="brand"><b>New in Tashkent</b><span id="sub">A1 &rarr; C2 &middot; 168 units</span></div>
+  <button class="chip sp" id="openSet">Settings</button>
+  <button class="chip" id="themeBtn" aria-pressed="false">Theme</button>
+</header>
+
+<main>
+  <div id="loading">Loading the course&hellip;</div>
+  <div id="map" hidden></div>
+  <div id="unit" hidden></div>
+</main>
+
+<div id="lesson" hidden>
+  <div id="lbar">
+    <button class="chip" id="quit">Close</button>
+    <div id="prog"><i style="width:0%"></i></div>
+    <span id="lcount" class="mono">0/0</span>
+  </div>
+  <div id="lwrap"><div id="lstage"></div></div>
+  <div id="lfoot"><div class="in">
+    <div class="fb" id="fb"></div>
+    <button class="btn" id="act">Check</button>
+  </div></div>
+</div>
+
+<dialog id="settings">
+  <div class="dh"><h2>Settings</h2></div>
+  <div class="db">
+    <div class="field">
+      <label for="l1sel">Gloss language</label>
+      <div class="seg">
+        <button id="l1uz" data-l1="uz" aria-pressed="true">O&lsquo;zbekcha</button>
+        <button id="l1ru" data-l1="ru" aria-pressed="false">Русский</button>
+      </div>
+      <small>Which first language the vocabulary glosses and instructions use.</small>
+    </div>
+    <div class="field">
+      <label for="gkey">Gemini API key &mdash; optional</label>
+      <input id="gkey" type="password" autocomplete="off" placeholder="AIza&hellip;">
+      <small>Stored only in this browser. Used for better speech than the built-in voice.</small>
+    </div>
+    <div class="note" id="ttsNote"></div>
+    <div class="field">
+      <label for="voicesel">Built-in voice</label>
+      <select id="voicesel"></select>
+    </div>
+  </div>
+  <div class="df">
+    <button class="btn ghost" id="wipe">Reset progress</button>
+    <button class="btn" id="closeSet">Done</button>
+  </div>
+</dialog>
+
+<script>
+"use strict";
+const $ = s => document.querySelector(s);
+const el = (t, c, x) => { const n = document.createElement(t); if (c) n.className = c;
+  if (x != null) n.textContent = x; return n; };
+
+/* ---------------------------------------------------------------- storage */
+const LS = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); }
+              catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+let prog = LS.get('nit.prog', {});
+let cfg  = LS.get('nit.cfg', { l1: 'uz', gkey: '', voice: '' });
+const saveProg = () => LS.set('nit.prog', prog);
+const saveCfg  = () => LS.set('nit.cfg', cfg);
+
+/* ---------------------------------------------------------------- speech */
+const TTS = {
+  cache: new Map(), blocked: false, reason: '',
+  wav(pcm, rate) {                       // Gemini returns raw 16-bit PCM
+    const b = new ArrayBuffer(44 + pcm.length), v = new DataView(b);
+    const s = (o, t) => { for (let i = 0; i < t.length; i++) v.setUint8(o + i, t.charCodeAt(i)); };
+    s(0, 'RIFF'); v.setUint32(4, 36 + pcm.length, true); s(8, 'WAVEfmt ');
+    v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+    v.setUint32(24, rate, true); v.setUint32(28, rate * 2, true); v.setUint16(32, 2, true);
+    v.setUint16(34, 16, true); s(36, 'data'); v.setUint32(40, pcm.length, true);
+    new Uint8Array(b, 44).set(pcm); return new Blob([b], { type: 'audio/wav' });
+  },
+  async gemini(text) {
+    if (this.cache.has(text)) return this.cache.get(text);
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/' +
+                'gemini-2.5-flash-preview-tts:generateContent?key=' + encodeURIComponent(cfg.gkey);
+    const r = await fetch(url, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: 'Read this clearly, as an English teacher: ' + text }] }],
+        generationConfig: { responseModalities: ['AUDIO'],
+          speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Kore' } } } }
+      })
+    });
+    if (!r.ok) throw new Error('Gemini replied ' + r.status);
+    const j = await r.json();
+    const part = j?.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+    if (!part) throw new Error('No audio in the reply');
+    const bin = atob(part.inlineData.data), pcm = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) pcm[i] = bin.charCodeAt(i);
+    const rate = +(/rate=(\d+)/.exec(part.inlineData.mimeType || '')?.[1] || 24000);
+    const u = URL.createObjectURL(this.wav(pcm, rate));
+    this.cache.set(text, u); return u;
+  },
+  speak(text) {
+    if (!text) return;
+    if (cfg.gkey && !this.blocked) {
+      this.gemini(text).then(u => new Audio(u).play()).catch(e => {
+        this.blocked = true;
+        this.reason = /Failed to fetch|NetworkError/i.test(e.message)
+          ? 'The page blocked the request to Google. Gemini speech works in the downloadable bundle, not in a published page.'
+          : e.message;
+        noteTTS(); this.browser(text);
+      });
+      return;
+    }
+    this.browser(text);
+  },
+  browser(text) {
+    if (!('speechSynthesis' in window)) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US'; u.rate = .92;
+    const v = speechSynthesis.getVoices().find(v => v.name === cfg.voice);
+    if (v) u.voice = v;
+    speechSynthesis.speak(u);
+  }
+};
+function noteTTS() {
+  const n = $('#ttsNote');
+  if (TTS.blocked) n.innerHTML = '<b>Gemini speech unavailable here.</b> ' + TTS.reason;
+  else if (cfg.gkey) n.innerHTML = '<b>Gemini speech on.</b> Each new phrase is fetched once, then cached for this session.';
+  else n.innerHTML = '<b>Using your browser’s built-in voice.</b> No audio has been recorded for this course yet — ' +
+    'about 20,800 files are referenced and none exist, so every listening and pronunciation exercise is spoken by synthesis. ' +
+    'Google Translate’s speech endpoint cannot be used from a web page at all: it refuses cross-origin requests.';
+}
+
+/* ---------------------------------------------------------------- data */
+let IX = null; const unitCache = new Map();
+const uget = async n => {
+  if (unitCache.has(n)) return unitCache.get(n);
+  const r = await fetch(`data/u${String(n).padStart(3, '0')}.json`);
+  if (!r.ok) throw new Error('unit ' + n);
+  const j = await r.json(); unitCache.set(n, j); return j;
+};
+const gloss = l => (cfg.l1 === 'ru' ? l.ru : l.uz) || l.uz || l.ru || l.en || '';
+const instr = k => { const p = IX.instr[k]; return p ? { en: p[0], l1: cfg.l1 === 'uz' ? p[1] : '' } : { en: '', l1: '' }; };
+const INSTR_FOR = {
+  tap_pairs:'instr.tap_pairs', memory_match:'instr.memory_match', word_race:'instr.word_race',
+  mcq_word_from_definition:'instr.mcq_word', odd_one_out:'instr.odd_one_out', sort_bins:'instr.sort_bins',
+  type_from_l1:'instr.type_from_l1', spelling_bee:'instr.spelling_bee',
+  word_bank_build:'instr.word_bank_build', sentence_reorder:'instr.sentence_reorder',
+  gap_fill_bank:'instr.gap_fill_bank', gap_fill_free:'instr.gap_fill_free',
+  error_correct:'instr.error_correct', grammaticality_judgement:'instr.grammaticality_judgement',
+  minimal_pair_discrimination:'instr.minimal_pair', phoneme_id:'instr.phoneme_id',
+  stress_tap:'instr.stress_tap', repeat_after:'instr.repeat_after', read_aloud:'instr.read_aloud',
+  dictation_word:'instr.dictation_word', dictation_sentence:'instr.dictation_sentence',
+  listen_gist_mcq:'instr.listen_gist_mcq', listen_detail_gap:'instr.listen_detail_gap',
+  listen_order_events:'instr.listen_order_events', read_gist_mcq:'instr.read_gist_mcq',
+  read_scan_detail:'instr.read_scan_detail', pragmatics_choose:'instr.pragmatics_choose',
+  speak_prompt:'instr.speak_prompt', speak_roleplay:'instr.speak_roleplay',
+  speak_retell:'instr.speak_retell', write_sentence:'instr.write_sentence'
+};
+const KIND = {
+  mcq_word_from_definition:'choice', odd_one_out:'choice', grammaticality_judgement:'choice',
+  pragmatics_choose:'choice', minimal_pair_discrimination:'choice', phoneme_id:'choice',
+  stress_tap:'choice', listen_gist_mcq:'choice', listen_detail_gap:'choice',
+  read_gist_mcq:'choice', read_scan_detail:'choice', gap_fill_bank:'choice',
+  type_from_l1:'text', spelling_bee:'text', dictation_word:'text', dictation_sentence:'text',
+  gap_fill_free:'text', error_correct:'text', write_sentence:'text',
+  word_bank_build:'bank', sentence_reorder:'bank', listen_order_events:'order',
+  tap_pairs:'pairs', memory_match:'pairs', word_race:'pairs', sort_bins:'bins',
+  speak_prompt:'speak', speak_roleplay:'speak', speak_retell:'speak',
+  repeat_after:'speak', read_aloud:'speak'
+};
+const norm = (s, rules) => {
+  let t = String(s == null ? '' : s).trim();
+  const has = r => !rules || rules.includes(r);
+  if (has('case')) t = t.toLowerCase();
+  if (has('contraction')) t = t.replace(/[’‘]/g, "'");
+  if (has('punct')) t = t.replace(/[.,!?;:"“”]/g, '');
+  if (has('spacing')) t = t.replace(/\s+/g, ' ').trim();
+  return t;
+};
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+/* ---------------------------------------------------------------- map */
+function drawMap() {
+  const m = $('#map'); m.innerHTML = '';
+  const hero = el('div', 'hero');
+  hero.append(el('h1', null, 'Learn English by playing through a story'));
+  hero.append(el('p', null,
+    'Six people in Tashkent, 168 episodes, and every exercise built from the words and grammar ' +
+    'taught up to that point. Start at unit 1 or open any unit you like — nothing is locked.'));
+  const st = el('div', 'stats');
+  [[IX.totals.units, 'units'], [IX.totals.items.toLocaleString(), 'exercises'],
+   [IX.totals.lexemes.toLocaleString(), 'words'], [IX.totals.stories, 'episodes']]
+   .forEach(([n, l]) => { const s = el('div', 'stat'); s.append(el('b', 'mono', String(n)), el('span', null, l)); st.append(s); });
+  hero.append(st); m.append(hero);
+
+  IX.sections.forEach(sec => {
+    const b = el('div', 'band'), h = el('header');
+    h.append(el('h2', null, 'Section ' + (+sec.id.slice(1))), el('span', 'cefr', sec.cefr));
+    const done = sec.units.filter(u => unitDone(u)).length;
+    h.append(el('span', 'meta', `${sec.units.length} units · ${done} finished`));
+    b.append(h);
+    const g = el('div', 'units');
+    sec.units.forEach(u => {
+      const c = el('button', 'unit'); c.type = 'button';
+      c.append(el('div', 'n mono', `${u.n} · ${u.items} items`), el('div', 't', u.title));
+      const bar = el('div', 'bar'), i = el('i');
+      const p = unitPct(u); i.style.width = p + '%'; if (p === 100) c.classList.add('done');
+      bar.append(i); c.append(bar);
+      c.onclick = () => openUnit(u.n);
+      g.append(c);
+    });
+    b.append(g); m.append(b);
+  });
+}
+const unitPct = u => {
+  const done = Object.keys(prog).filter(k => k.startsWith(u.id + 'N') && prog[k]).length;
+  return u.cells ? Math.min(100, Math.round(done / u.cells * 100)) : 0;
+};
+const unitDone = u => unitPct(u) === 100;
+
+/* ---------------------------------------------------------------- unit */
+let U = null;
+async function openUnit(n) {
+  $('#loading').hidden = false; $('#map').hidden = true;
+  try { U = await uget(n); } catch (e) { $('#loading').textContent = 'Could not load unit ' + n; return; }
+  const v = $('#unit'); v.innerHTML = ''; $('#loading').hidden = true;
+  v.hidden = false; $('#back').hidden = false;
+  $('#sub').textContent = `${U.cefr} · unit ${U.n} of 168`;
+
+  const cr = el('div', 'crumb', `Section ${+U.id.slice(1,3)} · ${U.cefr} · Unit ${U.n}`);
+  const hd = el('div', 'uhead');
+  hd.append(el('h1', null, U.title.en));
+  if (U.title.uz) hd.append(el('p', 'q-sub', U.title.uz));
+  if (U.can_do?.length) {
+    const ul = el('ul', 'cando');
+    U.can_do.forEach(c => ul.append(el('li', null, c)));
+    hd.append(ul);
+  }
+  v.append(cr, hd);
+
+  const cols = el('div', 'cols'), left = el('div'), right = el('div');
+  left.style.display = right.style.display = 'grid'; left.style.gap = right.style.gap = '18px';
+
+  const np = el('div', 'panel'); np.append(el('h3', null, 'Lessons'));
+  U.nodes.forEach((nd, i) => {
+    const row = el('div', 'node');
+    row.append(el('span', 'ix mono', String(i + 1)));
+    const nm = el('div', 'nm');
+    nm.append(el('b', null, nd.title || nd.focus || 'Practice'));
+    const tot = Object.values(nd.tiers).reduce((a, t) => a + t.length, 0);
+    nm.append(el('span', null, `${nd.focus || 'mixed'} · ${tot} items`));
+    row.append(nm);
+    const ts = el('div', 'tiers');
+    ['1', '2', '3'].forEach(t => {
+      const b = el('button', 'tier', t); b.type = 'button';
+      b.title = `Tier ${t} — ${(nd.tiers[t] || []).length} items`;
+      if (!nd.tiers[t]?.length) { b.disabled = true; b.style.opacity = '.3'; }
+      if (prog[nd.id + 'T' + t]) b.classList.add('on');
+      b.onclick = () => startLesson(nd, t);
+      ts.append(b);
+    });
+    row.append(ts); np.append(row);
+  });
+  left.append(np);
+
+  if (U.story) {
+    const sp = el('div', 'panel');
+    const h = el('h3', null, `Episode ${U.n} — ${U.story.title}`);
+    const play = el('button', 'say', '▶');
+    play.title = 'Read aloud'; play.onclick = () => TTS.speak(U.story.body.map(b => b.text).join(' '));
+    h.append(' '); h.append(play); sp.append(h);
+    const sb = el('div', 'story');
+    U.story.body.forEach(b => {
+      const ln = el('div', 'line');
+      ln.append(el('span', 'sp', b.speaker), el('div', 'tx', b.text));
+      sb.append(ln);
+    });
+    sp.append(sb); left.append(sp);
+  }
+
+  const vp = el('div', 'panel');
+  vp.append(el('h3', null, `Vocabulary — ${U.lex.length} words`));
+  const vb = el('div', 'vocab');
+  U.lex.forEach(l => {
+    const r = el('div', 'lex');
+    const w = el('div', 'w'); w.append(document.createTextNode(l.w + ' '));
+    const s = el('button', 'say', '▶'); s.title = 'Say it'; s.onclick = () => TTS.speak(l.w);
+    w.append(s);
+    r.append(w, el('span', 'pos mono', l.pos));
+    if (l.ipa) r.append(el('div', 'ipa', '/' + l.ipa + '/'));
+    r.append(el('div', 'g', gloss(l) + (l.en ? ' — ' + l.en : '')));
+    vb.append(r);
+  });
+  vp.append(vb); right.append(vp);
+
+  if (U.grammar?.length) {
+    const gp = el('div', 'panel'); gp.append(el('h3', null, 'Grammar'));
+    U.grammar.forEach(g => {
+      const d = el('div', 'gram');
+      d.append(el('b', null, g.label));
+      if (g.form) { const c = el('code', null, g.form); d.append(c); }
+      const ex = g.explanation?.en || g.meaning;
+      if (ex) d.append(el('p', null, ex));
+      if (g.positive_example) {
+        const p = el('p', null, '✓ ' + g.positive_example); p.style.color = 'var(--ok)'; d.append(p);
+      }
+      if (g.negative_example) {
+        const p = el('p', null, '✗ ' + g.negative_example); p.style.color = 'var(--no)'; d.append(p);
+      }
+      gp.append(d);
+    });
+    right.append(gp);
+  }
+  cols.append(left, right); v.append(cols);
+  window.scrollTo(0, 0);
+}
+
+/* ---------------------------------------------------------------- lesson */
+let L = null;
+function startLesson(node, tier) {
+  const items = (node.tiers[tier] || []).slice();
+  if (!items.length) return;
+  L = { node, tier, items, i: 0, right: 0, answered: false, sel: null, state: null };
+  $('#lesson').hidden = false; document.body.style.overflow = 'hidden';
+  renderItem();
+}
+function endLesson() {
+  $('#lesson').hidden = true; document.body.style.overflow = '';
+  L = null;
+  if (U) openUnit(U.n);
+}
+function renderItem() {
+  window.__lesson = L;
+  const st = $('#lstage'), f = $('#fb'), a = $('#act');
+  st.innerHTML = ''; f.className = 'fb'; f.innerHTML = ''; L.answered = false; L.sel = null; L.state = null;
+  $('#prog i').style.width = (L.i / L.items.length * 100) + '%';
+  $('#lcount').textContent = `${Math.min(L.i + 1, L.items.length)}/${L.items.length}`;
+
+  if (L.i >= L.items.length) {
+    const d = el('div', 'done');
+    const pctv = Math.round(L.right / L.items.length * 100);
+    d.append(el('div', 'sc mono', pctv + '%'));
+    d.append(el('h2', null, `${L.right} of ${L.items.length} right`));
+    d.append(el('p', 'q-sub', `${L.node.title || 'Practice'} · tier ${L.tier}`));
+    st.append(d);
+    prog[L.node.id + 'T' + L.tier] = { pct: pctv, at: Date.now() };
+    saveProg();
+    a.textContent = 'Finish'; a.disabled = false; a.onclick = endLesson;
+    $('#prog i').style.width = '100%';
+    return;
+  }
+
+  const it = L.items[L.i], kind = KIND[it.t] || 'text';
+  const ins = instr(INSTR_FOR[it.t] || '');
+  const ih = el('div', 'q-instr', ins.en || it.t.replace(/_/g, ' '));
+  if (ins.l1) ih.append(el('em', null, ins.l1));
+  st.append(ih);
+
+  RENDER[kind](it, st);
+
+  if (it.say) {
+    const row = el('div', 'audio-note');
+    const b = el('button', 'chip', '▶ Play');
+    b.onclick = () => TTS.speak(it.say);
+    row.append(b, el('span', null, 'spoken by synthesis — no audio recorded yet'));
+    st.append(row);
+    if (kind === 'choice' && /dictation|spelling|minimal|listen/.test(it.t)) TTS.speak(it.say);
+  }
+  a.textContent = 'Check'; a.disabled = kind === 'speak' ? false : true;
+  a.onclick = check;
+  if (kind === 'speak') a.textContent = 'I said it';
+}
+
+const RENDER = {
+  choice(it, st) {
+    const opts = it.t === 'stress_tap' ? it.p.syllables : (it.p.options || it.p.bank || []);
+    if (it.p.text) st.append(el('div', 'q-text', it.p.text));
+    if (it.p.text_uz) st.append(el('div', 'q-text', it.p.text_uz));
+    const box = el('div', 'opts');
+    opts.forEach((o, i) => {
+      const b = el('button', 'opt'); b.type = 'button';
+      b.append(el('span', 'k mono', String(i + 1)), el('span', null, o));
+      b.setAttribute('aria-pressed', 'false');
+      b.onclick = () => {
+        if (L.answered) return;
+        box.querySelectorAll('.opt').forEach(x => x.setAttribute('aria-pressed', 'false'));
+        b.setAttribute('aria-pressed', 'true'); L.sel = i; $('#act').disabled = false;
+        if (it.t === 'phoneme_id' || it.t === 'minimal_pair_discrimination') TTS.speak(o);
+      };
+      box.append(b);
+    });
+    st.append(box); L.state = { box, opts };
+  },
+  text(it, st) {
+    if (it.p.text) st.append(el('div', 'q-text', it.p.text));
+    if (it.p.text_uz) st.append(el('div', 'q-text', it.p.text_uz));
+    const long = it.t === 'dictation_sentence' || it.t === 'write_sentence' || it.t === 'error_correct';
+    const inp = el(long ? 'textarea' : 'input', 'ans');
+    inp.id = 'ans-' + it.id; inp.autocapitalize = 'off'; inp.autocomplete = 'off';
+    inp.spellcheck = false; inp.placeholder = 'Type here';
+    inp.oninput = () => $('#act').disabled = !inp.value.trim();
+    inp.onkeydown = e => { if (e.key === 'Enter' && !long && inp.value.trim()) { e.preventDefault(); check(); } };
+    st.append(inp); L.state = { inp }; setTimeout(() => inp.focus(), 40);
+  },
+  bank(it, st) {
+    if (it.p.text_uz) st.append(el('div', 'q-text', it.p.text_uz));
+    const slot = el('div', 'slot'), bank = el('div', 'bank'), picked = [];
+    shuffle(it.p.bank.slice()).forEach(w => {
+      const t = el('button', 'tok', w); t.type = 'button';
+      t.onclick = () => {
+        if (L.answered) return;
+        t.classList.add('used'); picked.push(w);
+        const c = el('button', 'tok', w); c.type = 'button';
+        c.onclick = () => { if (L.answered) return; c.remove(); t.classList.remove('used');
+          picked.splice(picked.indexOf(w), 1); $('#act').disabled = !picked.length; };
+        slot.append(c); $('#act').disabled = false;
+      };
+      bank.append(t);
+    });
+    st.append(slot, bank); L.state = { slot, picked };
+  },
+  order(it, st) {
+    const slot = el('div', 'slot'), bank = el('div', 'bank'), picked = [];
+    st.append(el('div', 'q-sub', 'Tap the lines in the order you hear them.'));
+    shuffle(it.p.options.slice()).forEach(w => {
+      const t = el('button', 'tok', w); t.type = 'button'; t.style.textAlign = 'left';
+      t.onclick = () => {
+        if (L.answered) return;
+        t.classList.add('used'); picked.push(w);
+        const c = el('button', 'tok', `${picked.length}. ${w}`); c.type = 'button';
+        slot.append(c); $('#act').disabled = picked.length !== it.p.options.length;
+      };
+      bank.append(t);
+    });
+    st.append(slot, bank); L.state = { picked };
+  },
+  pairs(it, st) {
+    const pairs = it.p.pairs, left = shuffle(pairs.map(p => p[0])), right = shuffle(pairs.map(p => p[1]));
+    const g = el('div', 'pairs'), lc = el('div'), rc = el('div');
+    lc.style.display = rc.style.display = 'grid'; lc.style.gap = rc.style.gap = '8px';
+    let sel = null, made = 0;
+    const mk = (txt, side, col) => {
+      const b = el('button', 'pill', txt); b.type = 'button'; b.setAttribute('aria-pressed', 'false');
+      b.dataset.side = side; b.dataset.v = txt;
+      b.onclick = () => {
+        if (L.answered || b.classList.contains('gone')) return;
+        if (side === 'l') TTS.speak(txt);
+        if (!sel) { sel = b; b.setAttribute('aria-pressed', 'true'); return; }
+        if (sel === b) { sel = null; b.setAttribute('aria-pressed', 'false'); return; }
+        if (sel.dataset.side === side) { sel.setAttribute('aria-pressed', 'false'); sel = b;
+          b.setAttribute('aria-pressed', 'true'); return; }
+        const a = sel.dataset.side === 'l' ? sel.dataset.v : b.dataset.v;
+        const z = sel.dataset.side === 'l' ? b.dataset.v : sel.dataset.v;
+        const ok = pairs.some(p => p[0] === a && p[1] === z);
+        if (ok) { [sel, b].forEach(x => { x.classList.add('gone'); x.setAttribute('aria-pressed', 'false'); });
+          made++; if (made === pairs.length) { $('#act').disabled = false; L.state.allDone = true; } }
+        else { [sel, b].forEach(x => { x.classList.add('bad');
+          setTimeout(() => x.classList.remove('bad'), 450); x.setAttribute('aria-pressed', 'false'); });
+          L.state.errs++; }
+        sel = null;
+      };
+      col.append(b);
+    };
+    left.forEach(t => mk(t, 'l', lc)); right.forEach(t => mk(t, 'r', rc));
+    g.append(lc, rc); st.append(g);
+    L.state = { errs: 0, allDone: false, n: pairs.length };
+    $('#act').textContent = 'Check'; $('#act').disabled = true;
+  },
+  bins(it, st) {
+    const bins = it.p.bins, words = shuffle(it.p.options.slice());
+    const bank = el('div', 'bank'); let sel = null;
+    const drops = {};
+    words.forEach(w => {
+      const t = el('button', 'tok', w); t.type = 'button'; t.dataset.w = w;
+      t.onclick = () => { if (L.answered) return;
+        if (sel) sel.setAttribute('aria-pressed', 'false');
+        sel = sel === t ? null : t; if (sel) t.setAttribute('aria-pressed', 'true'); };
+      bank.append(t);
+    });
+    st.append(bank);
+    const wrap = el('div', 'bins');
+    bins.forEach(bn => {
+      const b = el('div', 'bin'); b.append(el('b', null, bn));
+      const d = el('div', 'drop'); drops[bn] = d;
+      b.onclick = () => {
+        if (L.answered || !sel) return;
+        const w = sel.dataset.w; sel.remove();
+        const c = el('button', 'tok', w); c.type = 'button'; c.dataset.w = w;
+        d.append(c); sel = null;
+        const placed = Object.values(drops).reduce((a, x) => a + x.children.length, 0);
+        $('#act').disabled = placed !== words.length;
+      };
+      b.append(d); wrap.append(b);
+    });
+    st.append(wrap); L.state = { drops, bins };
+  },
+  speak(it, st) {
+    if (it.p.text) st.append(el('div', 'q-text', it.p.text));
+    st.append(el('div', 'q-sub',
+      'Speaking is not auto-marked — say it aloud, then move on. ' +
+      'Tap play to hear the model first.'));
+    L.state = {};
+  }
+};
+
+function check() {
+  if (L.answered) { L.i++; renderItem(); return; }
+  const it = L.items[L.i], kind = KIND[it.t] || 'text', a = it.a || {};
+  let ok = false, expect = '';
+
+  if (kind === 'choice') {
+    const { box, opts } = L.state;
+    if (typeof a.index === 'number') { ok = L.sel === a.index; expect = opts[a.index]; }
+    else if (a.key) { const k = Array.isArray(a.key) ? a.key[0] : a.key;
+      ok = norm(opts[L.sel], a.normalise) === norm(k, a.normalise); expect = k; }
+    box.querySelectorAll('.opt').forEach((b, i) => {
+      b.disabled = true;
+      if (opts[i] === expect || i === a.index) b.classList.add('good');
+      else if (i === L.sel) b.classList.add('bad');
+    });
+  } else if (kind === 'text') {
+    const v = L.state.inp.value;
+    const keys = [].concat(a.key || [], a.accepted || []);
+    if (!keys.length) { ok = v.trim().length > 0; expect = '—'; }
+    else { ok = keys.some(k => norm(v, a.normalise) === norm(k, a.normalise)); expect = keys[0]; }
+    L.state.inp.style.borderColor = ok ? 'var(--ok)' : 'var(--no)';
+    L.state.inp.disabled = true;
+    if (!ok && a.rejected_with_feedback) {
+      const hit = a.rejected_with_feedback.find(r => norm(r.pattern, a.normalise) === norm(v, a.normalise));
+      if (hit) expect = keys[0] + ' — ' + hit.feedback;
+    }
+  } else if (kind === 'bank') {
+    const got = L.state.picked.join(' ');
+    const keys = [].concat(a.key || []);
+    ok = keys.some(k => norm(got, a.normalise) === norm(k, a.normalise));
+    expect = keys[0] || '';
+    L.state.slot.classList.add(ok ? 'good' : 'bad');
+  } else if (kind === 'order') {
+    const keys = [].concat(a.key || []);
+    ok = JSON.stringify(L.state.picked) === JSON.stringify(keys);
+    expect = keys.join(' / ');
+  } else if (kind === 'pairs') {
+    ok = L.state.allDone && L.state.errs === 0;
+    expect = L.state.errs ? `${L.state.errs} wrong ${L.state.errs === 1 ? 'try' : 'tries'}` : 'all matched';
+  } else if (kind === 'bins') {
+    const map = a.mapping || {}; ok = true;
+    L.state.bins.forEach(bn => {
+      const d = L.state.drops[bn];
+      let good = true;
+      [...d.children].forEach(c => { if (map[c.dataset.w] !== bn) { good = false; c.classList.add('used'); } });
+      d.parentElement.classList.add(good ? 'good' : 'bad');
+      if (!good) ok = false;
+    });
+    expect = Object.entries(map).map(([w, b]) => `${w} → ${b}`).join(', ');
+  } else if (kind === 'speak') {
+    ok = true; expect = '';
+  }
+
+  if (ok) L.right++;
+  L.answered = true;
+  const f = $('#fb'); f.className = 'fb ' + (ok ? 'good' : 'bad');
+  const head = el('b', null, ok ? 'Correct' : 'Not quite');
+  f.append(head);
+  const note = ok ? (it.fb?.correct || '') : (expect ? 'Answer: ' + expect : '') ;
+  const extra = !ok && it.fb?.incorrect_default ? ' ' + it.fb.incorrect_default : '';
+  if (note || extra) f.append(el('span', null, note + extra));
+  const act = $('#act');
+  act.textContent = L.i === L.items.length - 1 ? 'See score' : 'Next';
+  act.disabled = false;
+}
+
+/* ---------------------------------------------------------------- wiring */
+$('#back').onclick = () => { $('#unit').hidden = true; $('#map').hidden = false;
+  $('#back').hidden = true; $('#sub').textContent = 'A1 → C2 · 168 units'; drawMap(); window.scrollTo(0, 0); };
+$('#quit').onclick = endLesson;
+$('#openSet').onclick = () => { noteTTS(); $('#settings').showModal(); };
+$('#closeSet').onclick = () => $('#settings').close();
+$('#gkey').oninput = e => { cfg.gkey = e.target.value.trim(); TTS.blocked = false; saveCfg(); noteTTS(); };
+$('#wipe').onclick = () => { if (confirm('Erase all progress on this device?')) {
+  prog = {}; saveProg(); $('#settings').close(); if (U) openUnit(U.n); else drawMap(); } };
+document.querySelectorAll('[data-l1]').forEach(b => b.onclick = () => {
+  cfg.l1 = b.dataset.l1; saveCfg();
+  document.querySelectorAll('[data-l1]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  if (U && !$('#unit').hidden) openUnit(U.n);
+});
+$('#themeBtn').onclick = () => {
+  const now = document.documentElement.getAttribute('data-theme');
+  const next = now === 'dark' ? 'light' : now === 'light' ? null : 'dark';
+  if (next) document.documentElement.setAttribute('data-theme', next);
+  else document.documentElement.removeAttribute('data-theme');
+  $('#themeBtn').setAttribute('aria-pressed', String(next === 'dark'));
+  LS.set('nit.theme', next);
+};
+function fillVoices() {
+  const s = $('#voicesel'); if (!s || !('speechSynthesis' in window)) return;
+  const vs = speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang));
+  s.innerHTML = '';
+  if (!vs.length) { s.append(new Option('No English voice in this browser', '')); return; }
+  vs.forEach(v => s.append(new Option(`${v.name} (${v.lang})`, v.name)));
+  if (cfg.voice) s.value = cfg.voice;
+  s.onchange = () => { cfg.voice = s.value; saveCfg(); TTS.speak('This is the voice you picked.'); };
+}
+if ('speechSynthesis' in window) { speechSynthesis.onvoiceschanged = fillVoices; fillVoices(); }
+
+(async function boot() {
+  const t = LS.get('nit.theme', null);
+  if (t) { document.documentElement.setAttribute('data-theme', t);
+    $('#themeBtn').setAttribute('aria-pressed', String(t === 'dark')); }
+  document.querySelectorAll('[data-l1]').forEach(x =>
+    x.setAttribute('aria-pressed', String(x.dataset.l1 === cfg.l1)));
+  $('#gkey').value = cfg.gkey || '';
+  try {
+    const r = await fetch('data/index.json');
+    IX = await r.json();
+  } catch (e) {
+    $('#loading').innerHTML = 'Could not load the course data.<br><small>Open this over http, ' +
+      'not as a file:// page — browsers block local fetches.</small>';
+    return;
+  }
+  $('#loading').hidden = true; $('#map').hidden = false;
+  drawMap(); noteTTS();
+})();
+</script>
