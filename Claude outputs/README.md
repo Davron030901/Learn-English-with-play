@@ -4,7 +4,7 @@ A complete, buildable specification for a gamified English course that takes a l
 
 Written as a working syllabus hand-over: every linguistic item the learner must acquire is enumerated, every item is tagged to a level, every level has measurable exit criteria, and every exit criterion has an assessment that produces it.
 
-## The documents
+## The documents    
 
 | # | File | What it fixes |
 |---|------|---------------|
