@@ -1,6 +1,8 @@
 # Generated. Rebuild with ./build.sh
 build/items/
+lep-backend/
+
+BACKEND-PROMPT.md
 
 
-
-
+FRONTEND-DECISIONS.md
