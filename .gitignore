@@ -113,7 +113,6 @@ lep-backend/tests/unit/test_entrypoints.py
 lep-backend/tests/unit/test_errors.py
 lep-backend/tests/unit/test_ids.py
 lep-backend/tests/unit/test_logging.py
-lep-backend/tests/unit/test_openapi.py
 
 
 
