@@ -107,4 +107,3 @@ lep-backend/tests/integration/test_workers.py
 lep-backend/tests/unit/__init__.py
 lep-backend/tests/unit/test_age_policy.py
 lep-backend/tests/unit/test_celery.py
-lep-backend/tests/unit/test_config.py
