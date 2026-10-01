@@ -103,5 +103,3 @@ lep-backend/tests/integration/test_rate_limit.py
 lep-backend/tests/integration/test_refresh_rotation.py
 lep-backend/tests/integration/test_schema.py
 lep-backend/tests/integration/test_tracing.py
-lep-backend/tests/integration/test_workers.py
-lep-backend/tests/unit/__init__.py
