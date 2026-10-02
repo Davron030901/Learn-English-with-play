@@ -100,4 +100,3 @@ lep-backend/tests/integration/test_health.py
 lep-backend/tests/integration/test_http_contract.py
 lep-backend/tests/integration/test_observability.py
 lep-backend/tests/integration/test_rate_limit.py
-lep-backend/tests/integration/test_refresh_rotation.py
