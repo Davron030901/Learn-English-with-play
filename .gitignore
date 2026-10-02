@@ -99,4 +99,3 @@ lep-backend/tests/integration/test_auth.py
 lep-backend/tests/integration/test_health.py
 lep-backend/tests/integration/test_http_contract.py
 lep-backend/tests/integration/test_observability.py
-lep-backend/tests/integration/test_rate_limit.py
