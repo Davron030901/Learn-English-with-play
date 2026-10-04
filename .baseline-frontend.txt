@@ -1,0 +1,61 @@
+
+> lep-frontend@0.1.0 typecheck
+> tsc --noEmit && tsc --noEmit -p tests && tsc --noEmit -p e2e
+
+== LINT
+
+> lep-frontend@0.1.0 lint
+> eslint . --max-warnings=0
+
+== VITEST
+-   "state/storage.ts",
++   "state\\prefs.ts",
++   "state\\storage.ts",
+  ]
+
+ ❯ tests/guardrails/guardrails.test.ts:108:19
+    106|   it('AsyncStorage is reached only through the device stores, never fo…
+    107|     const users = SOURCE_FILES.filter((f) => /@react-native-async-stor…
+    108|     expect(users).toEqual(['state/prefs.ts', 'state/storage.ts']);
+       |                   ^
+    109|     expect(hits(SOURCE_FILES, /(writeJson|setItem)\([^)]*token/i)).toE…
+    110|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 8 passed (9)
+      Tests  1 failed | 315 passed (316)
+   Start at  23:39:41
+   Duration  10.69s (tests 54%, transform 34%, import 11%, worker 1%)
+
+  Transform  transforming modules took 4.81s · 34% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+
+== JEST
+     [90m 85 |[39m   [36mconst[39m { onLeave } [33m=[39m [36mawait[39m show(session)[33m;[39m
+     [90m 86 |[39m   expect(screen[33m.[39mgetByTestId([32m'present-grammar'[39m))[33m.[39mtoBeTruthy()[33m;[39m[0m
+
+      at Object.test (tests/components/lesson.test.tsx:83:1)
+
+  ● leaving mid-lesson asks once, keeps the answers and does not mark the node finished
+
+    thrown: "Exceeded timeout of 5000 ms for a test.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 152 |[39m })[33m;[39m
+     [90m 153 |[39m
+    [31m[1m>[22m[39m[90m 154 |[39m test([32m'leaving mid-lesson asks once, keeps the answers and does not mark the node finished'[39m[33m,[39m [36masync[39m () [33m=>[39m {
+     [90m     |[39m [31m[1m^[22m[39m
+     [90m 155 |[39m   [36mconst[39m session [33m=[39m compose([32m'S01U01N2'[39m[33m,[39m [35m2[39m)[33m;[39m
+     [90m 156 |[39m   [36mconst[39m { onLeave } [33m=[39m [36mawait[39m show(session)[33m;[39m
+     [90m 157 |[39m   [36mconst[39m first [33m=[39m session[33m.[39msteps[33m.[39mfind((s) [33m=>[39m s[33m.[39mkind [33m===[39m [32m'item'[39m)[33m;[39m[0m
+
+      at Object.test (tests/components/lesson.test.tsx:154:1)
+
+Test Suites: 2 failed, 1 passed, 3 total
+Tests:       4 failed, 18 passed, 22 total
+Snapshots:   0 total
+Time:        98.241 s
+Ran all test suites.

@@ -1,0 +1,566 @@
+# 16 — ENGAGEMENT DESIGN
+## The motivation layer as built: features, screens, art and sound
+
+_Product design for the engagement layer, produced against docs/10 (ethics binding). Every feature lists how it passes the learning, autonomy and honesty tests._
+
+## Vision
+
+Duolingo keeps learners through loss aversion: hearts and energy, streaks that can be bought back, leagues switched on by default, an owl that guilt-trips. That works for about a month, then churn sets in. We keep learners with three things Duolingo cannot copy without breaking its own model. (1) A story people want to finish. "New in Tashkent" has 168 episodes and a cast that grows up while the learner's English does: Aziz goes from a student who wants to be a doctor to the mentor who edits Dilnoza's drafts; Sarah, newly arrived from England, takes years to learn Uzbek; Kamola, Bobur and Mr Karimov round out the cast. The characters stand on the path, host features, and can talk back when the server has an LLM key. (2) A Word Garden that turns the FSRS-6 scheduler into a living picture that is also accurate. Every learned word is a plant whose growth stage is its mastery state and whose health follows its due date. Due words visibly wilt, a 4-minute review waters them, and nothing ever dies. (3) Rewards that mean something. Badges are the 504 CEFR can-do statements, stamped into an English Passport. XP measures effort on scheduled work: replays earn ×0.25 and the summary says so. The headline number is coverage. Around these cores sit the habit mechanics that work: a daily goal ring, a forgiving streak (free automatic freezes, rest days, repair, pause), 3 daily quests generated from what the scheduler needs anyway, a cosmetic shop paid only in earned gems, opt-in leagues, and friends who see each other's activity but not their scores. The sensory layer has a local voice: Pip in a doppi, dutar plucks and doira thumps synthesised in code, Samarkand blue domes drawn in SVG. Celebrations stay rare enough to matter, Pip never guilt-trips, and every number survives the retention audit. Engagement comes from competence, story and care instead of fear, so it is still working at day 30, which is the point where loss-aversion stops working and Duolingo's churn sets in.
+
+## Art and sound (no external assets)
+
+PRINCIPLES. No external assets. Every visual is react-native-svg 15 animated with Reanimated 4.5 (both already installed), and every sound is synthesised by scripts/gen-sounds.mjs into 16-bit mono 22.05 kHz WAV. Colour literals may appear only in generated files (the lint rule in DECISIONS §7.7). New art sources therefore go in lep-frontend/design-system/art-extra/*.json, with a new design-system/art-palette.json holding light and dark values for each colour. `npm run gen:design` turns these into src/design/art-extra.generated.ts and artPalette.generated.ts. Components reference palette names only. Art palette tokens: skin-1…skin-6 (a realistic Central Asian and European range); hair-black, hair-brown, hair-auburn, hair-grey; leaf, leaf-2, leaf-dry, bark, soil, soil-dark, water; sky-day and sky-dusk (dark theme), dome-blue, tile-turquoise, brick, sand, snow; ikat-1…3; gold and gold-lip (stamps and certificate). CEFR and semantic colours stay the fixed tokens.json ones. Every element with a meaning also carries an icon or a word, never colour alone. Budgets: Pip parts ≤ 15 KB, characters ≤ 24 KB, the 10 scenes ≤ 80 KB, props ≤ 30 KB, plants ≤ 30 KB; stamps, emblems and confetti are procedural.
+
+PIP (src/design/pip/). Pip is the existing yellow speech-bubble body (yellow #ffc21a = token yellow, lip = yellow-lip, navy eyes, pink cheeks), drawn in viewBox 0 0 180 180 with translate(10 12). Parts: eyes {open, happy-arc, closed, wink, look-up, look-side}; mouth {smile, open-smile, small-o, flat-smile, grin}; arms {none, wave-r, cheer-both, point-r, hold}; props {headphones, book, watering-can, pencil, magnifier, map, mic, suitcase}; extras {zzz, thought-dots, sparkles}. Outfits are anchored to the head box (x 16–144, y 16–148):
+- doppi: a black four-sided cap with a white almond 'qalampir' (pepper) motif made of 4 mirrored paths;
+- ikat scarf: diagonal stripes using ikat-1…3 with a zig-zag edge;
+- round glasses;
+- graduation cap: a mortarboard with a tassel that swings 10° on Pip's bob;
+- chef hat;
+- raincoat and umbrella: the umbrella is held in the hold arm;
+- headphones: re-use the listen pose's band;
+- astronaut helmet: a translucent circle with a highlight arc.
+The existing six poses become presets, pinned by a snapshot test. New presets: point, water, read, write, explore, inspect, wink. No sad, angry or crying parts exist, and a guardrail test enforces it.
+
+CAST (src/design/characters/). Bust portraits, viewBox 96. Brand cohesion comes from Pip-style eyes (an ellipse with a white highlight). Expressions: neutral, smile, talk (open mouth, alternated while the AI replies), think. Sizes: 24, 32, 48 and 96 px.
+- Aziz: short black side-parted hair, skin-3, blue shirt; glasses from B2; a jacket at C2.
+- Sarah: auburn shoulder-length bob, skin-1 with freckles, green cardigan, small earrings.
+- Kamola: long dark braid over the shoulder, skin-3, purple top and ikat scarf.
+- Bobur: curly black hair, wide grin, skin-4, orange hoodie.
+- Mr Karimov: grey hair and moustache, skin-4, navy suit, a black-and-white chust doppi in festive scenes.
+- Dilnoza: dark hair in a bun, or a teal headscarf (flag for the content owner per the docs/00 diversity quota), skin-2, teal blouse, a notebook.
+
+PATH. The road is a cubic Bézier per unit through the fixed node rows: a 12 px level-colour stroke over a 4 px level-lip offset stroke (3D), with upcoming segments in line-2 dashed. Path skins:
+- Silk Road: a sand road with camel-footprint dots and small caravanserai arches;
+- Metro: a coloured line with white station dots and a station roundel at each unit, inspired by the Tashkent metro;
+- Garden stepping-stones: oval stones with tufts of grass;
+- Constellation: thin lines between star nodes on a sky-dusk band.
+Section scene bands (168 px). Each is ≤ 8 KB of primitives, with an evening palette in the dark theme, and owns 4 gutter props:
+- S1 Mahalla courtyard: grapevine trellis, a supa (raised platform), a teapot, a pomegranate tree. Props: teapot, piyola bowl, pomegranate, a cat.
+- S2 City and metro: the metro 'M' entrance, a bus, chinor plane trees, apartment blocks. Props: bus stop, metro sign, bicycle, chinor.
+- S3 On the road: a train on a viaduct, mountains, a waterfall (episode 'Under the cliff'). Props: suitcase, signpost, train, tent.
+- S4 Samarkand: three turquoise ribbed domes, minarets, tile bands. Props: dome, minaret, tile star, stork.
+- S5 Bazaar and choyxona: melon pyramids, lagan non (patterned round bread), tea bowls, a striped awning. Props: melon, non, samovar, spice sacks.
+- S6 Office: a skyline window, desks, a coffee cup, a plant. Props: laptop, mug, file stack, desk lamp.
+- S7 Chimgan: snowy peaks, a chairlift, juniper (archa). Props: chairlift chair, eagle, archa, ski poles.
+- S8 University library: columns, shelves, a reading lamp. Props: book stack, globe, lamp, chalkboard.
+- S9 Old Bukhara and Khiva: the Kalta Minor stub minaret, Ark walls, storks' nests. Props: minaret, wooden column, stork, carpet.
+- S10 Tashkent at night: the TV tower, city lights, stars, a crescent moon. Props: TV tower, street lamp, stars, fountain.
+Vehicles for section transitions: bus, train, Afrosiyob high-speed train, metro car, cable car, plane, night train. Each is one SVG group animated with translateX over 1.6 s.
+
+WORD GARDEN plants. Six species of Uzbek garden plants (tulip, cotton, pomegranate, mint, sunflower, rose) × five stages:
+- seed: a soil mound, the seed and a hair-thin shoot;
+- sprout: two leaves;
+- bush: a leafy stem with a bud;
+- bloom: an open flower, an open cotton boll or a pomegranate fruit;
+- tree: a small tree on a gold-rimmed pot.
+Health is applied by transform and recolour rather than separate drawings: thirsty = 18° stem bend, leaves lerped 40 % to leaf-dry, a lagoon water-drop badge; dry = 28° bend and 80 % leaf-dry. Variety is procedural, seeded by a hash of the lexeme id: leaf count ±1, height ±8 %, hue within leaf/leaf-2. Leech: a ladybug sits on the leaf (friendly, not sick). Paused: a small tag. Beds are soil-coloured rounded rects with the design system's lip. Watering animation: Pip's can tilts 35°, 5 drop circles fall 24 px, then the stem springs upright (damping 10).
+
+STAMPS (procedural). The shape comes from the unit's function category: circle (social), hexagon (transactions), scalloped (narrating), shield (opinion), notched rectangle (academic/professional). Fill is the level colour at 85 % with a rough-edge mask (a seeded jitter path) for an ink look. The inner glyph is an existing skill icon (chat, book, pencil, headphones, mic). A TextPath ring reads 'UNIT 12 · A1.1' plus a date. The tested variant is outline-only with a dashed ring. Habit stamps are flames with the day number. The Passport cover is navy with a gold-lip embossed Pip and a guilloche pattern made of 12 rotated ellipses.
+
+CELEBRATION EFFECTS. Confetti is used only for section, level and the 365-day streak: 40–60 SVG rects, circles and ribbons in the next level's colour family, a Reanimated physics loop (gravity 1,400 px/s², drag, spin), 1.2–2 s, then unmounted. It is off in Calm mode and with reduceMotion. The banner flip uses rotateY with backfaceVisibility. The stamp ink-splash is a radial path that scales to 1.3 and fades. League emblems are 10 faceted gems (3–5 facet polygons each, light and dark facet tints) named Clay through Diamond. The certificate is an A4-ratio SVG with a navy border, an ikat-band header, a gold seal, Pip and the honesty line; the same markup goes to expo-print for the PDF.
+
+NEW ICONS (24 px stroke style, matching art.json): sprout, watering-can, passport, stamp, bag (shop), snowflake (freeze), key (test-out), crown (flawless), cast (two heads), gift.
+
+MOTION SYSTEM. Durations: fast 120 ms, base 200 ms, slow 320 ms, celebrate 600–2,500 ms. Springs: pop {damping 12, stiffness 220}, settle {damping 16, stiffness 160}. Idle loops: Pip bob 2.8 s, current-node pulse 1.6 s, combo sheen 2 s. All idle loops pause while audio or speech plays, while a comprehension or listening item is in the answering state, and while the app is backgrounded. reduceMotion means fades only. Calm mode has no confetti and caps sequences at 1.2 s.
+
+SOUND. The existing 13 sounds (correct, incorrect, tap, pop, combo, complete, streak, levelup, gem, unlock, water, bloom, quest) are kept and wired (E07). Two helpers are added to gen-sounds.mjs: pluck() (Karplus-Strong: a lowpassed noise burst excitation, a delay line, damping 0.996) and drum() (a doira frame drum: a sine with a pitch drop plus bandpassed noise plus high 'jingle' noise ticks). New sounds:
+- ring: a sine glissando 600→1,200 Hz over 250 ms, then a C6-E6-G6 bell chord, 0.7 s.
+- stamp: a doira thump (110→70 Hz over 120 ms, decay 18) plus a 30 ms bandpassed noise slap at 1.2 kHz plus 4 jingle ticks (highpass 6 kHz, 15 ms each, 25 ms apart), 0.4 s.
+- chapter: a dutar motif from two plucked strings a fourth apart (D3 147 Hz and G3 196 Hz), notes D-G-A-G-D 110 ms apart, 1.2 s tail.
+- freeze: three slow-attack bells (C7, E7, B6) plus an airy highpassed noise puff, 0.8 s.
+- page: a lowpass-sweep noise swipe, 180 ms, played quietly.
+- kudos: two soft claps (12 ms noise bursts bandpassed at 1.5 kHz, 140 ms apart).
+- promote: a rising C5-E5-G5 marimba, a doira on the third note and a C6 bell, 1.0 s.
+- mic_on: a sine blip 880→1,320 Hz, 60 ms. mic_off: the reverse.
+- hint: a single soft A5 bell (decay 8), 0.4 s.
+- whoosh: noise with a lowpass sweeping up then down, 350 ms.
+Mastering: everything is normalised to a 0.7 peak with an 8 ms tail fade (the existing normalise()). New sounds add about 180 KB, keeping the total ≤ 600 KB, and the generation is reproducible byte for byte. Playback rules (sfx.ts): volume 0.8, tap and pop 0.5; celebratory sounds wait for speech to finish (up to 1.5 s, otherwise skipped); never over listening-item audio; at most 2 sfx per 500 ms; no loops, no music, no ticking timers; all off with noAudio or soundEffects=false.
+
+HAPTICS (expo-haptics, only through sfx.ts). correct: success. incorrect: warning. tap: selection. pop: light. combo: medium. complete: success. streak: heavy. levelup: success. unlock: medium. bloom: light. quest: success. stamp: heavy. ring: success. freeze: light. chapter: medium. kudos: selection. promote: success. mic_on: light. page, hint and whoosh: none. Haptics are a preference, are skipped on the web, and never appear in FeedbackPanel (existing guardrail).
+
+TESTS TO ADD. Snapshot tests for the Pip presets and outfits. A guardrail test that no Pip part, pose or copy is sad or guilt-tripping. Contrast tests for every shop theme in light and dark. A render-time budget for Path rows. Confetti may be reachable only from the section, level and streak-365 celebration components. Every new string must exist in en, uz and ru with matching ICU placeholders. The uz and ru strings above are drafts and need a native reviewer before release (DECISIONS §9.6).
+
+## Features
+
+| ID | Priority | Feature |
+|---|---|---|
+| E00 | P0 | Award pipeline and the honest pending state (foundation for every number below) |
+| E01 | P0 | XP that measures effort on scheduled work |
+| E02 | P0 | Daily goal ring |
+| E03 | P0 | Streak with free automatic freezes, rest days, repair, pause and rare milestones |
+| E04 | P0 | Lesson-end summary |
+| E05 | P0 | In-lesson combo and answer feedback (subtle, never confetti per tap) |
+| E06 | P0 | Pip mascot system: parametric poses and reactions that never guilt |
+| E07 | P0 | Sound effects and haptics, wired and extended |
+| E08 | P0 | The Path: a vivid winding road through ten places in Uzbekistan, with the cast on it |
+| E09 | P0 | Word Garden: the SRS review hub (each learned word is a plant whose health is its memory) |
+| E10 | P0 | Daily quests (3), generated from what the scheduler wants anyway |
+| E11 | P0 | English Passport: badges that are the CEFR can-do statements |
+| E12 | P0 | Rare celebrations: unit (small), section (large), level (largest) with a certificate |
+| E13 | P0 | Story seasons with progressive unlock, cliffhangers and the Cast |
+| E14 | P0 | Test-out for units and sections: free, unlimited, prominent |
+| E15 | P0 | Profile and Progress: avatar, passport, honest stats, coverage first |
+| E16 | P0 | Value-first reminders and a welcome-back flow |
+| E17 | P1 | Gems (earned only) and a cosmetic shop: Pip outfits, themes, path skins |
+| E18 | P1 | Weekly quests (2): immersion volume plus a stretch task |
+| E19 | P1 | Perfectionist Mode (an optional self-challenge) |
+| E20 | P1 | Placement: 'Find your level' |
+| E21 | P1 | AI conversation partner: talk with the story's characters |
+| E22 | P1 | Friends by code: activity, kudos and cooperative friend quests |
+| E23 | P1 | Opt-in weekly leagues (30 people, 10 tiers) |
+| E24 | P1 | Character hosts: the cast fronts the features |
+| E25 | P1 | Weekly report and the plateau explainer |
+| E26 | P1 | Soil test: the monthly retention audit, framed for the garden |
+| E27 | P2 | Cohort and the shared Chinor tree (a cooperative monthly goal) |
+| E28 | P2 | Help Sarah with Uzbek: teach-back mediation tasks |
+| E29 | P2 | Avatar builder |
+| E30 | P2 | Honest home-screen widget |
+
+### E00 — Award pipeline and the honest pending state (foundation for every number below) (P0)
+
+**Why it engages.** Rewards land the moment a lesson ends when online, and nothing is ever lost when offline. Learners trust the numbers because they never jump around or disappear, and a reward you trust is one that motivates.
+
+**Ethics check.** Honesty test (§8.6): the device may display only FACTS it measured itself (active minutes, answers given, words met, sessions finished), always labelled as such. Every AWARD (XP, streak, goal met, gems, quest completion, badge, celebration) comes from the server, which derives it by replaying the append-only log (docs/08 §10), so offline answers are credited to the day they were actually given. Guardrail §8.4-9 is revised, not removed: tests/guardrails asserts that award fields are typed only from the generated API schema, and that the device persists only server snapshots (each with as_of) plus a whitelist of raw facts (pendingActiveMs, pendingSessions). Rare celebrations are acknowledged server-side so each one shows once across all devices (docs/10 §10). Learning test: none of this changes what the scheduler serves.
+
+**Screens.** No screen of its own; this is the data flow every engagement surface uses.
+1. CLOSE (LessonRunner.finish): (a) flush the outbox through POST /v1/sync/reviews (≤500 rows); (b) POST /v1/sessions/{client_session_uuid}/complete with the session's facts; (c) render the E04 summary straight away with its skeleton (Pip, title, time, new words). Award tiles fill in when the response arrives, with a 600 ms count-up. Budget 2.5 s, then the offline variant (E04).
+2. 'While you were offline' sheet: on app foreground after a successful sync, if summary.unseen_awards is non-empty, a bottom sheet lists them (e.g. '+84 XP from 3 lessons on Tuesday · Streak 12 → 14 · Quest done: Water 10 plants') with one button 'Nice' / 'Zoʻr'. Plays sfx 'gem' if gems are included, else 'pop'. Title en 'While you were offline' / uz 'Internetsiz paytingizda'. Caption en 'Practice done offline counts for the day you did it.' / uz 'Internetsiz bajarilgan mashq oʻsha kun uchun hisoblanadi.'
+3. Store src/state/gamification.ts: a TanStack Query cache of GET /v1/gamification/summary, persisted as a snapshot with as_of. When the snapshot is more than 15 min old and the device is offline, the caption reads 'as of 14:05' / '14:05 holatiga'. It never computes awards.
+4. Celebration queue: the server returns celebrations[] (id, kind, payload). The client shows at most 2 after a summary and the rest at the next app open, and acknowledges each one when shown.
+5. New outbox kinds: 'session_complete' and 'immersion' (story reading, listening), replayed like reviews.
+
+**Backend needs.** Phase 4: POST /v1/sync/reviews (already planned), extended to accept outbox kinds session_complete and immersion. Phase 6: POST /v1/sessions/{client_session_uuid}/complete, idempotent. Body: {node_id?, tier?, mode:{timed, no_hints, perfectionist}, started_at, ended_at, active_ms, answer_uuids[]}. Response Awards: {xp:{total, rule_version, lines:[{kind, count, base, mult:{difficulty, novelty, mode}, xp}]}, goal:{goal_min, before_min, after_min, met_now}, streak:{before, after, credited_today, milestone|null}, gems:[{reason, amount}], quests:[{id, before, after, target, completed_now}], badges:[{id, variant}], unlocks:[{kind:'story'|'unit'|'section', id}], celebrations:[{id, kind, payload}], best_run}. GET /v1/gamification/summary: {as_of, xp:{today, week, total}, goal, streak, gems, quests:{daily[], weekly[]}, unseen_awards[], celebrations_pending[]}. POST /v1/gamification/celebrations/{id}/ack. Tables: session_completions (learner_id, client_session_uuid UQ, facts jsonb), celebrations (learner_id, id, kind, payload, created_at, seen_at). Pure modules per brief §4.1: domain/xp.py, domain/streaks.py, domain/quests.py, domain/garden.py. services/gamification.py re-derives the awards for every affected local day (learner tz) whenever late offline rows arrive.
+
+### E01 — XP that measures effort on scheduled work (P0)
+
+**Why it engages.** A visible reward for effort, with a formula anyone can read. Production, speaking and reading visibly earn more than tapping, and a replay explains its ×0.25 instead of quietly paying less, so the game feels fair and learners take the harder (better) tasks on purpose.
+
+**Ethics check.** Implements docs/10 §3 exactly: XP = Σ base(type) × difficulty_mult × novelty_mult × mode_mult. novelty_mult is 0.25 for re-grinding mastered content and is shown on screen (brief §8.2). difficulty_mult stays 1.0 until knowledge tracing exists (Phase 7), and the rules page says so. No XP boosts, no double-XP events, no per-answer XP pop-ups (docs/10 §10). XP is never a gate. TWO RULINGS NEEDED. R-XP1: the spec's base values contradict its own goal that immersion out-earns tapping. Ten minutes of lessons is about 17 items × ~2 ≈ 35 XP; ten minutes of A1 reading is about 600 words → 6 XP. Proposal: credit immersion by verified minutes. Reading XP = 4 × credited minutes, where credited minutes = min(time on text, words ÷ floor_wpm) and floor_wpm is A1 40 · A2 60 · B1 90 · B2 120 · C1 150 · C2 180. Listening XP = 4 × minutes played at ≥0.75 speed with at least one interaction per 3 minutes. A 10-minute read then earns ≈40 XP, more than a lesson. R-XP2: a wrong answer earns 0.5 × base (retrieval effort counts); a timeout, or a non-game answer with rt < 600 ms, earns 0; present cards earn 0.
+
+**Screens.** Base classes for the 31 types in the course. Recognition ×1: mcq_word_from_definition, tap_pairs, memory_match, word_race (per item), odd_one_out, minimal_pair_discrimination, phoneme_id, stress_tap, grammaticality_judgement, pragmatics_choose, listen_gist_mcq, read_gist_mcq, read_scan_detail, listen_order_events, sort_bins. Recall ×2: gap_fill_bank, word_bank_build, sentence_reorder, dictation_word, spelling_bee, listen_detail_gap, repeat_after (imitation, see R3). Production ×3: type_from_l1, gap_fill_free, error_correct, dictation_sentence, and any speaking item answered by typing. Speaking ×4: speak_prompt, speak_roleplay, speak_retell, read_aloud. Writing: write_sentence at 6 per 50 words (minimum 3).
+Where XP appears: the E04 summary tile, Profile (total, this week), the league (E23). It is never on the path's top bar and never per answer.
+Breakdown sheet ('See how XP was counted' / 'XP qanday hisoblanganini koʻrish'), one row per kind. Each row has an icon tile in the skill colour, then 'count × base = xp', e.g. '12 recall answers ×2 = 24' / '12 ta eslash javobi ×2 = 24'. Multiplier chips: 'No hints ×1.25' / 'Yordamsiz ×1.25'; 'Timed ×1.25' / 'Vaqtli ×1.25'; 'Revision ×0.25: you already know these well' / 'Takrorlash ×0.25: bularni allaqachon yaxshi bilasiz'. Footer en 'XP measures effort on work your schedule chose. Replaying easy lessons earns less, on purpose.' / uz 'XP jadvalingiz tanlagan ishdagi mehnatni oʻlchaydi. Oson darslarni qayta bajarish ataylab kamroq beradi.' Animation: the total counts up over 600 ms (ease-out) and then one 'pop'; reduceMotion shows the final value straight away.
+
+**Backend needs.** Phase 3/6 domain/xp.py (pure): xp_for_answer(type_class, correct, rt_ms, timed_out, hints, novelty, mode) and xp_for_immersion(kind, words, active_ms, level), versioned by XP_RULE_VERSION so replay reproduces the ledger. Novelty = 0.25 when every memory item the answer touched was retained or better and not due at answer time (read from memory_state during replay, so it is deterministic). xp_ledger is append-only: (learner_id, id, ts, amount, source, session_id, rule_version, detail jsonb with the breakdown lines). Exposed via the E00 Awards and GET /v1/gamification/summary.
+
+### E02 — Daily goal ring (P0)
+
+**Why it engages.** A ring closing is a small, satisfying finish line, sized by the learner, that they can hit every day. When it closes the app says 'a good place to stop', which makes tomorrow's return feel easy rather than owed.
+
+**Ethics check.** The goal is learner-set (5/10/20/40 min) and can be lowered at any time with no penalty: lowering never changes past days, the streak or gems (docs/10 §5). It counts active minutes of scheduled work: lessons, reviews, stories, immersion, speaking, writing. Idle time does not count (any per-item rt is clamped to 120 s; gaps over 120 s are excluded). Unsynced minutes appear as a dashed arc labelled as waiting, a fact rather than an award (E00). Stopping is encouraged (docs/07 §3.3).
+
+**Screens.** 1. Mini ring: in the Path and Garden top bar, 40×40 around a 28 px Pip head (wearing the equipped outfit). Stroke 4, track token line-2, fill token xp. accessibilityLabel en 'Daily goal: 6 of 10 minutes' / uz 'Kunlik maqsad: 10 daqiqadan 6'. Met: the ring is full with a 14 px success check badge, and Pip switches to the cheer pose for 1 s the first time it is seen.
+2. Goal sheet (tap the ring): a 168 px ring with centre text '6 / 10 min' and caption 'Today' / 'Bugun'. Then the list 'What counted today' / 'Bugun nimalar hisoblandi' (icon, title, minutes per session, from summary.goal.items). Then a 7-day strip of bars (met = filled xp, rest day = moon icon, paused = grey stripe). Then a Segmented control 5/10/20/40 titled 'Daily goal' / 'Kunlik maqsad', with helper en 'You can lower your goal any time. There's no penalty.' / uz 'Maqsadni istalgan vaqtda kamaytirishingiz mumkin, hech qanday jarimasi yoʻq.' Last, the link 'What this means for reaching B1' / 'Bu B1 ga yetishga qanday taʼsir qiladi', which opens the existing HonestTimeline with the chosen minutes.
+3. Goal met inside E04: the ring closes over 500 ms with sfx 'ring' (new) and a success haptic. Pip says en 'Goal done. That's a good place to stop.' / uz 'Maqsad bajarildi. Toʻxtash uchun yaxshi joy.' A +10 gems chip is added once E17 ships.
+4. Offline: a dashed xp-soft arc for pending minutes, captioned en '3 min waiting to sync' / uz '3 daqiqa yuborilishini kutmoqda'.
+5. Empty state (new day, 0 min): the ring is empty with no warning colour and no countdown.
+
+**Backend needs.** PATCH /v1/me/settings {daily_goal_min} (brief §12; it does not exist yet, and today the profile is read-only). Active minutes = Σ session_completions.active_ms + immersion_events.active_ms, bucketed by the learner's local date (tz on learners). summary.goal = {goal_min, done_min, met, items:[{kind, title, minutes}], last7:[{date, met, rest, paused}]}. Goal-met gems are written to gem_ledger once per local day, with an idempotent key (learner, date).
+
+### E03 — Streak with free automatic freezes, rest days, repair, pause and rare milestones (P0)
+
+**Why it engages.** The streak is the most reliable habit mechanic in language apps. This version keeps the pull of a growing flame and removes the dread. Freezes are automatic and free, two rest days a week are built in, a missed day can be repaired, and illness or a holiday is one tap. Learners keep long streaks because the streak forgives them.
+
+**Ethics check.** docs/10 §5 verbatim. 2 freezes held, +1 every 5 days (R9 default: cap 2), automatic, no purchase path anywhere. Up to 2 rest days. Repair within 48 h by a double session, free, once a month. Pause up to 30 days with no questions asked and no 'are you sure?'. Milestones only at 7/30/100/365. The streak is never a content gate, a league input or a certificate condition. The reset copy is the exact spec string, supplied by the server. No push notification ever mentions the streak (E16). Pip has no sad pose (E06). Copy is checked against the banned regex, so 'break your streak' is avoided even in a reassuring sense. RULING R-ST1: docs/10 §5 does not say whether a streak day needs the full daily goal. Proposed default: a day counts when it has ≥ min(daily_goal, 5) active minutes of scheduled work, so choosing a 40-minute goal never makes the streak harder.
+
+**Screens.** 1. Top-bar chip (36 px pill, 44 px hit area): colour flame icon plus the number. States: credited today (flame bright, number in weight 900); not yet today (outline flame in streak-ink, no red, no 'at risk'); rest day today (moon icon, label 'Rest day' / 'Dam olish kuni'); paused (pause icon, 'Paused' / 'Pauzada'); freeze used last night (a small lagoon snowflake badge on the chip for that day only).
+2. Streak screen (tap the chip). Header: 72 px flame, '23-day streak' / '23 kunlik ketma-ketlik', 'Best: 41' / 'Eng yaxshisi: 41'. Month calendar (swipe between months): practised = streak fill; rest = moon; freeze = snowflake on gem-soft; paused = grey diagonal stripe; repaired = streak fill with a stitched border; today = ring. Freezes card: two snowflake slots, en '2 of 2 freezes ready. They're free and used automatically.' / uz '2 ta muzlatish tayyor. Ular bepul va avtomatik ishlatiladi.' and, when one is missing, 'Next one in 3 days' / 'Keyingisi 3 kundan keyin'. Rest days card: Mon–Sun chips, up to 2 selectable, en 'Your streak carries on through rest days.' / uz 'Dam olish kunlarida ketma-ketligingiz davom etaveradi.' Pause card: en 'Taking a break? Pause your streak for up to 30 days. No questions asked.' / uz 'Tanaffus kerakmi? Ketma-ketlikni 30 kungacha pauza qiling. Hech qanday savolsiz.' Button 'Pause' opens a 1–30 day stepper and applies immediately. While paused: 'Paused until 14 Oct' / '14-oktyabrgacha pauzada' with the button 'Resume now' / 'Hozir davom ettirish'. Next milestone line, informational only: 'Next milestone: 30 days' / 'Keyingi marra: 30 kun'.
+3. Reset screen, shown once on the first open after a reset. Pip wave pose. Exact spec copy en 'Your streak reset. That's fine — 41 days of learning didn't disappear. Ready to start the next one?' / uz 'Ketma-ketligingiz qaytadan boshlandi. Hechqisi yoʻq — 41 kunlik oʻrganganingiz yoʻqolmadi. Keyingisini boshlaymizmi?' Primary 'Start a short lesson' / 'Qisqa darsni boshlash' (a 5-minute review session). If repair is available, secondary 'Repair it: practise 20 minutes today or tomorrow. Free, once a month.' / 'Tiklash: bugun yoki ertaga 20 daqiqa mashq qiling. Bepul, oyiga bir marta.' The repair window is shown as a static date, never a running countdown.
+4. Freeze-used notice: an in-app toast on the first open of the day, Pip wink. en 'A free freeze covered yesterday. 1 ready; the next arrives in 3 days.' / uz 'Kecha bepul muzlatish ishlatildi. 1 tasi tayyor; keyingisi 3 kundan keyin keladi.' Sfx 'freeze', light haptic.
+5. Milestone celebration (queued via E00), full screen for 2 s: the flame grows to 160 px, the number ticks up, sfx 'streak' (7, 30) or 'levelup' (100, 365), confetti only at 365. Copy: 7 en 'Seven days in a row. A habit is forming.' / uz 'Ketma-ket yetti kun. Odat shakllanmoqda.' · 30 'Thirty days. English is part of your routine now.' / 'Oʻttiz kun. Ingliz tili endi kundalik hayotingizning bir qismi.' · 100 'One hundred days of English.' / 'Ingliz tilining yuz kuni.' · 365 'A whole year of English.' / 'Ingliz tili bilan butun bir yil.' Buttons 'Share' (an image with no comparison) and 'Continue'. Each milestone also adds a habit stamp to the Passport (E11).
+
+**Backend needs.** Phase 6 domain/streaks.py (pure): evaluate(practice_days, rest_days, pauses, freeze_ledger, repairs, tz) → state, fully re-derivable when offline rows arrive late. Tables: streaks (per brief §5.1) plus streak_days (learner_id, local_date, kind ∈ practice|rest|freeze|pause|repair), append-only, for the calendar. Endpoints: GET /v1/gamification/streak/calendar?month=YYYY-MM; POST /v1/gamification/streak/repair (checks eligibility, then completes when a double session is logged within 48 h); POST /v1/gamification/streak/pause {days 1–30}; DELETE /v1/gamification/streak/pause; PATCH /v1/me/settings {rest_days} (ISO 1–7, ≤2, already constrained in the DB). The reset message is returned as a copy key plus the days value (brief §9.2: the copy comes from the server). Freezes are consumed lazily when the next activity or a daily beat job for each tz bucket evaluates a missed day.
+
+### E04 — Lesson-end summary (P0)
+
+**Why it engages.** The payoff screen: in about 3 seconds the learner sees what they earned, the ring closing, the flame ticking up, quests ticking off and new seeds landing in their garden. Then it honestly says this is a good place to stop. Every finished lesson feels like progress you can see, with no slot-machine noise.
+
+**Ethics check.** Celebration is proportionate: one 'complete' sound, no confetti (confetti belongs to sections and levels only, E12). 'Finish for now' stays the primary button (docs/07 §3.3), and the next lesson never auto-plays. XP lines show novelty ×0.25 (brief §8.2). Accuracy appears only in an expandable Details list, never as a judgement headline; the session itself ends on a recovery item, never on a failure (docs/07 §3.2). Offline, award tiles say they will count later instead of guessing (E00).
+
+**Screens.** Replaces the current CloseView, keeping its parts: learned chips, next-up card, withheld notices, the two buttons. Timeline (tap anywhere to skip to the final state; reduceMotion or 'Calm' renders the final state immediately):
+0–600 ms: Pip cheer pose at 120 px springs in. Title en 'Lesson complete' / uz 'Dars tugadi'. Sfx 'complete', success haptic.
+600–1600 ms: three stat tiles (each 1/3 width, surface card with lip): XP (xp colour, count-up), Time ('9 min' / '9 daq'), New words ('6' / '6 ta'). The link 'See how XP was counted' opens the E01 sheet.
+1600–2600 ms: the daily goal ring animates from before to after. If met now, the E02 close sequence runs. If this session earned today's streak credit, the flame chip ticks +1 with sfx 'streak' (only the first time per day).
+2600–3400 ms: today's quests (E10) as rows whose bars animate before → after; a completed quest gets a check and sfx 'quest' (one sound even if two complete).
+Then, static: the garden card en '6 new seeds planted in your Word Garden' / uz 'Soʻzlar bogʻingizga 6 ta yangi urugʻ ekildi', seed icons, tap → Garden; the 'New in this lesson' chips (tap to hear); 'Next up' card; Details expander (per-item list: prompt, your answer, correct form, with a 'Practise these later' note; accuracy shown here as 'Correct first time: 14 of 17' / 'Birinchi urinishda toʻgʻri: 17 tadan 14'). Buttons: primary 'Finish for now' / 'Hozircha tugatish', secondary 'Next lesson' / 'Keyingi dars'.
+Offline variant: the XP tile shows a cloud icon and 'Counts when you're online' / 'Internetga ulanganingizda hisoblanadi'; the ring shows the dashed pending arc; no streak or quest animation; caption 'Your answers are saved on this device.' (existing string).
+Afterwards: up to 2 queued celebrations (E12, E03 milestone, E11 stamps) open one after another.
+
+**Backend needs.** E00 Awards from POST /v1/sessions/{id}/complete. The garden seed count comes from the response: unlocks or awards include new_lexemes:[id] (lexemes whose first memory item was created in this session).
+
+### E05 — In-lesson combo and answer feedback (subtle, never confetti per tap) (P0)
+
+**Why it engages.** Being 'in the zone' gets a gentle visual and audio warmth, so momentum feels good and a run of 5 or 10 gets a small cheer. It is the flow state of a rhythm game without turning learning into a slot machine.
+
+**Ethics check.** No XP multiplier for combos or speed, because that would reward guessing and punish the p≈0.85 difficulty target (docs/07 §2.5). Thresholds land only every 5 correct answers. A wrong answer resets the run silently: no 'combo broken' message, no loss sound beyond the normal soft 'incorrect'. The feedback-sheet guardrail is kept: sounds and haptics fire from LessonRunner through the sfx layer, never inside FeedbackPanel or Exercise. Nothing animates while the learner is answering a comprehension or listening item (docs/07 §3.1). The combo chip appears only in the FEEDBACK state.
+
+**Screens.** 1. Answer sounds, called in LessonRunner.onSubmit after grading: correct → sfx 'correct' (light success haptic); incorrect or timeout → 'incorrect' (soft and low, warning haptic); ungraded free response → 'pop'. Skipped while speech is playing or the mic is recording.
+2. Run counter in runner/machine.ts: run += 1 on a correct answer without a hint; a hint-assisted correct answer keeps the run without adding to it; incorrect or timeout resets it to 0; ungraded items leave it unchanged.
+3. Visual (LessonHeader). From run ≥ 3 the progress-bar fill gains a soft xp-soft sheen sweeping every 2 s (reduceMotion: a static 2 px lighter top band). At run 5, 10, 15, 20… a chip rises 12 px above the bar during the feedback state: colour bolt icon plus en '5 in a row' / uz 'Ketma-ket 5 ta'. It holds 1.4 s and fades over 200 ms. Sfx 'combo', medium haptic, accessibilityLiveRegion polite 'Five correct in a row' / 'Ketma-ket beshta toʻgʻri javob'. Mini-Pip (28 px, right of the bar) does the cheer pose for 1 s. On a wrong answer the sheen fades over 300 ms with no text.
+4. Mini-Pip poses in the header, static between items: speaking item → listen; after correct → happy (one 3 px bob); after incorrect → think (curious, never sad); combo → cheer; break → rest.
+5. The best run is reported by the server (from the answer order), never computed on the device, and feeds the quest 'Get 8 right in a row'.
+
+**Backend needs.** None for display. Server: best_run per session derived from the order of review_attempts within session_id (E00 response field best_run) for quest progress.
+
+### E06 — Pip mascot system: parametric poses and reactions that never guilt (P0)
+
+**Why it engages.** A mascot with personality is half of Duolingo's brand. Pip, the yellow speech bubble, becomes a companion who points at your next step, waters your garden, reads with you and celebrates big moments. Because Pip's reactions are contextual and rare, they stay charming instead of becoming wallpaper.
+
+**Ethics check.** Guardrail tests: no pose drawn or named sad, cry, angry or disappointed. Every Pip line passes the banned-phrase regex in all three locales. Pip never mentions its own feelings about the learner's absence ('Pip misses you' is banned), never anthropomorphises loss, and only ever informs (docs/10 §5 copy rule, §7 tone). Idle animation pauses during comprehension items and audio (docs/07 §3.1) and is off with reduceMotion.
+
+**Screens.** 1. Renderer src/design/pip/Pip.tsx (react-native-svg, viewBox 0 0 180 180, the same translate(10 12) as the existing Mascot). It composes parts: body (the existing bubble path and lip), cheeks, eyes {open, happy-arc, closed, wink, look-up, look-side}, mouth {smile, open-smile, small-o, flat-smile, grin}, arms {none, wave-r, cheer-both, point-r, hold}, prop {none, headphones, book, watering-can, pencil, magnifier, map, mic, suitcase}, extras {zzz, thought-dots, sparkles}, outfit layer (E17). The existing 6 poses (happy, wave, cheer, think, listen, rest) become presets with identical output; a snapshot test pins this. New presets: point, water, read, write, explore (map and suitcase), inspect (magnifier), wink.
+2. Motion (Reanimated 4): idle bob translateY 0→−3 px on a 2.8 s sine; blink (eyes scaleY 1→0.1→1 over 140 ms every 3–6 s, seeded); reaction pop (scale 1→1.12→1, spring damping 12); pose cross-fade 150 ms.
+3. Placements: Path (56 px beside the current node, point pose aimed at it, outfit on); top-bar avatar (28 px inside the goal ring); lesson header (28 px); summary (120 px); Garden (water pose, 72–96 px); streak screen; empty states; Passport cover emblem.
+4. Reaction table (event → pose → line en / uz → sfx):
+first open of the day, goal not met → wave → 'Hi! Ready for today's {n} minutes?' / 'Salom! Bugungi {n} daqiqaga tayyormisiz?' → none;
+goal met → cheer → 'Goal done. That's a good place to stop.' / 'Maqsad bajarildi. Toʻxtash uchun yaxshi joy.' → ring;
+reviews due → water → '{n} words are ready for a quick review, about {m} min.' / '{n} ta soʻz qisqa takrorlashga tayyor, taxminan {m} daqiqa.';
+nothing due → read → 'Nothing is due today. Fancy a story?' / 'Bugun takrorlash yoʻq. Hikoya oʻqiymizmi?';
+back after ≥ 3 days → wave → 'Welcome back! Let's start with a short one.' / 'Xush kelibsiz! Qisqasidan boshlaymiz.';
+freeze used → wink → 'A free freeze covered yesterday.' / 'Kecha bepul muzlatish ishlatildi.' → freeze;
+unit complete → cheer → 'Unit {n} done. You can now: {can_do}' / '{n}-dars tugadi. Endi siz: {can_do}' → complete;
+new section → explore → 'Next stop: {place}!' / 'Keyingi bekat: {place}!' → whoosh;
+speaking item → listen → 'I'm listening.' / 'Eshitayapman.';
+wrong answer → think → no line.
+5. Lines live in i18n under pip.*. At most one Pip line per screen.
+
+**Backend needs.** None. Counts in the lines (due words, minutes) come from GET /v1/gamification/summary and GET /v1/garden/summary.
+
+### E07 — Sound effects and haptics, wired and extended (P0)
+
+**Why it engages.** Sound is half of what makes a game feel alive. The 13 existing sounds are not wired to anything yet. Wiring them, plus 11 new sounds with a local timbre (dutar plucks, doira thumps), gives the app an audio identity a learner recognises with their eyes closed.
+
+**Ethics check.** Soft palette: a wrong answer is a low two-note fall, never a buzzer (docs/10 §8.3). No ticking timers, no background music in lessons (docs/07 §3.1 extraneous load), and nothing over speech or listening audio. Every sound has a visual equivalent and every haptic is optional. Everything is off with noAudio. A 'Calm' celebrations setting shortens or removes fanfares. Sounds are synthesised in code, so there are no licences or external assets.
+
+**Screens.** 1. Event map (sfx → event): correct/incorrect → answer graded; tap → tile placed or option selected (exercise renderers); pop → button press on primary game buttons only (not every Pressable); combo → run 5/10/15…; complete → lesson summary; streak → first streak credit of the day and milestones 7/30; levelup → section, level, and streak 100/365; gem → gems earned; unlock → unit/node unlocked or test-out passed; water → garden watering; bloom → plant stage-up; quest → quest completed. New: ring → goal ring closes; stamp → passport stamp; chapter → story episode unlocked; freeze → freeze used; page → story 'play all' advances a line (very quiet, 0.3 volume); kudos → a friend's reaction received; promote → league promotion; mic_on and mic_off → recording starts/stops (an accessibility affordance); hint → hint revealed; whoosh → section travel transition.
+2. Settings → Audio (exists): 'Sound effects' (exists), 'Haptics' (exists), new 'Celebrations: Full / Calm' / 'Tabriklar: Toʻliq / Sokin'. Calm = no confetti, sequences ≤ 1.2 s, levelup replaced by complete.
+3. Mixing rules (sfx.ts): volume 0.8, tap and pop 0.5; if speech is playing (usePlayingKey), a celebratory sound waits up to 1.5 s for it to end and is skipped otherwise; answer sounds play before any feedback audio; never more than 2 sfx in 500 ms; preloadSfx at lesson start and on the summary screen.
+4. Haptic map additions: stamp heavy; ring success; freeze light; chapter medium; kudos selection; promote success; mic_on light; whoosh none; page none; hint none.
+
+**Backend needs.** None.
+
+### E08 — The Path: a vivid winding road through ten places in Uzbekistan, with the cast on it (P0)
+
+**Why it engages.** The path is the home screen, and Duolingo's is iconic. Ours is a journey through real, beloved places, from a mahalla courtyard to Samarkand's blue domes to Tashkent at night, following the story's cast. The road fills in with colour behind you, Pip points at the next stop, and characters peek out at story nodes. Opening the app feels like resuming a trip, not starting a chore.
+
+**Ethics check.** Locks come from the server, and 2–3 units stay visible ahead (docs/10 §4). Every lock offers a free, unlimited test-out (E14). Decoration lives only in the gutters, is aria-hidden, and never animates near an active item. Session-length chips give autonomy (docs/07 §4.1) and use the honest budgets (docs/08 §5: 5 min = reviews only). Until the server's progress overlay exists, DECISIONS F22 stands: everything is open and pips show device-only tiers, labelled as such.
+
+**Screens.** 1. Top bar (sticky, 56 px, also used on the Garden tab). Left: LevelBadge chip (tap → section overview sheet: section scene, units with states, 'Test out of Section {n}'). Right: the streak chip (E03), the gem chip (E17; hidden until the shop ships), and Pip in the goal ring (E02). Chips are 36 px pills (surface, line border, lip-sm) with 44 px hit areas.
+2. Under the bar: the existing Continue button. Once POST /v1/sessions exists, a chip row: '5 min · reviews' / '5 daq · takrorlash', '10 min', '15 min', defaulting to the daily goal. If reviews are due, a secondary pill 'Water garden · 12 · 4 min' / 'Bogʻni sugʻorish · 12 · 4 daq' → E09. Below that, the collapsible 'Today's quests' card (E10).
+3. Road: for each unit, an SVG layer behind the nodes. Nodes sit on fixed rows of 132 px (the current node's row is 150) with the existing OFFSETS zig-zag, so a cubic Bézier through the node centres needs no measuring. Completed segments: 12 px stroke in the level colour, with a 4 px level-lip stroke offset 4 px below for a 3D road. Upcoming segments: line-2, 8 px, dashed 2/10, round caps. The road continues into the next unit's banner. Path skins (E17) swap this style.
+4. Section scene band, replacing the plain section header: a 168 px SVG illustration at full content width, overlaid with 'Section {n} · {cefr} · {name}' and the place name, plus a 'Test out of Section {n}' key button when the section is ahead of the learner. Places en / uz: 1 Mahalla courtyard / Mahalla hovlisi; 2 City streets and metro / Shahar koʻchalari va metro; 3 On the road / Yoʻlda; 4 Samarkand's blue domes / Samarqandning moviy gumbazlari; 5 Bazaar and choyxona / Bozor va choyxona; 6 The office / Ishxona; 7 Chimgan mountains / Chimyon togʻlari; 8 University library / Universitet kutubxonasi; 9 Old Bukhara and Khiva / Qadimiy Buxoro va Xiva; 10 Tashkent at night / Tungi Toshkent. Dark theme uses an evening palette.
+5. Gutter props: one per unit, on the side opposite that row's offset, 48–64 px, from the section's prop set (art plan), aria-hidden, never overlapping nodes or captions.
+6. Character cameos: beside each story node (N4), 32 px heads of the 1–2 speakers with the most lines in that episode, peeking from behind the node. The node sheet reads 'Episode {n} · {title} · with Aziz and Kamola' / '{n}-qism · {title} · Aziz va Kamola bilan'. A character's first appearance (Kamola ep 2, Bobur ep 10, Mr Karimov ep 23, Dilnoza ep 145) adds a 'New character' / 'Yangi qahramon' pill and a Cast card (E13).
+7. Node states: locked (disabled fill and lock icon; still tappable, showing the sheet en 'Opens after Unit {n}. Already know this? Test out: free, any time.' / uz '{n}-darsdan keyin ochiladi. Buni bilasizmi? Imtihon bilan oʻting: bepul, istalgan vaqtda.'); open; current (Pip pointing, callout 'Start'/'Continue', a 1.6 s pulse ring unless reduceMotion); tier pips (server-confirmed, or device-only labelled per F22); all tiers done → star; flawless → gold rim (E19). Review node N8 shows a lagoon bubble with the unit's due count and opens the Garden filtered to that bed. Immersion node N7 opens the story or reader.
+8. Units beyond the visible window: a light mist overlay (gradient of token bg-soft at 60 %). Titles stay readable, and each banner carries a key 'Test out' / 'Imtihon bilan oʻtish'.
+9. Performance budget: each FlatList row renders in < 16 ms on a mid-range Android; scenes and props are memoised; a test measures this.
+
+**Backend needs.** Phase 2 (lead engineer, in progress): GET /v1/course and GET /v1/units/{unit_id} serve the map. Gamification reads unit, can-do and story metadata only through the content service's public interface and imposes no module layout on it. Phase 5/6 add a progress overlay on GET /v1/course: units[].state ∈ locked|open|current|complete, nodes[].tiers_done (server), sections[].state, test_out_available, story_unlocked, story_read, due_count per unit. Phase 5: POST /v1/sessions {minutes, node_id?, mode:'path'|'review'} (brief §12) with the docs/08 §5 budgets.
+
+### E09 — Word Garden: the SRS review hub (each learned word is a plant whose health is its memory) (P0)
+
+**Why it engages.** Reviews are the least glamorous and most valuable part of language learning. The garden makes them something you want to tend: you see hundreds of words you have grown, you see which ones are thirsty, and four minutes of watering visibly brings them back to life with a satisfying sound. Plants grow through stages as memory strengthens, so long-term retention becomes something you can watch.
+
+**Ethics check.** The picture stays faithful to the memory model. Stage = docs/08 §4.1 mastery state of the lexeme's weakest required aspect (mastery.weakest_stability, never the maximum or the mean), and health = the server's due date, so a wilted plant means it really is due. Watering only happens through scheduler-composed sessions: a healthy plant cannot be watered (docs/10 §1, docs/07 §2.2). Nothing ever dies, because forgetting is gradual and recoverable, and showing death would be both loss-framing and false. When nothing is due, the screen says so and points at reading (docs/08 §11). No 'words known' headline here; stage counts are labelled estimates until the soil test (E26). Leeches get the honest label 'Needs a different approach'. A colour is never the only signal.
+
+**Screens.** Tab: Practice becomes Garden (en 'Garden' / uz 'Bogʻ'; new sprout icon). The existing mixed practice and saved words move inside it.
+1. Header: the E08 top bar, then Pip water pose (72 px), title en 'Word Garden' / uz 'Soʻzlar bogʻi', and the weather line en '12 plants need water · about 4 min' / uz '12 ta nihol suv kutmoqda · taxminan 4 daqiqa'. Primary Button lg 'Water the garden' / 'Bogʻni sugʻorish' → POST /v1/sessions {mode:'review', minutes: est rounded to 5/10}. With 0 due: Pip read pose, en 'Nothing needs water today. Read a story?' / uz 'Bugun sugʻorish kerak emas. Hikoya oʻqiymizmi?', and a button to the Library.
+2. Stage strip: five tappable filter tiles, each with a plant icon and count. Seed 'Learning' / Urugʻ 'Oʻrganilmoqda'; Sprout 'Getting there' / Nish 'Yaqinlashmoqda'; Bush 'Known' / Buta 'Bilaman'; Bloom 'Strong' / Gul 'Mustahkam'; Tree 'Mastered' / Daraxt 'Puxta oʻzlashtirilgan'. Caption en 'Stages follow your memory model. Counts are estimates until your first soil test.' / uz 'Bosqichlar xotira modelingizga asoslanadi. Birinchi tuproq sinovigacha sonlar taxminiy.'
+3. Tricky words card, shown when leeches exist: en '3 tricky words need a different approach' / uz '3 ta qiyin soʻzga boshqacha yondashuv kerak' → a clinic session (the E24 host Kamola once P1 ships).
+4. Beds: a virtualised vertical list with one bed per unit, most recent first. Bed header 'Unit 12 · Food and drink' plus '36 planted · 5 thirsty' / '36 ta ekilgan · 5 tasi suv kutmoqda'. Plants sit in a wrapping grid of 44×56 cells (6 per row on a 360 px phone), each an SVG plant (art plan). Species comes from a hash of the lexeme id, the colour variant from part of speech, and the stage and health from the server. The 'Show words' toggle adds an 11 px lemma caption. Thirsty: stem bent 18°, leaves tinted toward the leaf-dry token, a lagoon water-drop badge. Dry (R < 0.70): a 28° bend and brown leaves. Plants are never removed.
+5. Seed packets shelf: saved story words that have not been taught yet, en 'Saved from stories. They'll be planted when you learn them.' / uz 'Hikoyalardan saqlangan. Oʻrganganingizda ekiladi.'
+6. Plant sheet (tap a plant): lemma (Andika learn-m), IPA, play button (with the synthetic-voice chip), L1 gloss, stage label, and 'Next watering: in 12 days' / 'Keyingi sugʻorish: 12 kundan keyin' or 'Needs water now' / 'Hozir suv kerak'. Five leaves stand for the aspects Recognise / Hear / Recall / Spell / Say (Tanish / Eshitish / Eslash / Imlo / Aytish), each lit when unlocked and seen, with the weakest one outlined. Text en 'You know it as well as its weakest leaf: Spell.' / uz 'Siz uni eng zaif bargi darajasida bilasiz: Imlo.' Example sentences follow. A healthy plant shows only en 'This one doesn't need water yet.' / uz 'Bunga hali suv kerak emas.' A due plant shows 'Water just this word' (P1: a micro-session of that lexeme's due items).
+7. After a review session the learner returns to the Garden and an animation queue runs: up to 12 reviewed plants each get a watering-can tilt (250 ms) and a droop-to-upright spring; sfx 'water' plays once at the start; stage-ups get a sparkle and 'bloom' (at most 3 animated, the rest summarised as '+5 grew a stage' / '+5 tasi oʻsdi'). With reduceMotion: an instant update plus the toast en '12 plants watered · 3 grew' / uz '12 ta nihol sugʻorildi · 3 tasi oʻsdi'.
+8. One-time explainer banner: en 'Words don't die here. A wilted plant just needs a review.' / uz 'Bu yerda soʻzlar oʻlmaydi. Soʻlgan nihol faqat takrorlashni kutadi.'
+9. Accessibility: a 'Show as list' mode with rows like 'hello, Known, next review in 12 days'; beds are headed lists; the drop badge and the words carry the state.
+10. Offline: the last snapshot plus as_of, with due status decided by comparing now to the server's due_at and dry_at (no R computed on the device). Watering offline needs the server's 7-day review window (docs/08 §10); until that exists the button says it needs a connection.
+
+**Backend needs.** Phase 4 memory_state, Phase 5 sessions. domain/garden.py (pure): plant_for(lexeme aspects' states) → {stage from mastery.classify of the weakest required aspect (learning→seed, young→sprout, retained→bush, durable→bloom, retired→tree, leech→leech, suspended→paused), due_at = last_review + next_interval of the weakest aspect, dry_at = last_review + interval_days(S, 0.70)}. Endpoints: GET /v1/garden/summary {as_of, due_count, est_minutes, stages:{seed, sprout, bush, bloom, tree}, leeches, audited_at|null}; GET /v1/garden/beds?cursor=&stage=&unit_id= → [{unit_id, planted, thirsty, plants:[{lexeme_id, stage, due_at, dry_at, aspects:{recog,aural,recall,spell,prod:{unlocked, seen}}, weakest}]}], 10 beds per page, compact arrays, ETag on the learner's state version; POST /v1/sessions {mode:'review', minutes, lexeme_id?}. R2 (which aspects are required) must be settled first, and the aspect coverage is shown in the plant sheet as R2 suggests.
+
+### E10 — Daily quests (3), generated from what the scheduler wants anyway (P0)
+
+**Why it engages.** Three small, varied, achievable goals give every day a shape and a reason to try a different skill (read, speak, review). Ticking them off is satisfying, and because they come from your own schedule they never feel like busywork.
+
+**Ethics check.** Generated only from work the scheduler would choose (docs/10 §10): due reviews, the current path node, unread unlocked episodes, speaking not practised recently. No quest asks the learner to replay mastered content, cram, or exceed the docs/08 §5 new-item caps. Sized to the daily goal (total ≤ 1.5 × goal). No countdown or 'expiring' copy. A speaking quest always accepts typed answers (docs/10 §12: no mic requirement), and no listening or speaking quests are generated for a noAudio profile. One free swap per day (autonomy).
+
+**Screens.** 1. Path card 'Today's quests' / 'Kunlik vazifalar' under Continue, collapsible and remembered per device. Three rows, each with an icon tile in the skill colour, the title, a progress bar (n/target) and a reward chip (+15 gems once E17 ships; until then a small stamp icon for the habit page). A completed row gets a success check; sfx 'quest' when the completion is first seen. Footer en 'Quests come from what your schedule needs today.' / uz 'Vazifalar bugungi jadvalingizdan olinadi.' When all are done: Pip wink and en 'All done. New quests tomorrow.' / uz 'Hammasi bajarildi. Yangi vazifalar ertaga.'
+2. Quests screen (tap the card header): daily quests, the weekly quests section (E18, P1), and the text link 'Swap' / 'Almashtirish' on one quest per day.
+3. Templates, targets for goals S(5)/M(10)/L(20)/XL(40), en / uz:
+REVIEW 'Water {n} plants' / '{n} ta nihol sugʻoring', n = min(due, 5/10/20/30), eligible when due ≥ 3.
+LESSON 'Finish {n} lessons' / '{n} ta darsni tugating', 1/1/2/3 path sessions of scheduled work.
+READ 'Read {n} words' / '{n} ta soʻz oʻqing', 150/300/600/1,000.
+STORY 'Finish a story episode' / 'Hikoyaning bir qismini oxirigacha oʻqing', when an unread unlocked episode exists.
+SPEAK 'Answer {n} speaking prompts, aloud or typed' / '{n} ta gapirish topshirigʻiga javob bering, ovozli yoki yozma', 2/3/5/8, when there has been no speaking answer for 2 days.
+RUN 'Get {n} right in a row' / 'Ketma-ket {n} ta toʻgʻri javob bering', 5/6/8/8.
+NOHINT 'Finish a lesson without hints' / 'Darsni maslahatlarsiz tugating', from A2.
+4. Selection: slot 1 = REVIEW if eligible, else LESSON. Slot 2 = LESSON or STORY, whichever the learner did less in the last 7 days. Slot 3 = seeded weighted pick (seed = learner_id + local date) among the remaining eligible categories, never repeating a category. Progress counts events by their true timestamp, so offline work counts.
+
+**Backend needs.** Phase 6 domain/quests.py (pure): generate(snapshot, local_date, seed) and progress(events) → state. Snapshot = {due_count, est_review_min, current_node, goal_min, days_since_speak, unread_unlocked_episodes, immersion_7d, profile flags, level}. quests table (brief §5.1) plus template, params, slot, swapped. Generated lazily on the first summary call of the local day. POST /v1/gamification/quests/{id}/swap (1/day, 409 problem type quest_swap_used). Progress is updated in the session-complete and immersion ingest paths.
+
+### E11 — English Passport: badges that are the CEFR can-do statements (P0)
+
+**Why it engages.** Collecting is deeply motivating, and these stamps are real: 'I can order in a café.' The Passport fits the story perfectly: Sarah is new in Tashkent and you are new in English. Every page is a place on your journey, unearned stamps outline what is next, and the stamp landing (ink splash plus a doira thump) is one of the best small moments in the app.
+
+**Ethics check.** Badges are capabilities, not activity (docs/10 §10), and the syllabus and badge system are the same object: 504 stamps = 3 can-dos × 168 units. Earned means demonstrated: the unit is complete (all 8 nodes at tier ≥ 2, including the N6 speak task whose prompt is the can-do, content note C13), or the unit was passed by test-out (a distinct 'tested' variant). A strength rim shows honestly whether the evidence is durable (≥ 85 % of the unit's syllabus items retained) and may say 'could use a refresher'. A badge is never revoked, because revoking would be loss-framing. Habit stamps (7/30/100/365) live on a separate page so effort and ability are not mixed.
+
+**Screens.** 1. Passport screen (from Profile and from unit-complete). Cover: navy with a gold 'ENGLISH PASSPORT' / 'INGLIZ TILI PASPORTI' wordmark, the Pip emblem and the learner's display name. Swipeable pages, one per section, headed in the level colour with the place name (E08). Each page has a 3-column stamp grid (3 per unit). Earned: a solid stamp (art plan). Unearned: a faint dotted outline with the unit title, so the learner sees what comes next. Last pages: 'Milestones' (first sentence aloud, first story episode finished, first 30-minute conversation, first unsimplified book (B2+), understood native-speed conversation (C1)) and 'Habits' (7/30/100/365, weekly quests).
+2. Stamp sheet: the can-do in English (Andika), e.g. 'I can order in a café.'; 'Earned 3 Oct 2026 · Unit 10 · Food and drink' / '2026-yil 3-oktyabr · 10-dars · Ovqat va ichimlik'; evidence lines from the server ('Spoke in the café roleplay', 'Finished all 8 lessons'); the strength rim status, en 'Kept strong' / uz 'Mustahkam saqlanmoqda' or en 'Could use a refresher' / uz 'Biroz takrorlasa boʻladi' with the button 'Practise this' → a review session for that unit; for tested stamps, en 'Tested out' / uz 'Imtihon orqali'.
+3. Earning animation (within E12 unit-complete or alone): the stamp drops from scale 1.4 at −8° to 1.0 over 260 ms, an ink-splash ring expands to 1.3 and fades, sfx 'stamp', heavy haptic. reduceMotion: a 150 ms fade. Title en 'Stamp earned' / uz 'Muhr olindi'.
+4. Profile shows the latest 6 stamps and '{n} of 504 stamps' / '504 tadan {n} ta muhr'.
+
+**Backend needs.** badges table (brief §5.1) plus variant ∈ earned|tested and evidence jsonb. Badge ids: '{unit_id}.cd{1..3}', 'ms.{name}' and 'habit.{n}'. GET /v1/badges → {stamps:[{id, variant, earned_at, strength: strong|refresh|null}], totals}. Evaluated in services/gamification on unit completion or test-out, with a nightly Celery beat job recomputing strength from memory_state. The can-do texts come from the Phase 2 content service (unit can_do arrays).
+
+### E12 — Rare celebrations: unit (small), section (large), level (largest) with a certificate (P0)
+
+**Why it engages.** Because celebrations are rare (a unit every week or two, a section every few months, a level about once a year), they land hard. The section transition is a little journey to a new place, and the level certificate is something to show family. It is the opposite of confetti on every tap.
+
+**Ethics check.** docs/10 §10: unit small, section large, level largest; never on answers (the existing guardrail keeps the celebration component unreachable from FeedbackPanel and Exercise). At most 2 celebration screens in a row, with the rest queued. Calm mode and reduceMotion are respected. The certificate carries the docs/12 §4 honesty line. A level is awarded only on the four docs/00 §7 conditions (Phase 7), never on path progress alone.
+
+**Screens.** 1. Unit complete (after E04, full-screen modal, auto-plays 2.5 s then shows buttons). The unit banner in the level colour flips (rotateY 180°, 400 ms) to its 'complete' side: en 'Unit {n} complete' / uz '{n}-dars tugadi', 'You can now:' / 'Endi siz:'. The three can-do stamps drop 250 ms apart (E11). Pip cheer. Sfx 'complete', then a quiet 'stamp' ×3. +30 gems chip (E17). If the next episode unlocked: a card 'Next episode unlocked: “The exam”' / 'Keyingi qism ochildi: “The exam”' with the 'chapter' dutar motif. Buttons 'Open passport' / 'Pasportni ochish' and 'Continue' / 'Davom etish'.
+2. Section complete (large). Scene transition: the current section scene pans left; a vehicle crosses (S1→2 bus, 2→3 train, 3→4 Afrosiyob high-speed train, 4→5 bus, 5→6 metro, 6→7 cable car, 7→8 bus, 8→9 plane, 9→10 night train); the next scene arrives with the title en 'Next stop: {place}' / uz 'Keyingi bekat: {place}'; Pip in the explore pose with a suitcase; 40 confetti pieces in the next level's colour (Full mode only); sfx 'whoosh' then 'levelup'. Then section stats: words planted this section, minutes, episodes read, stamps. A 'Share' card. Title en 'Section {n} complete!' / uz '{n}-boʻlim tugadi!'
+3. Level achieved (largest). The certificate is drawn in SVG: navy and gold, learner name, level (e.g. B1), date, per-paper sub-scores, and the line en 'Internal assessment, not an accredited qualification.' / uz 'Ichki baholash, akkreditatsiyadan oʻtgan malaka emas.' Pip cheer wearing a graduation cap, an outfit gifted free and permanently. 60 confetti pieces; sfx 'levelup' plus a doira roll. Buttons 'Save as PDF' (expo-print from the same SVG), 'Share image', and 'See your report' (docs/12 §9.2).
+4. Queue rules: at most 2 per session end, the remainder at the next app open; each one is acknowledged server-side (E00) and never repeats on another device.
+
+**Backend needs.** Celebrations come through E00. Unit and section completion come from the Phase 6 progress service. The section checkpoint and level award come from Phase 7 (level_awards, GET /v1/progress/level/{level} with the four conditions). Certificate data: GET /v1/progress/level/{level}/certificate {name, level, date, papers[]}.
+
+### E13 — Story seasons with progressive unlock, cliffhangers and the Cast (P0)
+
+**Why it engages.** 'Learners return for the story, not the streak' (docs/06 §7.1). With 168 episodes of a recurring cast, each unit unlocks the next episode, each episode ends with 'to be continued…', and the Cast page lets learners follow lives they care about (Aziz's road from student to mentor, Sarah's years of learning Uzbek). This is the retention engine Duolingo's Stories never built: one serial across the whole course.
+
+**Ethics check.** Unlocking follows progression, not currency or payment. Test-out unlocks skipped episodes too, so nobody grinds for the story. Unlocked episodes are free forever and readable offline. 'Previously' recaps use content lines only (nothing invented); character bios are authored and reviewed by the content owner, spoiler-safe per section. Reading earns immersion XP (E01 R-XP1), aligning fun with input volume (docs/07 §1 condition 1).
+
+**Screens.** 1. Library → 'Story' shelf restyled as 10 seasons, one per section, titled with the place (E08). Episode cards are 160×200: cover = a crop of the section scene plus the speakers' heads, title, 'Episode {n}' / '{n}-qism'. States: read (check); new and unread (a 'New' / 'Yangi' dot); locked (padlock, title still visible, en 'Unlocks at Unit {n}' / uz '{n}-darsda ochiladi'). Unlocked = all units ≤ the current unit, plus tested-out ranges.
+2. Reader (existing StoryReader) gains a collapsible top line 'Previously:' / 'Avvalgi qismda:' showing the last line of the previous episode with its speaker, and an end card 'To be continued…' / 'Davomi bor…' with the next episode's title, its characters' heads, and either 'Read next' or 'Unlocks when you reach Unit {n}' / '{n}-darsga yetganingizda ochiladi'. Sfx 'chapter' when an episode unlocks (from E12 or E14). Reading time and words go to the outbox as an 'immersion' event (XP, quests).
+3. Cast page (Library → 'The cast' / 'Qahramonlar'): six cards, each a 96 px portrait, name, a one-line bio revealed up to the learner's section (e.g. Aziz: 'A student in Tashkent who wants to be a doctor.'), 'Appears in {n} episodes' / '{n} ta qismda', and the first episode. Characters not met yet show a silhouette and '?'. Cast bios are a P1 sub-part (they need authoring); the counts and first appearances are P0 (computed from content).
+
+**Backend needs.** Phase 2 content service exposes story metadata per unit (speakers with line counts, word count, first appearance per speaker), read through its public interface. Progress overlay on GET /v1/course: story_unlocked and story_read per unit (Phase 5/6). Immersion ingest: outbox kind 'immersion' {kind:'story', text_id, words, active_ms, completed} → immersion_events (append-only, docs/00 §3.3 volume statistics). New authored content file for the content owner: content/cast.json (character × section → bio en/uz/ru, spoiler-safe).
+
+### E14 — Test-out for units and sections: free, unlimited, prominent (P0)
+
+**Why it engages.** Nothing kills motivation faster than grinding content you already know. 'Skip ahead' turns that frustration into a quick win: the nodes fill in with a whoosh, the stamps land and the story jumps ahead. It is also the fastest way for returning or stronger learners to feel at home.
+
+**Ethics check.** docs/10 §4: any unit or section can be skipped by passing at ≥ 85 %, free and unlimited (a guardrail test asserts there is no cost or cooldown on unit test-out). Failing never blocks (docs/12 §3); the result gives at most 3 specific things to work on (docs/12 §9.1). RULING R-TO1: docs/12 §3 limits the *gating* section checkpoint to 2 attempts 48 h apart, which conflicts with 'unlimited' test-out. Proposal: section test-out (skipping ahead) is unlimited, and the gating checkpoint keeps docs/12's limits. Composition includes ≥ 3 production and ≥ 2 listening items unless the profile is noAudio.
+
+**Screens.** 1. Entry points: the locked-node sheet, the key icon on unit banners, the section scene band button, and the placement result.
+2. Pre-screen sheet (host Mr Karimov in E24; P0 uses Pip in the inspect pose). en 'Skip ahead to Unit {n}?' / uz '{n}-darsga oʻtib ketasizmi?'; '15 questions · about 5 minutes · pass with 85% or more' / '15 ta savol · taxminan 5 daqiqa · 85% va undan yuqori natija bilan oʻtasiz'; 'Nothing is lost if you don't pass. Try again whenever you like.' / 'Oʻtmasangiz ham hech narsa yoʻqolmaydi. Xohlagan paytda yana urinib koʻring.' Buttons 'Start test' / 'Sinovni boshlash' and 'Not now' / 'Hozir emas'.
+3. Test runner: LessonRunner in assessment mode. No hints, no combo, no per-item XP or feedback sheet (a neutral 'Next'), a progress bar, and a leave dialog that says progress is not kept. Answers go to the outbox as kind 'assessment'.
+4. Pass: en 'You tested out of Units {a}–{b}!' / uz '{a}–{b}-darslardan imtihon bilan oʻtdingiz!'; on return to the path the skipped nodes fill one by one (40 ms each) with 'whoosh' then 'unlock'; tested-variant stamps; episodes unlocked.
+5. Not passed: en 'Not this time: 78%. Here's what to practise:' / uz 'Bu safar emas: 78%. Mana nimani mashq qilish kerak:' with up to 3 specific syllabus items (each with 'Practise'), then primary 'Start Unit {n}' / '{n}-darsni boshlash' and secondary 'Try again later' / 'Keyinroq yana urinish'.
+
+**Backend needs.** Phase 7: POST /v1/assessment/checkpoint {scope:'unit'|'section', id, purpose:'test_out'} → item set (docs/12 §3: 40 % this unit, 40 % previous 3, 20 % earlier; ≥ 3 production, ≥ 2 listening) plus respond and result endpoints. On a pass the server credits tier 2 on the skipped nodes as 'tested', schedules memory items from the responses, unlocks stories and awards tested stamps. Before IRT exists: fixed forms drawn from the unit's tier 2–3 items.
+
+### E15 — Profile and Progress: avatar, passport, honest stats, coverage first (P0)
+
+**Why it engages.** A place to see yourself grow: your avatar in its outfit, your stamps, your volume of reading and speaking, and the one number that matters most, 'You understand about 87% of everyday conversation'. Learners come back to look at it, which Duolingo's thin profile never earns.
+
+**Ethics check.** docs/10 §4.1 order: coverage first, then level, then streak, XP and league, then badges. Every figure traces to a server field (guardrail 9). 'Words known' is labelled an estimate until the retention audit (E26). Each stat tile has an (i) explaining exactly what it measures. There is no comparison with anyone. Minors: no league row.
+
+**Screens.** 1. Me tab, top to bottom. (a) Header card: avatar = a Pip-head disc in one of 8 learner-chosen tones (initials fallback; equipped outfit from E17); display name (tap to edit), or 'Add a name' / 'Ism qoʻshing'; 'Learning since Oct 2026' / '2026-yil oktyabrdan beri oʻrganmoqda'; LevelBadge. (b) Coverage card: the CoverageMeter with en 'You understand about {p}% of everyday conversation' / uz 'Kundalik suhbatning taxminan {p}% qismini tushunasiz'; it stays a PendingStat until the server provides it. (c) A 2×3 stats grid of icon, value, label and (i): 'Words known' / 'Biladigan soʻzlarim' (with an 'estimate' / 'taxminiy' tag until audited); 'Day streak' / 'Kunlik ketma-ketlik' (current · best); 'Total XP' / 'Jami XP'; 'This week' / 'Shu hafta' (minutes); 'Words read' / 'Oʻqilgan soʻzlar'; 'Minutes spoken' / 'Gapirilgan daqiqalar'. (d) Passport preview (E11). (e) Social rows, P1: Friends, Leagues 'Off. Join if you like.' / 'Oʻchirilgan. Xohlasangiz qoʻshiling.' (hidden for minors). (f) The existing settings list, plus Celebrations Full/Calm on the Audio page. (g) Sign out.
+2. Progress tab: the three PendingStats become server values in docs/10 order: coverage (spoken/written), level progress with the four conditions (GET /v1/progress/level/{level}), streak and XP, then the immersion volumes against the level targets in docs/00 §3.3 (words read, hours listened, words written, minutes spoken) as horizontal bars. The HonestTimeline stays.
+
+**Backend needs.** Phase 6: GET /v1/progress (coverage first, then level, xp, streak, volumes, audited_at). PATCH /v1/me/profile {display_name 3–20 chars, moderated by blocklist with no emails or phone numbers; avatar:{tone, outfit}}. GET /v1/badges summary. Guardrail test update: progress.tsx renders only server fields.
+
+### E16 — Value-first reminders and a welcome-back flow (P0)
+
+**Why it engages.** Duolingo's notifications are its strongest return lever. Ours do the same job with value instead of guilt: a new episode waiting, a 4-minute review, the time you chose to study. A learner returning after a gap gets a 5-minute restart rather than a wall of shame, and that is when most apps lose people.
+
+**Ethics check.** docs/10 §7: caps, quiet hours and weekly fallback already exist in code and stay. New templates are value-first and specific, and never mention the streak, absence or feelings. The two-week check-in asks why rather than when (docs/07 §4.3), is skippable, and only adapts the plan. Minors keep the stricter cap.
+
+**Screens.** 1. Reminder templates (local notifications scheduled from the last summary snapshot when the app goes to the background), chosen in priority order: (a) due reviews: en '{n} words are ready for a review, about {m} minutes.' / uz '{n} ta soʻz takrorlashga tayyor, taxminan {m} daqiqa.'; (b) new episode unlocked and unread: en 'Episode {n}: {title}.' plus the episode's first line as the body / uz '{n}-qism: {title}.'; (c) implementation-intention cue: en '{cue}: your {goal} minutes of English.' / uz '{cue}: {goal} daqiqalik ingliz tilingiz.' (cue e.g. 'After dinner' / 'Kechki ovqatdan keyin'); (d) quest suggestion: en 'Today's quest: read {n} words. One story episode does it.' / uz 'Bugungi vazifa: {n} ta soʻz oʻqing. Bitta hikoya qismi yetarli.'
+2. Welcome back (app open after ≥ 3 days without activity; replaced by the E03 reset screen if a reset happened, never both): a sheet with Pip wave, en 'Welcome back! Let's start with a short one.' / uz 'Xush kelibsiz! Qisqasidan boshlaymiz.', primary '5-minute restart' / '5 daqiqalik qayta boshlash' (a reviews-only session, docs/08 §5) and secondary 'Not now' / 'Hozir emas'.
+3. Check-in (return after ≥ 14 days): en 'What got in the way?' / uz 'Nima xalaqit berdi?' with chips. 'No time' / 'Vaqt yoʻq' → offers a smaller goal and the pause. 'Too hard' / 'Juda qiyin' → an easier review session and a clinic. 'Too easy' / 'Juda oson' → test-out. 'Got bored' / 'Zerikdim' → stories or AI chat. 'Life happened' / 'Hayot oʻz ishini qildi' → pause going forward. 'Skip' is always visible.
+
+**Backend needs.** GET /v1/gamification/summary supplies the template data (due count, est minutes, newest unlocked unread episode with its first line). POST /v1/me/checkins {reason} (optional; learner data, exportable and deletable). Scheduling stays on the device (notifications/reminders.ts, caps unchanged).
+
+### E17 — Gems (earned only) and a cosmetic shop: Pip outfits, themes, path skins (P1)
+
+**Why it engages.** Self-expression and something to save towards: dressing Pip in a doppi, turning the path into a Silk Road caravan trail or a metro line, giving the app a Samarkand-blue theme. It is a soft, positive goal layered on learning that never competes with it.
+
+**Ethics check.** docs/10 §9 earn table only: daily goal 10 · quest 15 · unit 30 · checkpoint 60 · weekly immersion goal 50. Gems cannot be bought, have no ad source and no random source. They are spendable only on cosmetics. A guardrail test asserts catalogue kinds ⊂ {outfit, theme, path_skin}: never freezes, content, tests, certificates, XP boosts or AI minutes. There are no timers, 'limited' labels, daily deals or confirm-shaming (§8.2). Seasonal decorations appear free for everyone and their outfits then join the catalogue permanently, so there is no fear of missing out. Undo within 10 minutes. Themes change only decorative tokens and must pass the existing 92-pair contrast test in light and dark; semantic and CEFR colours never change. RULING R-GEM1: minors (§8.8 'no purchases') may use the gem shop because no money is involved. Confirm.
+
+**Screens.** 1. Gem chip in the top bar (colour gem icon plus balance) → Shop. Header: balance, then en 'Gems are earned by learning. They can't be bought.' / uz 'Gavharlar oʻrganish orqali topiladi. Ularni sotib boʻlmaydi.'
+2. Tabs 'Pip' / 'Pip', 'Themes' / 'Mavzular', 'Path' / 'Yoʻl'. A 2-column grid of cards: a live preview (Pip wearing the item; a mini app screenshot drawn from the theme's tokens; a path-skin road segment), name, price chip. States: Buy, Owned ('Wear' / 'Kiyish', 'Use' / 'Ishlatish'), Equipped (check). Not enough gems: the price chip shows '{n} more' / 'yana {n} ta' and the button is disabled with the text 'Keep learning to earn gems' / 'Gavhar topish uchun oʻrganishda davom eting'.
+3. Purchase sheet: a large preview, en 'Buy {item} for {price} gems? You'll have {rest} left.' / uz '{item}ni {price} gavharga olasizmi? {rest} ta qoladi.' Buttons 'Buy' / 'Olish' and 'Not now' / 'Hozir emas'. After buying: sfx 'gem', and Pip try-on (the outfit drops onto Pip with a spring). The card then shows 'Undo' / 'Bekor qilish' for 10 minutes.
+4. Catalogue v1, prices against a typical 30–55 gems a day. Outfits: Doppi 300, Ikat scarf 250, Round glasses 200, Graduation cap 400 (also gifted free at the first level award), Chef hat 250, Raincoat and umbrella 300, Headphones 200, Astronaut helmet 600. Themes: Samarkand Blue 600, Choyxona 600, Suzani 600, Night Tashkent 800. Path skins: Silk Road caravan 800, Metro line 800, Garden stepping-stones 800, Constellation 1,000. Seasonal free decorations: Navruz (21 Mar: sumalak pot and tulips on the path) and Independence Day (1 Sep: flag-colour bunting), each for one week.
+
+**Backend needs.** gem_ledger, append-only (learner_id, id, ts, amount ±, reason, ref, idempotency key); the balance is derived. GET /v1/shop (versioned catalogue: id, kind, price, preview params). POST /v1/shop/purchases {item_id, idempotency_key} (409 problem types insufficient_gems and already_owned). POST /v1/shop/purchases/{id}/undo (≤ 10 min). GET and PATCH /v1/me/cosmetics {equipped:{outfit, theme, path_skin}}. Gem awards are written by services/gamification on goal, quest, unit, checkpoint and weekly-immersion events.
+
+### E18 — Weekly quests (2): immersion volume plus a stretch task (P1)
+
+**Why it engages.** A bigger weekly target gives the week an arc and steers learners toward the highest-value and least-chosen work (extensive reading or listening, writing, clinics) with a real payoff of 50 gems.
+
+**Ethics check.** Weekly targets follow the immersion volume targets in docs/00 §3.3, scaled by level, plus a writing task, a clinic or a speaking node (docs/10 §10). Nothing is gated. There is no countdown; the card says 'Resets on Monday' only after completion. The speaking option accepts typed answers.
+
+**Screens.** 1. A section in the Quests screen and a mini row in the Path quests card. Each quest has a progress ring.
+2. Quest 1 (immersion): en 'Read {w} words or listen {m} minutes this week' / uz 'Shu hafta {w} ta soʻz oʻqing yoki {m} daqiqa tinglang'. A1 1,000/20 · A2 2,000/30 · B1 5,000/45 · B2 8,000/60 · C1–C2 12,000/90. Reward 50 gems.
+3. Quest 2 (rotating): en 'Write 5 sentences about your week' / uz 'Haftangiz haqida 5 ta gap yozing' (from the current unit's write_sentence items), or 'Finish a Focus Clinic' / 'Fokus klinikasini tugating' (if one is queued), or 'Complete a speaking lesson, aloud or typed' / 'Gapirish darsini tugating, ovozli yoki yozma'. Reward 30 gems.
+4. Completion: sfx 'quest' and a stamp in the Passport's Habits page.
+
+**Backend needs.** The same quests table with period 'week' (local Monday 00:00 in the learner's tz). Generator in domain/quests.py. Progress from immersion_events, writing submissions and clinic completions.
+
+### E19 — Perfectionist Mode (an optional self-challenge) (P1)
+
+**Why it engages.** Some learners love a challenge. A clean run with no hints and at most 2 mistakes earns a gold rim on the node, which is the satisfying part of Duolingo's old hearts without any of the punishment.
+
+**Ethics check.** Opt-in (learner_settings.perfectionist_mode already exists, default false). Adopted only in the form docs/10 §2 allows: a self-challenge with no purchase path. A lesson NEVER ends early and every answer still counts for learning. The guardrail vocabulary bans hearts, lives, energy and refill, so the mode uses 'rings'. No gems, only a cosmetic rim, which keeps the reward informational (docs/07 §4.4). Not available in assessments.
+
+**Screens.** 1. Settings → Learning: a switch 'Perfectionist Mode' / 'Mukammallik rejimi' with en 'A personal challenge: no hints, and try to finish with two mistakes or fewer. Lessons never stop early.' / uz 'Shaxsiy sinov: maslahatlarsiz, ikki yoki undan kam xato bilan tugatishga harakat qiling. Darslar hech qachon erta toʻxtamaydi.'
+2. Lesson header: three 12 px gold rings (xp) left of the progress bar. Each mistake dims one ring to line-2 over 200 ms, with no extra sound. On the third: the rings turn into the chip en 'Challenge over. Every answer still counts.' / uz 'Sinov tugadi. Har bir javob baribir hisoblanadi.' for 2 s, and the lesson continues normally. Hints are hidden (no-hints ×1.25 applies).
+3. Finishing with at least one ring: a summary line en 'Perfectionist run: {n} mistakes' / uz 'Mukammallik sinovi: {n} ta xato'; the node on the path gains a gold rim titled 'Flawless' / 'Benuqson'.
+
+**Backend needs.** PATCH /v1/me/settings {perfectionist_mode}. The session-complete mode flag. Server: a flawless flag on node_attempts (derived from the answers), exposed in the course overlay as nodes[].flawless.
+
+### E20 — Placement: 'Find your level' (P1)
+
+**Why it engages.** Starting at the right place is the biggest early-retention lever: too easy bores people, too hard scares them. The climb visual turns a test into a small adventure, and the result offers an immediate, credible starting point.
+
+**Ethics check.** docs/12 §2: place at the lower bound of the confidence band, then let test-out move the learner up. The progress visual shows measurement precision, not a score. A productive add-on is required, but speaking always has a typed fallback (docs/10 §12). Always skippable (docs/10 §11), repeatable after 6 months. Honest copy: an interim fixed-form placement is labelled 'quick estimate' until IRT calibration (≥ 1,500 calibrated items) exists.
+
+**Screens.** 1. Onboarding step 4 (replaces today's self-select, which stays as the 'Skip' path). Intro: en 'Find your level: about 8–12 minutes.' / uz 'Darajangizni aniqlang: taxminan 8–12 daqiqa.' with a visible 'Skip, start from the beginning' / 'Oʻtkazib yuborish, boshidan boshlash'.
+2. Test screen: an SVG mountain on the side (desktop) or top (phone) with six bands A1–C2 in the level colours. A Pip climber marker sits at the current estimate, inside a translucent band showing the confidence interval, which narrows as answers come in. There is no question counter (the test is adaptive). Items use the normal renderers in assessment mode (no feedback).
+3. Productive add-on: one 60-second spoken answer ('Type instead' always available) and 3 written sentences.
+4. Result: en 'Start at Section {n} · {cefr}' / uz '{n}-boʻlimdan boshlang · {cefr}'; en 'Your level is probably between {a} and {b}. We start you at the lower end. Test out any time.' / uz 'Darajangiz taxminan {a} va {b} oraligʻida. Pastki chegaradan boshlaymiz. Istalgan vaqtda imtihon bilan oʻtishingiz mumkin.' Buttons 'Start here' / 'Shu yerdan boshlash' and 'Start from the beginning' / 'Boshidan boshlash'.
+
+**Backend needs.** Phase 7: POST /v1/assessment/placement, POST .../{id}/respond, GET .../{id}/result (brief §12). The interim result is a multistage test: an 8-item router at A2/B1 then 10-item easier or harder panels, built from existing items, labelled quick estimate. The result writes the start section and unit and seeds the BKT priors.
+
+### E21 — AI conversation partner: talk with the story's characters (P1)
+
+**Why it engages.** Talking with Sarah, Bobur or Kamola, people you have followed through dozens of episodes, about the situation you just learned is a dream feature: interaction practice (docs/07 condition 4) with relatedness built in. Live goal ticks and gentle recasts make every chat feel like a win.
+
+**Ethics check.** Optional: the feature exists only when the server has an LLM key. Every learning path still works without it (scripted N6 speak nodes). All calls go through the server, and the existing guardrail keeps provider keys and hosts out of the client. The AI is always labelled as an AI character and never claims to be human. No romance or companionship framing. Stricter moderation for minors, and no requests for personal data. Recasts and an end summary of 2 items, per docs/07 §6.2. Transcripts are learner data: kept 30 days, exportable and deletable, never used for training without a separate opt-in (§8.9). Turn and day allowances are a published, uniform cost ceiling that cannot be raised with gems or money (see rejected). Characters know only the story up to the learner's unit, so there are no spoilers.
+
+**Screens.** 1. Entry points, visible only when GET /v1/ai/status says available: (a) N6 speak node sheet → secondary 'Talk with {character}' / '{character} bilan suhbat'; (b) Library → 'Talk' section en 'Chat with the cast' / uz 'Qahramonlar bilan suhbat', listing the characters met so far (48 px portrait, name, the chip 'AI character' / 'Sunʼiy intellekt qahramoni') and suggested scenarios (the current unit's can-do plus 2 recent ones).
+2. Pre-chat card: a 96 px portrait (smile), the scenario as the can-do ('Order in a café'), the setting from the unit title, a goal checklist of 1–3 subgoals from the server, and a mode toggle 'Fluency (corrections at the end)' / 'Ravonlik (tuzatishlar oxirida)' or 'Accuracy (gentle corrections as we go)' / 'Aniqlik (yoʻl-yoʻlakay yumshoq tuzatishlar)'. Notes: en 'AI character, not a real person.' and 'Conversations are kept 30 days, then deleted. Delete any time.' / uz 'Sunʼiy intellekt qahramoni, haqiqiy odam emas.' and 'Suhbatlar 30 kun saqlanadi, keyin oʻchiriladi. Istalgan vaqtda oʻchirishingiz mumkin.' Allowance line: 'Today: 3 of 5 conversations' / 'Bugun: 5 tadan 3 ta suhbat'.
+3. Chat: character bubbles on surface-2 with name and portrait; learner bubbles on primary-soft. In character replies, recast spans are underlined in primary-ink; a tap shows en 'You said “I go yesterday”. A more natural way: “I went yesterday”.' / uz 'Siz “I go yesterday” dedingiz. Tabiiyrogʻi: “I went yesterday”.' Typing indicator: the portrait's 'talk' expression toggles every 300 ms (reduceMotion: static '…'). Input bar: a TextField in Andika, Send, a Mic button (only if server speech recognition exists), and 'Help' / 'Yordam' offering 3 starter phrases from the unit's function exponents. A subtle 'Turn 4 of 12'. Goal chips tick as the server detects completion, with a small 'quest' sfx and a success haptic.
+4. End (goal met, 12 turns, or 'End chat'): a summary card with 'Goal reached' / 'Maqsadga erishildi' or 'Good practice. The goal can wait for next time.' / 'Yaxshi mashq. Maqsad keyingi safarga qoldi.'; '2 things to work on' / 'Ustida ishlash kerak boʻlgan 2 narsa', each with its correct form and 'Add to my reviews' / 'Takrorlashlarimga qoʻshish'; chips for words used from this unit; XP (production 3 per learner turn of ≥ 3 words); buttons 'Practise again', 'Done' and 'Delete this conversation' / 'Bu suhbatni oʻchirish'.
+5. Ceiling reached: en 'That's today's conversations. More tomorrow, or try the speaking lessons, which are always available.' / uz 'Bugungi suhbatlar shu. Ertaga yana boʻladi, yoki doim mavjud gapirish darslarini sinab koʻring.' When unavailable on the server the feature is hidden entirely, with no teaser.
+
+**Backend needs.** Phase 8. Config (all optional; feature off when absent): LEP_LLM_PROVIDER, LEP_LLM_MODEL, LEP_LLM_API_KEY (SecretStr), LEP_AI_DAILY_CONVERSATIONS (default 5), LEP_AI_MAX_TURNS (12), plus a per-learner daily cost ceiling. Endpoints: GET /v1/ai/status {available, daily_limit, used_today}; POST /v1/ai/conversations {character_id, unit_id, mode} → {id, opening_line, subgoals[]}; POST /v1/ai/conversations/{id}/turns {client_uuid, text | speech_job_id} → {reply, recasts:[{start, end, original, corrected}], subgoals[], turn, ended}; POST /v1/ai/conversations/{id}/end → summary {goal_met, focus_items[2], words_used[], xp}; DELETE /v1/ai/conversations/{id}. Keep brief §12's POST /v1/ai/roleplay as an alias. Persona sheets are authored and versioned (prompt_version) in the content repo: personality, speech style, facts known per section, hard limits. Level controller: max words per sentence (A1 8, A2 12, B1 16, B2 22, C1–C2 free); the reply's token coverage against the learner's known lexemes plus the current unit's lexemes must be ≥ 95 % (A1–A2) or ≥ 90 % (B1), else regenerate once, then simplify. Moderation on input and output with a minors profile. Tables: ai_conversations, ai_turns (append-only, expires_at, nightly purge job), ai_usage_daily. Rate limits per learner.
+
+### E22 — Friends by code: activity, kudos and cooperative friend quests (P1)
+
+**Why it engages.** Relatedness (docs/07 §4.1): seeing a friend finish Unit 12 or earn 'I can order in a café', and sending a one-tap 'Barakalla!', makes learning social without making it a race. A weekly cooperative quest gives friends a shared goal.
+
+**Ethics check.** Friends see activity, not scores (docs/10 §6): no XP, accuracy or streak numbers, only milestone events. Codes only: no contact-book scraping, no suggestions of strangers. Reactions are presets (no free text, so no harassment channel). Mutual acceptance is required. Minors may connect only with other accounts that may be under 18, enforced on the server, with no social matching with adults (§8.8). Block and remove are one tap. Cooperative quests show combined progress only. Push for kudos is off by default (at most a daily digest if enabled, within the caps).
+
+**Screens.** 1. Me → Friends: en 'Your friend code' / uz 'Doʻstlik kodingiz' 'PIP-7KX3' with Copy and Share (OS share sheet, deep link lep://friend/PIP-7KX3); an 'Add a friend' / 'Doʻst qoʻshish' code field → a preview of their display name and avatar → 'Send request' / 'Soʻrov yuborish'; pending requests (Accept / Decline: 'Qabul qilish' / 'Rad etish'); the friends list (avatar, name, latest activity).
+2. Activity feed, with events: started learning; unit completed (title); story episode finished; stamp earned (can-do text); habit milestone (7/30/100/365); section completed; level achieved. Reactions: 'Well done!' / 'Barakalla!', 'Keep going!' / 'Davom eting!', 'Nice one!' / 'Zoʻr!'. A received reaction shows an in-app toast with sfx 'kudos'.
+3. Friend quest (weekly, opt-in per friendship): en 'You and {name}: {n} lessons together this week' / uz 'Siz va {name}: shu hafta birga {n} ta dars' with one combined progress bar; completing it adds a shared stamp on the Habits page.
+4. Settings → Privacy: 'Who can add me' (anyone with my code / nobody), 'Show my level to friends', and per friend 'Remove' and 'Block'.
+
+**Backend needs.** Tables: friend_codes (rotatable), friendships (a, b, status, created_at), activity_events (append-only, privacy-filtered), kudos. Endpoints: GET /v1/friends/code; POST /v1/friends/code/rotate; POST /v1/friends/requests {code}; POST /v1/friends/requests/{id}/accept|decline; GET /v1/friends; DELETE /v1/friends/{id}; POST /v1/friends/{id}/block; GET /v1/friends/feed?cursor=; POST /v1/friends/events/{event_id}/kudos {kind}. Minors are enforced server-side using is_minor derived for both learners. Rate limit on code lookups (brute-force). A display name is required (E15).
+
+### E23 — Opt-in weekly leagues (30 people, 10 tiers) (P1)
+
+**Why it engages.** For the learners who love competition, a weekly ladder is the strongest engagement mechanic Duolingo has. Groups are matched by similar effort, so most people have a winnable race, and the tiers are named after stones and colours of Silk Road craft.
+
+**Ethics check.** Off by default and never auto-enabled (an existing guardrail test checks this). The explainer is honest about the stress some people feel (docs/10 §6). Only novelty 1.0 XP (scheduled work and immersion) counts, so farming replays does not help. No pushes about rank or demotion; the result is shown in-app on the next open. Tiers 1–2 have no demotion. Learners on a streak pause skip the week with no movement. Leaving is one tap, with a neutral confirmation. No league for minors (§8.8), enforced on the server. The week ends at a fixed, stated time with no countdown.
+
+**Screens.** 1. Me → Leagues card: 'Off. Join if you like.' → explainer sheet: en 'A weekly XP ladder with 30 people at a similar pace. Some people find it motivating; some find it stressful. You can leave any time.' / uz 'Oʻxshash sur'atdagi 30 kishi bilan haftalik XP reytingi. Ba'zilarga bu ilhom beradi, ba'zilarga esa bosim. Istalgan vaqtda chiqib ketishingiz mumkin.' Button 'Join leagues' / 'Ligaga qoʻshilish' (asks for a display name if missing).
+2. League screen: tier emblem (an SVG gem) and en '{tier} League · week ends Sunday 20:00' / uz '{tier} ligasi · hafta yakshanba 20:00 da tugaydi'. Thirty rows: rank, avatar, display name, weekly XP. The top 7 sit in a green-soft band labelled 'Moves up' / 'Yuqoriga oʻtadi'; the bottom 5 (tiers 3–10) in an orange-soft band labelled 'Moves down' / 'Pastga tushadi'; the learner's own row is highlighted and sticky. Footer en 'Only XP from scheduled work counts. Revision doesn't.' / uz 'Faqat jadvaldagi ish uchun XP hisoblanadi. Takrorlash hisoblanmaydi.' Text link 'Leave leagues' / 'Ligadan chiqish' → en 'Leave leagues? Your tier is kept for 4 weeks.' / uz 'Ligadan chiqasizmi? Darajangiz 4 hafta saqlanadi.'
+3. Week result on the next open: promotion → sfx 'promote' and en 'You moved up to {tier}!' / uz '{tier} ligasiga koʻtarildingiz!'; stay → 'You'll stay in {tier} this week.' / 'Shu hafta {tier} ligasida qolasiz.'; down → 'Next week: {tier} League.' / 'Keyingi hafta: {tier} ligasi.' Pip is neutral or happy, never sad.
+4. Tier names en / uz: Clay / Loy, Brick / Gʻisht, Copper / Mis, Silver / Kumush, Gold / Oltin, Turquoise / Feruza, Lapis / Lojuvard, Ruby / Yoqut, Emerald / Zumrad, Diamond / Olmos.
+
+**Backend needs.** Tables: leagues (id, tier, week), league_members (league_id, learner_id, weekly_xp, final_rank, moved). Weekly XP = Σ xp_ledger where novelty = 1.0. Groups of 30 are formed lazily at the first XP of the week among opted-in learners of the same tier, matched by the previous week's XP band (±50 %). Settlement is a Celery beat job on Sunday 20:00 Asia/Tashkent. GET /v1/leagues/current, GET /v1/leagues/history, PATCH /v1/me/settings {leagues_opt_in} (refused with a problem type for is_minor). Guardrail tests: default false, minors refused, no rank push.
+
+### E24 — Character hosts: the cast fronts the features (P1)
+
+**Why it engages.** Each feature gets a face from the story, so a clinic becomes 'Kamola's workshop' and a test-out becomes 'Mr Karimov's exam room'. Learners meet familiar people throughout the app, which deepens attachment to the story and makes dry features warmer.
+
+**Ethics check.** Copy only, informational and kind, checked by the banned-phrase guardrail. Hosts appear only after the learner has met them in the story (Pip hosts otherwise), so there are no spoilers. Hosts never comment on absence or performance in a judging way.
+
+**Screens.** A host card component: a 48 px portrait plus a speech bubble of 1–2 lines, at the top of the host's screen. Mapping and lines en / uz: Garden → Pip (E06). Focus Clinic → Kamola: 'Let's look at this one together.' / 'Keling, buni birga koʻrib chiqamiz.' Unit or section test-out and checkpoints → Mr Karimov: 'Fifteen questions. Take your time.' / 'Oʻn besh savol. Shoshilmang.' Speed games (word_race, memory_match) in Practice → Bobur: 'Sixty seconds. Ready?' / 'Oltmish soniya. Tayyormisiz?' Library and stories → Sarah: 'Shall we read the next one?' / 'Keyingisini oʻqiymizmi?' Onboarding first sentence → Aziz: 'I started with “Hello” too.' / 'Men ham “Hello”dan boshlaganman.' C2 mentoring tasks (E28) → Dilnoza. Portraits use the character's age and look at the learner's current section (e.g. Aziz gains glasses from B2).
+
+**Backend needs.** None beyond the content service's first appearance per speaker (E13). Host lines live in the i18n catalogues.
+
+### E25 — Weekly report and the plateau explainer (P1)
+
+**Why it engages.** A Sunday 'Your week in English' gives a moment of reflection and pride: the words that became Known this week, how much you read, and one specific insight. At B1, where learners usually quit because progress feels invisible, the plateau card shows what is still improving.
+
+**Ethics check.** Every figure comes from the server and is specific and true (docs/10 §8.6). Insights are chosen by rule and never comparative (docs/12 §9.3). The plateau explainer implements docs/07 §4.3 and the 'Understanding the plateau' module (docs/07 §9). The push is optional and counts toward the cap.
+
+**Screens.** 1. Card on the Path every Sunday from 18:00 local, dismissible, plus an optional push en 'Your week in English is ready.' / uz 'Ingliz tilidagi haftangiz tayyor.' The report screen has: a calendar strip of days practised and minutes; 'Words that became Known' / 'Bilinadigan boʻlgan soʻzlar' (chips you can play); reading words and listening minutes against the level target bars; stamps earned; one insight, e.g. en 'Your typed answers got faster: 6.1 s → 5.2 s.' / uz 'Yozma javoblaringiz tezlashdi: 6.1 s → 5.2 s.'; and one suggestion with a start button. A share image shows no XP.
+2. Plateau card (B1+, when new Known words per week fall below 50 % of the 8-week average for 3 weeks): en 'Feeling stuck? That's the B1 plateau, and it's normal. Here's what is improving.' / uz 'Joyida turgandek his qilyapsizmi? Bu B1 platosi va bu odatiy hol. Mana nima yaxshilanmoqda.' Three sparklines: coverage, median answer speed, weekly reading volume. Then a link to the module.
+
+**Backend needs.** GET /v1/progress/weekly?week= computed from memory_state transitions (young→retained), review_attempts RT medians per type, immersion_events and badges. Snapshots are stored in progress_weekly. Plateau detection is a pure function in domain/ (thresholds versioned).
+
+### E26 — Soil test: the monthly retention audit, framed for the garden (P1)
+
+**Why it engages.** Twenty quick words, three minutes, and Pip with a magnifier. The result tells learners how much they truly remember and tunes their schedule. It makes the garden, and the 'words known' number, something they can trust and be proud of.
+
+**Ethics check.** This is docs/08 §9, the product's honesty mechanism. Results are shown truthfully even when below prediction, and parameters are refit with R_d raised. It is optional within a 7-day window, carries no streak pressure, and earns normal XP. 'Words known' loses its 'estimate' tag only for 35 days after an audit.
+
+**Screens.** 1. Invitation card in the Garden, Pip inspect pose: en 'Soil test: 20 quick words, 3 minutes. It checks that your garden's numbers are true.' / uz 'Tuproq sinovi: 20 ta tezkor soʻz, 3 daqiqa. Bogʻingizdagi raqamlar toʻgʻriligini tekshiradi.' Buttons 'Start' / 'Boshlash' and 'Later' / 'Keyinroq'.
+2. Runner in assessment mode: cold items from retained and durable words, no feedback until the end.
+3. Result: en 'We expected you to remember about {p}%. You remembered {a}%. We've adjusted your schedule, so reviews will come a little sooner.' / uz 'Taxminan {p}% eslab qolasiz deb kutgandik. Siz {a}% eslab qoldingiz. Jadvalingizni moslashtirdik: takrorlashlar biroz ertaroq keladi.' (or, when actual ≥ predicted: '…Your schedule stays as it is.' / '…Jadvalingiz oʻzgarmaydi.'). Then en 'Words known: {n}, checked {date}' / uz 'Biladigan soʻzlarim: {n}, {date} tekshirilgan'.
+
+**Backend needs.** Phase 7: POST /v1/assessment/audit (start, respond, result) per brief §12; refit FSRS parameters and raise desired_retention per docs/08 §9; progress.audited_at; aggregate audit results feed scheduler quality metrics (docs/15 §7).
+
+### E27 — Cohort and the shared Chinor tree (a cooperative monthly goal) (P2)
+
+**Why it engages.** Belonging to a named group of 20–40 people who started the same month at the same level, and watching a shared plane tree (chinor) grow leaves as everyone reads, is warm, cooperative motivation with no losers.
+
+**Ethics check.** docs/10 §6: on by default for adults, aggregate only, no individual ranking. Your own contribution is visible only to you. Minors are placed only in minor-only cohorts. Members are visible by display name only if they opt in. Goals are scaled to cohort size and level so they are achievable.
+
+**Screens.** Me → Cohort: en 'Chinor · October 2026 · A1' with a large SVG plane tree that gains a leaf for every 10,000 words the cohort reads; a month goal bar en '312,400 of 500,000 words this month' / uz 'Shu oy 500 000 tadan 312 400 ta soʻz'; private 'You added 3,420 words' / 'Siz 3 420 ta soʻz qoʻshdingiz'; member count. When the goal is reached the tree blossoms (sfx 'bloom') and every member gets a stamp. Cohort names come from Uzbek trees and places (Chinor, Archa, Tol, Yongʻoq, Bodom…).
+
+**Backend needs.** Tables cohorts, cohort_members and cohort_goals (brief §5.1). A monthly assignment job by signup month, level band and minor status; goal = k × members × level reading target. GET /v1/cohort and PATCH /v1/me/settings {cohort_visible}.
+
+### E28 — Help Sarah with Uzbek: teach-back mediation tasks (P2)
+
+**Why it engages.** A role reversal that is surprisingly delightful: Sarah, the Englishwoman learning Uzbek, asks the learner to explain an Uzbek word or custom in simple English. Learners get to be the expert, and the protégé effect is a large learning gain.
+
+**Ethics check.** Pedagogically grounded: mediation (docs/05 §7, docs/06 §6) and teach-back (docs/10 §6, the protégé effect). Optional and ungated. Graded by rubric with an LLM rater only when one is configured, otherwise a self-check against a model answer and a key-word checklist. Writing is learner data.
+
+**Screens.** A card at the end of selected episodes where Sarah talks about learning Uzbek, e.g. en 'Sarah: What exactly is a “choyxona”? Explain it to me in simple English.' The learner writes 1–3 sentences (or speaks, with a typed fallback). Sarah replies with thanks and a recast. The result shows the rubric bands or the self-check, plus a mediation stamp in the Passport. About 30 prompts per level, authored by the content owner.
+
+**Backend needs.** Content: content/mediation/help_sarah.json (prompt, model answer, key concepts, level). Phase 8 writing_submissions plus rubric_scores (the docs/12 §5.3 mediation rubric), with the LLM rater optional.
+
+### E29 — Avatar builder (P2)
+
+**Why it engages.** An avatar that looks like you (skin tone, hair, doppi, headscarf, glasses) makes friends, leagues and the profile feel personal, and gives cosmetics a second canvas.
+
+**Ethics check.** Diverse options by explicit quota (docs/00 content diversity rule), no cost to change, no premium-only options. The avatar spec is a small enum code with no photo upload, which minimises data.
+
+**Screens.** Me → Edit avatar: a live preview at 120 px, plus option rows for face shape (4), skin tone (6), hair style (12) and colour (6), headwear (none, doppi, cap, headscarf, beanie), glasses (3) and clothing colour (8). Randomise, then Save. Used everywhere the Pip-tone disc was used, which stays as an option.
+
+**Backend needs.** PATCH /v1/me/profile {avatar:{v:1, parts:{…}}} validated against enums; served in the friends and league payloads.
+
+### E30 — Honest home-screen widget (P2)
+
+**Why it engages.** A widget showing the goal ring, today's due words and Pip is one of the strongest return triggers on mobile, and it works without any notification.
+
+**Ethics check.** Shows value only: 'Garden: 12 words · 4 min' and the goal ring. Never streak-risk copy or a sad mascot. Updated from the last server snapshot with its as-of time.
+
+**Screens.** Small widget: Pip in the goal ring and '6/10 min'. Medium: plus 'Garden: 12 words · 4 min' / 'Bogʻ: 12 ta soʻz · 4 daq' and the newest unlocked episode title. A tap deep-links to the Garden or the Reader.
+
+**Backend needs.** None beyond the summary. It needs a native widget extension through an Expo config plugin and a development build (not Expo Go), hence P2.
+
+## Considered and rejected
+
+- Hearts, lives or energy in any form, including as the Perfectionist currency (docs/10 §8.1 and the guardrail vocabulary). Perfectionist Mode uses cosmetic rings that never stop a lesson.
+- Buying streak freezes or repairs with gems or money (docs/10 §5, §9). Freezes stay free and automatic.
+- Gems for extra AI conversation minutes. docs/10 §9 lists this as a 'convenience', but it would make a learning activity purchasable with currency and turn it into a grind target, against §8.1. The AI limit is a published cost ceiling, the same for everyone. Flagged for a ruling.
+- Gem 'charity conversion'. Gems have no cash value, so saying they fund free accounts fails the honesty test unless a sponsor pledges real money per gem. Parked until such a pledge exists.
+- Double-XP hours, XP boosts and happy hours: fake urgency, a pull toward cramming, and distortion of leagues.
+- Loot boxes, random reward chests and spin wheels: variable-ratio gambling mechanics, especially harmful with under-18 accounts.
+- Limited-time shop items, daily deals, countdowns and 'only N left' labels (§8.2 fake scarcity). Seasonal items are free decorations that then stay in the catalogue permanently.
+- A sad, crying or angry Pip, 'Pip misses you' messages, and late-night 'save your streak' pushes (docs/10 §7 tone, §12 guilt notifications).
+- Countdown timers on quests, leagues or the repair window (fake urgency). Static dates are shown instead.
+- Plants dying or being removed in the Word Garden. Death is loss-framing and also false, because forgetting is gradual and recoverable. Plants only wilt and dry.
+- Watering healthy plants on demand, or reviewing for XP outside the scheduler. That means reviewing items the scheduler did not choose (docs/10 §1) and breaks spacing (docs/07 §2.2).
+- XP multipliers for combos or answer speed: they reward guessing and punish the p≈0.85 difficulty target. Reaction time already informs the FSRS grade.
+- Friend streaks or shared streaks: mutual-obligation pressure. Replaced by opt-in weekly cooperative friend quests.
+- Leagues on by default, global or friends XP leaderboards, and 'X passed you' or 'you're about to be demoted' pushes (docs/10 §6, §8.5).
+- Background music in lessons, and animated scenery near the active item (docs/07 §3.1 extraneous load).
+- Confetti or a celebration on correct answers (docs/10 §10, existing guardrail). Confetti is reserved for section, level and the 365-day milestone.
+- Lottie or Rive animation files, stock sound packs and licensed fonts for art. Every visual is react-native-svg plus Reanimated, and every sound is synthesised by scripts/gen-sounds.mjs.
+- Premium-only or paywalled story episodes, characters or AI personas (docs/10 §9: the free tier must reach C2).
+- A 'words known' headline in the Garden before the retention audit (§8.6). Stage counts are labelled estimates.
+- Rewarded ads for gems, or any ad between exercises (docs/10 §12).
+- Contact-book scraping, 'people you may know', and free-text messaging between learners: privacy risk and a harassment channel, especially for minors. Friends are by code only, with preset reactions.
+- AI characters that claim to be human, or companionship and romance modes: honesty, and the protection of minors.
+- Auto-advancing into the next lesson after the summary: docs/07 §3.3 says encourage stopping.
+- Showing accuracy as the summary headline or a 'perfect lesson' score for everyone. It is demotivating at the p≈0.85 target and is kept to the Details expander and the opt-in Perfectionist Mode.
+- Streak gems or milestone gems beyond the docs/10 §9 earn table. Rewards should stay informational, not controlling (docs/07 §4.4).

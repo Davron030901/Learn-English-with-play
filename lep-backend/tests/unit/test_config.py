@@ -126,10 +126,16 @@ def test_should_require_encrypted_transport_and_a_redis_password_in_production()
         make_settings(env="prod", db_ssl_mode="prefer", **strong)
     with pytest.raises(ValidationError, match="LEP_REDIS_PASSWORD"):
         make_settings(env="prod", db_ssl_mode="require", **strong)
+    with pytest.raises(ValidationError, match="LEP_REDIS_PASSWORD"):
+        make_settings(env="prod", db_ssl_mode="require", redis_password=SecretStr(""), **strong)
+    redis_password = SecretStr(secrets.token_urlsafe(18))
+    with pytest.raises(ValidationError, match="LEP_METRICS_TOKEN"):
+        make_settings(env="prod", db_ssl_mode="require", redis_password=redis_password, **strong)
     prod = make_settings(
         env="prod",
         db_ssl_mode="verify-full",
-        redis_password=SecretStr(secrets.token_urlsafe(18)),
+        redis_password=redis_password,
+        metrics_token=SecretStr(secrets.token_urlsafe(24)),
         **strong,
     )
     assert prod.openapi_enabled is False

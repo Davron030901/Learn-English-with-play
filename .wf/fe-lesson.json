@@ -1,0 +1,256 @@
+{
+ "audit": {
+  "findings": [
+   {
+    "id": "word-race-timeout-discards-matches",
+    "file": "lep-frontend/src/features/lesson/LessonRunner.tsx",
+    "line": 248,
+    "severity": "high",
+    "category": "spec-deviation",
+    "title": "Running out the clock on word_race or memory_match grades the whole game as wrong and throws away the matches",
+    "detail": "Every timed item uses the same expiry path: `const left = useCountdown(seconds, state.status === 'answering', () => onSubmit({ kind: 'timeout' }), state.index);`. In grade.ts:230, `if (sub.kind === 'timeout') return result('incorrect', expected, { reason: 'timeout' });` runs before any per-type logic, and toSubmissionRecord stores just `{ kind: 'timeout' }`. Whatever matches PairsExercise or MemoryGrid had made live only in component state, so they never reach the grader or the outbox. docs/09 #69 scores word_race as 'Items/minute', and docs/09 §6 gives word_race '60 s total' with no timeout penalty ('—'). In the packed data, 161 of the 211 word_race items have 11–12 pairs with max_seconds 60 (138×12, 23×11), and the clock runs at every level because games keep it (policy.ts timerSeconds). A1 learners must therefore match 12 pairs, glosses included, in 5 s each. If they miss, the screen says \"Time's up — here's the answer\" and shows no answer (expected is null for pairs). The review goes out as `local_verdict: 'incorrect'` with no matches. Because lastResult is incorrect, a recovery item is also inserted. The server cannot compute items per minute because the matches were never sent.",
+    "fix": "Let the pairs renderers report their progress at expiry: either the renderer owns the game clock, or the runner can read the current matches through a ref or callback. On timeout, submit `{kind:'pairs', matches, mistakes, complete:false}`, adding a `timed_out` flag. Grade word_race per element or by items per minute, not as a blanket Again, and show the unmatched pairs on the feedback sheet."
+   },
+   {
+    "id": "pairs-mismatches-never-fail",
+    "file": "lep-frontend/src/grading/grade.ts",
+    "line": 318,
+    "severity": "high",
+    "category": "correctness",
+    "title": "Pairs games always grade 'correct' once finished, however many wrong matches were tried, and the wrong attempts are not recorded",
+    "detail": "In Pairs.tsx:109-120 (and the same pattern in MemoryGrid), only correct matches are added to `matches`; a wrong attempt does nothing but `mistakes.current += 1`. Submission happens only at `next.length === n`. The grader computes `const allMatched = sub.complete && sub.matches.length === pairs.length && elements.every(Boolean);` and never reads `sub.mistakes`. Every completed tap_pairs, memory_match or word_race item (1,145 items) is therefore 'correct', and a learner can brute-force it by tapping every combination. tests/unit/grading.test.ts:143 encodes this (`mistakes: 2` → 'correct'). docs/09 #1 says the opposite for tap_pairs: 'All pairs correct = Good; any mismatch = Again on that item'. The SubmissionRecord keeps only a mistake count, not which left/right tiles were confused. The server therefore cannot apply 'Again on that item' per lexeme either, and the diagnostic data is lost at the source.",
+    "fix": "Record every attempt in the submission (for example `attempts: [left, right][]`, including the wrong ones). Grade tap_pairs 'incorrect' when any mismatch occurred, or return per-pair elements with confused pairs marked false, so the outbox carries which lexemes failed. Update the unit test, which currently asserts the opposite."
+   },
+   {
+    "id": "timer-runs-under-leave-dialog",
+    "file": "lep-frontend/src/features/lesson/LessonRunner.tsx",
+    "line": 248,
+    "severity": "medium",
+    "category": "ux",
+    "title": "An item's countdown keeps running while the leave dialog is open, so considering leaving can cost a timed-out 'Again'",
+    "detail": "The countdown runs whenever `state.status === 'answering'`. `confirmLeave` is not considered, and the Modal at :413 does not pause anything. Timed items include grammaticality_judgement (10 s on 987 items at B2+), type_from_l1 (20 s on 1,008 items at B2+), memory_match (120 s) and word_race (60 s at every level). A learner who taps X to think about stopping, or presses Android back (which opens the same dialog), can time out behind the modal. onSubmit({kind:'timeout'}) then grades Again and writes the review to the outbox before they choose. If they choose 'Leave', the punished answer is already stored. docs/07 §3.3 and the brief §6.2 require stopping to be guilt-free and never punished. The recorder's max-length timer in SpeakExercise also keeps running under the modal and can auto-submit a voice answer.",
+    "fix": "Pass `state.status === 'answering' && !confirmLeave` as `running` to useCountdown. Optionally also pause on AppState background. The recording limit should be suspended, or the recording paused, while the dialog is open."
+   },
+   {
+    "id": "ios-verdict-not-announced",
+    "file": "lep-frontend/src/design/Exercise.tsx",
+    "line": 386,
+    "severity": "medium",
+    "category": "a11y",
+    "title": "VoiceOver on iOS hears no verdict: the feedback sheet relies on an Android-only live region",
+    "detail": "FeedbackSheet announces itself only through `accessibilityLiveRegion=\"polite\"` and `role=\"status\"`. React Native documents accessibilityLiveRegion as `@platform android` (node_modules/react-native/.../ViewAccessibility.d.ts:241), and iOS has no 'status' trait. Nothing in src calls AccessibilityInfo.announceForAccessibility or setAccessibilityFocus (grep finds only the reduce-motion use in theme.tsx). On submit, every renderer also unmounts the focused Check button (`{locked ? null : <CheckButton .../>}`), so VoiceOver focus is dropped. An iOS screen-reader learner is not told 'Correct' or 'Almost' after any answer. The same Android-only pattern carries Pairs' 'Not a match' (Pairs.tsx:131) and the dispute confirmation.",
+    "fix": "When FeedbackPanel mounts, call AccessibilityInfo.announceForAccessibility with the title and answer, or move accessibility focus to the sheet's header with setAccessibilityFocus or findNodeHandle. Do the same for the pairs 'not a match' message. Keep the live region for Android and web."
+   },
+   {
+    "id": "order-rows-hide-move-buttons-ios",
+    "file": "lep-frontend/src/exercises/families/Order.tsx",
+    "line": 61,
+    "severity": "medium",
+    "category": "a11y",
+    "title": "listen_order_events: on iOS, VoiceOver cannot reach the move up/down buttons, which are the exercise's only accessible route",
+    "detail": "Each row is `<View key={canonical} accessible accessibilityLabel={...}>` and contains the two `IconButton`s (Move down / Move up). On iOS, `accessible` makes the View one accessibility element and hides its subviews from VoiceOver. The file's own header says '\"Move up\" / \"Move down\" buttons are the accessible route and the only one'. The no-vision profile keeps listen_order_events (LIST_ROUTE_WITHOUT_VISION includes it), so a blind iOS learner can only submit the shuffled order unchanged. That affects 186 items.",
+    "fix": "Drop `accessible` from the row and put the position+text label on the Txt, or add `accessibilityActions` ('increment'/'decrement' or custom 'move up'/'move down') with `onAccessibilityAction` on the grouped row so the reorder works through the VoiceOver rotor."
+   },
+   {
+    "id": "gapbank-ui-contradicts-verdict",
+    "file": "lep-frontend/src/exercises/families/Choice.tsx",
+    "line": 54,
+    "severity": "medium",
+    "category": "correctness",
+    "title": "gap_fill_bank: the card marks the learner's choice wrong while the sheet says Correct",
+    "detail": "The highlight uses `correctCanonical = bank.findIndex(w => matchText(w, item.answer.key, rules, { words: ctx.english }, false).ok)`, which compares against the key only. The grader (grade.ts:250-254) uses `acceptedForms(item, ctx)`, which adds `answer.accepted` and the lexical US/UK alternatives of the target lexemes. Real item item.0007371: 'My son is ___ today.', bank [worried, ill, sick, healthy], key ['ill'], target lex.00808 (ill), which has the lexical pair ill/sick. Picking 'sick' returns verdict 'correct', so the sheet title reads 'Correct'. stateOf() meanwhile paints 'ill' green and the selected 'sick' red with an X, whose accessible label is 'sick, Incorrect'. Running the real grader over the corpus confirmed this item has two bank words that grade correct.",
+    "fix": "Derive the highlight from the grader. For the selected card, use result.verdict. For the other cards, mark every bank word that `grade(item, {kind:'text', text:w}, gradeContextFor(...))` accepts. Alternatively, make acceptedForms and the highlight share one helper."
+   },
+   {
+    "id": "error-correct-unchanged-prompt-accepted",
+    "file": "lep-frontend/src/grading/grade.ts",
+    "line": 262,
+    "severity": "medium",
+    "category": "correctness",
+    "title": "Punctuation-target error_correct items accept the pre-filled, uncorrected sentence",
+    "detail": "TextExercise pre-fills the field with the faulty sentence (`useState(item.type_id === 'error_correct' ? item.prompt.text : '')`). Six items keep the 'punct' rule although punctuation is what they test. Under that rule applyPunct strips commas and full stops and folds standalone dashes, so the untouched prompt matches the key and grades 'correct' before rejected_with_feedback is ever consulted. Corpus run: item.0011739 and item.0011745 have prompt 'It was cold however we went out.' and key 'It was cold. However, we went out.' Items 0039233, 0039268, 0039366 and 0039398 have prompt 'The report, all ninety pages of it — arrived on Friday.' and key 'The report — all ninety pages of it — arrived on Friday.' In all six, the rejected_with_feedback pattern is exactly the prompt, yet pressing Check without editing returns Correct.",
+    "fix": "In grade() for error_correct, check rejected_with_feedback before accepting. If the typed text matches a rejected pattern under base normalisation plus case only, return incorrect with that feedback. Alternatively, at load, drop 'punct' when key and prompt differ only in punctuation and report the item as a content defect."
+   },
+   {
+    "id": "pairs-duplicate-l1-gloss",
+    "file": "lep-frontend/src/exercises/families/Pairs.tsx",
+    "line": 99,
+    "severity": "medium",
+    "category": "correctness",
+    "title": "Pairs for Russian learners can show two identical gloss tiles, and only one of them counts as a match",
+    "detail": "The tiles show `l1PairGloss(...)`, the learner's L1, but `isMatch` compares against the Uzbek data `item.prompt.pairs[r]?.[1]`. When two lexemes have the same Russian gloss, the learner sees identical tiles and is told 'Not a match' for one of them. In memory_match that counts as a mistake; in word_race it costs clock time. Corpus run with l1='ru' found 8 items. memory_match item.0001835: afternoon and day both show 'день'. tap_pairs item.0016542: scene/stage both 'сцена'. tap_pairs item.0016758: detour/diversion both 'объезд'. tap_pairs item.0034318: exacerbate/compound both 'усугублять'. word_race items 0001906, 0013120 (brave/bold 'смелый'), 0016837 and 0021754 (circuit/chain 'цепь').",
+    "fix": "Treat a right-hand tile as a match when its displayed gloss equals the displayed gloss of the correct partner, i.e. compare `gloss(r) === gloss(correctIndexFor(l))` as well as the mapping. Alternatively, fall back to the Uzbek gloss or add the lemma in parentheses when the L1 glosses collide, and report the collision as a content defect."
+   },
+   {
+    "id": "recorder-start-race",
+    "file": "lep-frontend/src/audio/useRecorder.ts",
+    "line": 97,
+    "severity": "medium",
+    "category": "correctness",
+    "title": "Recording start is async and has no 'starting' state: 'Type instead' or a second mic tap during start leaves the microphone on or orphans the limit timer",
+    "detail": "`start()` awaits stopAudio, the permission request, setAudioModeAsync and prepareToRecordAsync before `recorder.record(); setPhase('recording')`, and phase stays 'idle' throughout. (1) Speak.tsx:41-45 `typeInstead` only stops `if (rec.phase === 'recording')`. If the learner taps 'Type instead' while start is pending, recording begins behind the text field with no mic UI. This is easy on web, where the getUserMedia prompt is not modal. It is the same privacy failure the independent review marked as a blocker in DECISIONS §10, reached through the race, and it lasts until max_seconds, or indefinitely when timers are off. (2) MicButton is not disabled while starting, so a double tap runs start() twice. The second `timer.current = setTimeout(() => void stop(true), …)` (line 110) overwrites the first id, which can no longer be cleared. After the learner stops and taps 'Again', the orphaned timer fires stop(true): it cuts the retake short and sets stoppedByLimit, and Speak's effect then auto-submits a voice answer. (3) Leaving the lesson during start runs the unmount cleanup while `recorder.isRecording` is still false, so the recording that starts afterwards is not stopped or deleted by it.",
+    "fix": "Add a 'starting' phase and a generation or cancel ref: set it before the first await, disable MicButton and treat 'Type instead' and unmount as cancelling. After each await, bail out if cancelled or unmounted, and stop and delete the take if recording already began. Clear any existing timer before setting a new one."
+   },
+   {
+    "id": "asset-audio-stale-fallback",
+    "file": "lep-frontend/src/audio/speech.ts",
+    "line": 147,
+    "severity": "medium",
+    "category": "correctness",
+    "title": "Recorded-audio path (once EXPO_PUBLIC_AUDIO_BASE_URL is set): a stopped or slow clip falls back to TTS later and can play twice",
+    "detail": "play() waits for didJustFinish and arms `setTimeout(() => { if (!p.isLoaded) reject(new Error('asset did not load')); }, 4000)`. (a) If stopAudio() removes the player before it loads (the learner taps another speed, or the step changes), the timer still fires. On web, expo-audio's remove() leaves `loaded` false, so the promise rejects and the catch runs `markFallback(key); return speakText(key, source.fallbackText, …)`, speaking the previous item's text over whatever is playing now. On native, reading a property of a released shared object may throw inside the timer, uncaught. (b) If the asset just takes more than 4 s on a slow connection, the catch starts TTS without pausing or removing `p`. `p.play()` was already called, so the recording plays over the synthetic voice once it loads. The 'playbackStatusUpdate' listener is also never removed on the reject path. This is latent today, because AUDIO_BASE is empty and every source is 'tts'. The brief, however, requires that switching to real recordings be only a configuration change.",
+    "fix": "Keep a per-call token. Clear the timer on finish or stop, and ignore the timeout if `player !== p` (superseded). In the catch, pause and remove `p` and remove the listener before falling back, and only fall back if this call is still current."
+   },
+   {
+    "id": "sfx-never-used",
+    "file": "lep-frontend/src/audio/sfx.ts",
+    "line": 95,
+    "severity": "medium",
+    "category": "spec-deviation",
+    "title": "The sound-effect and haptic layer is never called: lessons are silent on correct and incorrect answers",
+    "detail": "`sfx()`, `preloadSfx()` and `releaseSfx()` have no call sites; grep over src finds only their definitions. The prefs `soundEffects` and `haptics` (prefs.ts:43-45) are read only inside sfx.ts and have no settings UI. LessonRunner's onSubmit, the FeedbackPanel continue, CloseView and Pairs matches play no 'correct', 'incorrect', 'pop', 'complete' or 'tap' sound and trigger no haptic. The generated assets/sfx/*.wav files are dead weight. This works against the owner's engagement goal, and the files were listed as already built.",
+    "fix": "In LessonRunner.onSubmit (after grading), call `sfx(result.verdict === 'correct' ? 'correct' : result.verdict === 'incorrect' ? 'incorrect' : 'tap')`. Call 'pop' on a pairs match, 'complete' on reaching CLOSE, and preloadSfx on mount. Add the two toggles to Settings, and call releaseSfx when sound effects are turned off. Keep the docs/10 §8 restraint: no celebration on every tap."
+   },
+   {
+    "id": "finish-not-idempotent",
+    "file": "lep-frontend/src/features/lesson/LessonRunner.tsx",
+    "line": 257,
+    "severity": "low",
+    "category": "correctness",
+    "title": "Close-screen buttons stay active after finishing; a second tap calls onLeave (router.back) again",
+    "detail": "After `finish()` dispatches 'finish' (status 'ended'), the body still renders CloseView because the branch tests only `step?.kind === 'close'`. On a second press, `reachedClose = state.status === 'close'` is false, so `if (then === 'next' && next && reachedClose) onNext(...) else onLeave();` falls through to onLeave(), i.e. router.back(). A double tap on 'Stop' pops two screens. 'Keep going' followed by a second tap during the transition replaces the screen with the next lesson and then backs out of it. Hardware back at 'ended' opens the leave dialog, because backAction only special-cases 'close'.",
+    "fix": "Return early from finish() and leave() when `state.status === 'ended'`, or track it with a ref. Disable the CloseView buttons and the header close once ended."
+   },
+   {
+    "id": "dictation-unplayable-not-withheld",
+    "file": "lep-frontend/src/runner/compose.ts",
+    "line": 64,
+    "severity": "low",
+    "category": "correctness",
+    "title": "Dictation items whose audio resolves to 'unavailable' are presented anyway and can only be failed",
+    "detail": "withholdReason withholds notation audio only for minimal_pair_discrimination. resolveAudio returns `{kind:'unavailable', reason:'notation'}` for any spoken text that notationKind flags. item.0055651 and item.0055866 (dictation_sentence, C2) have say 'The Tenant shall: (a) give notice in writing; and (b) do so before 1 March.'. PAREN gives 'direction', so the stem is only the 'audio unavailable' notice and there is nothing to transcribe. The learner can submit only a guess, which is graded incorrect. These items are not counted as withheld on the close screen.",
+    "fix": "In withholdReason, withhold any audio-dependent type (dictation_*, spelling_bee, listen_*, minimal_pair) whose itemAudio() is 'unavailable' unless the no-audio text route applies, and count it under 'notation_audio'."
+   },
+   {
+    "id": "dictation-inaudible-differences",
+    "file": "lep-frontend/src/grading/normalise.ts",
+    "line": 27,
+    "severity": "low",
+    "category": "correctness",
+    "title": "Dictation rejects spellings a listener cannot hear: hyphen versus space, and digits versus number words",
+    "detail": "applyPunct keeps hyphens inside words, and no rule relates numerals to words. The file's own rationale ('a dictation learner must not be failed for an inaudible comma') applies equally to both. Real items fail with the real grader: item.0006187 and item.0006206 ('…alive at ninety-four.' typed 'ninety four' gives incorrect), item.0048827 ('record-keeping'), item.0034264 (dictation_word 'far-reaching' vs 'far reaching'). TTS says 'nineteen ninety' and 'five hundred', yet item.0014494 'built in 1990' and item.0024669 'over 500 years old' accept only digits (18 dictation_sentence keys contain numerals).",
+    "fix": "For dictation_* only, treat '-' and ' ' between letters as equivalent, and accept a spelled-out number for a numeral (a small numeral-to-words expansion for years and integers). Alternatively, ask the content owner to add `accepted` forms."
+   },
+   {
+    "id": "phoneme-option-button-nested",
+    "file": "lep-frontend/src/exercises/families/Choice.tsx",
+    "line": 204,
+    "severity": "low",
+    "category": "a11y",
+    "title": "phoneme_id option play buttons sit inside the radio card: screen readers cannot reach them, and notation options play nothing",
+    "detail": "The AudioButton is passed as `trailing` into ChoiceCard, which is a Press3D/Pressable with role 'radio'. On iOS the outer accessible element hides the inner button. On web, ARIA radio has presentational children, so the nested role=button is dropped from the accessibility tree (axe nested-interactive). Separately, 83 option sources resolve to 'unavailable' (e.g. item.0000097 option 'STUdent', item.0000438 'Do you speak English? ↗'). Tapping their play button still calls onPlay(), inflating plays_used, then returns silently from play() with no notice.",
+    "fix": "Render the option audio buttons outside the radio, as a sibling column. Hide the button, or show the 'unavailable' notice, when optionAudio(...).kind === 'unavailable', and do not count it as a play."
+   },
+   {
+    "id": "close-duplicate-chip-keys",
+    "file": "lep-frontend/src/features/lesson/Interstitials.tsx",
+    "line": 81,
+    "severity": "low",
+    "category": "correctness",
+    "title": "CloseView keys chips by lemma text; homograph lexemes produce duplicate React keys",
+    "detail": "`learned.map((w) => <Chip key={w}>…)`. Composing all 3,019 node-tier sessions with composeNodeSession found S05U11N1.t1 introducing two lexemes with the lemma 'draft' (lex.02463 and lex.02484). React warns about the duplicate key and may drop or duplicate a chip on update. Other units also carry homograph pairs (count, rain, hard, post, matter …).",
+    "fix": "Key by lexeme id or index (e.g. `key={`lex:${l.id}`}` and `key={`g:${i}`}`), and show the part of speech when lemmas repeat."
+   },
+   {
+    "id": "close-claims-saved-when-outbox-full",
+    "file": "lep-frontend/src/features/lesson/Interstitials.tsx",
+    "line": 99,
+    "severity": "low",
+    "category": "content",
+    "title": "Close screen always says 'Your answers are saved on this device', even when the runner knows they were not",
+    "detail": "LessonRunner sets `outboxFull` when enqueue returns false or throws, but shows the notice only inside the item body. CloseView renders `t('lesson.close.savedLocal')` ('Your answers are saved on this device. They'll be sent…') unconditionally and is never told about outboxFull. That contradicts the honest-numbers guardrail (docs/10 §12) in exactly the case where it matters.",
+    "fix": "Pass outboxFull to CloseView. When it is true, show the outboxFull notice instead of the 'saved' line."
+   }
+  ],
+  "notes": "Overall, the lesson engine is in good shape. I found no crash on the main path and no data loss in the outbox. The issues are concentrated in the pairs games (grading and the timeout path), some iOS screen-reader gaps, and a few grader edge cases that only show up on real items.\n\n**How I checked.** I ran the real grader, composer, audio resolver and L1 helpers over all 37,173 packed items, using a throwaway vitest harness in the scratchpad (no project files were changed). The findings above that name item IDs come from those runs.\n\n**What holds up:**\n- **State machine (runner/machine.ts):** pure, and every action is guarded by status. Recovery and break steps are inserted only after the current index, so earlier answers keep their step numbers. pickRecovery never re-presents a speaking item.\n- **No double submission:** the `submittedFor` ref plus the `latest` layout-effect ref block it, including a timeout racing a tap.\n- **Countdown:** it restarts per step, so a new item cannot inherit a zero, and it pauses on the feedback sheet.\n- **Shuffle mapping:** shown position to original index is correct in all seven exercise families, including stress_tap (never shuffled), bank tiles keyed by index, pairs index sets, the memory grid and the order list.\n\n**Corpus results:**\n- Real-word exclusion holds for the typo-tolerant items.\n- Every dictation item's spoken text grades correct against its key.\n- Every repeat_after / read_aloud prompt typed back grades correct.\n- Every item that allows a hint gets one derived from the item.\n- No instruction key is missing.\n- No item has typo tolerance without the case rule.\n- listen_order_events always has 6 options, so the chance of arriving already in order is 1/720.\n\n**Main risks, in order:**\n1. Pairs games: completed games are always graded correct, wrong attempts are not recorded, and word_race / memory_match timeouts grade Again and throw away the matches, contrary to docs/09.\n2. The timer is not paused under the leave dialog.\n3. iOS VoiceOver gaps: the verdict is never announced, and the order exercise's move buttons are unreachable.\n4. Grader and UI disagreements on real items: the ill/sick gap_fill_bank item, six punctuation error_correct items, and Russian gloss collisions in pairs.\n5. Async races in the recorder.\n6. A latent double-audio / stale-fallback bug that appears once recorded audio is configured.\n\nThe sound-effect and haptic module is complete but has no callers anywhere."
+ },
+ "ver": [
+  {
+   "id": "word-race-timeout-discards-matches",
+   "real": true,
+   "severity": "high",
+   "reasoning": "I confirmed this in the code. LessonRunner.tsx:248 sends every expiry to onSubmit({kind:'timeout'}). grade.ts:230 returns 'incorrect' (reason 'timeout') before any per-type logic runs, and record.ts toSubmissionRecord stores only {kind:'timeout'}. The matches exist only in Pairs.tsx and MemoryGrid useState, so they never reach the grader or the outbox. feedbackContent passes result.expected, which expectedAnswer() returns as null for pairs. The sheet title is therefore 'Time's up — here's the answer' (en.json) with no answer under it. docs/09 §6 gives word_race '60 s total' with timeout behaviour '—', and #69 scores it as items/minute. The doc outranks brief line 488, and DECISIONS F15 does not override this for games. policy.ts timerSeconds keeps the clock for games at every level. The corpus run matches the auditor's figures: word_race has 211 items: 138 with 12 pairs and 23 with 11 pairs, all at 60 s, plus 22×6, 20×8, 6×7 and 2×10. memory_match has 433 items at 120 s. One overstatement: a recovery item is inserted only when the timed-out item comes right before CLOSE (machine.ts:125), not after every timeout. The rest holds. Each timeout records Again over up to 12 lexemes, including the ones the learner matched correctly, and the server cannot recover the data.",
+   "corrected_fix": "As proposed, with these additions. Let the Pairs/MemoryGrid renderer report its live state through a ref or callback registered with the runner. On expiry, the runner submits {kind:'pairs', matches, mistakes, complete:false, timed_out:true}. Extend SubmissionRecord in outbox.ts and toSubmissionRecord to carry the new field. For word_race (and memory_match), grade per element rather than as a blanket timeout: the matched pairs are credited and the unmatched pairs are listed. The feedback sheet should not use the 'here's the answer' timeout title when there is no expected string. It should show the unmatched pairs, or reveal the correct pairing on the locked grid. Mirror the change in lep-backend/app/domain/grading.py, which the parity tests require."
+  },
+  {
+   "id": "pairs-mismatches-never-fail",
+   "real": true,
+   "severity": "medium",
+   "reasoning": "I confirmed this. Pairs.tsx:109-120 and MemoryGrid add only correct matches and count wrong attempts in mistakes.current. grade.ts:318 never reads sub.mistakes, and tests/unit/grading.test.ts asserts that mistakes:2 grades 'correct'. docs/09 #1 says tap_pairs is 'any mismatch = Again on that item'. The corpus has 501 tap_pairs, 433 memory_match and 211 word_race items (1,145 in total). Because only right matches are accepted, a learner can brute-force a tap_pairs item to 'correct'. Two parts of the claim are overstated. First, the mistake count is recorded (toSubmissionRecord keeps mistakes), so the server already has what it needs for the item-level rule in docs/09. Only which lexemes were confused is lost. Second, the rule should not be applied to memory_match. Wrong flips are the game mechanic in a concentration game, and docs/09 #68 scores it 'Time + errors', not Again. The client verdict is also only optimistic. The backend parity grader (lep-backend/app/domain/grading.py:578) has the same logic, so the fix has to be made in both. I rate it medium rather than high.",
+   "corrected_fix": "For tap_pairs only, return 'incorrect' when sub.mistakes > 0. Return elements in which every pair involved in a wrong attempt is false. Make the same change in lep-backend/app/domain/grading.py so client and server grade alike, and update the unit test. Optionally add attempts:[left,right][] to the submission and record so the server can apply Again per lexeme. Do not apply 'any mismatch = Again' to memory_match, where wrong flips are expected. Score memory_match on time and errors and word_race on items per minute, as in docs/09 #68 and #69."
+  },
+  {
+   "id": "timer-runs-under-leave-dialog",
+   "real": true,
+   "severity": "medium",
+   "reasoning": "I confirmed this. useCountdown gets running = state.status === 'answering' (LessonRunner.tsx:248), and confirmLeave is not part of that condition. The Modal at :413 only renders on top, and ExerciseView stays mounted, so the setTimeout chain keeps ticking. On expiry, onSubmit sees status 'answering', grades the item 'incorrect' and enqueues the review before the learner chooses. Choosing 'Leave' afterwards dispatches quit, but the timed-out review is already in the outbox. The Android back button opens the same dialog through backAction. The timed items named are real: games at every level, and grammaticality_judgement and type_from_l1 from B2 or in timed mode. The useRecorder limit timer is internal to SpeakExercise and also keeps running, and stoppedByLimit then auto-submits a voice answer (Speak.tsx:38-40).",
+   "corrected_fix": "Pass `state.status === 'answering' && !confirmLeave` as useCountdown's running argument; optionally also pause on AppState background. For speaking, pass a `paused` flag down through ExerciseContext or props. While it is set, either suspend the recorder's limit timer by clearing it and re-arming it with the remaining time, or stop the take without the byLimit flag, so nothing auto-submits behind the dialog."
+  },
+  {
+   "id": "ios-verdict-not-announced",
+   "real": true,
+   "severity": "medium",
+   "reasoning": "I confirmed this. FeedbackSheet (Exercise.tsx) announces only through accessibilityLiveRegion=\"polite\" and role=\"status\". ViewAccessibility.d.ts marks accessibilityLiveRegion as @platform android. On iOS, RCTViewManager.m maps the 'status' role to UIAccessibilityTraitNone, and nothing in the Fabric view component posts an announcement. grep over src finds no announceForAccessibility or setAccessibilityFocus; theme.tsx uses AccessibilityInfo only for reduce motion. Every renderer removes its CheckButton once the item is locked (`locked ? null : <CheckButton/>`), so VoiceOver loses the focused element. A VoiceOver learner is never told the verdict. The pairs 'Not a match' text (Pairs.tsx:131) and the dispute confirmation use the same Android-only live region. Android (TalkBack) and web (aria-live) behave correctly.",
+   "corrected_fix": "On iOS only, when FeedbackPanel mounts (useEffect on mount), call AccessibilityInfo.announceForAccessibility with the title and the answer. Alternatively, move focus to the sheet's header with AccessibilityInfo.setAccessibilityFocus(findNodeHandle(headerRef)), or with sendAccessibilityEvent(ref, 'focus') on newer RN. Restricting this to iOS avoids a double announcement on Android, where the live region already speaks. Announce 'Not a match' and the dispute confirmation the same way on iOS."
+  },
+  {
+   "id": "order-rows-hide-move-buttons-ios",
+   "real": true,
+   "severity": "medium",
+   "reasoning": "I confirmed this. Each row in Order.tsx:59-63 is `<View accessible accessibilityLabel=...>` and contains the two IconButtons. On iOS, accessible={true} makes the View one accessibility element and hides its subviews from VoiceOver. Android TalkBack can still reach actionable children, and react-native-web keeps the buttons tabbable, so the problem is iOS only. The file's own header says the move buttons are 'the accessible route and the only one'. listen_order_events is in LIST_ROUTE_WITHOUT_VISION (a11y/profile.ts), and the corpus has 186 such items. A VoiceOver user can only submit the shuffled order unchanged.",
+   "corrected_fix": "Either remove `accessible` from the row and give the position-and-text label to the Txt, or keep the grouped row and add accessibilityActions=[{name:'increment',label:moveUp},{name:'decrement',label:moveDown}], or custom-named actions, with onAccessibilityAction calling move(). Then the reorder works through the VoiceOver rotor (accessibilityRole 'adjustable' also allows swipe up and down)."
+  },
+  {
+   "id": "recorder-start-race",
+   "real": true,
+   "severity": "medium",
+   "reasoning": "I confirmed this. useRecorder.start() awaits stopAudio, requestRecordingPermissionsAsync, setAudioModeAsync and prepareToRecordAsync before record() and setPhase('recording'). phase stays 'idle' throughout, and MicButton is disabled only when locked. (1) Speak.tsx typeInstead stops only when phase === 'recording'. On web the getUserMedia prompt is not modal, so a learner can tap 'Type instead' while it is pending. If they then allow access, recording starts behind the text field and runs until max_seconds; the limit's auto-submit is skipped because typing is true. (2) A double tap runs start() twice. The second timer.current assignment overwrites the first timer id, and that orphaned timer can later call stop(true) during a retake, which triggers Speak's voice auto-submit. On web each prepareToRecordAsync calls getUserMedia (AudioRecorder.web.js createMediaRecorder), so the first stream can be orphaned with its tracks never stopped. (3) If the screen unmounts during start, cleanup checks recorder.isRecording, which is still false. On web the released AudioRecorderWeb is still usable afterwards, so record() starts with nothing left to stop it. On native, record() on a released shared object probably throws into the catch, so (3) applies mainly to web.",
+   "corrected_fix": "As proposed: add a 'starting' phase and a cancellation or generation ref set synchronously before the first await, and disable MicButton while starting. Treat typeInstead and unmount as cancelling. After every await, bail out if cancelled; if recorder.record() already ran, stop it and deleteTake its uri. Clear any existing timer before arming a new one."
+  },
+  {
+   "id": "gapbank-ui-contradicts-verdict",
+   "real": true,
+   "severity": "low",
+   "reasoning": "The mismatch is real. Choice.tsx:54-60 computes the highlight with matchText against item.answer.key only and ctx {words}, with no targetLemmas. The grader uses acceptedForms(item, ctx), which adds `accepted` and the lexical US/UK alternatives for target lemmas. In the corpus run, item.0007371 ('My son is ___ today.', bank [worried, ill, sick, healthy], key ['ill'], spelling_variant rule) grades both 'ill' and 'sick' correct, while the highlight marks only 'ill'. Picking 'sick' therefore gives a 'Correct' sheet while the selected card shows 'wrong'. It is the only such item in the corpus (sweep over every gap_fill_bank item), so the impact is one item. I rate it low, not medium. The root cause is also a content defect: a bank with two acceptable answers.",
+   "corrected_fix": "As proposed. Compute the highlight with the same grader the runner uses: mark every bank word for which grade(item,{kind:'text',text:w}, gradeContextFor(item, ctx.unit, ctx.english)) returns 'correct', and paint the selected card from result.verdict. Also report item.0007371 as a content defect (two acceptable bank words)."
+  },
+  {
+   "id": "error-correct-unchanged-prompt-accepted",
+   "real": true,
+   "severity": "low",
+   "reasoning": "I confirmed this with the corpus run. TextExercise pre-fills error_correct with prompt.text (Text.tsx:25). Under the item's 'punct' rule, applyPunct strips punctuation, so the unedited prompt matches the key. grade.ts:266-267 returns 'correct' before it ever looks at rejected_with_feedback. Exactly 6 items are affected: item.0011739 and item.0011745 ('It was cold however we went out.') and item.0039233, item.0039268, item.0039366 and item.0039398 ('The report, all ninety pages of it — arrived on Friday.'). In each, the only rejected pattern is the prompt itself. DECISIONS F14 says punctuation-target items should leave 'punct' out, so this is a content defect that the grader exposes. Six items out of 37k makes it low rather than medium.",
+   "corrected_fix": "Two parts. First, in grade() for error_correct, before key matching, return 'incorrect' with the matched rejected feedback when the typed text equals a rejected_with_feedback pattern under rule 1 only (baseNormalise) plus case folding, which in this corpus is always the unedited prompt. Make the same change in lep-backend/app/domain/grading.py for parity. Second, report the 6 items as a content defect so that 'punct' is dropped from their normalise list."
+  },
+  {
+   "id": "pairs-duplicate-l1-gloss",
+   "real": true,
+   "severity": "low",
+   "reasoning": "I confirmed this. Pairs.tsx displays gloss(r) from l1PairGloss, but isMatch compares mapping[left] against the Uzbek item.prompt.pairs[r][1]. My corpus run with l1='ru' found exactly the 8 items listed: 0001835 memory_match (afternoon/day 'день'), 0001906 word_race (the same pair), 0013120 (brave/bold), 0016542 (scene/stage), 0016758 and 0016837 (detour/diversion), 0021754 (circuit/chain) and 0034318 (exacerbate/compound). The Uzbek side has no duplicates. A Russian learner sees two identical tiles and has a 50% chance of a 'Not a match'. The impact is limited to 8 items and Russian learners only, and mistakes do not affect the grade today, so I rate it low. The proposed fix is wrong as written. Accepting a tile because its gloss is equal would record [l, r] with the other lexeme's r, and grade.ts:313-317 would mark that element false, so the item would grade incorrect. Showing the lemma would give away the answer, and falling back to Uzbek breaks DECISIONS F23.",
+   "corrected_fix": "Treat right-hand tiles with identical displayed glosses as interchangeable. When the learner pairs left l with any tile whose gloss(r) === gloss(partnerOf(l)), record the canonical pair [l, partnerOf(l)] for submission. Mark the tapped tile done for display, and keep tile-done state separate from canonical indices so the remaining identical tile can match the other left word. The grader then needs no change. Do not add the lemma, which reveals the answer, or fall back to Uzbek (F23). Report the 8 collisions as a content defect so the Russian glosses get disambiguating parentheticals."
+  },
+  {
+   "id": "asset-audio-stale-fallback",
+   "real": true,
+   "severity": "low",
+   "reasoning": "The code defect is real, but it cannot happen in the current configuration. speech.ts play() arms a 4 s timer that rejects when !p.isLoaded and is never cleared or checked against the current player. On web, AudioPlayer.web.js remove() clears the handlers and src, and `loaded` only becomes true in onloadeddata. A player removed by stopAudio before it loads therefore rejects 4 s later, and the catch calls markFallback and speakText(previous fallbackText) over whatever is now playing. If the asset takes longer than 4 s, the catch starts TTS without pausing or removing p, and the recording plays over the synthetic voice once it loads. The listener is not removed on reject, and a player stopped after loading leaves the promise pending forever. On native, reading isLoaded on a released shared object inside the timer could throw. resolveAudio returns 'asset' only when EXPO_PUBLIC_AUDIO_BASE_URL is set, and it is empty today, so every source is 'tts'. It becomes roughly medium once recordings are configured.",
+   "corrected_fix": "As proposed. Use a per-call token or a check that `player === p`. Clear the timer and remove the listener on finish, on stop and on reject. In the catch, pause and remove p, then fall back to TTS only if this call is still the current one. Also resolve the promise when the player is superseded so callers do not hang."
+  },
+  {
+   "id": "sfx-never-used",
+   "real": true,
+   "severity": "low",
+   "reasoning": "Confirmed. sfx(), preloadSfx() and releaseSfx() have no call sites outside src/audio/sfx.ts. The soundEffects and haptics prefs (prefs.ts:43-45, default true) are read only inside sfx.ts and have no settings UI. The assets/sfx/*.wav files are bundled but never played. It is not a spec deviation, though: no requirement for sound effects or haptics exists in docs/, FRONTEND-PROMPT.md or the design system (grep finds none). It is an unwired feature that works against the owner's engagement goal, with no correctness impact, so I rate it low.",
+   "corrected_fix": "Wire it with restraint (docs/10 §8): call preloadSfx(['correct','incorrect','pop','complete']) when LessonRunner mounts. After grading in onSubmit, play a soft 'correct' or 'incorrect' sound, and nothing for 'ungraded' answers. Play 'pop' on a pairs or memory match and 'complete' once on reaching CLOSE. Add Settings toggles for soundEffects and haptics, and call releaseSfx() when sound effects are turned off. Never play a sound on every tap."
+  }
+ ]
+}

@@ -16,6 +16,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.pool import NullPool
 
 from app.models import Base
+from app.models.partitions import include_name
 from tests.integration.conftest import (
     TABLES,
     Database,
@@ -29,7 +30,9 @@ pytestmark = pytest.mark.integration
 
 
 def _diff(connection: Connection) -> list[Any]:
-    context = MigrationContext.configure(connection, opts={"compare_type": True})
+    context = MigrationContext.configure(
+        connection, opts={"compare_type": True, "include_name": include_name}
+    )
     return list(compare_metadata(context, Base.metadata))
 
 

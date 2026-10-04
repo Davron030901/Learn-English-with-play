@@ -4,6 +4,7 @@ import errno
 from collections.abc import AsyncIterator
 from typing import Annotated
 
+import asyncpg
 import httpx
 import pytest
 import redis.exceptions
@@ -123,3 +124,30 @@ def test_dependency_failures_are_recognised(exc: Exception) -> None:
 )
 def test_ordinary_bugs_are_not_dependency_failures(exc: Exception) -> None:
     assert not is_dependency_failure(exc)
+
+
+class _AdapterError(Exception):
+    """Stands in for SQLAlchemy's asyncpg adapter error: the asyncpg exception is its cause."""
+
+
+def _wrapped(cause: BaseException) -> sqlalchemy.exc.DBAPIError:
+    orig = _AdapterError("adapter")
+    orig.__cause__ = cause
+    return sqlalchemy.exc.DBAPIError("SELECT 1", None, orig)
+
+
+@pytest.mark.parametrize(
+    "cause",
+    [
+        asyncpg.exceptions.QueryCanceledError("canceling statement due to statement timeout"),
+        asyncpg.exceptions.AdminShutdownError("terminating connection"),
+        asyncpg.exceptions.TooManyConnectionsError("too many"),
+        asyncpg.exceptions.ConnectionDoesNotExistError("gone"),
+    ],
+)
+def test_database_failures_raised_mid_query_are_dependency_failures(cause: Exception) -> None:
+    assert is_dependency_failure(_wrapped(cause))
+
+
+def test_a_wrapped_constraint_violation_is_a_bug_not_an_outage() -> None:
+    assert not is_dependency_failure(_wrapped(asyncpg.exceptions.UniqueViolationError("dup")))
