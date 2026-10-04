@@ -26,6 +26,7 @@ celerybeat-schedule*
 .DS_Store
 .env
 # lep-backend — har bir fayl alohida (yuklagan faylingiz qatorini o'chiring)
+lep-frontend/
 lep-backend/.dockerignore
 lep-backend/DECISIONS.md
 lep-backend/Dockerfile
@@ -97,5 +98,4 @@ lep-backend/tests/integration/api.py
 lep-backend/tests/integration/conftest.py
 lep-backend/tests/integration/test_auth.py
 lep-backend/tests/integration/test_health.py
-lep-backend/tests/integration/test_http_contract.py
-lep-frontend/
+
