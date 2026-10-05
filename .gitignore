@@ -99,4 +99,3 @@ lep-backend/tests/factories.py
 lep-backend/tests/integration/__init__.py
 lep-backend/tests/integration/api.py
 lep-backend/tests/integration/conftest.py
-lep-backend/tests/integration/test_auth.py
