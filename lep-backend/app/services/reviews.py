@@ -31,8 +31,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.clock import Clock
 from app.content.catalog import ContentCatalog, ItemRecord
-from app.domain.fsrs import SCHEDULER_VERSION, Grade, grade_response
+from app.domain.fsrs import SCHEDULER_VERSION, Grade, grade_response, retrievability
 from app.domain.grading import FAMILY, GradeResult, InvalidSubmission, Verdict, grade
+from app.domain.mastery import KNOWN_STATES
 from app.domain.scheduling import LAPSE_WINDOW, ItemState, LoggedReview, apply_review, replay
 from app.ids import Uuid7Sequence
 from app.repositories.reviews import ReviewRepository
@@ -93,6 +94,17 @@ class Outcome:
     #: the attempt as graded, for downstream accounting (XP, quests); None unless accepted now
     item: ItemRecord | None = None
     answered_at: datetime | None = None
+    attempt_id: UUID | None = None
+    session_id: UUID | None = None
+    rt_ms: int = 0
+    hints_used: int = 0
+    timed_out: bool = False
+    #: any memory item of the answer was due when it was answered (a "watered" word)
+    was_due: bool = False
+    #: predicted p(correct) before the answer — mean retrievability; None for new material
+    p_correct: float | None = None
+    #: every memory item was already known and not due: replaying for its own sake (XP x0.25)
+    regrind: bool = False
 
 
 @dataclass(slots=True)
@@ -225,8 +237,9 @@ class ReviewService:
                 await self._repo.upsert_state(learner_id, m, p.state)
 
         for d in disputes:
-            if d.client_uuid in keys:
-                outcomes[d.client_uuid] = Outcome(d.client_uuid, "duplicate")
+            # seen before, or a second copy in this same batch
+            if d.client_uuid in keys or d.client_uuid in outcomes:
+                outcomes.setdefault(d.client_uuid, Outcome(d.client_uuid, "duplicate"))
                 continue
             await self._repo.insert_dispute(
                 {
@@ -273,6 +286,24 @@ class ReviewService:
             ts, clock_adjusted = now, True
         rt_ms = clamp_rt(r.rt_ms)
         item_grade = fsrs_grade(item, result, rt_ms, r.hints_used)
+        before = [pending[m].state for m in item.memory_items if m in pending]
+        known = [s for s in before if s is not None]
+        was_due = any(s.due <= ts for s in known)
+        p_correct = (
+            sum(
+                retrievability(max((ts - s.last_review).total_seconds() / 86_400, 0.0), s.stability)
+                for s in known
+            )
+            / len(known)
+            if known and len(known) == len(before)
+            else None
+        )
+        regrind = (
+            bool(before)
+            and len(known) == len(before)
+            and not was_due
+            and all(s.state in KNOWN_STATES for s in known)
+        )
         attempt_id = self._ids.next()
 
         await self._repo.insert_attempt(
@@ -365,4 +396,12 @@ class ReviewService:
             typo=result.typo,
             item=item,
             answered_at=ts,
+            attempt_id=attempt_id,
+            session_id=r.session_id,
+            rt_ms=rt_ms,
+            hints_used=r.hints_used,
+            timed_out=result.reason == "timeout",
+            was_due=was_due,
+            p_correct=p_correct,
+            regrind=regrind,
         )

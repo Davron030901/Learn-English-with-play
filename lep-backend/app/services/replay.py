@@ -43,7 +43,9 @@ def _same(a: ItemState, b: ItemState) -> bool:
     )
 
 
-async def replay_learner(session: AsyncSession, learner_id: UUID, *, write: bool = False) -> ReplayReport:
+async def replay_learner(
+    session: AsyncSession, learner_id: UUID, *, write: bool = False
+) -> ReplayReport:
     """Run inside a transaction the caller owns."""
     report = ReplayReport(learner_id)
     profile = await LearnerRepository(session).profile(learner_id)

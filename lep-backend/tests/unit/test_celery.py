@@ -60,6 +60,14 @@ def test_beat_schedules_the_auth_purge_and_the_task_exists() -> None:
     app.loader.import_default_modules()
     assert "lep.auth.purge_expired_sessions" in app.tasks
     assert "lep.ping" in app.tasks
+    ai = app.conf.beat_schedule["purge-expired-ai-conversations"]
+    assert ai["task"] == "lep.ai.purge_expired_conversations"
+    assert "lep.ai.purge_expired_conversations" in app.tasks
+    bias = app.conf.beat_schedule["rater-bias-audit"]
+    assert bias["task"] == "lep.assessment.bias_audit"
+    assert "lep.assessment.bias_audit" in app.tasks
+    for name in ("purge-expired-recordings", "seed-media-assets", "tts-drafts"):
+        assert app.conf.beat_schedule[name]["task"] in app.tasks
     assert app.conf.result_expires is None  # no result backend, so nothing to clean up
 
 

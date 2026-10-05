@@ -6,6 +6,7 @@ from collections.abc import Sequence
 
 from fastapi import APIRouter
 
+from app.api.v1.gamification import awards_out
 from app.deps import ContainerDep, CurrentPrincipal, DbSession
 from app.errors import InvalidToken
 from app.repositories.learners import LearnerRepository
@@ -20,6 +21,7 @@ from app.schemas.reviews import (
     SyncResponse,
     Typo,
 )
+from app.services.gamification import GamificationService
 from app.services.reviews import IncomingDispute, IncomingReview, Outcome, ReviewService
 
 router = APIRouter(tags=["reviews"])
@@ -81,13 +83,26 @@ async def _ingest(
             reviews=reviews,
             disputes=disputes,
         )
+        awards = await GamificationService(session, container.content, container.clock).apply(
+            principal.learner_id, profile, outcomes
+        )
         now = container.clock.now()
         due = await ReviewRepository(session).due_count(principal.learner_id, now)
     by_id = {o.client_uuid: o for o in outcomes}
+    results: list[RecordResult] = []
+    seen: set[object] = set()
+    for r in records:
+        result = _result(by_id[r.client_uuid])
+        if r.client_uuid in seen:
+            # a second copy in the same request: reported, never written twice
+            result = result.model_copy(update={"status": "duplicate"})
+        seen.add(r.client_uuid)
+        results.append(result)
     return SyncResponse(
-        results=[_result(by_id[r.client_uuid]) for r in records if r.client_uuid in by_id],
+        results=results,
         server_time=now,
         due_now=due,
+        awards=awards_out(awards),
     )
 
 

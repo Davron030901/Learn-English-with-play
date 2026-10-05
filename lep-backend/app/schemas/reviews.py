@@ -13,6 +13,8 @@ from uuid import UUID
 
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
 
+from app.schemas.gamification import AwardsOut
+
 MAX_SUBMISSION_KEYS = 16
 
 
@@ -72,11 +74,15 @@ class SyncRequest(BaseModel):
 
 
 class Typo(BaseModel):
+    model_config = ConfigDict(json_schema_serialization_defaults_required=True)
+
     typed: str
     expected: str
 
 
 class RecordResult(BaseModel):
+    model_config = ConfigDict(json_schema_serialization_defaults_required=True)
+
     client_uuid: UUID
     status: Literal["accepted", "duplicate", "rejected"] = Field(
         description="duplicate: this client_uuid was ingested before; nothing was written again."
@@ -92,6 +98,9 @@ class RecordResult(BaseModel):
 
 
 class SyncResponse(BaseModel):
+    model_config = ConfigDict(json_schema_serialization_defaults_required=True)
+
     results: list[RecordResult]
+    awards: AwardsOut = Field(description="What these answers earned (docs/16 E00).")
     server_time: datetime
     due_now: int = Field(description="Memory items due for review at server_time.")

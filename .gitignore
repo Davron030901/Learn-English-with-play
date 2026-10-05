@@ -27,6 +27,9 @@ celerybeat-schedule*
 .env
 # lep-backend — har bir fayl alohida (yuklagan faylingiz qatorini o'chiring)
 lep-frontend/
+
+lep-backend/migrations/
+lep-backend/tests/
 lep-backend/.dockerignore
 lep-backend/DECISIONS.md
 lep-backend/Dockerfile
