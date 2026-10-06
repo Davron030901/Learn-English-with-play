@@ -133,4 +133,3 @@ lep-backend/app/services/sessions.py
 lep-backend/app/services/speech.py
 lep-backend/app/services/sync.py
 lep-backend/docs/ERD.md
-lep-backend/docs/RUNBOOK.md
