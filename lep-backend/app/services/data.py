@@ -51,7 +51,7 @@ def _learner_tables() -> list[Table]:
     ]
 
 
-async def export(session: AsyncSession, learner_id: UUID) -> dict[str, Any]:
+async def export(session: AsyncSession, learner_id: UUID, now: datetime) -> dict[str, Any]:
     learner = await session.get(Learner, learner_id)
     if learner is None:
         return {}
@@ -63,7 +63,11 @@ async def export(session: AsyncSession, learner_id: UUID) -> dict[str, Any]:
         }
     }
     for table in _learner_tables():
-        rows = await session.execute(select(table).where(table.c.learner_id == learner_id))
+        query = select(table).where(table.c.learner_id == learner_id)
+        if table.name == "recordings":
+            # past its expiry a recording is gone, even before the nightly purge runs
+            query = query.where(table.c.expires_at > now)
+        rows = await session.execute(query)
         out[table.name] = [
             {k: _plain(v) for k, v in r._mapping.items() if k not in SECRET_COLUMNS} for r in rows
         ]
@@ -71,7 +75,7 @@ async def export(session: AsyncSession, learner_id: UUID) -> dict[str, Any]:
         "Recordings are kept at most 30 days and are never used for training without your "
         "separate opt-in."
     )
-    out["recording_count"] = len(await all_recordings(session, learner_id))
+    out["recording_count"] = len(await all_recordings(session, learner_id, now))
     return out
 
 

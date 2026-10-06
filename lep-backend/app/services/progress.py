@@ -92,6 +92,11 @@ def _indexes(catalog: ContentCatalog) -> _Indexes:
     return hit
 
 
+def warm_indexes(catalog: ContentCatalog) -> None:
+    """Build the indexes at start-up, so no learner's first request pays for it (seconds)."""
+    _indexes(catalog)
+
+
 def _build_indexes(catalog: ContentCatalog) -> _Indexes:
     aspects: dict[str, set[str]] = defaultdict(set)
     items_for: dict[str, list[str]] = defaultdict(list)
@@ -268,6 +273,10 @@ class ProgressService:
             if len(picked) >= limit:
                 break
         return len(states), picked
+
+    def units_reviewing(self, memory_item_id: str) -> set[str]:
+        """The units holding an item that reviews this memory item."""
+        return {self._catalog.items[i].unit_id for i in self._ix.items_for.get(memory_item_id, ())}
 
     def review_item(self, m: MemoryState, used: set[str]) -> str | None:
         """An item that reviews this memory item: a family suited to its state, never the type

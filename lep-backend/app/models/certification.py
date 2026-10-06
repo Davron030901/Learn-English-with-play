@@ -32,6 +32,10 @@ class LevelExam(Base):
     #: paper → item ids
     papers: Mapped[dict[str, list[str]]] = mapped_column(JSONB)
     created_at: Mapped[datetime]
+    #: answers count only when the server received them before this (docs/12 §4.1 timings)
+    ends_at: Mapped[datetime]
+    #: the form had to reuse items from an exam within 12 months (the course has no exam bank)
+    reused: Mapped[bool]
     completed_at: Mapped[datetime | None]
     #: paper → share right
     scores: Mapped[dict[str, float] | None] = mapped_column(JSONB)

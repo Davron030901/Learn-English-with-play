@@ -123,7 +123,9 @@ def quadratic_weighted_kappa(a: Sequence[float], b: Sequence[float]) -> float:
             w = ((i - j) ** 2) / ((n - 1) ** 2)
             num += w * observed[i][j]
             den += w * row[i] * col[j] / total
-    return 1.0 if den == 0 else 1 - num / den
+    # every rating the same band: agreement is undefined, and a set that cannot tell bands
+    # apart is no evidence a rater can — it must not open the certification gate
+    return 0.0 if den == 0 else 1 - num / den
 
 
 @dataclass(frozen=True, slots=True)

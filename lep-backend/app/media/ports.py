@@ -39,5 +39,7 @@ class SpeechScorer(Protocol):
     async def measure(self, audio: bytes, mime: str, expected: str | None) -> Measurement:
         """Forced alignment against ``expected`` (GOP per phone, stress, timings) plus an
         independent ASR pass with no prior on the expected text. ``expected`` is None for free
-        speech: then only the transcript, the timings and the ASR confidence are meaningful."""
+        speech: then only the transcript and the timings are meaningful, ``words`` may be empty,
+        and ``independent_wer`` is the disagreement between two independent ASR passes — the
+        intelligibility proxy that free speech has."""
         ...

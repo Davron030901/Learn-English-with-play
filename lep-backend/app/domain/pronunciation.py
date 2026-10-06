@@ -76,31 +76,44 @@ class Verdict:
     intelligibility: float
 
 
-def word_score(word: Word) -> float:
-    """Mean GOP weighted by salience; an accented right phoneme keeps its GOP floor at the pass bar."""
+def word_score(word: Word, floor: float = 70.0) -> float:
+    """Mean GOP weighted by salience. A phone the scorer recognised as the right phoneme — however
+    accented — is raised to ``floor``, the level's pass bar, so accent alone can never fail a word;
+    only a substituted contrastive phoneme keeps its low GOP."""
     total = weight = 0.0
     for p in word.phones:
         w = CONTRASTIVE_WEIGHT if p.contrastive else 1.0
-        # accent is not an error: only a substituted contrastive phoneme can pull a word down hard
-        gop = p.gop if (p.substituted and p.contrastive) else max(p.gop, 70.0)
+        gop = p.gop if (p.substituted and p.contrastive) else max(p.gop, floor)
         total += w * gop
         weight += w
     return total / weight if weight else 0.0
 
 
-def judge(m: Measurement, level: str) -> Verdict:
+def judge(m: Measurement, level: str, *, free: bool = False) -> Verdict:
+    """``free``: free speech (no expected text). The scorer port says GOP means nothing there,
+    so only intelligibility is judged and the headline is intelligibility alone."""
     gop_pass, max_wer, stress_min = THRESHOLDS[level[:2]]
-    scores = tuple((w.text, round(word_score(w), 1)) for w in m.words)
-    mean_word = sum(s for _, s in scores) / len(scores) if scores else 0.0
+    intelligibility = max(0.0, 1.0 - m.independent_wer)
+    if free or not m.words:
+        return Verdict(
+            headline=round(intelligibility * 100),
+            passed=m.independent_wer <= max_wer,
+            notes=(),
+            word_scores=(),
+            stress_accuracy=None,
+            intelligibility=round(intelligibility, 3),
+        )
+    scores = tuple((w.text, round(word_score(w, floor=gop_pass), 1)) for w in m.words)
+    mean_word = sum(s for _, s in scores) / len(scores)
     stressed = [w for w in m.words if w.stress_expected is not None]
     stress_acc = (
         sum(w.stress_heard == w.stress_expected for w in stressed) / len(stressed)
         if stressed
         else None
     )
-    intelligibility = max(0.0, 1.0 - m.independent_wer)
+    # the bar is per word (docs/02 §10.2): one ship → sheep fails, it is not averaged away
     passed = (
-        mean_word >= gop_pass
+        all(s >= gop_pass for _, s in scores)
         and m.independent_wer <= max_wer
         and (stress_acc is None or stress_acc >= stress_min)
     )

@@ -9,23 +9,30 @@ length in minutes, build the ordered list of exercises for one session:
    Time one block cannot use flows to the other, except into "new" at T ≤ 5.
 2. **Review block**, most urgent first: ``(1 - R) × importance × (1 + 0.3·leech) × (1 + 0.2·in
    current level)``. Leeches never take more than 5 % of the session's time (docs/08 §7).
-3. **New block**, in syllabus order, capped by the day's allowance of new targets (15 a day at
-   A1–A2, 20 at B1+, none while the backlog is over 3× a normal day).
-4. **Interleaving**, enforced on the whole sequence as hard rules: at most 3 consecutive items on
-   one target, at most 2 consecutive of one exercise type, at most 3 consecutive of one modality —
-   and the modality rotates (read → listen → type → speak) whenever the next pick allows it. An
-   item that cannot be placed without breaking a rule is left out and reported, never forced in.
+3. **New block**, in syllabus order (docs/08 §5 step 4), capped by the day's allowance of new
+   targets (15 a day at A1–A2, 20 at B1+, none while the backlog is over 3× a normal day). Every
+   card that would introduce a target — a review card included — counts against the allowance.
+4. **Interleaving** of the review block (docs/08 §5 step 3), as hard rules: at most 3 consecutive
+   items on one target, at most 2 consecutive of one exercise type, at most 3 consecutive of one
+   modality, never the same item twice running — and the modality rotates (read → listen → type →
+   speak) whenever the next pick allows it. A review that no position can take is left out and
+   reported. The new block keeps its authored order and is **never dropped**: where a lesson item
+   would break a rule, a review that was left out is used as a spacer if one fits; otherwise the
+   lesson item follows the one before it, as the content was written.
 5. **Warm-up** — up to 2 items predicted at p(correct) ≥ 0.95 — and **close** — the reviewed
    memory item with the lowest stability, through a different exercise (the recency effect).
 6. **Fit**: Σ expected seconds (the learner's median response time per exercise family, plus
-   time to read the feedback) stays within T + 10 %.
+   time to read the feedback) stays within T + 10 %. A node-tier is played whole, so a node
+   session's budget is never below the tier's own time; reviews only fill what is left.
 
-Node tiers (docs/08 §4.3): tier 1 is always open, tier 2 after tier 1, and tier 3 only once
-**3 days** have passed since tier 2 — structural spacing, enforced here and in the award pipeline.
+Node tiers (docs/08 §4.3): the lowest tier a node has is always open; each later one needs the
+tier before it; tier 3 opens only **3 days** after tier 2 — structural spacing, enforced here and
+in the award pipeline. A node without a tier 2 has no tier-2 spacing to wait for.
 """
 
 from __future__ import annotations
 
+import math
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -174,7 +181,7 @@ class Plan:
     budget_s: float
     review_share: float
     new_targets: frozenset[str]
-    #: chosen but left out because no position kept every interleaving rule
+    #: reviews chosen but left out because no position kept every interleaving rule
     deferred: tuple[str, ...]
 
     @property
@@ -266,17 +273,31 @@ class TierGate:
     available_at: datetime | None = None
 
 
-def tier_gate(tier: int, completed: Mapping[int, datetime], now: datetime) -> TierGate:
-    """docs/08 §4.3: tier 1 always; tier 2 after tier 1; tier 3 ≥ 3 days after tier 2."""
-    if tier <= 1:
+def tier_gate(
+    tier: int,
+    completed: Mapping[int, datetime],
+    now: datetime,
+    populated: Iterable[int] = (1, 2, 3),
+) -> TierGate:
+    """docs/08 §4.3 over the tiers the node actually has.
+
+    The lowest populated tier is always open. A later tier needs the populated tier before it to
+    be completed — or any tier from there up (a test-out records tier 2 without tier 1, and a
+    tier already passed may always be replayed). Tier 3 opens 3 days after tier 2 was completed;
+    a node with no tier 2 has no such wait.
+    """
+    tiers = sorted(set(populated))
+    if not tiers or tier <= tiers[0]:
         return TierGate(True, "ok")
-    previous = completed.get(tier - 1)
-    if previous is None:
+    if any(t >= tier for t in completed):
+        return TierGate(True, "ok")  # passed already: replaying it is practice
+    before = max(t for t in tiers if t < tier)
+    if not any(t >= before for t in completed):
         return TierGate(False, "previous_tier")
-    if tier == 3:
-        opens = previous + TIER3_SPACING
-        if now < opens:
-            return TierGate(False, "spacing", opens)
+    if tier == 3 and before == 2:
+        t2 = completed.get(2)
+        if t2 is not None and now < t2 + TIER3_SPACING:
+            return TierGate(False, "spacing", t2 + TIER3_SPACING)
     return TierGate(True, "ok")
 
 
@@ -310,108 +331,174 @@ def backlog(due: int, normal_per_day: int) -> Backlog:
 # ------------------------------------------------------------------------- composition
 
 
+class _Allowance:
+    """The day's remaining new targets, shared by every card of the session."""
+
+    def __init__(self, remaining: int) -> None:
+        self.remaining = max(0, remaining)
+        self.introduced: set[str] = set()
+
+    def fits(self, card: Card) -> bool:
+        return len(card.new_targets - self.introduced) <= self.remaining
+
+    def take(self, card: Card) -> None:
+        fresh = card.new_targets - self.introduced
+        self.remaining -= len(fresh)
+        self.introduced |= fresh
+
+
 def _take_reviews(
-    reviews: Iterable[Review], budget_s: float, leech_cap_s: float, taken: set[str]
+    reviews: Iterable[Review],
+    budget_s: float,
+    leech_cap_s: float,
+    taken: set[str],
+    allowance: _Allowance,
 ) -> list[Review]:
+    """Most urgent first, within the time, the leech share and the day's new targets."""
     out: list[Review] = []
     items: set[str] = set()
     used = leech_s = 0.0
     for r in sorted(reviews, key=lambda r: (-r.priority, r.memory_item_id)):
         if r.memory_item_id in taken or r.card.item_id in items:
             continue
-        if used + r.card.seconds > budget_s:
+        if used + r.card.seconds > budget_s or not allowance.fits(r.card):
             continue
         if r.leech:
             if leech_s + r.card.seconds > leech_cap_s:
                 continue
             leech_s += r.card.seconds
         out.append(r)
+        allowance.take(r.card)
         items.add(r.card.item_id)
         used += r.card.seconds
         taken.add(r.memory_item_id)
     return out
 
 
-def _take_lesson(cards: Iterable[Card], budget_s: float, allowance: int) -> list[Card]:
+def _take_lesson(
+    cards: Iterable[Card], budget_s: float, allowance: _Allowance | None
+) -> list[Card]:
+    """New material in syllabus order. ``allowance`` None: a node-tier, played whole."""
     out: list[Card] = []
     used = 0.0
-    introduced: set[str] = set()
     for c in cards:
-        fresh = c.new_targets - introduced
-        if len(introduced) + len(fresh) > allowance:
-            continue
-        if used + c.seconds > budget_s:
-            continue
+        if allowance is not None:
+            if used + c.seconds > budget_s or not allowance.fits(c):
+                continue
+            allowance.take(c)
         out.append(c)
         used += c.seconds
-        introduced |= fresh
     return out
 
 
-def compose(req: Request) -> Plan:
-    budget = max(1, req.minutes) * 60.0
-    review_share, breaks = split(req.minutes)
-    node = req.node_share is not None
-    if node:
-        # a node-tier session: the node's material first; reviews fill what is left
-        review_share = 1.0 - (req.node_share or 0.0)
-    ceiling = budget * (1 + FIT_TOLERANCE)
+def _place_lesson(
+    seq: list[Card], lesson: Sequence[Card], spares: list[Card]
+) -> tuple[list[Card], set[int]]:
+    """The new block in its authored order, every card placed; a spare review breaks a run
+    where one fits. Returns the cards added and the ids of the spares used."""
+    added: list[Card] = []
+    used: set[int] = set()
+    for card in lesson:
+        if not _runs_ok(seq, card):
+            for k, spare in enumerate(spares):
+                if _runs_ok(seq, spare) and _runs_ok([*seq, spare], card):
+                    seq.append(spare)
+                    added.append(spare)
+                    used.add(id(spare))
+                    spares.pop(k)
+                    break
+        seq.append(card)
+        added.append(card)
+    return added, used
 
-    # 1. warm-up: up to two items the learner is almost sure to get right
+
+def compose(req: Request) -> Plan:
+    node = req.node_share is not None
+    requested = max(1, req.minutes) * 60.0
+    review_share, breaks = split(req.minutes)
+    if node:
+        review_share = 1.0 - (req.node_share or 0.0)
+
+    # 1. warm-up: up to two items the learner is almost sure to get right, introducing nothing
     taken: set[str] = set()
-    warm = [
-        w
-        for w in sorted(req.warmups, key=lambda w: -w.retrievability)
-        if w.retrievability >= WARMUP_MIN_P
-    ]
     warm_cards: list[Review] = []
-    for w in warm:
+    for w in sorted(req.warmups, key=lambda w: (-w.retrievability, w.memory_item_id)):
         if len(warm_cards) == WARMUP_ITEMS:
             break
-        if w.memory_item_id in taken or not _runs_ok([x.card for x in warm_cards], w.card):
+        if w.retrievability < WARMUP_MIN_P or w.memory_item_id in taken or w.card.new_targets:
+            continue
+        if not _runs_ok([x.card for x in warm_cards], w.card):
             continue
         warm_cards.append(w)
         taken.add(w.memory_item_id)
     warm_s = sum(w.card.seconds for w in warm_cards)
 
-    # 2. the two budgets; whatever one block cannot use flows to the other
-    lesson_budget = 0.0 if (req.minutes <= 5 and not node) else budget * (1 - review_share)
-    allowance = max(0, req.new_allowance)
-    lesson = _take_lesson(req.lesson, lesson_budget, allowance)
+    # 2. the lesson: a node-tier whole (its time sets the floor of the budget); new material
+    #    for free practice within its share and the day's allowance
+    lesson_alloc = _Allowance(req.new_allowance)
+    if node:
+        lesson = _take_lesson(req.lesson, math.inf, None)
+        for c in lesson:
+            lesson_alloc.introduced |= c.new_targets  # the caller already counted these
+        budget = max(requested, warm_s + sum(c.seconds for c in lesson))
+    else:
+        budget = requested
+        lesson_budget = 0.0 if req.minutes <= 5 else budget * (1 - review_share)
+        lesson = _take_lesson(req.lesson, lesson_budget, lesson_alloc)
     lesson_s = sum(c.seconds for c in lesson)
-    review_budget = max(0.0, budget - warm_s - lesson_s)
-    reviews = _take_reviews(req.reviews, review_budget, budget * LEECH_TIME_SHARE, taken)
-    review_s = sum(r.card.seconds for r in reviews)
-    if req.lesson and not (req.minutes <= 5 and not node):
-        # reviews left time over: give it back to the lesson (still capped by the allowance)
-        spare = max(0.0, budget - warm_s - review_s)
-        if spare > lesson_s:
-            lesson = _take_lesson(req.lesson, spare, allowance)
+    ceiling = budget * (1 + FIT_TOLERANCE)
 
-    # 3. order: warm-up, then reviews (urgent first) and the lesson (syllabus order), interleaved
-    prefix = [w.card for w in warm_cards]
-    pool = [r.card for r in reviews] + lesson
-    arranged, deferred = arrange(prefix, pool)
+    # 3. reviews fill the time that is left, most urgent first, and may only introduce targets
+    #    within what the allowance still holds after the lesson
+    # nothing new at all in a session too short to consolidate it (T ≤ 5)
+    review_alloc = _Allowance(0 if (not node and req.minutes <= 5) else lesson_alloc.remaining)
+    review_alloc.introduced = set(lesson_alloc.introduced)
+    reviews = _take_reviews(
+        req.reviews,
+        max(0.0, budget - warm_s - lesson_s),
+        budget * LEECH_TIME_SHARE,
+        taken,
+        review_alloc,
+    )
+    if not node and req.lesson and req.minutes > 5:
+        # time the reviews could not use flows back to new material, within the allowance
+        spare_time = max(0.0, budget - warm_s - sum(r.card.seconds for r in reviews))
+        if spare_time > lesson_s:
+            review_new = review_alloc.introduced - lesson_alloc.introduced
+            regrow = _Allowance(req.new_allowance - len(review_new))
+            regrow.introduced = set(review_new)
+            lesson = _take_lesson(req.lesson, spare_time, regrow)
+
+    # 4. order: warm-up; the review block interleaved under the hard rules; the new block in
+    #    syllabus order, with left-over reviews as spacers where a run would be too long
+    seq: list[Card] = [w.card for w in warm_cards]
+    review_placed, review_left = arrange(seq, [r.card for r in reviews])
+    seq.extend(review_placed)
+    lesson_added, spares_used = _place_lesson(seq, lesson, review_left)
     by_card = {id(r.card): r for r in reviews}
     lesson_ids = {id(c) for c in lesson}
 
     steps: list[Step] = [
         Step("warmup", w.card, w.card.seconds, w.memory_item_id) for w in warm_cards
     ]
-    for c in arranged:
+    for c in [*review_placed, *lesson_added]:
         rv = by_card.get(id(c))
-        if rv is not None:
-            steps.append(Step("review", c, c.seconds, rv.memory_item_id))
-        elif id(c) in lesson_ids:
+        if id(c) in lesson_ids:
             steps.append(Step("lesson", c, c.seconds))
+        elif rv is not None:
+            steps.append(Step("review", c, c.seconds, rv.memory_item_id))
+    deferred = [c for c in review_left if id(c) not in spares_used]
 
-    # 4. close: the weakest memory item just reviewed, through a different exercise
+    # 5. close: the weakest memory item just reviewed — never a leech, so leeches stay within
+    #    their share — through a different exercise that introduces nothing new
     sequence = [s.card for s in steps if s.card is not None]
     total = sum(s.seconds for s in steps)
-    placed_reviews = [by_card[id(c)] for c in arranged if id(c) in by_card]
+    placed_reviews = [by_card[id(s.card)] for s in steps if s.role == "review" and s.card]
     for r in sorted(placed_reviews, key=lambda r: (r.stability, r.memory_item_id)):
         alt = req.close_cards.get(r.memory_item_id)
-        if alt is None or alt.type_id == r.card.type_id or alt.item_id == r.card.item_id:
+        if r.leech or alt is None or alt.new_targets:
+            continue
+        if alt.type_id == r.card.type_id or alt.item_id == r.card.item_id:
             continue
         if total + alt.seconds > ceiling or not _runs_ok(sequence, alt):
             continue
@@ -420,7 +507,7 @@ def compose(req: Request) -> Plan:
         total += alt.seconds
         break
 
-    # 5. long sessions: a 15-second break every 12 minutes of work
+    # 6. long sessions: a 15-second break every 12 minutes of work
     if breaks:
         with_breaks: list[Step] = []
         since = 0.0
@@ -436,9 +523,7 @@ def compose(req: Request) -> Plan:
         steps=tuple(steps),
         budget_s=budget,
         review_share=review_share,
-        new_targets=frozenset(
-            t for s in steps if s.role == "lesson" and s.card for t in s.card.new_targets
-        ),
+        new_targets=frozenset(t for s in steps if s.card for t in s.card.new_targets),
         deferred=tuple(c.item_id for c in deferred),
     )
 

@@ -22,6 +22,7 @@ from app.errors import (
 )
 from app.models.learner import Learner
 from app.repositories.learners import LearnerRepository
+from app.schemas.auth import rate_limit_key_for_email
 from app.schemas.media import (
     AssetOut,
     DeleteAccountRequest,
@@ -239,10 +240,12 @@ async def submit_speech(
     summary="A recording's scoring job",
     responses=problem_responses(401, 404, 429),
 )
-async def get_job(job_id: UUID, principal: CurrentPrincipal, session: DbSession) -> SpeechJobOut:
+async def get_job(
+    job_id: UUID, principal: CurrentPrincipal, session: DbSession, container: ContainerDep
+) -> SpeechJobOut:
     try:
         async with session.begin():
-            row = await speech.job(session, principal.learner_id, job_id)
+            row = await speech.job(session, principal.learner_id, job_id, container.clock.now())
             return SpeechJobOut(
                 id=row.id,
                 status=row.status,  # type: ignore[arg-type]
@@ -262,9 +265,11 @@ async def get_job(job_id: UUID, principal: CurrentPrincipal, session: DbSession)
     summary="Everything the server holds about you, as JSON (recordings as base64)",
     responses=problem_responses(401, 429, 503),
 )
-async def export_data(principal: CurrentPrincipal, session: DbSession) -> dict[str, Any]:
+async def export_data(
+    principal: CurrentPrincipal, session: DbSession, container: ContainerDep
+) -> dict[str, Any]:
     async with session.begin():
-        return await data.export(session, principal.learner_id)
+        return await data.export(session, principal.learner_id, container.clock.now())
 
 
 @router.delete(
@@ -295,6 +300,12 @@ async def delete_account(
     async with session.begin():
         creds_row = await session.get(Learner, principal.learner_id)
         stored = creds_row.password_hash if creds_row is not None else None
+        email = creds_row.email if creds_row is not None else str(principal.learner_id)
+    # the same fail-closed limit as sign-in: confirming a password must not be a faster way to
+    # guess it than signing in (whoever holds a token could otherwise erase the account)
+    await container.rate_limiter.enforce(
+        container.limits.login_account, rate_limit_key_for_email(email), fail_open=False
+    )
     if not await container.hasher.verify(stored, SecretStr(body.password)):
         raise InvalidCredentials()
     async with session.begin():

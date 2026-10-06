@@ -103,6 +103,8 @@ def _exam_out(row: LevelExam) -> ExamOut:
         pass_overall=overall,
         pass_paper=paper,
         created_at=row.created_at,
+        ends_at=row.ends_at,
+        reused=row.reused,
     )
 
 
@@ -182,7 +184,17 @@ async def submit_writing(
     service = _service(session, container)
     try:
         async with session.begin():
-            sub = await service.new_writing(principal.learner_id, body.task_id, body.text)
+            # the same text for the same task is the same submission: never rated again
+            same = await service.same_submission(principal.learner_id, body.task_id, body.text)
+            if same is not None:
+                existing = await service.existing_score(principal.learner_id, same.id)
+                if existing is not None:
+                    return SubmissionOut(
+                        submission_id=same.id, status="scored", score=_score_out(existing)
+                    )
+                sub = same
+            else:
+                sub = await service.new_writing(principal.learner_id, body.task_id, body.text)
             sub_id, level, prompt, text = sub.id, sub.level, sub.prompt, sub.text
     except CertificationError as exc:
         raise _raise(exc) from None
@@ -192,8 +204,8 @@ async def submit_writing(
         return SubmissionOut(submission_id=sub_id, status="awaiting_rater", score=None)
     # the model is asked outside any transaction: no connection waits on the network
     try:
-        raw = await rater.rate(level=level, prompt=prompt, text=text)
-        rated = rate("writing", grounded(raw, text))
+        rating = await rater.rate(level=level, prompt=prompt, text=text)
+        rated = rate("writing", grounded(rating.criteria, text))
     except (RaterUnavailable, RubricInvalid) as exc:
         _log.info("writing_not_rated", reason=type(exc).__name__)
         return SubmissionOut(submission_id=sub_id, status="awaiting_rater", score=None)
@@ -203,7 +215,8 @@ async def submit_writing(
             sub_id,
             rated,
             rater_kind="llm",
-            rater_version=rater.version,
+            # the model that actually rated (a fallback is not the calibrated model)
+            rater_version=rating.version,
             prompt_version=PROMPT_VERSION,
         )
         return SubmissionOut(submission_id=sub_id, status="scored", score=_score_out(score))

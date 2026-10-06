@@ -28,6 +28,12 @@ class ExamOut(Out):
     pass_overall: float
     pass_paper: float
     created_at: datetime
+    ends_at: datetime = Field(
+        description="Answers the server receives after this do not count (docs/12 §4.1 timings)."
+    )
+    reused: bool = Field(
+        description="True when the form had to reuse items from an earlier exam (no exam bank)."
+    )
 
 
 class ExamResultOut(Out):

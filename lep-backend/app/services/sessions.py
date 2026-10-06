@@ -129,6 +129,8 @@ class SessionService:
                 select(MemoryState).where(MemoryState.learner_id == learner_id)
             )
         }
+        # a target is new only when none of its memory items has state (DECISIONS §8.3)
+        seen = frozenset(m.rpartition(".")[0] for m in states)
         seconds = await self._seconds_by_family(learner_id)
         progress = ProgressService(self._session, self._catalog)
         tiers, done = await progress.path(learner_id)
@@ -155,7 +157,12 @@ class SessionService:
             want = tier or 1
             if not node.tiers.get(want):
                 raise SessionError("not_found", "this node has no such tier")
-            gate = cp.tier_gate(want, await self._completed_tiers(learner_id, node_id), now)
+            gate = cp.tier_gate(
+                want,
+                await self._completed_tiers(learner_id, node_id),
+                now,
+                populated=[t for t, ids in node.tiers.items() if ids],
+            )
             if not gate.allowed:
                 raise SessionError(
                     "tier_locked",
@@ -166,40 +173,53 @@ class SessionService:
                     ),
                     available_at=gate.available_at,
                 )
-            lesson = [self._card(self._catalog.items[i], seconds, states) for i in node.tiers[want]]
-            fresh = set().union(*(c.new_targets for c in lesson)) if lesson else set()
-            # an opened lesson is never cut short: it is refused whole, with the reason, when
-            # it would take the day past its new-word cap — except the day's first lesson
+            lesson = [self._card(self._catalog.items[i], seconds, seen) for i in node.tiers[want]]
+            fresh: set[str] = set()
+            for c in lesson:
+                fresh |= c.new_targets
+            # an opened lesson is never cut short: it is refused whole, with the reason, when it
+            # would bring new material during a backlog, or take the day past its new-target
+            # cap — except the day's first lesson, so a tier larger than the cap can be played
+            if fresh and not bl.new_allowed:
+                raise SessionError(
+                    "new_cap", "catch up on your reviews first; new lessons wait until then"
+                )
             if fresh and new_today > 0 and len(fresh) > allowance:
                 raise SessionError(
                     "new_cap",
                     "that is enough new material for today; review now, more tomorrow",
                 )
-            allowance = 10**9
+            # reviews mixed into the lesson may still introduce what the allowance has left
+            allowance = max(0, allowance - len(fresh))
             # the node-tier's own items come first and whole (its 60 / 30 / 0 % new mix is built
             # into the content, docs/08 §4.3); due reviews fill the time that is left
             node_share = 1.0
             tier = want
         else:
-            lesson = self._next_new(current, states, seconds)
+            lesson = self._next_new(current, seen, seconds)
 
-        due.sort(key=lambda m: m.memory_item_id)
-        reviews = [
-            r for r in (self._review(m, now, seconds, level, states) for m in due) if r is not None
-        ][: bl.queue_cap]
+        leech_failures = await self._recent_failure_types(
+            learner_id, [m.memory_item_id for m in due if m.state == "leech"]
+        )
+        # rank everything due by priority first, then cap the day's queue (docs/08 §2.10)
+        built = (self._review(m, now, seconds, level, seen, leech_failures) for m in due)
+        reviews = sorted(
+            (r for r in built if r is not None),
+            key=lambda r: (-r.priority, r.memory_item_id),
+        )[: bl.queue_cap]
         warm = [
             r
             for r in (
-                self._review(m, now, seconds, level, states)
+                self._review(m, now, seconds, level, seen, {})
                 for m in states.values()
                 if m.due > now and m.state in ("young", "retained", "durable")
             )
             if r is not None and r.retrievability >= cp.WARMUP_MIN_P
         ][:20]
         close_cards = {
-            r.memory_item_id: c
+            r.memory_item_id: alt
             for r in reviews
-            if (c := self._other_card(r, seconds, states)) is not None
+            if (alt := self._other_card(r, seconds, seen)) is not None
         }
 
         plan = cp.compose(
@@ -231,15 +251,13 @@ class SessionService:
 
     # ------------------------------------------------------------------- inputs
 
-    def _card(
-        self, item: ItemRecord, seconds: dict[str, float], states: dict[str, MemoryState]
-    ) -> cp.Card:
+    def _card(self, item: ItemRecord, seconds: dict[str, float], seen: frozenset[str]) -> cp.Card:
         family = FAMILY.get(item.type_id, "choice")
         target = cp.target_of(item.memory_items, item.id)
         fresh = frozenset(
-            m.rpartition(".")[0]
-            for m in item.memory_items
-            if m not in states and not m.startswith("txt.")
+            t
+            for t in (m.rpartition(".")[0] for m in item.memory_items if not m.startswith("txt."))
+            if t not in seen
         )
         return cp.Card(
             item_id=item.id,
@@ -264,15 +282,16 @@ class SessionService:
         now: datetime,
         seconds: dict[str, float],
         level: str,
-        states: dict[str, MemoryState],
+        seen: frozenset[str],
+        failed_types: dict[str, list[str]],
     ) -> cp.Review | None:
-        item_id = self._pick_item(m)
+        item_id = self._pick_item(m, seen, failed_types.get(m.memory_item_id, []))
         if item_id is None:
             return None
         item = self._catalog.items[item_id]
         r = retrievability(max((now - m.last_review).total_seconds() / 86_400, 0.0), m.stability)
         return cp.Review(
-            card=self._card(item, seconds, states),
+            card=self._card(item, seconds, seen),
             memory_item_id=m.memory_item_id,
             retrievability=r,
             stability=m.stability,
@@ -281,38 +300,51 @@ class SessionService:
             in_current_level=item.cefr[:2] == level[:2],
         )
 
-    def _pick_item(self, m: MemoryState, avoid: str | None = None) -> str | None:
-        """An exercise suited to the state, never the type used last time (docs/08 §5.1)."""
+    def _introduces(self, item_id: str, seen: frozenset[str]) -> bool:
+        return any(
+            m.rpartition(".")[0] not in seen
+            for m in self._catalog.items[item_id].memory_items
+            if not m.startswith("txt.")
+        )
+
+    def _pick_item(
+        self, m: MemoryState, seen: frozenset[str], failed_types: Sequence[str] = ()
+    ) -> str | None:
+        """An exercise suited to the state, never the type used last time (docs/08 §5.1); for a
+        leech, none of the types of its last three failures (forced variation). An exercise that
+        would introduce an unseen target is used only when nothing else reviews the item."""
         candidates = [
-            i
-            for i in self._ix.items_for.get(m.memory_item_id, ())
-            if i in self._catalog.items and i != avoid
+            i for i in self._ix.items_for.get(m.memory_item_id, ()) if i in self._catalog.items
         ]
         if not candidates:
             return None
+        clean = [i for i in candidates if not self._introduces(i, seen)]
+        pool = clean or candidates
+        avoid = {m.last_type_id, *failed_types[:3]} if m.state == "leech" else {m.last_type_id}
         try:
             state = MasteryState(m.state)
         except ValueError:
             state = MasteryState.LEARNING
         for family in FAMILIES_FOR.get(state, ("choice",)):
-            for item_id in candidates:
+            for item_id in pool:
                 t = self._catalog.items[item_id].type_id
-                if FAMILY.get(t) == family and t != m.last_type_id:
+                if FAMILY.get(t) == family and t not in avoid:
                     return item_id
-        different = [i for i in candidates if self._catalog.items[i].type_id != m.last_type_id]
-        return (different or candidates)[0]
+        different = [i for i in pool if self._catalog.items[i].type_id not in avoid]
+        return (different or pool)[0]
 
     def _other_card(
-        self, r: cp.Review, seconds: dict[str, float], states: dict[str, MemoryState]
+        self, r: cp.Review, seconds: dict[str, float], seen: frozenset[str]
     ) -> cp.Card | None:
         for item_id in self._ix.items_for.get(r.memory_item_id, ()):
             item = self._catalog.items.get(item_id)
-            if item is not None and item.type_id != r.card.type_id:
-                return self._card(item, seconds, states)
+            if item is None or item.type_id == r.card.type_id or self._introduces(item_id, seen):
+                continue
+            return self._card(item, seconds, seen)
         return None
 
     def _next_new(
-        self, current: str, states: dict[str, MemoryState], seconds: dict[str, float]
+        self, current: str, seen: frozenset[str], seconds: dict[str, float]
     ) -> list[cp.Card]:
         """New material for free practice: the current unit's tier-1 items not yet met, in order."""
         out: list[cp.Card] = []
@@ -321,7 +353,7 @@ class SessionService:
             if node.kind not in ITEM_BEARING_KINDS:
                 continue
             for item_id in node.tiers.get(1, ()):
-                card = self._card(self._catalog.items[item_id], seconds, states)
+                card = self._card(self._catalog.items[item_id], seconds, seen)
                 if card.new_targets:
                     out.append(card)
         return out
@@ -345,19 +377,44 @@ class SessionService:
         return out
 
     async def _new_targets_today(self, learner_id: UUID, profile: Profile, now: datetime) -> int:
-        """Syllabus targets whose first review was today, in the learner's own time zone."""
+        """Syllabus targets whose first review of *any* aspect was today, in the learner's own
+        time zone. Story comprehension (txt.*) is not a target the cap counts."""
         day = local_day(now, profile.tz)
         start = datetime.combine(day, time.min, tzinfo=ZoneInfo(profile.tz))
-        first = (
+        rows = await self._session.execute(
             select(ReviewLog.memory_item_id, func.min(ReviewLog.ts).label("first"))
             .where(ReviewLog.learner_id == learner_id)
             .group_by(ReviewLog.memory_item_id)
-            .subquery()
         )
+        first: dict[str, datetime] = {}
+        for r in rows:
+            if r.memory_item_id.startswith("txt."):
+                continue
+            target = r.memory_item_id.rpartition(".")[0]
+            if target not in first or r.first < first[target]:
+                first[target] = r.first
+        return sum(1 for at in first.values() if at >= start)
+
+    async def _recent_failure_types(
+        self, learner_id: UUID, memory_item_ids: Sequence[str]
+    ) -> dict[str, list[str]]:
+        """The exercise types of each leech's most recent failures, newest first."""
+        if not memory_item_ids:
+            return {}
         rows = await self._session.execute(
-            select(first.c.memory_item_id).where(first.c.first >= start)
+            select(ReviewLog.memory_item_id, ReviewLog.type_id)
+            .where(
+                ReviewLog.learner_id == learner_id,
+                ReviewLog.memory_item_id.in_(sorted(set(memory_item_ids))),
+                ReviewLog.grade == 1,
+            )
+            .order_by(ReviewLog.ts.desc())
         )
-        return len({r.memory_item_id.rpartition(".")[0] for r in rows})
+        out: dict[str, list[str]] = defaultdict(list)
+        for r in rows:
+            if len(out[r.memory_item_id]) < 3:
+                out[r.memory_item_id].append(r.type_id)
+        return dict(out)
 
     async def _completed_tiers(self, learner_id: UUID, node_id: str) -> dict[int, datetime]:
         rows = await self._session.execute(

@@ -60,6 +60,8 @@ class Recording(Base):
     audio: Mapped[bytes] = mapped_column(LargeBinary)
     mime: Mapped[str] = mapped_column(Text)
     seconds: Mapped[int] = mapped_column(Integer)
+    #: the learner-local day the seconds were charged to (refunded there if scoring fails)
+    charged_day: Mapped[date]
     status: Mapped[str] = mapped_column(Text)
     result: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
     created_at: Mapped[datetime]

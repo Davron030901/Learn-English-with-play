@@ -13,10 +13,11 @@ from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
-from typing import Any, Literal, Protocol
+from typing import Any, Final, Literal, Protocol
 
 import anthropic
-from pydantic import BaseModel, Field
+from anthropic.types.beta import BetaJSONOutputFormatParam, BetaOutputConfigParam
+from pydantic import BaseModel, Field, ValidationError
 
 from app.domain.conversation import Persona, Subgoal
 from app.observability.logs import get_logger
@@ -48,6 +49,14 @@ class PartnerTurn(BaseModel):
 class Exchange:
     role: Literal["learner", "character"]
     text: str
+
+
+#: the structured-output format, sent with every request. The reply is parsed here, not by the
+#: SDK, so a refusal or a cut-off reply is a refusal (with its tokens counted), never a crash.
+OUTPUT_FORMAT: Final[BetaJSONOutputFormatParam] = {
+    "type": "json_schema",
+    "schema": anthropic.transform_schema(PartnerTurn.model_json_schema()),
+}
 
 
 @dataclass(frozen=True, slots=True)
@@ -173,12 +182,14 @@ class ClaudePartner:
         messages: list[dict[str, Any]] = [{"role": "user", "content": OPENING_CUE}]
         for ex in history:
             role = "user" if ex.role == "learner" else "assistant"
+            text = ex.text.strip() or "…"  # the API rejects an empty message
             if messages and messages[-1]["role"] == role:
-                messages[-1]["content"] += "\n" + ex.text
+                messages[-1]["content"] += "\n" + text
             else:
-                messages.append({"role": role, "content": ex.text})
+                messages.append({"role": role, "content": text})
         if note:
-            # an operator note about the reply just rejected (level too hard): last, after a user turn
+            # an operator note quoting the reply just rejected (level too hard): last, after the
+            # user turn it answers
             messages.append({"role": "system", "content": note})
         return messages
 
@@ -190,14 +201,14 @@ class ClaudePartner:
             if self._fallbacks
             else {}
         )
+        config: BetaOutputConfigParam = {"effort": self._effort, "format": OUTPUT_FORMAT}
         try:
-            response = await self._client.beta.messages.parse(
+            response = await self._client.beta.messages.create(
                 model=self._model,
                 max_tokens=self._max_tokens,
                 system=[{"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}],
                 messages=self._messages(history, note),  # type: ignore[arg-type]
-                output_config={"effort": self._effort},
-                output_format=PartnerTurn,
+                output_config=config,
                 **extra,
             )
         except anthropic.BadRequestError:
@@ -218,8 +229,16 @@ class ClaudePartner:
             + int(getattr(usage, "cache_creation_input_tokens", 0) or 0)
         )
         output_tokens = int(usage.output_tokens or 0)
-        parsed = response.parsed_output
-        if response.stop_reason == "refusal" or parsed is None:
+        text = "".join(b.text for b in response.content if b.type == "text")
+        parsed: PartnerTurn | None = None
+        if response.stop_reason not in ("refusal", "max_tokens"):
+            try:
+                parsed = PartnerTurn.model_validate_json(text)
+            except ValidationError:
+                _log.warning("ai_unparseable", stop_reason=response.stop_reason, length=len(text))
+        if parsed is None:
+            # a refusal (possibly after some output), a reply cut off at max_tokens, or JSON that
+            # does not fit the schema: the service shows its fixed safe line instead
             _log.info("ai_refusal", stop_reason=response.stop_reason)
             return ModelTurn(
                 PartnerTurn(reply="", recasts=[], subgoals_met=[], off_limits=True),

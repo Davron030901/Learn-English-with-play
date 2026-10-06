@@ -48,12 +48,19 @@ class AiEnded(Conflict):
     title = "This conversation has ended"
 
 
+class AiBusy(Conflict):
+    type = "ai_busy"
+    title = "The character is still answering"
+    default_headers = {"Retry-After": "5"}
+
+
 def _raise(exc: AiError) -> AppError:
     detail = str(exc)
     return {
         "unavailable": AiUnavailable(detail),
         "allowance": AiAllowance(detail),
         "ended": AiEnded(detail),
+        "busy": AiBusy(detail),
         "not_found": NotFound(detail),
         "invalid": ValidationFailed([FieldError("text", detail)], detail),
         "gone": InvalidToken(detail),
@@ -91,16 +98,17 @@ async def status(principal: CurrentPrincipal, container: ContainerDep) -> AiStat
 
 @router.get(
     "/characters",
-    summary="The characters met by a unit, and scenarios from it and the two before",
+    summary="The characters met by a unit, and scenarios from it and the two before "
+    "(capped at the furthest unit the learner has reached)",
     responses=problem_responses(401, 404, 422, 429),
 )
 async def characters(
-    principal: CurrentPrincipal,  # noqa: ARG001 — signed-in learners only
+    principal: CurrentPrincipal,
     container: ContainerDep,
     unit_id: str = Query(pattern=r"^S\d{2}U\d{2}$"),
 ) -> CastOut:
     try:
-        cast, scenarios = _service(container).characters(unit_id)
+        cast, scenarios = await _service(container).characters(principal.learner_id, unit_id)
     except AiError as exc:
         raise _raise(exc) from None
     return CastOut(
@@ -124,7 +132,8 @@ async def characters(
 @router.post(
     "/conversations",
     status_code=201,
-    summary="Start a conversation with a character about a unit's scenario",
+    summary="Start a conversation with a character about a unit's scenario (idempotent by "
+    "client_uuid)",
     responses=problem_responses(401, 404, 409, 422, 429, 503),
 )
 async def start(
@@ -132,7 +141,7 @@ async def start(
 ) -> ConversationOut:
     try:
         started = await _service(container).start(
-            principal.learner_id, body.character_id, body.unit_id, body.mode
+            principal.learner_id, body.character_id, body.unit_id, body.mode, body.client_uuid
         )
     except AiError as exc:
         raise _raise(exc) from None
@@ -151,7 +160,8 @@ async def start(
 
 @router.post(
     "/conversations/{conversation_id}/turns",
-    summary="Say something; the character replies (idempotent by client_uuid)",
+    summary="Say something; the character replies (idempotent by client_uuid; 409 ai_busy "
+    "while the reply is being written)",
     responses=problem_responses(401, 404, 409, 422, 429, 503),
 )
 async def turn(
@@ -182,7 +192,7 @@ async def turn(
 @router.post(
     "/conversations/{conversation_id}/end",
     summary="End the chat: goal, two things to work on, words used, XP",
-    responses=problem_responses(401, 404, 429),
+    responses=problem_responses(401, 404, 409, 429),
 )
 async def end(
     conversation_id: UUID, principal: CurrentPrincipal, container: ContainerDep

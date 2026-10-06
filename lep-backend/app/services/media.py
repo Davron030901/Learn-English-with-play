@@ -28,7 +28,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 from app.content.catalog import ContentCatalog
 from app.domain import audio_qc
 from app.media.ports import ProviderUnavailable, TtsEngine
-from app.models.media import MediaAsset, MediaUsageDaily
+from app.models.media import MediaAsset
 from app.observability.logs import get_logger
 
 _log = get_logger("app.media")
@@ -45,10 +45,15 @@ class MediaError(Exception):
 
 def safe_path(root: Path, relative: str) -> Path:
     """A path inside ``root`` for a content-relative name; anything that escapes is refused."""
+    if chr(0) in relative:
+        raise MediaError("invalid", "not a media path")
     parts = PurePosixPath(relative).parts
     if not parts or any(p in ("..", "") or p.startswith("/") or ":" in p for p in parts):
         raise MediaError("invalid", "not a media path")
-    target = root.joinpath(*parts).resolve()
+    try:
+        target = root.joinpath(*parts).resolve()
+    except (OSError, ValueError):
+        raise MediaError("invalid", "not a media path") from None
     if root.resolve() not in target.parents:
         raise MediaError("invalid", "not a media path")
     return target
@@ -111,11 +116,16 @@ async def tts_drafts(
             continue
         target = safe_path(media_dir, path)
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes(audio.audio)
+        # written aside first, and moved into place only while the row (locked) still says
+        # missing: a human recording that arrived meanwhile is never overwritten
+        draft = target.with_name(target.name + ".draft")
+        draft.write_bytes(audio.audio)
         async with sessionmaker() as session, session.begin():
             row = await session.get(MediaAsset, path, with_for_update=True)
             if row is None or row.status != "missing":
-                continue  # a human recording arrived meanwhile: never overwrite it
+                draft.unlink(missing_ok=True)
+                continue
+            draft.replace(target)
             row.status = "tts_draft"
             row.made_by = tts.version
             row.sha256 = hashlib.sha256(audio.audio).hexdigest()
@@ -194,16 +204,12 @@ async def qc_master(
 async def _charge_chars(
     session: AsyncSession, learner_id: UUID, day: date, chars: int, ceiling: int
 ) -> None:
-    row = await session.get(MediaUsageDaily, (learner_id, day), with_for_update=True)
-    used = row.tts_chars if row else 0
-    if used + chars > ceiling:
+    from app.services.speech import _usage_row
+
+    row = await _usage_row(session, learner_id, day)
+    if row.tts_chars + chars > ceiling:
         raise MediaError("ceiling", "that is today's synthesised speech")
-    if row is None:
-        session.add(
-            MediaUsageDaily(learner_id=learner_id, day=day, tts_chars=chars, speech_seconds=0)
-        )
-    else:
-        row.tts_chars = used + chars
+    row.tts_chars += chars
     await session.flush()
 
 

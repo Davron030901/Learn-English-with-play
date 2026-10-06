@@ -23,8 +23,9 @@ import hashlib
 import math
 import re
 from collections import defaultdict
+from collections.abc import Sequence
 from dataclasses import asdict, dataclass
-from datetime import timedelta
+from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Any, Final
 from uuid import UUID
@@ -80,6 +81,8 @@ RETENTION_AUDIT_EVERY: Final = timedelta(days=28)
 RETENTION_GAP: Final = 0.10
 #: share of an audit's items that must be answered for it to count
 AUDIT_COVERAGE: Final = 0.8
+#: the check's answers count when the server receives them within this window
+RETENTION_AUDIT_WINDOW: Final = timedelta(hours=24)
 MIN_WRITING_WORDS: Final = 5
 #: families a cold check may use, recall first (never speech: it is self-assessed)
 AUDIT_FAMILIES: Final = ("text", "bank", "choice", "order", "pairs")
@@ -149,6 +152,37 @@ def grounded(scores: list[CriterionScore], text: str) -> list[CriterionScore]:
     ]
 
 
+def _uuid7_floor(at: datetime) -> UUID:
+    """The smallest UUIDv7 made at ``at``: attempt ids are made by the server on receipt."""
+    return UUID(int=int(at.timestamp() * 1000) << 80)
+
+
+async def first_answers(
+    session: AsyncSession,
+    learner_id: UUID,
+    session_id: UUID,
+    item_ids: Sequence[str],
+    received_from: datetime,
+    received_until: datetime,
+) -> dict[str, str]:
+    """item → verdict of the first answer the server *received* for it inside the window."""
+    rows = await session.execute(
+        select(ReviewAttempt.item_id, ReviewAttempt.verdict)
+        .where(
+            ReviewAttempt.learner_id == learner_id,
+            ReviewAttempt.session_id == session_id,
+            ReviewAttempt.item_id.in_(list(item_ids)),
+            ReviewAttempt.id >= _uuid7_floor(received_from),
+            ReviewAttempt.id < _uuid7_floor(received_until),
+        )
+        .order_by(ReviewAttempt.id)
+    )
+    first: dict[str, str] = {}
+    for r in rows:
+        first.setdefault(r.item_id, r.verdict)
+    return first
+
+
 class CertificationService:
     def __init__(self, session: AsyncSession, catalog: ContentCatalog, clock: Clock) -> None:
         self._session = session
@@ -161,19 +195,48 @@ class CertificationService:
         if level not in LEVELS:
             raise CertificationError("not_found", "there is no such level")
         now = self._clock.now()
-        recent = await self._session.execute(
-            select(LevelExam.papers).where(
-                LevelExam.learner_id == learner_id,
-                LevelExam.created_at >= now - ex.REUSE_AFTER,
+        # an exam already open (started, not completed, still within its time) is resumed:
+        # looking at an exam twice does not use up a second form
+        open_exam = (
+            await self._session.execute(
+                select(LevelExam)
+                .where(
+                    LevelExam.learner_id == learner_id,
+                    LevelExam.level == level,
+                    LevelExam.completed_at.is_(None),
+                    LevelExam.ends_at > now,
+                )
+                .order_by(LevelExam.created_at.desc())
+                .limit(1)
             )
-        )
-        seen = {i for (papers,) in recent for ids in papers.values() for i in ids}
+        ).scalar_one_or_none()
+        if open_exam is not None:
+            return open_exam
+        recent = (
+            await self._session.execute(
+                select(LevelExam.papers, LevelExam.created_at)
+                .where(
+                    LevelExam.learner_id == learner_id,
+                    LevelExam.created_at >= now - ex.REUSE_AFTER,
+                )
+                .order_by(LevelExam.created_at)
+            )
+        ).all()
         eid = uuid7()
-        form = ex.build_form(level, level_index(self._catalog, level).candidates, seen, str(eid))
+        candidates = level_index(self._catalog, level).candidates
+        reused = False
+        seen = {i for r in recent for ids in r.papers.values() for i in ids}
+        form = ex.build_form(level, candidates, seen, str(eid))
+        if ex.fair(level, form) and recent:
+            # the course has no exam bank: rather than lock the level for a year, a retake may
+            # reuse items from older exams, never from the last one, and is marked as reused
+            last = {i for ids in recent[-1].papers.values() for i in ids}
+            form = ex.build_form(level, candidates, last, str(eid))
+            reused = True
         thin = ex.fair(level, form)
         if thin:
             raise CertificationError(
-                "no_form", f"not enough unseen items for a fair exam ({', '.join(thin)})"
+                "no_form", f"not enough items for a fair exam ({', '.join(thin)})"
             )
         row = LevelExam(
             learner_id=learner_id,
@@ -181,6 +244,8 @@ class CertificationService:
             level=level,
             papers=form,
             created_at=now,
+            ends_at=now + ex.exam_duration(level),
+            reused=reused,
             completed_at=None,
             scores=None,
             passed=None,
@@ -196,18 +261,9 @@ class CertificationService:
         if row.completed_at is not None:
             return row
         ids = [i for papers in row.papers.values() for i in papers]
-        rows = await self._session.execute(
-            select(ReviewAttempt.item_id, ReviewAttempt.verdict)
-            .where(
-                ReviewAttempt.learner_id == learner_id,
-                ReviewAttempt.session_id == exam_id,
-                ReviewAttempt.item_id.in_(ids),
-            )
-            .order_by(ReviewAttempt.ts)
+        first = await first_answers(
+            self._session, learner_id, exam_id, ids, row.created_at, row.ends_at
         )
-        first: dict[str, str] = {}
-        for r in rows:
-            first.setdefault(r.item_id, r.verdict)
         scores = {
             paper: round(sum(first.get(i) == "correct" for i in items) / len(items), 4)
             for paper, items in row.papers.items()
@@ -243,6 +299,22 @@ class CertificationService:
         self._session.add(row)
         await self._session.flush()
         return row
+
+    async def same_submission(
+        self, learner_id: UUID, task_id: str, text: str
+    ) -> ProductionSubmission | None:
+        """docs/12 §6.1: the same submission receives the same score — a resubmission of the
+        same text to the same task is not rated again."""
+        rows = await self._session.execute(
+            select(ProductionSubmission)
+            .where(
+                ProductionSubmission.learner_id == learner_id,
+                ProductionSubmission.task_id == task_id,
+            )
+            .order_by(ProductionSubmission.created_at.desc())
+        )
+        key = _norm(text)
+        return next((s for (s,) in rows if _norm(s.text) == key), None)
 
     async def calibrations(self) -> dict[tuple[str, str, str], Calibration]:
         rows = await self._session.execute(select(RaterCalibration))
@@ -389,17 +461,7 @@ class CertificationService:
                 .limit(1)
             )
         ).scalar_one_or_none()
-        scores = await self._session.execute(
-            select(RubricScore.kind, RubricScore.overall, RubricScore.certifying).where(
-                RubricScore.learner_id == learner_id, RubricScore.level == level
-            )
-        )
-        automatic: dict[str, float] = {}
-        certified: dict[str, float] = {}
-        for r in scores:
-            automatic[r.kind] = max(automatic.get(r.kind, 0.0), r.overall)
-            if r.certifying:
-                certified[r.kind] = max(certified.get(r.kind, 0.0), r.overall)
+        automatic, certified = await self._production(learner_id, level)
         return LevelEvidence(
             level=level,
             syllabus_total=len(ix.target_nodes),
@@ -411,6 +473,71 @@ class CertificationService:
                 k: Production(automatic.get(k), certified.get(k)) for k in ("writing", "speaking")
             },
         )
+
+    async def _production(
+        self, learner_id: UUID, level: str
+    ) -> tuple[dict[str, float], dict[str, float]]:
+        """Each kind's band is its *weakest* task of the level, each task judged by its latest
+        submission (a new attempt replaces the old, it is not a re-roll that keeps the best).
+        Within a submission a human score — an audit or an appeal — overrides the machine. A
+        machine score counts for certification only when it is certifying and not borderline:
+        a borderline one waits for its human audit (docs/12 §6)."""
+        rows = (
+            await self._session.execute(
+                select(RubricScore, ProductionSubmission.task_id, ProductionSubmission.created_at)
+                .join(
+                    ProductionSubmission,
+                    (ProductionSubmission.learner_id == RubricScore.learner_id)
+                    & (ProductionSubmission.id == RubricScore.submission_id),
+                )
+                .where(RubricScore.learner_id == learner_id, RubricScore.level == level)
+                .order_by(ProductionSubmission.created_at, RubricScore.created_at)
+            )
+        ).all()
+        per_sub: dict[UUID, dict[str, Any]] = {}
+        for score, task_id, submitted in rows:
+            entry = per_sub.setdefault(
+                score.submission_id,
+                {
+                    "task": task_id,
+                    "at": submitted,
+                    "kind": score.kind,
+                    "machine": None,
+                    "human": None,
+                },
+            )
+            entry["human" if score.rater_kind == "human" else "machine"] = score
+        latest: dict[str, dict[str, Any]] = {}
+        for entry in per_sub.values():
+            if entry["task"] not in latest or entry["at"] >= latest[entry["task"]]["at"]:
+                latest[entry["task"]] = entry
+        automatic: dict[str, float] = {}
+        certified: dict[str, float] = {}
+        tasks = {
+            "writing": [t.id for t in ex.WRITING_TASKS if t.level == level],
+            "speaking": [t.id for t in ex.SPEAKING_TASKS if t.level == level],
+        }
+        for kind, task_ids in tasks.items():
+            auto_bands: list[float] = []
+            cert_bands: list[float] = []
+            for task_id in task_ids:
+                chosen = latest.get(task_id)
+                machine: RubricScore | None = chosen["machine"] if chosen else None
+                human: RubricScore | None = chosen["human"] if chosen else None
+                if human is not None:
+                    auto_bands.append(human.overall)
+                elif machine is not None:
+                    auto_bands.append(machine.overall)
+                if human is not None:
+                    cert_bands.append(human.overall)
+                elif machine is not None and machine.certifying and not machine.borderline:
+                    cert_bands.append(machine.overall)
+            # every task of the level must be done; the weakest one counts
+            if task_ids and len(auto_bands) == len(task_ids):
+                automatic[kind] = min(auto_bands)
+            if task_ids and len(cert_bands) == len(task_ids):
+                certified[kind] = min(cert_bands)
+        return automatic, certified
 
     async def evaluate(self, learner_id: UUID, level: str, *, record: bool) -> LevelAwardResult:
         evidence = await self.evidence(learner_id, level)
@@ -435,7 +562,10 @@ class CertificationService:
         now = self._clock.now()
         last = await self._session.execute(
             select(RetentionAudit.created_at)
-            .where(RetentionAudit.learner_id == learner_id)
+            .where(
+                RetentionAudit.learner_id == learner_id,
+                RetentionAudit.completed_at.is_not(None),
+            )
             .order_by(RetentionAudit.created_at.desc())
             .limit(1)
         )
@@ -471,6 +601,9 @@ class CertificationService:
             )
             if len(items) == RETENTION_AUDIT_ITEMS:
                 break
+        if len(items) < RETENTION_AUDIT_MIN_ITEMS:
+            # most known items may be ones only speech can check (production aspects)
+            raise CertificationError("too_few", "there is not enough known material to check yet")
         row = RetentionAudit(
             learner_id=learner_id,
             id=aid,
@@ -509,20 +642,21 @@ class CertificationService:
             raise CertificationError("not_found", "there is no such retention check")
         if row.completed_at is not None:
             return row, None
-        answers = await self._session.execute(
-            select(ReviewAttempt.item_id, ReviewAttempt.verdict)
-            .where(
-                ReviewAttempt.learner_id == learner_id,
-                ReviewAttempt.session_id == audit_id,
-                ReviewAttempt.item_id.in_(row.item_ids),
-            )
-            .order_by(ReviewAttempt.ts)
+        # the same lock review ingest holds: re-deriving every due date must not race a sync
+        await ReviewRepository(self._session).lock_learner(learner_id)
+        # answered cold and soon, or not at all: the prediction is for the day it was made
+        first = await first_answers(
+            self._session,
+            learner_id,
+            audit_id,
+            row.item_ids,
+            row.created_at,
+            row.created_at + RETENTION_AUDIT_WINDOW,
         )
-        first: dict[str, str] = {}
-        for a in answers:
-            first.setdefault(a.item_id, a.verdict)
         graded = [v for v in first.values() if v != "ungraded"]
         if len(first) < math.ceil(AUDIT_COVERAGE * len(row.item_ids)) or not graded:
+            if self._clock.now() > row.created_at + RETENTION_AUDIT_WINDOW:
+                raise CertificationError("expired", "this check has expired; start a new one")
             raise CertificationError("incomplete", "answer the check's items first")
         row.actual = round(sum(v == "correct" for v in graded) / len(graded), 4)
         row.completed_at = self._clock.now()
@@ -574,7 +708,7 @@ def _evidence_json(evidence: LevelEvidence, result: LevelAwardResult) -> dict[st
 
 #: docs/12 §6.1: a group difference above this many bands triggers a model review
 BIAS_ALERT_BANDS: Final = 0.3
-#: groups smaller than this are too small to compare
+#: groups with fewer learners than this are too small to compare
 BIAS_MIN_GROUP: Final = 20
 
 
@@ -594,15 +728,28 @@ async def bias_audit(session: AsyncSession, now_year: int) -> list[dict[str, Any
 
     rows = await session.execute(
         select(
-            RubricScore.level, RubricScore.kind, RubricScore.overall, Learner.l1, Learner.birth_year
+            RubricScore.learner_id,
+            RubricScore.level,
+            RubricScore.kind,
+            RubricScore.overall,
+            Learner.l1,
+            Learner.birth_year,
         )
         .join(Learner, Learner.id == RubricScore.learner_id)
         .where(RubricScore.rater_kind != "human")
     )
-    groups: dict[tuple[str, str, str, str], list[float]] = defaultdict(list)
+    # one mean per learner first, so a learner who resubmits does not weigh more than others
+    per_learner: dict[tuple[str, str, Any], list[float]] = defaultdict(list)
+    who: dict[Any, tuple[str, int]] = {}
     for r in rows:
-        groups[(r.level, r.kind, "l1", r.l1)].append(r.overall)
-        groups[(r.level, r.kind, "age", _age_band(r.birth_year, now_year))].append(r.overall)
+        per_learner[(r.level, r.kind, r.learner_id)].append(r.overall)
+        who[r.learner_id] = (r.l1, r.birth_year)
+    groups: dict[tuple[str, str, str, str], list[float]] = defaultdict(list)
+    for (level, kind, learner), values in per_learner.items():
+        mean = sum(values) / len(values)
+        l1, birth_year = who[learner]
+        groups[(level, kind, "l1", l1)].append(mean)
+        groups[(level, kind, "age", _age_band(birth_year, now_year))].append(mean)
     alerts: list[dict[str, Any]] = []
     by_dimension: dict[tuple[str, str, str], dict[str, float]] = defaultdict(dict)
     for (level, kind, dim, group), values in groups.items():
@@ -615,7 +762,7 @@ async def bias_audit(session: AsyncSession, now_year: int) -> list[dict[str, Any
         if gap > BIAS_ALERT_BANDS:
             alerts.append(
                 {
-                    "level": level,
+                    "cefr": level,
                     "kind": kind,
                     "dimension": dim,
                     "gap": round(gap, 3),

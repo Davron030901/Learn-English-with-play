@@ -4,11 +4,19 @@ A conversation is a scenario from a unit the learner has reached, with a charact
 met. Each learner turn is stored before the model is asked, and the model's reply after — the
 call happens between two short transactions, so no database connection waits on the network.
 A turn is idempotent by its ``client_uuid``: a retry after a failure resumes the same turn,
-and a retry after success returns the stored reply.
+and a retry after success returns the stored reply. While a reply is being written the learner
+turn holds a short lease, so a duplicate request cannot ask the model a second time (409
+``ai_busy``). A message that was never answered is replaced by the next one, so the transcript
+always alternates and every reply answers the latest message.
 
 The character's English is held to the learner's level (``app.domain.conversation``): a reply
 that is too long or uses too many words beyond the course so far is regenerated once with a
-note to simplify. Contact details are redacted before anything is stored or sent.
+note to simplify. Contact details are redacted before anything is stored or sent — the
+learner's words, the character's reply and the recasts alike. An off-limits request or a
+refusal is answered with a fixed safe line.
+
+Everything the model was asked costs tokens, and every call is counted against the allowance,
+whatever happens to its reply.
 
 The allowance (conversations and tokens per learner-local day) is published and uniform; it
 cannot be raised with gems or money (docs/16 E21, "considered and rejected").
@@ -22,7 +30,7 @@ from datetime import date, datetime, timedelta
 from typing import Any
 from uuid import UUID
 
-from sqlalchemy import delete, func, select
+from sqlalchemy import delete, func, select, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
@@ -36,12 +44,14 @@ from app.ai.partner import (
 )
 from app.clock import Clock
 from app.config import Settings
-from app.content.catalog import ContentCatalog
+from app.content.catalog import CEFR_LEVELS, ContentCatalog
 from app.domain import conversation as cv
 from app.domain.age_policy import is_minor
 from app.domain.streaks import local_day
 from app.ids import uuid7
 from app.models.ai import AiConversation, AiTurn, AiUsageDaily
+from app.models.assessment import Placement
+from app.models.gamification import NodeProgress, UnitProgress
 from app.observability.logs import get_logger
 from app.repositories.learners import LearnerRepository, Profile
 from app.repositories.reviews import ReviewRepository
@@ -155,6 +165,8 @@ class _Loaded:
     history: list[Exchange]
     learner_seq: int
     reply: AiTurn | None
+    #: the lease this request took (its exact value): only this request may give it back
+    lease: datetime | None = None
 
 
 _CAST_INDEX: dict[str, tuple[list[str], dict[str, str]]] = {}
@@ -204,9 +216,16 @@ class AiService:
             retention_days=self._settings.ai_retention_days,
         )
 
-    def characters(self, unit_id: str) -> tuple[list[CharacterView], list[ScenarioView]]:
+    async def characters(
+        self, learner_id: UUID, unit_id: str
+    ) -> tuple[list[CharacterView], list[ScenarioView]]:
+        """The cast and scenarios by ``unit_id`` — or by the furthest unit the learner has
+        reached, when ``unit_id`` is beyond it (no spoilers, however the request is made)."""
         if unit_id not in self._catalog.units:
             raise AiError("not_found", "there is no such unit")
+        async with self._sessions() as session, session.begin():
+            reach = await self._reach(session, learner_id)
+        unit_id = self._order[min(self._order.index(unit_id), reach)]
         met = cv.available_cast(unit_id, self._order, self._firsts)
         cast = [
             CharacterView(p.id, p.name, dict(p.role), self._firsts[p.id])
@@ -267,7 +286,14 @@ class AiService:
 
     # ------------------------------------------------------------------- start
 
-    async def start(self, learner_id: UUID, character_id: str, unit_id: str, mode: str) -> Started:
+    async def start(
+        self,
+        learner_id: UUID,
+        character_id: str,
+        unit_id: str,
+        mode: str,
+        client_uuid: UUID | None = None,
+    ) -> Started:
         model = self._require_model()
         if mode not in cv.MODES:
             raise AiError("invalid", "mode must be fluency or accuracy")
@@ -283,8 +309,14 @@ class AiService:
         # 1. reserve: the allowance is checked and counted under the learner's lock
         async with self._sessions() as session, session.begin():
             profile = await self._profile(session, learner_id)
+            if self._order.index(unit_id) > await self._reach(session, learner_id):
+                raise AiError("not_found", "the learner has not reached this unit yet")
             await ReviewRepository(session).lock_learner(learner_id)
             today = self._today(profile)
+            if client_uuid is not None:
+                prior = await self._started_before(session, learner_id, client_uuid, today)
+                if prior is not None:
+                    return prior
             await self._check_allowance(session, learner_id, today, starting=True)
             session.add(
                 AiConversation(
@@ -304,6 +336,7 @@ class AiService:
                     ended_at=None,
                     expires_at=expires,
                     summary=None,
+                    client_uuid=client_uuid,
                 )
             )
             await self._add_usage(session, learner_id, today, conversations=1)
@@ -311,33 +344,30 @@ class AiService:
         scenario = self._scenario(profile, character_id, unit_id, mode, subgoals)
         try:
             opened = await self._ask(model, scenario, [])
-        except ModelUnavailable:
-            # nothing happened: give the conversation back
+        except Exception as exc:
+            # no opening line, whatever went wrong: give the conversation back — once (a retry
+            # may already have given this start back, if it outlived its lease)
             async with self._sessions() as session, session.begin():
-                await session.execute(
-                    delete(AiConversation).where(
-                        AiConversation.learner_id == learner_id, AiConversation.id == cid
-                    )
+                await ReviewRepository(session).lock_learner(learner_id)
+                removed = await session.execute(
+                    delete(AiConversation)
+                    .where(AiConversation.learner_id == learner_id, AiConversation.id == cid)
+                    .returning(AiConversation.id)
                 )
-                await self._add_usage(session, learner_id, today, conversations=-1)
-            raise AiError(
-                "unavailable", "the conversation partner is not available right now"
-            ) from None
-        opening = opened.turn.reply if not opened.refused else self._safe_reply(subgoals)
+                if removed.first() is not None:
+                    await self._add_usage(session, learner_id, today, conversations=-1)
+            if isinstance(exc, ModelUnavailable):
+                raise AiError(
+                    "unavailable", "the conversation partner is not available right now"
+                ) from None
+            raise
+        # cleaned like every reply; never empty (it is replayed to the model on every turn)
+        cleaned = cv.clean_reply(opened.turn.reply)
+        refused = opened.refused or opened.turn.off_limits
+        opening = cleaned if cleaned and not refused else self._safe_reply(subgoals)
         async with self._sessions() as session, session.begin():
-            session.add(
-                AiTurn(
-                    learner_id=learner_id,
-                    conversation_id=cid,
-                    seq=0,
-                    role="character",
-                    text=opening,
-                    recasts=[],
-                    client_uuid=None,
-                    created_at=self._clock.now(),
-                    expires_at=expires,
-                )
-            )
+            # the learner first, then the usage row: the order every writer of it takes
+            await ReviewRepository(session).lock_learner(learner_id)
             await self._add_usage(
                 session,
                 learner_id,
@@ -345,6 +375,27 @@ class AiService:
                 input_tokens=opened.input_tokens,
                 output_tokens=opened.output_tokens,
             )
+            still_there = await session.get(AiConversation, (learner_id, cid), with_for_update=True)
+            if still_there is not None:
+                session.add(
+                    AiTurn(
+                        learner_id=learner_id,
+                        conversation_id=cid,
+                        seq=0,
+                        role="character",
+                        text=opening,
+                        recasts=[],
+                        client_uuid=None,
+                        off_limits=refused,
+                        answering_until=None,
+                        created_at=self._clock.now(),
+                        expires_at=expires,
+                    )
+                )
+        if still_there is None:
+            # took longer than a reply can, and a retry gave the start back meanwhile (or the
+            # learner deleted it): the tokens are counted, the retry's chat is the one that stands
+            raise AiError("not_found", "this chat was started again; open the newer one")
         return Started(
             cid,
             character_id,
@@ -371,7 +422,7 @@ class AiService:
         said = cv.redact(text).strip()
         if not said:
             raise AiError("invalid", "say something first")
-        # 1. store the learner's turn (or find it again on a retry)
+        # 1. store the learner's turn (or find it again on a retry) and take the reply's lease
         async with self._sessions() as session, session.begin():
             profile = await self._profile(session, learner_id)
             loaded = await self._load_for_turn(
@@ -379,69 +430,91 @@ class AiService:
             )
         row = loaded.row
         if loaded.reply is not None:
-            return self._result(row, loaded.reply, refused=False)
+            return self._result(row, loaded.reply)
         subgoals = [cv.Subgoal(g["id"], g["text"]) for g in row.subgoals]
         scenario = self._scenario(profile, row.character_id, row.unit_id, row.mode, subgoals)
         # 2. ask the model, outside any transaction
         try:
             answered = await self._ask(model, scenario, loaded.history)
-        except ModelUnavailable:
-            raise AiError(
-                "unavailable", "the conversation partner is not available right now; try again"
-            ) from None
-        reply_text = (
-            cv.clean_reply(answered.turn.reply)
-            if not answered.refused and cv.clean_reply(answered.turn.reply)
-            else self._safe_reply(subgoals)
-        )
+        except Exception as exc:
+            # give the lease back so the retry can ask at once
+            await self._release(learner_id, conversation_id, loaded, client_uuid)
+            if isinstance(exc, ModelUnavailable):
+                raise AiError(
+                    "unavailable", "the conversation partner is not available right now; try again"
+                ) from None
+            raise
+        # an off-limits request or a refusal gets the fixed safe line, and nothing else from
+        # that reply counts: no recasts, no goals, no production XP
+        off_limits = answered.refused or answered.turn.off_limits
+        cleaned = cv.clean_reply(answered.turn.reply)
+        reply_text = cleaned if cleaned and not off_limits else self._safe_reply(subgoals)
         recasts = [
-            {"original": r.original.strip(), "corrected": r.corrected.strip()}
-            for r in answered.turn.recasts[:2]
+            {"original": cv.redact(r.original).strip(), "corrected": cv.redact(r.corrected).strip()}
+            for r in ([] if off_limits else answered.turn.recasts[:2])
             if r.corrected.strip() and r.corrected.strip() != r.original.strip()
         ]
         valid = {g.id for g in subgoals}
-        newly_met = [g for g in answered.turn.subgoals_met if g in valid]
+        newly_met = [] if off_limits else [g for g in answered.turn.subgoals_met if g in valid]
+        xp = 0 if off_limits else cv.turn_xp(said)
         # 3. store the reply and credit the turn, once
+        try:
+            outcome = await self._store_reply(
+                learner_id,
+                conversation_id,
+                client_uuid,
+                loaded,
+                profile,
+                answered,
+                reply_text=reply_text,
+                recasts=recasts,
+                off_limits=off_limits,
+                newly_met=newly_met,
+                xp=xp,
+                said=said,
+                rt_ms=rt_ms,
+            )
+        except Exception:
+            # the reply could not be stored (a database error): give the lease back so the retry
+            # can ask again at once, and still count what the model was asked
+            await self._release(learner_id, conversation_id, loaded, client_uuid, answered)
+            raise
+        if isinstance(outcome, AiError):
+            raise outcome
+        return outcome
+
+    async def _store_reply(
+        self,
+        learner_id: UUID,
+        conversation_id: UUID,
+        client_uuid: UUID,
+        loaded: _Loaded,
+        profile: Profile,
+        answered: ModelTurn,
+        *,
+        reply_text: str,
+        recasts: list[dict[str, str]],
+        off_limits: bool,
+        newly_met: list[str],
+        xp: int,
+        said: str,
+        rt_ms: int | None,
+    ) -> TurnResult | AiError:
+        """Txn 3. Locks in the order every writer takes them — the conversation, then the
+        learner (review ingest's lock), then the day's usage row (start() takes the learner lock
+        before it) — and decides every outcome without raising, so the usage write commits."""
+        row = loaded.row
+        outcome: TurnResult | AiError
         async with self._sessions() as session, session.begin():
             now = self._clock.now()
-            inserted = await session.execute(
-                insert(AiTurn)
-                .values(
-                    learner_id=learner_id,
-                    conversation_id=conversation_id,
-                    seq=loaded.learner_seq + 1,
-                    role="character",
-                    text=reply_text,
-                    recasts=recasts,
-                    client_uuid=None,
-                    created_at=now,
-                    expires_at=row.expires_at,
-                )
-                .on_conflict_do_nothing(index_elements=["learner_id", "conversation_id", "seq"])
-                .returning(AiTurn.seq)
-            )
-            if inserted.first() is None:
-                # a parallel retry stored the reply first: return that one
-                stored = await session.get(
-                    AiTurn, (learner_id, conversation_id, loaded.learner_seq + 1)
-                )
-                fresh = await session.get(
-                    AiConversation, (learner_id, conversation_id), populate_existing=True
-                )
-                if stored is None or fresh is None:
-                    raise AiError("not_found", "there is no such conversation")
-                return self._result(fresh, stored, refused=False)
             conv = await session.get(
                 AiConversation,
                 (learner_id, conversation_id),
                 with_for_update=True,
                 populate_existing=True,
             )
-            if conv is None:
-                raise AiError("not_found", "there is no such conversation")
-            conv.met = sorted(set(conv.met) | set(newly_met))
-            xp = cv.turn_xp(said)
-            conv.xp += xp
+            await ReviewRepository(session).lock_learner(learner_id)
+            # the model was asked: that is counted whatever happens to the reply
             await self._add_usage(
                 session,
                 learner_id,
@@ -449,31 +522,55 @@ class AiService:
                 input_tokens=answered.input_tokens,
                 output_tokens=answered.output_tokens,
             )
-            awards = await GamificationService(session, self._catalog, self._clock).credit_activity(
-                learner_id,
-                profile,
-                at=now,
-                active_ms=cv.turn_active_ms(rt_ms, said),
-                xp=xp,
-                source="conversation",
-                session_id=conversation_id,
+            mine = await session.get(
+                AiTurn, (learner_id, conversation_id, loaded.learner_seq), populate_existing=True
             )
-            stored = AiTurn(
-                learner_id=learner_id,
-                conversation_id=conversation_id,
-                seq=loaded.learner_seq + 1,
-                role="character",
-                text=reply_text,
-                recasts=recasts,
-                client_uuid=None,
-                created_at=now,
-                expires_at=row.expires_at,
+            stored = await session.get(
+                AiTurn, (learner_id, conversation_id, loaded.learner_seq + 1)
             )
-            result = self._result(
-                conv, stored, refused=answered.refused or answered.turn.off_limits
-            )
-        result.awards = awards
-        return result
+            if conv is None:
+                outcome = AiError("not_found", "there is no such conversation")
+            elif mine is None or mine.client_uuid != client_uuid:
+                # the lease ran out and a newer message took this one's place
+                outcome = AiError("busy", "a newer message replaced this one; send it again")
+            elif stored is not None:
+                # a request whose lease ran out stored the reply first: return that one
+                outcome = self._result(conv, stored)
+            elif conv.status != "open":
+                outcome = AiError("ended", "this conversation has ended")
+            else:
+                stored = AiTurn(
+                    learner_id=learner_id,
+                    conversation_id=conversation_id,
+                    seq=loaded.learner_seq + 1,
+                    role="character",
+                    text=reply_text,
+                    recasts=recasts,
+                    client_uuid=None,
+                    off_limits=off_limits,
+                    answering_until=None,
+                    created_at=now,
+                    expires_at=row.expires_at,
+                )
+                session.add(stored)
+                mine.answering_until = None
+                conv.met = sorted(set(conv.met) | set(newly_met))
+                conv.xp += xp
+                await session.flush()
+                awards = await GamificationService(
+                    session, self._catalog, self._clock
+                ).credit_activity(
+                    learner_id,
+                    profile,
+                    at=now,
+                    active_ms=cv.turn_active_ms(rt_ms, said),
+                    xp=xp,
+                    source="conversation",
+                    session_id=conversation_id,
+                )
+                outcome = self._result(conv, stored)
+                outcome.awards = awards
+        return outcome
 
     # ------------------------------------------------------------------- end, delete, purge
 
@@ -486,6 +583,10 @@ class AiService:
                 raise AiError("not_found", "there is no such conversation")
             if row.status == "ended" and row.summary is not None:
                 return Summary(**row.summary)
+            # a reply still being written would change the goals and XP after the summary
+            pending = await self._unanswered(session, row)
+            if pending is not None and self._leased(pending):
+                raise AiError("busy", "the character is still answering; end the chat in a moment")
             turns = list(
                 (
                     await session.execute(
@@ -610,6 +711,8 @@ class AiService:
         )
         if row is None:
             raise AiError("not_found", "there is no such conversation")
+        now = self._clock.now()
+        today = self._today(profile)
         existing = (
             await session.execute(
                 select(AiTurn).where(
@@ -620,17 +723,37 @@ class AiService:
             )
         ).scalar_one_or_none()
         if existing is not None:
+            # a retry: replay the reply, or resume this turn (always the latest; see below)
             learner_seq = existing.seq
             reply = await session.get(AiTurn, (learner_id, conversation_id, learner_seq + 1))
             if reply is not None:
                 return _Loaded(row, [], learner_seq, reply)
+            if row.status != "open":
+                raise AiError("ended", "this conversation has ended")
+            if self._leased(existing):
+                raise AiError("busy", "the character is still answering this message")
+            await self._check_allowance(session, learner_id, today, starting=False)
+            lease = existing.answering_until = now + self._lease()
         else:
             if row.status != "open":
                 raise AiError("ended", "this conversation has ended")
-            if row.turns >= self._settings.ai_max_turns:
+            unanswered = await self._unanswered(session, row)
+            if unanswered is not None and self._leased(unanswered):
+                raise AiError("busy", "the character is still answering your last message")
+            if unanswered is None and row.turns >= self._settings.ai_max_turns:
                 raise AiError("ended", "this conversation has reached its last turn")
-            await self._check_allowance(session, learner_id, self._today(profile), starting=False)
-            learner_seq = 2 * row.turns + 1
+            await self._check_allowance(session, learner_id, today, starting=False)
+            if unanswered is not None:
+                # a message that was never answered is replaced by this one, in its place: the
+                # transcript alternates and the reply answers what the learner said last
+                learner_seq = unanswered.seq
+                await session.delete(unanswered)
+                await session.flush()
+            else:
+                learner_seq = 2 * row.turns + 1
+                row.turns += 1
+                await self._add_usage(session, learner_id, today, turns=1)
+            lease = now + self._lease()
             session.add(
                 AiTurn(
                     learner_id=learner_id,
@@ -640,13 +763,13 @@ class AiService:
                     text=said,
                     recasts=[],
                     client_uuid=client_uuid,
-                    created_at=self._clock.now(),
+                    off_limits=False,
+                    answering_until=lease,
+                    created_at=now,
                     expires_at=row.expires_at,
                 )
             )
-            row.turns += 1
-            await self._add_usage(session, learner_id, self._today(profile), turns=1)
-            await session.flush()
+        await session.flush()
         history = [
             Exchange("learner" if t.role == "learner" else "character", t.text)
             for t in (
@@ -661,9 +784,136 @@ class AiService:
                 )
             ).scalars()
         ]
-        return _Loaded(row, history, learner_seq, None)
+        return _Loaded(row, history, learner_seq, None, lease)
 
-    def _result(self, row: AiConversation, reply: AiTurn, *, refused: bool) -> TurnResult:
+    async def _started_before(
+        self, session: AsyncSession, learner_id: UUID, client_uuid: UUID, today: date
+    ) -> Started | None:
+        """A retried start: the conversation it already made, charged once. While its opening
+        line is still being written the retry waits (busy); a start abandoned for longer than a
+        reply could take (its process died) is given back, and this one starts afresh."""
+        prior = (
+            await session.execute(
+                select(AiConversation).where(
+                    AiConversation.learner_id == learner_id,
+                    AiConversation.client_uuid == client_uuid,
+                )
+            )
+        ).scalar_one_or_none()
+        if prior is None:
+            return None
+        opening = await session.get(AiTurn, (learner_id, prior.id, 0))
+        if opening is not None:
+            return Started(
+                prior.id,
+                prior.character_id,
+                prior.unit_id,
+                prior.mode,
+                opening.text,
+                [cv.Subgoal(g["id"], g["text"]) for g in prior.subgoals],
+                self._starters(prior.unit_id),
+                self._settings.ai_max_turns,
+                prior.expires_at,
+            )
+        if prior.created_at + self._lease() > self._clock.now():
+            raise AiError("busy", "the character is still opening this chat")
+        await session.delete(prior)
+        await self._add_usage(session, learner_id, today, conversations=-1)
+        await session.flush()
+        return None
+
+    def _lease(self) -> timedelta:
+        """Long enough for the slowest reply: two model calls (the level retry), each with the
+        client's one retry, each up to the timeout."""
+        return timedelta(seconds=4 * self._settings.ai_timeout_s + 15)
+
+    def _leased(self, learner_turn: AiTurn) -> bool:
+        until = learner_turn.answering_until
+        return until is not None and until > self._clock.now()
+
+    @staticmethod
+    async def _unanswered(session: AsyncSession, row: AiConversation) -> AiTurn | None:
+        """The latest learner turn, when it has no reply."""
+        if row.turns == 0:
+            return None
+        seq = 2 * row.turns - 1
+        learner = await session.get(AiTurn, (row.learner_id, row.id, seq), populate_existing=True)
+        reply = await session.get(AiTurn, (row.learner_id, row.id, seq + 1))
+        return learner if learner is not None and reply is None else None
+
+    async def _release(
+        self,
+        learner_id: UUID,
+        conversation_id: UUID,
+        loaded: _Loaded,
+        client_uuid: UUID,
+        answered: ModelTurn | None = None,
+    ) -> None:
+        """Give back this request's lease — only if it is still this request's (a request can
+        outlive its lease, and a newer one may hold the turn now) — and count what the model was
+        asked, if anything."""
+        async with self._sessions() as session, session.begin():
+            await session.execute(
+                update(AiTurn)
+                .where(
+                    AiTurn.learner_id == learner_id,
+                    AiTurn.conversation_id == conversation_id,
+                    AiTurn.seq == loaded.learner_seq,
+                    AiTurn.client_uuid == client_uuid,
+                    AiTurn.answering_until == loaded.lease,
+                )
+                .values(answering_until=None)
+            )
+            if answered is not None:
+                profile = await self._profile(session, learner_id)
+                await self._add_usage(
+                    session,
+                    learner_id,
+                    self._today(profile),
+                    input_tokens=answered.input_tokens,
+                    output_tokens=answered.output_tokens,
+                )
+
+    async def _reach(self, session: AsyncSession, learner_id: UUID) -> int:
+        """The furthest unit (its place in the course) the learner has reached: the furthest
+        one they have worked in, the one after the furthest they completed, or where placement
+        put them — the first unit at least."""
+        position = {u: i for i, u in enumerate(self._order)}
+        reach = 0
+        for node_id in (
+            await session.execute(
+                select(NodeProgress.node_id).where(NodeProgress.learner_id == learner_id).distinct()
+            )
+        ).scalars():
+            node = self._catalog.nodes.get(node_id)
+            if node is not None and node.unit_id in position:
+                reach = max(reach, position[node.unit_id])
+        for unit_id in (
+            await session.execute(
+                select(UnitProgress.unit_id).where(UnitProgress.learner_id == learner_id)
+            )
+        ).scalars():
+            if unit_id in position:
+                reach = max(reach, position[unit_id] + 1)
+        placed = (
+            await session.execute(
+                select(func.max(Placement.result_level)).where(Placement.learner_id == learner_id)
+            )
+        ).scalar_one_or_none()
+        if placed is not None and 0 <= placed < len(CEFR_LEVELS):
+            first = next(
+                (
+                    i
+                    for i, u in enumerate(self._order)
+                    if self._catalog.units[u].cefr == CEFR_LEVELS[placed]
+                ),
+                None,
+            )
+            if first is not None:
+                reach = max(reach, first)
+        return min(reach, len(self._order) - 1)
+
+    def _result(self, row: AiConversation, reply: AiTurn) -> TurnResult:
         shown = reply.recasts if row.mode == "accuracy" else []
         recasts = []
         for r in shown:
@@ -686,7 +936,7 @@ class AiService:
             max_turns=self._settings.ai_max_turns,
             ended=row.status != "open" or turn >= self._settings.ai_max_turns,
             goal_met=bool(ids) and set(ids) <= set(row.met),
-            off_limits=refused,
+            off_limits=reply.off_limits,
         )
 
     def _scenario(
@@ -749,14 +999,16 @@ class AiService:
         """One reply, held to the learner's level: regenerate once with a note if it is not."""
         system = system_prompt(scenario)
         first = await model.respond(system=system, history=history)
-        if first.refused:
+        if first.refused or first.turn.off_limits:
+            # replaced by the safe line anyway: no point asking for a simpler version
             return first
         vocabulary = self._vocabulary(scenario.unit_id)
         check = cv.check_level(first.turn.reply, scenario.cefr, vocabulary)
         if check.ok:
             return first
+        # the rejected reply is not in the history, so the note quotes it
         note = (
-            "Your last reply was too hard for this learner"
+            f"You were about to reply: {first.turn.reply!r}. That is too hard for this learner"
             + (
                 f" (a sentence had {check.longest_sentence} words)"
                 if scenario.max_sentence_words
@@ -764,9 +1016,15 @@ class AiService:
                 else ""
             )
             + (f"; avoid these words: {', '.join(check.unknown[:12])}" if check.unknown else "")
-            + ". Say the same thing again with shorter sentences and only very common words."
+            + ". Write that reply again, still answering the learner's last message, with shorter "
+            "sentences and only very common words."
         )
-        second = await model.respond(system=system, history=history, note=note)
+        try:
+            second = await model.respond(system=system, history=history, note=note)
+        except ModelUnavailable:
+            # a reply above the level is still a reply: better than none, and already paid for
+            _log.info("ai_level_retry_unavailable", coverage=round(check.coverage, 3))
+            return first
         _log.info(
             "ai_level_retry",
             coverage=round(check.coverage, 3),

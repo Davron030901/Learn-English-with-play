@@ -158,6 +158,15 @@ def per_memory_item_grades(
     return grades
 
 
+@dataclass
+class _Writes:
+    """A batch's rows, written together once every answer has been graded."""
+
+    attempts: list[dict[str, Any]] = field(default_factory=list)
+    log_rows: list[dict[str, Any]] = field(default_factory=list)
+    keys: list[dict[str, Any]] = field(default_factory=list)
+
+
 class ReviewService:
     def __init__(self, session: AsyncSession, catalog: ContentCatalog, clock: Clock) -> None:
         self._session = session
@@ -215,16 +224,24 @@ class ReviewService:
             for m in touched
         }
 
+        writes = _Writes()
         for r in fresh:
-            outcomes[r.client_uuid] = await self._ingest_one(
-                learner_id, r, now, tz, desired_retention, pending
+            outcomes[r.client_uuid] = self._ingest_one(
+                learner_id, r, now, tz, desired_retention, pending, writes
             )
+        # the batch's rows go in one round trip per table; a late answer's re-derivation below
+        # reads the log, so they are written first
+        await self._repo.insert_attempts(writes.attempts)
+        await self._repo.insert_log_rows(writes.log_rows)
+        await self._repo.insert_keys(writes.keys)
 
+        late = sorted(m for m, p in pending.items() if p.recompute)
+        histories = await self._repo.history(learner_id, late) if late else {}
+        derived: list[tuple[str, ItemState]] = []
         for m, p in pending.items():
             if p.recompute:
-                history = await self._repo.history(learner_id, [m])
                 state = replay(
-                    history.get(m, []),
+                    histories.get(m, []),
                     learner_id=str(learner_id),
                     memory_item_id=m,
                     tz=tz,
@@ -232,9 +249,10 @@ class ReviewService:
                     suspended=p.suspended,
                 )
                 if state is not None:
-                    await self._repo.upsert_state(learner_id, m, state)
+                    derived.append((m, state))
             elif p.state is not None and p.dirty:
-                await self._repo.upsert_state(learner_id, m, p.state)
+                derived.append((m, p.state))
+        await self._repo.upsert_states(learner_id, derived)
 
         for d in disputes:
             # seen before, or a second copy in this same batch
@@ -257,7 +275,7 @@ class ReviewService:
         order = [r.client_uuid for r in reviews] + [d.client_uuid for d in disputes]
         return [outcomes[u] for u in dict.fromkeys(order)]
 
-    async def _ingest_one(
+    def _ingest_one(
         self,
         learner_id: UUID,
         r: IncomingReview,
@@ -265,6 +283,7 @@ class ReviewService:
         tz: str,
         desired_retention: float,
         pending: dict[str, _Pending],
+        writes: _Writes,
     ) -> Outcome:
         item = self._catalog.item(r.item_id)
         if item is None:
@@ -306,7 +325,7 @@ class ReviewService:
         )
         attempt_id = self._ids.next()
 
-        await self._repo.insert_attempt(
+        writes.attempts.append(
             {
                 "learner_id": learner_id,
                 "ts": ts,
@@ -375,9 +394,9 @@ class ReviewService:
                 if g == Grade.AGAIN:
                     p.lapses.append(ts)
                 p.dirty = True
-            await self._repo.insert_log_rows(rows)
+            writes.log_rows.extend(rows)
 
-        await self._repo.insert_key(
+        writes.keys.append(
             {
                 "learner_id": learner_id,
                 "client_uuid": r.client_uuid,

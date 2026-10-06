@@ -50,6 +50,11 @@ class StartConversation(BaseModel):
     character_id: str = Field(min_length=1, max_length=32)
     unit_id: str = Field(pattern=r"^S\d{2}U\d{2}$")
     mode: Literal["fluency", "accuracy"] = "accuracy"
+    client_uuid: UUID | None = Field(
+        default=None,
+        description="The app's id for this start. Retrying with the same id returns the same "
+        "conversation and is charged once (409 ai_busy while its opening line is being written).",
+    )
 
 
 class SubgoalOut(Out):
@@ -82,7 +87,10 @@ class TurnIn(BaseModel):
 class RecastOut(Out):
     original: str
     corrected: str
-    start: int | None = Field(description="Where the corrected form sits in the reply.")
+    start: int | None = Field(
+        description="Where the corrected form sits in the reply, in UTF-16 code units "
+        "(JavaScript string indices), so emoji before it do not shift the underline."
+    )
     end: int | None
 
 
@@ -94,7 +102,10 @@ class TurnOut(Out):
     max_turns: int
     ended: bool
     goal_met: bool
-    off_limits: bool
+    off_limits: bool = Field(
+        description="The message asked for something outside the rules (or the model declined): "
+        "the reply is the fixed safe line, and the turn earns no goals or production XP."
+    )
     awards: AwardsOut
 
 

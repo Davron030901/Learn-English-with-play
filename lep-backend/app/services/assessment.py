@@ -19,10 +19,10 @@ import hashlib
 import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
+from datetime import timedelta
 from typing import Any, Final
 from uuid import UUID
 
-from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.clock import Clock
@@ -30,7 +30,6 @@ from app.content.catalog import CEFR_LEVELS, ITEM_BEARING_KINDS, ContentCatalog,
 from app.domain.grading import FAMILY, InvalidSubmission, Verdict, grade
 from app.ids import uuid7
 from app.models.assessment import Checkpoint, Placement
-from app.models.review import ReviewAttempt
 from app.services.gamification import Awards, GamificationService
 
 CHECKPOINT_SIZE: Final = 12
@@ -154,17 +153,18 @@ class AssessmentService:
         row = await self._session.get(Checkpoint, (learner_id, checkpoint_id), with_for_update=True)
         if row is None:
             raise AssessmentError("there is no such checkpoint")
-        rows = await self._session.execute(
-            select(ReviewAttempt.item_id, ReviewAttempt.verdict).where(
-                ReviewAttempt.learner_id == learner_id,
-                ReviewAttempt.session_id == checkpoint_id,
-                ReviewAttempt.item_id.in_(row.item_ids),
-            )
+        # the first answer to each item counts — first as the server received it, since device
+        # timestamps are the learner's to set (a backdated retry must not replace a wrong answer)
+        from app.services.certification import first_answers
+
+        first = await first_answers(
+            self._session,
+            learner_id,
+            checkpoint_id,
+            row.item_ids,
+            row.created_at,
+            self._clock.now() + timedelta(minutes=1),
         )
-        # the first answer to each item counts
-        first: dict[str, str] = {}
-        for r in rows:
-            first.setdefault(r.item_id, r.verdict)
         graded = [v for v in first.values() if v != "ungraded"]
         accuracy = sum(v == "correct" for v in graded) / len(graded) if graded else None
         enough = len(first) >= math.ceil(CHECKPOINT_COVERAGE * len(row.item_ids))

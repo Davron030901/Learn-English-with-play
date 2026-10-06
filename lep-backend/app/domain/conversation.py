@@ -143,6 +143,10 @@ FUNCTION_WORDS: Final = frozenset(
 
 _WORD = re.compile(r"[A-Za-z]+(?:'[A-Za-z]+)?")
 _SENTENCE = re.compile(r"[^.!?]+[.!?]*")
+#: typographic apostrophes a phone keyboard or the model may type, read as the plain one
+_APOSTROPHES: Final = str.maketrans({"’": "'", "‘": "'", "ʼ": "'"})
+#: negative contractions whose base is not simply the word before "n't"
+_NEGATIVES: Final = {"can't": "can", "won't": "will", "shan't": "shall", "ain't": "am"}
 
 
 def band(cefr: str) -> str:
@@ -150,13 +154,14 @@ def band(cefr: str) -> str:
 
 
 def words(text: str) -> list[str]:
-    return [w.lower() for w in _WORD.findall(text)]
+    return [w.lower() for w in _WORD.findall(text.translate(_APOSTROPHES))]
 
 
 def _stem(word: str) -> Iterable[str]:
     """The word and its likely base forms (a light, deterministic lemmatiser)."""
     yield word
-    base = word.split("'")[0]
+    # don't → do, isn't → is, can't → can; I'm → i, she's → she
+    base = _NEGATIVES.get(word, word[:-3]) if word.endswith("n't") else word.split("'")[0]
     yield base
     for suffix, repl in (
         ("ies", "y"), ("ied", "y"), ("ing", ""), ("ing", "e"), ("ed", ""), ("ed", "e"),
@@ -200,14 +205,41 @@ def check_level(text: str, cefr: str, vocabulary: frozenset[str]) -> LevelCheck:
 
 _EMAIL = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
 _URL = re.compile(r"(?:https?://|www\.)\S+", re.IGNORECASE)
+#: top-level domains a link without a scheme ends in. Those that are also English words only
+#: count with a path after them (t.me/…), so "I like tea.Me too" is left alone.
+_TLDS: Final = "com|net|org|biz|uz|ru|kz|kg|tj|tm|su|ua|de|eu|tk|cc|xyz|gg|ly"
+_WORDY_TLDS: Final = "me|by|uk|info|co|us|io|ai|tv|app|dev|link|site|online|store|shop|page"
+_DOMAIN = re.compile(
+    rf"(?<![\w@.])(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+"
+    rf"(?:(?:{_TLDS})\b(?:/\S*)?|(?:{_WORDY_TLDS})/\S*)",
+    re.IGNORECASE,
+)
+#: a Telegram / Instagram handle is a contact detail too
+_HANDLE = re.compile(r"(?<![\w@])@[A-Za-z0-9_]{3,32}\b")
 _PHONE = re.compile(r"(?<!\w)\+?\d[\d\s().-]{6,}\d(?!\w)")
+#: 1 500 000 or 150,000,000 — a price the learner is practising, not a phone number
+_THOUSANDS = re.compile(r"\d{1,3}([ ,.])\d{3}(?:\1\d{3})*")
+
+
+def _phone(m: re.Match[str]) -> str:
+    """A phone number, unless it reads as a date (12.05.2010) or a price (1 500 000 so'm)."""
+    found = m.group(0)
+    digits = sum(c.isdigit() for c in found)
+    if (found.startswith("+") and digits >= 7) or digits >= 10:
+        return "[number]"
+    if digits >= 9 and not _THOUSANDS.fullmatch(found):
+        return "[number]"
+    return found
 
 
 def redact(text: str) -> str:
-    """Contact details never reach the model or the transcript (docs/10 §8.9)."""
+    """Contact details never reach the model or the transcript (docs/10 §8.9): emails, links
+    (with or without a scheme), handles and phone numbers. Dates and prices stay."""
     text = _EMAIL.sub("[email]", text)
     text = _URL.sub("[link]", text)
-    return _PHONE.sub("[number]", text)
+    text = _DOMAIN.sub("[link]", text)
+    text = _HANDLE.sub("[handle]", text)
+    return _PHONE.sub(_phone, text)
 
 
 def clean_reply(text: str) -> str:
@@ -259,9 +291,20 @@ def turn_active_ms(rt_ms: int | None, text: str) -> int:
 
 
 def words_used(learner_texts: Iterable[str], unit_lemmas: Iterable[str]) -> list[str]:
-    """The unit's words the learner used themselves, in the unit's order."""
-    said = {form for t in learner_texts for w in words(t) for form in _stem(w)}
-    return [lemma for lemma in dict.fromkeys(unit_lemmas) if lemma.lower() in said]
+    """The unit's words the learner used themselves, in the unit's order. A multi-word lemma
+    ('thank you', 'in front of') counts when its words come in a row."""
+    said = [[set(_stem(w)) for w in words(t)] for t in learner_texts]
+
+    def used(lemma: str) -> bool:
+        target = words(lemma)
+        n = len(target)
+        return n > 0 and any(
+            all(target[j] in forms[i + j] for j in range(n))
+            for forms in said
+            for i in range(len(forms) - n + 1)
+        )
+
+    return [lemma for lemma in dict.fromkeys(unit_lemmas) if used(lemma)]
 
 
 def focus_items(recasts: Sequence[Mapping[str, str]], limit: int = 2) -> list[dict[str, str]]:
@@ -279,9 +322,17 @@ def focus_items(recasts: Sequence[Mapping[str, str]], limit: int = 2) -> list[di
     return out
 
 
+def _utf16(text: str, index: int) -> int:
+    return len(text[:index].encode("utf-16-le")) // 2
+
+
 def span_of(reply: str, phrase: str) -> tuple[int, int] | None:
-    """Where a recast's corrected form appears in the character's reply, for underlining."""
-    if not phrase.strip():
+    """Where a recast's corrected form appears in the character's reply, for underlining.
+
+    The offsets are UTF-16 code units — what the app's JavaScript ``String.slice`` counts — so
+    an emoji before the phrase does not shift the underline."""
+    wanted = phrase.strip()
+    if not wanted:
         return None
-    at = reply.lower().find(phrase.strip().lower())
-    return None if at < 0 else (at, at + len(phrase.strip()))
+    m = re.search(re.escape(wanted), reply, re.IGNORECASE)
+    return None if m is None else (_utf16(reply, m.start()), _utf16(reply, m.end()))

@@ -34,7 +34,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.clock import Clock
 from app.content.catalog import ITEM_BEARING_KINDS, ContentCatalog
 from app.domain import quests as q
-from app.domain.composer import TIER3_SPACING
+from app.domain.composer import tier_gate
 from app.domain.grading import FAMILY
 from app.domain.streaks import StreakState, can_repair, local_day, reset_message, settle
 from app.domain.xp import ItemEffort, item_xp
@@ -207,6 +207,33 @@ def _streak_values(s: StreakState) -> dict[str, Any]:
     }
 
 
+@dataclass(frozen=True, slots=True)
+class _Attempt:
+    item_id: str
+    verdict: str
+    hints_used: int
+
+
+def _tier_passed(
+    session_attempts: Sequence[_Attempt], tier: int, tier_items: Sequence[str]
+) -> tuple[bool, float | None]:
+    """docs/08 §4.3: enough of the tier answered in the session, accurately, with few hints."""
+    wanted = set(tier_items)
+    attempts = [a for a in session_attempts if a.item_id in wanted]
+    answered = {a.item_id for a in attempts}
+    if len(answered) < math.ceil(TIER_COVERAGE * len(tier_items)):
+        return False, None
+    graded = [a for a in attempts if a.verdict != "ungraded"]
+    accuracy = sum(a.verdict == "correct" for a in graded) / len(graded) if graded else None
+    hints = sum(a.hints_used for a in attempts)
+    max_hints = TIER_MAX_HINTS[tier]
+    if max_hints is not None and hints > max_hints:
+        return False, accuracy
+    if accuracy is not None and accuracy < TIER_PASS[tier]:
+        return False, accuracy
+    return True, accuracy
+
+
 class GamificationService:
     def __init__(self, session: AsyncSession, catalog: ContentCatalog, clock: Clock) -> None:
         self._session = session
@@ -374,8 +401,8 @@ class GamificationService:
         return out
 
     async def _save_days(self, learner_id: UUID, days: dict[date, _Day]) -> None:
-        for day, d in days.items():
-            values = {
+        rows = [
+            {
                 "learner_id": learner_id,
                 "day": day,
                 "answers": d.answers,
@@ -390,13 +417,19 @@ class GamificationService:
                 "nodes_completed": d.nodes_completed,
                 "goal_met_at": d.goal_met_at,
             }
-            stmt = insert(LearnerDay).values(values)
-            await self._session.execute(
-                stmt.on_conflict_do_update(
-                    index_elements=[LearnerDay.learner_id, LearnerDay.day],
-                    set_={k: stmt.excluded[k] for k in values if k not in ("learner_id", "day")},
-                )
-            )
+            for day, d in days.items()
+        ]
+        if not rows:
+            return
+        # values passed apart from the statement: compiled once, every day in one round trip
+        stmt = insert(LearnerDay)
+        await self._session.execute(
+            stmt.on_conflict_do_update(
+                index_elements=[LearnerDay.learner_id, LearnerDay.day],
+                set_={k: stmt.excluded[k] for k in rows[0] if k not in ("learner_id", "day")},
+            ),
+            rows,
+        )
 
     async def _award_gems(
         self, learner_id: UUID, amount: int, reason: str, ref: str, ts: datetime
@@ -436,6 +469,7 @@ class GamificationService:
         if not touched:
             return
         done = await self._completed_tiers(learner_id)
+        attempts = await self._session_attempts(learner_id, touched, done)
         units_to_check: set[str] = set()
         for (session_id, node_id, tier), at in sorted(touched.items(), key=lambda kv: kv[1]):
             if (node_id, tier) in done:
@@ -447,10 +481,17 @@ class GamificationService:
             if not tier_items:
                 continue
             if tier == 3:
-                t2 = done.get((node_id, 2))
-                if t2 is None or at - t2 < TIER3_SPACING:
+                # the same gate the session composer applies, over the tiers this node has: a
+                # node without a tier 2 has no tier-2 spacing to wait for (docs/08 §4.3)
+                gate = tier_gate(
+                    3,
+                    {t: when for (n, t), when in done.items() if n == node_id},
+                    at,
+                    populated=[t for t, ids in node.tiers.items() if ids],
+                )
+                if not gate.allowed:
                     continue
-            passed, accuracy = await self._tier_passed(learner_id, session_id, tier, tier_items)
+            passed, accuracy = _tier_passed(attempts.get(session_id, []), tier, tier_items)
             if not passed:
                 continue
             self._session.add(
@@ -479,29 +520,39 @@ class GamificationService:
         )
         return {(r.node_id, r.tier): r.completed_at for r in rows}
 
-    async def _tier_passed(
-        self, learner_id: UUID, session_id: UUID, tier: int, tier_items: Sequence[str]
-    ) -> tuple[bool, float | None]:
+    async def _session_attempts(
+        self,
+        learner_id: UUID,
+        touched: dict[tuple[UUID, str, int], datetime],
+        done: dict[tuple[str, int], datetime],
+    ) -> dict[UUID, list[_Attempt]]:
+        """Every answer of the touched sessions to the touched node-tiers' items, in one query."""
+        sessions: set[UUID] = set()
+        items: set[str] = set()
+        for session_id, node_id, tier in touched:
+            node = self._catalog.nodes.get(node_id)
+            if (node_id, tier) in done or node is None:
+                continue
+            sessions.add(session_id)
+            items.update(node.tiers.get(tier, ()))
+        out: dict[UUID, list[_Attempt]] = defaultdict(list)
+        if not sessions or not items:
+            return out
         rows = await self._session.execute(
-            select(ReviewAttempt.item_id, ReviewAttempt.verdict, ReviewAttempt.hints_used).where(
+            select(
+                ReviewAttempt.session_id,
+                ReviewAttempt.item_id,
+                ReviewAttempt.verdict,
+                ReviewAttempt.hints_used,
+            ).where(
                 ReviewAttempt.learner_id == learner_id,
-                ReviewAttempt.session_id == session_id,
-                ReviewAttempt.item_id.in_(list(tier_items)),
+                ReviewAttempt.session_id.in_(sorted(sessions)),
+                ReviewAttempt.item_id.in_(sorted(items)),
             )
         )
-        attempts = list(rows)
-        answered = {r.item_id for r in attempts}
-        if len(answered) < math.ceil(TIER_COVERAGE * len(tier_items)):
-            return False, None
-        graded = [r for r in attempts if r.verdict != "ungraded"]
-        accuracy = sum(r.verdict == "correct" for r in graded) / len(graded) if graded else None
-        hints = sum(r.hints_used for r in attempts)
-        max_hints = TIER_MAX_HINTS[tier]
-        if max_hints is not None and hints > max_hints:
-            return False, accuracy
-        if accuracy is not None and accuracy < TIER_PASS[tier]:
-            return False, accuracy
-        return True, accuracy
+        for r in rows:
+            out[r.session_id].append(_Attempt(r.item_id, r.verdict, r.hints_used))
+        return out
 
     def _required_tier(self, node_id: str) -> int:
         node = self._catalog.nodes[node_id]
@@ -699,9 +750,12 @@ class GamificationService:
         if result.reset_from:
             unseen = result.reset_from
         values["unseen_reset_from"] = unseen
-        stmt = insert(Streak).values(learner_id=learner_id, **values)
+        stmt = insert(Streak)
         await self._session.execute(
-            stmt.on_conflict_do_update(index_elements=[Streak.learner_id], set_=values)
+            stmt.on_conflict_do_update(
+                index_elements=[Streak.learner_id], set_={k: stmt.excluded[k] for k in values}
+            ),
+            {"learner_id": learner_id, **values},
         )
         return StreakView(
             current=result.state.current,

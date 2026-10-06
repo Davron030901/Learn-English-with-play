@@ -47,10 +47,27 @@ PAPER_TYPES: Final[dict[str, frozenset[str]]] = {
     ),
 }
 
+#: docs/12 §4.1: minutes per receptive paper (listening, reading, use of English)
+PAPER_MINUTES: Final[dict[str, dict[str, int]]] = {
+    "A1": {"listening": 15, "reading": 20, "use_of_english": 10},
+    "A2": {"listening": 20, "reading": 25, "use_of_english": 15},
+    "B1": {"listening": 25, "reading": 35, "use_of_english": 20},
+    "B2": {"listening": 30, "reading": 45, "use_of_english": 30},
+    "C1": {"listening": 35, "reading": 55, "use_of_english": 35},
+    "C2": {"listening": 40, "reading": 60, "use_of_english": 40},
+}
+#: time to settle in and to sync answers after the last paper
+EXAM_GRACE: Final = timedelta(minutes=10)
+
 #: docs/12 §4.4: no item reused for the same learner within 12 months
 REUSE_AFTER: Final = timedelta(days=365)
-#: a paper needs at least this share of its blueprint to be a fair paper
-MIN_PAPER_FILL: Final = 0.5
+#: a paper needs at least this share of its blueprint to be a fair paper. 0.4, not 0.5: the
+#: course's C1 reading pool is 14 items against a blueprint of 35 (there is no exam bank yet)
+MIN_PAPER_FILL: Final = 0.4
+
+
+def exam_duration(level: str) -> timedelta:
+    return timedelta(minutes=sum(PAPER_MINUTES[level].values())) + EXAM_GRACE
 
 
 @dataclass(frozen=True, slots=True)

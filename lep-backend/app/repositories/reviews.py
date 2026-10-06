@@ -6,10 +6,10 @@ from collections import defaultdict
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Any
+from typing import Any, cast
 from uuid import UUID
 
-from sqlalchemy import func, select, text
+from sqlalchemy import Table, func, select, text
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -22,6 +22,12 @@ from app.models.review import (
     ReviewIngestKey,
     ReviewLog,
 )
+
+
+def _table(model: type[Any]) -> Table:
+    """The Core table: rows inserted through it in a list are one cached statement and one
+    round trip (the ORM's bulk path compiles the statement anew each time)."""
+    return cast(Table, model.__table__)
 
 
 @dataclass(frozen=True, slots=True)
@@ -158,50 +164,75 @@ class ReviewRepository:
         )
         return [r.memory_item_id for r in rows]
 
-    async def insert_attempt(self, values: dict[str, Any]) -> None:
-        await self._session.execute(insert(ReviewAttempt).values(values))
+    # Writes pass their values separately from the statement: SQLAlchemy then compiles each
+    # statement once and reuses it (``insert(...).values(dict)`` has no cache key and is compiled
+    # on every call), and a list of rows goes to the database in one round trip.
 
-    async def insert_log_rows(self, rows: list[dict[str, Any]]) -> None:
+    async def insert_attempts(self, rows: Sequence[dict[str, Any]]) -> None:
         if rows:
-            await self._session.execute(insert(ReviewLog).values(rows))
+            await self._session.execute(insert(_table(ReviewAttempt)), list(rows))
+
+    async def insert_attempt(self, values: dict[str, Any]) -> None:
+        await self.insert_attempts([values])
+
+    async def insert_log_rows(self, rows: Sequence[dict[str, Any]]) -> None:
+        if rows:
+            await self._session.execute(insert(_table(ReviewLog)), list(rows))
+
+    async def insert_keys(self, rows: Sequence[dict[str, Any]]) -> None:
+        if rows:
+            # a dispute and a review key carry different columns: one statement per shape
+            for shape in dict.fromkeys(tuple(sorted(r)) for r in rows):
+                same = [r for r in rows if tuple(sorted(r)) == shape]
+                await self._session.execute(insert(_table(ReviewIngestKey)), same)
 
     async def insert_key(self, values: dict[str, Any]) -> None:
-        await self._session.execute(insert(ReviewIngestKey).values(values))
+        await self.insert_keys([values])
 
     async def insert_dispute(self, values: dict[str, Any]) -> None:
         await self._session.execute(
-            insert(AnswerDispute)
-            .values(values)
-            .on_conflict_do_nothing(
+            insert(AnswerDispute).on_conflict_do_nothing(
                 index_elements=[AnswerDispute.learner_id, AnswerDispute.client_uuid]
-            )
+            ),
+            values,
         )
 
-    async def upsert_state(self, learner_id: UUID, memory_item_id: str, s: ItemState) -> None:
-        values = {
-            "learner_id": learner_id,
-            "memory_item_id": memory_item_id,
-            "stability": s.stability,
-            "difficulty": s.difficulty,
-            "due": s.due,
-            "last_review": s.last_review,
-            "last_review_day": s.last_review_day,
-            "reviews_today": s.reviews_today,
-            "reps": s.reps,
-            "lapses": s.lapses,
-            "lapses_last_30_days": s.lapses_last_30_days,
-            "state": s.state.value,
-            "last_item_id": s.last_item_id,
-            "last_type_id": s.last_type_id,
-            "scheduler_version": s.scheduler_version,
-        }
-        stmt = insert(MemoryState).values(values)
-        update = {k: stmt.excluded[k] for k in values if k not in ("learner_id", "memory_item_id")}
+    async def upsert_states(
+        self, learner_id: UUID, states: Sequence[tuple[str, ItemState]]
+    ) -> None:
+        if not states:
+            return
+        rows = [
+            {
+                "learner_id": learner_id,
+                "memory_item_id": memory_item_id,
+                "stability": s.stability,
+                "difficulty": s.difficulty,
+                "due": s.due,
+                "last_review": s.last_review,
+                "last_review_day": s.last_review_day,
+                "reviews_today": s.reviews_today,
+                "reps": s.reps,
+                "lapses": s.lapses,
+                "lapses_last_30_days": s.lapses_last_30_days,
+                "state": s.state.value,
+                "last_item_id": s.last_item_id,
+                "last_type_id": s.last_type_id,
+                "scheduler_version": s.scheduler_version,
+            }
+            for memory_item_id, s in states
+        ]
+        stmt = insert(_table(MemoryState))
+        update = {k: stmt.excluded[k] for k in rows[0] if k not in ("learner_id", "memory_item_id")}
         await self._session.execute(
             stmt.on_conflict_do_update(
                 index_elements=[MemoryState.learner_id, MemoryState.memory_item_id], set_=update
-            )
+            ),
+            rows,
         )
+
+    async def upsert_state(self, learner_id: UUID, memory_item_id: str, s: ItemState) -> None:
+        await self.upsert_states(learner_id, [(memory_item_id, s)])
 
     async def due_count(self, learner_id: UUID, now: datetime) -> int:
         result = await self._session.execute(

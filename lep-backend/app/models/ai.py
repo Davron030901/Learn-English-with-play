@@ -53,12 +53,21 @@ class AiConversation(Base):
     ended_at: Mapped[datetime | None]
     expires_at: Mapped[datetime]
     summary: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    #: the app's id for this start: a retried start returns the same conversation, charged once
+    client_uuid: Mapped[UUID | None]
 
     __table_args__ = (
         CheckConstraint("mode IN ('fluency', 'accuracy')", name="mode_valid"),
         CheckConstraint("status IN ('open', 'ended')", name="status_valid"),
         CheckConstraint("turns >= 0", name="turns_non_negative"),
         Index("ix_ai_conversations_expires_at", "expires_at"),
+        Index(
+            "uq_ai_conversations_learner_id_client_uuid",
+            "learner_id",
+            "client_uuid",
+            unique=True,
+            postgresql_where=sql_text("client_uuid IS NOT NULL"),
+        ),
     )
 
 
@@ -75,6 +84,11 @@ class AiTurn(Base):
     #: [{"original": …, "corrected": …}]
     recasts: Mapped[list[dict[str, str]]] = mapped_column(JSONB)
     client_uuid: Mapped[UUID | None]
+    #: a character turn that answered an off-limits message with the fixed safe line
+    off_limits: Mapped[bool]
+    #: a learner turn whose reply is being written: no other request asks the model for it
+    #: (or replaces it) until then
+    answering_until: Mapped[datetime | None]
     created_at: Mapped[datetime]
     expires_at: Mapped[datetime]
 

@@ -12,10 +12,11 @@ count for certification is decided at call time from the rater's calibration (κ
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from typing import Literal, Protocol
 
 import anthropic
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ValidationError
 
 from app.domain.rubric import CRITERIA, CriterionScore
 from app.observability.logs import get_logger
@@ -41,10 +42,20 @@ class RaterUnavailable(RuntimeError):
     pass
 
 
+@dataclass(frozen=True, slots=True)
+class Rating:
+    """The criteria, and the version of the rater that *actually* produced them: with a
+    server-side fallback the answering model may differ from the one asked, and only a
+    calibrated model version may certify (backend DECISIONS §9.3)."""
+
+    criteria: list[CriterionScore]
+    version: str
+
+
 class WritingRater(Protocol):
     version: str
 
-    async def rate(self, *, level: str, prompt: str, text: str) -> list[CriterionScore]: ...
+    async def rate(self, *, level: str, prompt: str, text: str) -> Rating: ...
 
 
 RUBRIC = """Bands (1 = A1 … 6 = C2), half-bands allowed:
@@ -73,7 +84,7 @@ class ClaudeWritingRater:
         self._model = model
         self.version = f"claude:{model}:{PROMPT_VERSION}"
 
-    async def rate(self, *, level: str, prompt: str, text: str) -> list[CriterionScore]:
+    async def rate(self, *, level: str, prompt: str, text: str) -> Rating:
         try:
             response = await self._client.beta.messages.parse(
                 model=self._model,
@@ -85,6 +96,9 @@ class ClaudeWritingRater:
                 betas=["server-side-fallback-2026-07-01"],
                 fallbacks="default",
             )
+        except ValidationError as exc:
+            # a refusal or a cut-off reply leaves output that is not a rating
+            raise RaterUnavailable("unparseable") from exc
         except (anthropic.RateLimitError, anthropic.APIConnectionError) as exc:
             raise RaterUnavailable(type(exc).__name__) from exc
         except anthropic.APIStatusError as exc:
@@ -92,12 +106,16 @@ class ClaudeWritingRater:
                 raise RaterUnavailable(f"status {exc.status_code}") from exc
             raise
         parsed = response.parsed_output
-        if response.stop_reason == "refusal" or parsed is None:
+        if response.stop_reason in ("refusal", "max_tokens") or parsed is None:
             _log.info("rater_refusal", stop_reason=response.stop_reason)
             raise RaterUnavailable("refused")
-        return [
-            CriterionScore(c.criterion, float(c.band), tuple(c.evidence)) for c in parsed.criteria
-        ]
+        return Rating(
+            [
+                CriterionScore(c.criterion, float(c.band), tuple(c.evidence))
+                for c in parsed.criteria
+            ],
+            f"claude:{response.model}:{PROMPT_VERSION}",
+        )
 
     async def aclose(self) -> None:
         await self._client.close()
@@ -144,7 +162,7 @@ class SpeakingRater(Protocol):
         transcript: str,
         wpm: float | None,
         pause_ratio: float | None,
-    ) -> list[CriterionScore]: ...
+    ) -> Rating: ...
 
 
 class ClaudeSpeakingRater:
@@ -163,7 +181,7 @@ class ClaudeSpeakingRater:
         transcript: str,
         wpm: float | None,
         pause_ratio: float | None,
-    ) -> list[CriterionScore]:
+    ) -> Rating:
         measures = (f"Speech rate: {wpm:.0f} words per minute. " if wpm is not None else "") + (
             f"Pause ratio: {pause_ratio:.2f}." if pause_ratio is not None else ""
         )
@@ -187,6 +205,9 @@ class ClaudeSpeakingRater:
                 betas=["server-side-fallback-2026-07-01"],
                 fallbacks="default",
             )
+        except ValidationError as exc:
+            # a refusal or a cut-off reply leaves output that is not a rating
+            raise RaterUnavailable("unparseable") from exc
         except (anthropic.RateLimitError, anthropic.APIConnectionError) as exc:
             raise RaterUnavailable(type(exc).__name__) from exc
         except anthropic.APIStatusError as exc:
@@ -194,11 +215,15 @@ class ClaudeSpeakingRater:
                 raise RaterUnavailable(f"status {exc.status_code}") from exc
             raise
         parsed = response.parsed_output
-        if response.stop_reason == "refusal" or parsed is None:
+        if response.stop_reason in ("refusal", "max_tokens") or parsed is None:
             raise RaterUnavailable("refused")
-        return [
-            CriterionScore(c.criterion, float(c.band), tuple(c.evidence)) for c in parsed.criteria
-        ]
+        return Rating(
+            [
+                CriterionScore(c.criterion, float(c.band), tuple(c.evidence))
+                for c in parsed.criteria
+            ],
+            f"claude:{response.model}:{SPEAKING_PROMPT_VERSION}",
+        )
 
     async def aclose(self) -> None:
         await self._client.close()

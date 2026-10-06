@@ -243,6 +243,7 @@ class ContentCatalog:
     #: as the app's packer builds words.lep, because typo rule 7 depends on it.
     words: frozenset[str] = frozenset()
     _cache: dict[str, bytes] = field(default_factory=dict, repr=False)
+    _digests: dict[str, tuple[str, int]] = field(default_factory=dict, repr=False)
     _lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
 
     # --------------------------------------------------------------- lookups
@@ -296,7 +297,10 @@ class ContentCatalog:
     # --------------------------------------------------------------- serialised responses
 
     def etag(self, scope: str) -> str:
-        return f'"{self.version}:{scope}"'
+        """A strong ETag from the bytes served for ``course`` or a unit id — not from the content
+        version alone, which a release that changes how content is serialised keeps."""
+        sha256, _ = self.digest("course" if scope == "course" else f"unit:{scope}")
+        return f'"sha256:{sha256[:32]}"'
 
     def _cached(self, key: str, build: Any) -> bytes:
         hit = self._cache.get(key)
@@ -316,6 +320,32 @@ class ContentCatalog:
         if unit_id not in self.units:
             return None
         return self._cached(f"unit:{unit_id}", lambda: self._unit(unit_id))
+
+    def digest(self, scope: str) -> tuple[str, int]:
+        """SHA-256 (hex) and size of the bytes served for ``course`` or ``unit:<id>``: a
+        client keeps a cached unit while its hash is unchanged, and checks what it downloads."""
+        hit = self._digests.get(scope)
+        if hit is None:
+            # the bytes a unit is served as, hashed without keeping them: the manifest needs
+            # every unit's hash, not every unit's JSON in memory
+            body = self._cache.get(scope)
+            if body is None:
+                if scope == "course":
+                    body = self.course_json()
+                elif scope.startswith("unit:") and scope[5:] in self.units:
+                    body = _dumps(self._unit(scope[5:]))
+                else:
+                    raise KeyError(scope)
+            hit = (hashlib.sha256(body).hexdigest(), len(body))
+            self._digests[scope] = hit
+        return hit
+
+    def warm_digests(self) -> None:
+        """Hash every file at start-up (about a second), so the first manifest request does not
+        block the event loop doing it."""
+        self.digest("course")
+        for unit_id in self.unit_order():
+            self.digest(f"unit:{unit_id}")
 
     def _course(self) -> dict[str, Any]:
         return {
