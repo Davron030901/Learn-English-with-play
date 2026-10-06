@@ -134,4 +134,3 @@ lep-backend/app/services/speech.py
 lep-backend/app/services/sync.py
 lep-backend/docs/ERD.md
 lep-backend/docs/RUNBOOK.md
-lep-backend/scripts/export_bundle.py
