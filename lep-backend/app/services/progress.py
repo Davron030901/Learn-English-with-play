@@ -274,14 +274,16 @@ class ProgressService:
                 break
         return len(states), picked
 
-    def units_reviewing(self, memory_item_id: str) -> set[str]:
-        """The units holding an item that reviews this memory item."""
-        return {self._catalog.items[i].unit_id for i in self._ix.items_for.get(memory_item_id, ())}
-
-    def review_item(self, m: MemoryState, used: set[str]) -> str | None:
+    def review_item(
+        self, m: MemoryState, used: set[str], within: frozenset[str] | None = None
+    ) -> str | None:
         """An item that reviews this memory item: a family suited to its state, never the type
-        used last time (docs/08 §5.1), and not one already in this queue."""
+        used last time (docs/08 §5.1), and not one already in this queue. With ``within``, items
+        in those units are preferred (a unit the learner has not reached would spoil its story)."""
         candidates = [i for i in self._ix.items_for.get(m.memory_item_id, ()) if i not in used]
+        if within is not None:
+            reached = [i for i in candidates if self._catalog.items[i].unit_id in within]
+            candidates = reached or candidates
         if not candidates:
             return None
         families = FAMILIES_FOR.get(MasteryState(m.state), ("choice",))
