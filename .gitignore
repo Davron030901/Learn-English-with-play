@@ -135,4 +135,3 @@ lep-backend/app/domain/exam_report.py
 lep-backend/app/mail/
 lep-backend/app/repositories/password_resets.py
 lep-backend/app/security/
-lep-backend/app/services/exam_report.py
