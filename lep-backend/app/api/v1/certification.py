@@ -20,18 +20,27 @@ from app.schemas.certification import (
     AppealRequest,
     ConditionOut,
     CriterionOut,
+    ErrorTypeOut,
     ExamOut,
+    ExamReportOut,
     ExamRequest,
     ExamResultOut,
+    FluencyOut,
     LevelAwardOut,
+    PaperReportOut,
     RetentionAuditOut,
     ScoreOut,
+    SkillOut,
     SubmissionOut,
+    TimelineOut,
+    VocabularyOut,
+    WorkOnOut,
     WritingRequest,
     WritingTaskOut,
 )
 from app.schemas.problem import problem_responses
 from app.services.certification import CertificationError, CertificationService, grounded
+from app.services.exam_report import exam_report
 
 router = APIRouter(tags=["certification"])
 _log = get_logger("app.certification")
@@ -149,6 +158,49 @@ async def complete_exam(
             )
     except CertificationError as exc:
         raise _raise(exc) from None
+
+
+@router.get(
+    "/assessment/exams/{exam_id}/report",
+    summary="The full report on a completed level exam (docs/12 §9.2)",
+    responses=problem_responses(401, 404, 409, 429, 503),
+)
+async def exam_report_out(
+    exam_id: UUID, principal: CurrentPrincipal, session: DbSession, container: ContainerDep
+) -> ExamReportOut:
+    try:
+        async with session.begin():
+            r = await exam_report(
+                session, container.content, container.clock, principal.learner_id, exam_id
+            )
+    except CertificationError as exc:
+        raise _raise(exc) from None
+    completed_at = r.exam.completed_at
+    assert completed_at is not None  # noqa: S101 — exam_report refuses an unfinished exam
+    return ExamReportOut(
+        id=r.exam.id,
+        level=r.exam.level,
+        completed_at=completed_at,
+        passed=bool(r.exam.passed),
+        overall=r.overall,
+        papers=[PaperReportOut.model_validate(p, from_attributes=True) for p in r.papers],
+        skills=[SkillOut.model_validate(s, from_attributes=True) for s in r.skills],
+        error_types=[ErrorTypeOut.model_validate(e, from_attributes=True) for e in r.error_types],
+        work_on=[
+            WorkOnOut(
+                target=w.target,
+                kind=w.kind,  # type: ignore[arg-type]
+                wrong=w.wrong,
+                asked=w.asked,
+                label=info.label if info else None,
+                unit_id=info.unit_id if info else None,
+            )
+            for w, info in r.work_on
+        ],
+        vocabulary=VocabularyOut.model_validate(r.vocabulary, from_attributes=True),
+        fluency=FluencyOut.model_validate(r.fluency, from_attributes=True),
+        timeline=TimelineOut.model_validate(r.timeline, from_attributes=True),
+    )
 
 
 # ------------------------------------------------------------------- production

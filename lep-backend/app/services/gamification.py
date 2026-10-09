@@ -34,6 +34,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.clock import Clock
 from app.content.catalog import ITEM_BEARING_KINDS, ContentCatalog
 from app.domain import quests as q
+from app.domain.accessibility import A11yProfile, presentable
 from app.domain.composer import tier_gate
 from app.domain.grading import FAMILY
 from app.domain.streaks import StreakState, can_repair, local_day, reset_message, settle
@@ -50,6 +51,7 @@ from app.models.gamification import (
     XpEvent,
 )
 from app.models.review import ReviewAttempt
+from app.models.sessions import LearnerSession
 from app.repositories.learners import Profile
 from app.services.reviews import Outcome
 
@@ -452,6 +454,21 @@ class GamificationService:
 
     # --------------------------------------------------------------- node-tiers and units
 
+    async def _planned_profiles(
+        self, learner_id: UUID, session_ids: set[UUID]
+    ) -> dict[UUID, A11yProfile]:
+        """The accessibility profile each server-composed session was planned for."""
+        rows = await self._session.execute(
+            select(LearnerSession.id, LearnerSession.plan["a11y"]).where(
+                LearnerSession.learner_id == learner_id, LearnerSession.id.in_(session_ids)
+            )
+        )
+        return {
+            sid: A11yProfile(bool(a.get("no_audio")), bool(a.get("no_vision")))
+            for sid, a in rows
+            if isinstance(a, dict)
+        }
+
     async def _progress_nodes(
         self,
         learner_id: UUID,
@@ -470,6 +487,8 @@ class GamificationService:
             return
         done = await self._completed_tiers(learner_id)
         attempts = await self._session_attempts(learner_id, touched, done)
+        saved = A11yProfile(profile.a11y_no_audio, profile.a11y_no_vision)
+        planned = await self._planned_profiles(learner_id, {k[0] for k in touched})
         units_to_check: set[str] = set()
         for (session_id, node_id, tier), at in sorted(touched.items(), key=lambda kv: kv[1]):
             if (node_id, tier) in done:
@@ -477,7 +496,14 @@ class GamificationService:
             node = self._catalog.nodes.get(node_id)
             if node is None or node.kind not in ITEM_BEARING_KINDS:
                 continue
-            tier_items = node.tiers.get(tier, ())
+            # passed on the items the session's accessibility profile could show: the one
+            # the server composed it for, else the one saved in settings
+            a11y = planned.get(session_id, saved)
+            tier_items = [
+                i
+                for i in node.tiers.get(tier, ())
+                if i in self._catalog.items and presentable(self._catalog.items[i].type_id, a11y)
+            ]
             if not tier_items:
                 continue
             if tier == 3:

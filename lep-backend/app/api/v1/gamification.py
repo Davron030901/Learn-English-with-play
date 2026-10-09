@@ -315,6 +315,10 @@ async def patch_settings(
             settings.training_opt_in = body.training_opt_in
         if body.data_collection_paused is not None:
             settings.data_collection_paused = body.data_collection_paused
+        if body.a11y_no_audio is not None:
+            settings.a11y_no_audio = body.a11y_no_audio
+        if body.a11y_no_vision is not None:
+            settings.a11y_no_vision = body.a11y_no_vision
         if body.voice_consent is not None:
             if settings.voice_consent and not body.voice_consent:
                 # consent withdrawn: the recordings go with it (docs/11 §10)

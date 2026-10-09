@@ -19,7 +19,7 @@ import math
 from collections import defaultdict
 from collections.abc import Sequence
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Final
 from uuid import UUID
 
@@ -27,9 +27,11 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.content.catalog import ITEM_BEARING_KINDS, ContentCatalog
+from app.domain.accessibility import NO_PROFILE, A11yProfile, degraded, presentable
 from app.domain.fsrs import retrievability
 from app.domain.grading import FAMILY
 from app.domain.mastery import KNOWN_STATES, MasteryState
+from app.models.certification import RetentionAudit
 from app.models.gamification import Badge, NodeProgress, UnitProgress
 from app.models.review import MemoryState
 
@@ -55,6 +57,9 @@ _WEAKNESS: Final[dict[MasteryState, int]] = {
 }
 SECONDS_PER_REVIEW: Final = 8
 BEDS_PER_PAGE: Final = 10
+#: a memory check counts as current for a month and a week (the checks are 28 days apart)
+AUDIT_FRESH: Final = timedelta(days=35)
+
 COVERAGE_METHOD: Final = (
     "zipf-weighted share of the course word list (teaching order = frequency order)"
 )
@@ -175,6 +180,21 @@ class ProgressService:
 
     # ------------------------------------------------------------------- coverage and level
 
+    async def audited(self, learner_id: UUID, now: datetime) -> bool:
+        """True while a memory check (docs/08 §9) finished within the last ``AUDIT_FRESH``: the
+        memory model behind "known" has then been checked against what the learner recalled,
+        not only predicted."""
+        found = await self._session.execute(
+            select(RetentionAudit.id)
+            .where(
+                RetentionAudit.learner_id == learner_id,
+                RetentionAudit.completed_at.is_not(None),
+                RetentionAudit.completed_at >= now - AUDIT_FRESH,
+            )
+            .limit(1)
+        )
+        return found.first() is not None
+
     def coverage(self, lexemes: dict[str, LexemeStatus]) -> tuple[int, int, float]:
         known = [k for k, v in lexemes.items() if v.known]
         weight = sum(1 / (self._ix.rank[k] + 1) for k in known if k in self._ix.rank)
@@ -247,7 +267,7 @@ class ProgressService:
     # ------------------------------------------------------------------- due queue
 
     async def due(
-        self, learner_id: UUID, now: datetime, limit: int
+        self, learner_id: UUID, now: datetime, limit: int, a11y: A11yProfile = NO_PROFILE
     ) -> tuple[int, list[tuple[MemoryState, str, float]]]:
         states = [
             m
@@ -265,7 +285,7 @@ class ProgressService:
         picked: list[tuple[MemoryState, str, float]] = []
         used_items: set[str] = set()
         for m in states:
-            item_id = self.review_item(m, used_items)
+            item_id = self.review_item(m, used_items, a11y=a11y)
             if item_id is None:
                 continue
             used_items.add(item_id)
@@ -275,25 +295,41 @@ class ProgressService:
         return len(states), picked
 
     def review_item(
-        self, m: MemoryState, used: set[str], within: frozenset[str] | None = None
+        self,
+        m: MemoryState,
+        used: set[str],
+        within: frozenset[str] | None = None,
+        a11y: A11yProfile = NO_PROFILE,
     ) -> str | None:
         """An item that reviews this memory item: a family suited to its state, never the type
         used last time (docs/08 §5.1), and not one already in this queue. With ``within``, items
-        in those units are preferred (a unit the learner has not reached would spoil its story)."""
-        candidates = [i for i in self._ix.items_for.get(m.memory_item_id, ()) if i not in used]
+        in those units are preferred (a unit the learner has not reached would spoil its story).
+        Only types the accessibility profile can show; a degraded route (a listening item read
+        from its transcript, a visual game as a list) only when nothing else reviews it."""
+        candidates = [
+            i
+            for i in self._ix.items_for.get(m.memory_item_id, ())
+            if i not in used and presentable(self._catalog.items[i].type_id, a11y)
+        ]
         if within is not None:
             reached = [i for i in candidates if self._catalog.items[i].unit_id in within]
             candidates = reached or candidates
         if not candidates:
             return None
         families = FAMILIES_FOR.get(MasteryState(m.state), ("choice",))
-        for family in families:
-            for item_id in candidates:
-                item = self._catalog.items[item_id]
-                if FAMILY.get(item.type_id) == family and item.type_id != m.last_type_id:
-                    return item_id
-        different = [i for i in candidates if self._catalog.items[i].type_id != m.last_type_id]
-        return (different or candidates)[0]
+        full = [i for i in candidates if not degraded(self._catalog.items[i].type_id, a11y)]
+        groups = [g for g in (full, [i for i in candidates if i not in full]) if g]
+        for group in groups:
+            for family in families:
+                for item_id in group:
+                    item = self._catalog.items[item_id]
+                    if FAMILY.get(item.type_id) == family and item.type_id != m.last_type_id:
+                        return item_id
+        for group in groups:
+            different = [i for i in group if self._catalog.items[i].type_id != m.last_type_id]
+            if different:
+                return different[0]
+        return groups[0][0]
 
 
 def est_minutes(due_memory_items: int) -> int:

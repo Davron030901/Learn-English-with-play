@@ -44,6 +44,98 @@ class ExamResultOut(Out):
     passed: bool
 
 
+class PaperReportOut(Out):
+    paper: str
+    score: float = Field(description="Share of the paper's items answered right.")
+    asked: int
+    answered: int
+    correct: int
+    paper_bar: float = Field(description="No paper below this (docs/12 §4.3).")
+    overall_bar: float = Field(description="The overall share the level asks for.")
+    band: Literal["secure", "pass", "borderline", "below"] = Field(
+        description="secure: 10 points or more above the overall bar; pass: at or above it; "
+        "borderline: above the paper bar only; below: under the paper bar."
+    )
+    median_seconds: float | None = Field(description="Median seconds per answer on this paper.")
+
+
+class SkillOut(Out):
+    skill: Literal["listening", "reading", "language", "writing", "speaking"]
+    value: float | None = Field(
+        description="A share (listening, reading, language) or a rubric band 1–6 (writing, "
+        "speaking); null when the skill has not been assessed at this level yet."
+    )
+    target: float = Field(description="What the level asks for, on the same scale.")
+    scale: Literal["share", "band"]
+
+
+class ErrorTypeOut(Out):
+    kind: Literal["vocabulary", "grammar", "function", "pronunciation", "comprehension"]
+    asked: int
+    wrong: int
+
+
+class WorkOnOut(Out):
+    target: str = Field(description="A syllabus target: a lexeme, grammar point, function …")
+    kind: Literal["vocabulary", "grammar", "function", "pronunciation"]
+    wrong: int
+    asked: int
+    label: str | None = Field(description="The target in words (a headword, a grammar point).")
+    unit_id: str | None = Field(description="The first unit that teaches it: where to practise.")
+
+
+class VocabularyOut(Out):
+    known_lexemes: int
+    level_known: int = Field(description="Known lexemes of this level.")
+    level_total: int
+    estimate_percent: float = Field(
+        description="About how much of everyday English the known words cover — an estimate."
+    )
+
+
+class FluencyOut(Out):
+    reading_target_wpm: str = Field(description="docs/06 §1.2, at the top of the level.")
+    speech_target_wpm: str = Field(description="docs/06 §1.3, at the top of the level.")
+    speech_rate_wpm: float | None = Field(
+        description="Measured once recorded speech is scored; never estimated."
+    )
+
+
+class TimelineOut(Out):
+    next_level: str | None
+    units_left: int = Field(description="Units not yet completed up to the end of the next level.")
+    units_per_week: float | None = Field(description="Units completed a week, the last 4 weeks.")
+    weeks: int | None = Field(description="At that pace; null when there is no pace yet.")
+    reason: Literal["", "top_level", "no_pace"]
+
+
+class ExamReportOut(Out):
+    """docs/12 §9.2 — and §9.3: no comparison with others, no unexplained single score, no
+    external band, no number the evidence does not support."""
+
+    id: UUID
+    level: str
+    completed_at: datetime
+    passed: bool
+    overall: float = Field(description="The mean of the papers; read it with the papers.")
+    papers: list[PaperReportOut]
+    skills: list[SkillOut]
+    error_types: list[ErrorTypeOut]
+    error_norms: None = Field(
+        default=None,
+        description="Level norms need answers from many learners; none exist yet, so none "
+        "are shown.",
+    )
+    work_on: list[WorkOnOut] = Field(description="At most five targets, most often wrong first.")
+    vocabulary: VocabularyOut
+    fluency: FluencyOut
+    timeline: TimelineOut
+    note: str = Field(
+        default="An internal assessment, not an accredited qualification.",
+        description="docs/12 §4: every result says so in plain language.",
+    )
+
+
 class WritingTaskOut(Out):
     id: str
     level: str

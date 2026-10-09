@@ -24,6 +24,15 @@ length in minutes, build the ordered list of exercises for one session:
 6. **Fit**: Σ expected seconds (the learner's median response time per exercise family, plus
    time to read the feedback) stays within T + 10 %. A node-tier is played whole, so a node
    session's budget is never below the tier's own time; reviews only fill what is left.
+7. **Phases** (docs/07 §3.2): every step is labelled with the part of the mandatory session shape
+   it belongs to — warm-up, review, guided practice (the first 60 % of the lesson's practice
+   items), integration (the rest), production (speaking and free writing), close. NEW INPUT is
+   presented, never tested, so no item carries it: the app shows the new words and grammar
+   before the first lesson item.
+8. **Recovery**: up to two items the learner is almost sure to get right (p ≥ 0.95, a different
+   exercise type each, nothing new, nothing already in the plan) travel with the plan. The app
+   plays one before CLOSE when the last answer was wrong — a session never ends on a failure
+   (docs/07 §3.2) — and none otherwise, so they are not part of the session's time.
 
 Node tiers (docs/08 §4.3): the lowest tier a node has is always open; each later one needs the
 tier before it; tier 3 opens only **3 days** after tier 2 — structural spacing, enforced here and
@@ -34,7 +43,7 @@ from __future__ import annotations
 
 import math
 from collections.abc import Iterable, Mapping, Sequence
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import datetime, timedelta
 from typing import Final, Literal
 
@@ -54,6 +63,9 @@ LEECH_TIME_SHARE: Final = 0.05
 FIT_TOLERANCE: Final = 0.10
 BREAK_SECONDS: Final = 15
 BREAK_EVERY_S: Final = 12 * 60
+RECOVERY_ITEMS: Final = 2
+#: the share of a lesson's practice items that is guided practice; the rest is integration
+GUIDED_SHARE: Final = 0.6
 #: time to read the feedback after an answer, added to the response time
 FEEDBACK_S: Final = 3.0
 
@@ -86,6 +98,19 @@ MODALITY: Final[dict[str, str]] = {
     "speak_roleplay": "speak",
     "speak_retell": "speak",
 }
+
+
+#: speaking and free writing: the PRODUCTION phase of docs/07 §3.2
+PRODUCTION_TYPES: Final = frozenset(
+    {
+        "repeat_after",
+        "speak_prompt",
+        "read_aloud",
+        "speak_roleplay",
+        "speak_retell",
+        "write_sentence",
+    }
+)
 
 
 def modality(type_id: str) -> str:
@@ -160,11 +185,26 @@ class Request:
     node_share: float | None = None
     #: a second card per memory item for the close (memory item → card, a different exercise)
     close_cards: Mapping[str, Card] = field(default_factory=dict)
+    #: candidates for the recovery items: well-known memory items through a recognition exercise
+    recovery: Sequence[Review] = ()
 
 
 # ------------------------------------------------------------------------- output
 
-Role = Literal["warmup", "review", "lesson", "close", "break"]
+Role = Literal["warmup", "review", "lesson", "close", "break", "recovery"]
+#: docs/07 §3.2; ``break`` is the rest screen, which belongs to no phase
+Phase = Literal[
+    "warmup", "review", "new_input", "guided", "integration", "production", "close", "break"
+]
+
+#: the phase of every role but ``lesson``, whose phase depends on its place in the lesson
+ROLE_PHASE: Final[dict[str, Phase]] = {
+    "warmup": "warmup",
+    "review": "review",
+    "close": "close",
+    "break": "break",
+    "recovery": "integration",
+}
 
 
 @dataclass(frozen=True, slots=True)
@@ -173,6 +213,7 @@ class Step:
     card: Card | None
     seconds: float
     memory_item_id: str | None = None
+    phase: Phase = "review"
 
 
 @dataclass(frozen=True, slots=True)
@@ -183,6 +224,8 @@ class Plan:
     new_targets: frozenset[str]
     #: reviews chosen but left out because no position kept every interleaving rule
     deferred: tuple[str, ...]
+    #: held back for the app to play before CLOSE when the last answer was wrong
+    recovery: tuple[Step, ...] = ()
 
     @property
     def seconds(self) -> float:
@@ -519,13 +562,66 @@ def compose(req: Request) -> Plan:
             since += s.seconds
         steps = with_breaks
 
+    # 7. phases (docs/07 §3.2)
+    steps = label_phases(steps)
+
+    # 8. recovery: held back, played only if the session would otherwise end on a failure
     return Plan(
         steps=tuple(steps),
         budget_s=budget,
         review_share=review_share,
         new_targets=frozenset(t for s in steps if s.card for t in s.card.new_targets),
         deferred=tuple(c.item_id for c in deferred),
+        recovery=_recovery(req.recovery, steps),
     )
+
+
+def label_phases(steps: Sequence[Step]) -> list[Step]:
+    """Each step with its docs/07 §3.2 phase: a lesson item is production when it is speaking or
+    free writing, else guided practice for the first 60 % of the lesson's practice items and
+    integration after them."""
+    practice = sum(
+        1
+        for s in steps
+        if s.role == "lesson" and s.card is not None and s.card.type_id not in PRODUCTION_TYPES
+    )
+    guided = math.ceil(practice * GUIDED_SHARE)
+    seen = 0
+    out: list[Step] = []
+    for s in steps:
+        phase: Phase
+        if s.role == "lesson" and s.card is not None:
+            if s.card.type_id in PRODUCTION_TYPES:
+                phase = "production"
+            else:
+                phase = "guided" if seen < guided else "integration"
+                seen += 1
+        else:
+            phase = ROLE_PHASE[s.role]
+        out.append(replace(s, phase=phase))
+    return out
+
+
+def _recovery(candidates: Iterable[Review], steps: Sequence[Step]) -> tuple[Step, ...]:
+    """Up to two near-certain items, each a different exercise type, none in the plan."""
+    items = {s.card.item_id for s in steps if s.card is not None}
+    memory = {m for s in steps if s.card is not None for m in s.card.memory_items}
+    memory |= {s.memory_item_id for s in steps if s.memory_item_id is not None}
+    types: set[str] = set()
+    out: list[Step] = []
+    for r in sorted(candidates, key=lambda r: (-r.retrievability, r.memory_item_id)):
+        if len(out) == RECOVERY_ITEMS:
+            break
+        card = r.card
+        if r.retrievability < WARMUP_MIN_P or card.new_targets or card.type_id in types:
+            continue
+        if card.item_id in items or r.memory_item_id in memory:
+            continue
+        out.append(Step("recovery", card, card.seconds, r.memory_item_id, phase="integration"))
+        items.add(card.item_id)
+        memory.add(r.memory_item_id)
+        types.add(card.type_id)
+    return tuple(out)
 
 
 def target_of(memory_items: Sequence[str], fallback: str) -> str:
@@ -540,8 +636,11 @@ def expected_seconds(median_rt_ms: float) -> float:
 
 
 __all__ = [
+    "PRODUCTION_TYPES",
+    "ROLE_PHASE",
     "Backlog",
     "Card",
+    "Phase",
     "Plan",
     "Request",
     "Review",
@@ -551,6 +650,7 @@ __all__ = [
     "backlog",
     "compose",
     "expected_seconds",
+    "label_phases",
     "modality",
     "new_cap_per_day",
     "split",

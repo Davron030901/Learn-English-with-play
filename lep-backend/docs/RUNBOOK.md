@@ -59,7 +59,7 @@ failed. Scale API replicas before the p99 reaches 200 ms at peak. Each API proce
 
 | Job | When | What | If it failed |
 |---|---|---|---|
-| `lep.auth.purge_expired_sessions` | 03:17 daily | deletes expired refresh sessions | harmless for a day; run it by hand |
+| `lep.auth.purge_expired_sessions` | 03:17 daily | deletes expired refresh sessions and expired password-reset links | harmless for a day; run it by hand |
 | `lep.ai.purge_expired_conversations` | 03:23 daily | deletes AI transcripts past 30 days | **retention promise**: run by hand the same day |
 | `lep.media.purge_expired_recordings` | 03:29 daily | deletes recordings past `expires_at` (tombstones stay), fails and refunds jobs queued > 1 h | **retention promise**: run by hand the same day |
 | `lep.media.seed_assets` | 02:05 daily | records the audio the content needs | idempotent; next run catches up |
@@ -111,6 +111,20 @@ by the server against the content it had, and stay in the log; replay (§6) re-d
   `LEP_JWT_PREVIOUS_SECRET`, redeploy; after one access-token lifetime (15 min), remove the
   previous key and redeploy again. If the key was used maliciously, delete all rows of
   `auth_sessions` instead: every learner signs in again; no learning data is touched.
+
+### 5.5a Password-reset letters do not arrive
+* `mail_events_total{kind="password_reset",outcome="failed"}` rising, with
+  `password_reset_mail_failed` in the logs (the relay's error type, never the address): the
+  relay refused or could not be reached. Check `LEP_SMTP_*` and the relay's status; the
+  learner's link was stored and simply asks again — a newer request voids the old link.
+* `outcome="no_account"` is normal: a request for an address with no active account.
+* A learner says the link "does not work": links last `LEP_PASSWORD_RESET_TTL_S` (30 min) and
+  work once; a second request voids the first. Ask them to request one more and use the newest.
+* Abuse (many requests): the per-address limit (`LEP_RATE_LIMIT_PASSWORD_RESET_ACCOUNT_PER_HOUR`)
+  holds across IPs; lower the per-IP one if needed. Every answer is 202 whatever the address,
+  so an attacker learns nothing from it.
+* `password_screen_total{outcome="lookup_failed"}` rising: Have I Been Pwned is unreachable;
+  new passwords are still screened by the built-in list (it fails open by design).
 
 ### 5.6 Rater bias alert (`rater_bias_alert` in logs)
 A machine rater's mean band differs by more than 0.3 between L1 or age groups. Machine scores

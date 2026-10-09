@@ -37,6 +37,7 @@ from app.services.progress import (
     est_minutes,
     required_nodes,
 )
+from app.services.sessions import saved_profile
 
 router = APIRouter(tags=["progress"])
 
@@ -54,6 +55,7 @@ async def get_progress(
         service = ProgressService(session, catalog)
         lexemes = await service.lexemes(principal.learner_id, container.clock.now())
         known, learning, percent = service.coverage(lexemes)
+        audited = await service.audited(principal.learner_id, container.clock.now())
         tiers, done = await service.path(principal.learner_id)
         current = service.current_unit(tiers, done)
         cefr, units_done, units_total = service.level(current, done)
@@ -78,7 +80,7 @@ async def get_progress(
             total_lexemes=len(catalog.lexemes),
             estimate_percent=percent,
             method=COVERAGE_METHOD,
-            audited=False,
+            audited=audited,
         ),
         level=LevelOut(
             cefr=cefr,
@@ -119,12 +121,13 @@ async def garden_summary(
         service = ProgressService(session, container.content)
         lexemes = await service.lexemes(principal.learner_id, now)
         total_due, _ = await service.due(principal.learner_id, now, limit=0)
+        audited = await service.audited(principal.learner_id, now)
     return GardenSummary(
         as_of=now,
         due_count=sum(1 for v in lexemes.values() if v.thirsty),
         est_minutes=est_minutes(total_due),
         stages=service.stages(lexemes),
-        audited=False,
+        audited=audited,
     )
 
 
@@ -185,8 +188,11 @@ async def due_reviews(
 ) -> DueQueue:
     now = container.clock.now()
     async with session.begin():
+        profile = await LearnerRepository(session).profile(principal.learner_id)
+        if profile is None:
+            raise InvalidToken("This account no longer exists.")
         total, picked = await ProgressService(session, container.content).due(
-            principal.learner_id, now, limit
+            principal.learner_id, now, limit, saved_profile(profile)
         )
     return DueQueue(
         as_of=now,

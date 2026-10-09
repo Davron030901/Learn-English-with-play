@@ -3,6 +3,10 @@
 ``compose`` reads the learner's memory state, their recent response times, today's new targets
 and the node-tier record, turns them into composer inputs, and stores the plan it gets back.
 The composer itself is pure; everything here is gathering and storing.
+
+Every exercise is chosen within the learner's accessibility profile (``domain.accessibility``):
+the one saved in their settings, or the one the request names. A lesson item the profile has
+no form for is left out of the plan and reported as ``withheld``.
 """
 
 from __future__ import annotations
@@ -22,6 +26,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.clock import Clock
 from app.content.catalog import ITEM_BEARING_KINDS, ContentCatalog, ItemRecord
 from app.domain import composer as cp
+from app.domain.accessibility import NO_PROFILE, A11yProfile, degraded, presentable
 from app.domain.fsrs import retrievability
 from app.domain.grading import FAMILY
 from app.domain.mastery import MasteryState
@@ -39,6 +44,8 @@ MIN_RT_SAMPLES: Final = 8
 RECENT_ATTEMPTS: Final = 400
 #: seconds one review takes on average, to turn the daily goal into "a normal day's reviews"
 SECONDS_PER_REVIEW: Final = 10
+#: how many well-known memory items are considered for the warm-up and the recovery items
+WELL_KNOWN: Final = 20
 
 
 class SessionError(Exception):
@@ -56,36 +63,49 @@ class Composed:
     new_cap: int
 
 
-def _plan_json(plan: cp.Plan, catalog: ContentCatalog) -> dict[str, Any]:
-    steps: list[dict[str, Any]] = []
-    for s in plan.steps:
-        if s.card is None:
-            steps.append({"role": s.role, "seconds": s.seconds})
-            continue
-        item = catalog.items[s.card.item_id]
-        steps.append(
-            {
-                "role": s.role,
-                "item_id": s.card.item_id,
-                "type_id": s.card.type_id,
-                "unit_id": item.unit_id,
-                "node_id": item.node_id,
-                "tier": item.tier,
-                "memory_item_id": s.memory_item_id,
-                "target": s.card.target,
-                "modality": cp.modality(s.card.type_id),
-                "seconds": round(s.card.seconds, 1),
-                "new_targets": sorted(s.card.new_targets),
-            }
-        )
+def _step_json(s: cp.Step, catalog: ContentCatalog) -> dict[str, Any]:
+    if s.card is None:
+        return {"role": s.role, "phase": s.phase, "seconds": s.seconds}
+    item = catalog.items[s.card.item_id]
     return {
-        "steps": steps,
+        "role": s.role,
+        "phase": s.phase,
+        "item_id": s.card.item_id,
+        "type_id": s.card.type_id,
+        "unit_id": item.unit_id,
+        "node_id": item.node_id,
+        "tier": item.tier,
+        "memory_item_id": s.memory_item_id,
+        "target": s.card.target,
+        "modality": cp.modality(s.card.type_id),
+        "seconds": round(s.card.seconds, 1),
+        "new_targets": sorted(s.card.new_targets),
+    }
+
+
+def _plan_json(
+    plan: cp.Plan, catalog: ContentCatalog, a11y: A11yProfile, withheld: Sequence[str]
+) -> dict[str, Any]:
+    return {
+        "steps": [_step_json(s, catalog) for s in plan.steps],
+        "recovery": [_step_json(s, catalog) for s in plan.recovery],
         "estimated_seconds": round(plan.seconds, 1),
         "budget_seconds": plan.budget_s,
         "review_share": plan.review_share,
         "new_targets": sorted(plan.new_targets),
         "deferred": list(plan.deferred),
+        "withheld": list(withheld),
+        "a11y": {"no_audio": a11y.no_audio, "no_vision": a11y.no_vision},
     }
+
+
+def saved_profile(profile: Profile) -> A11yProfile:
+    """The accessibility profile saved in the learner's settings."""
+    return A11yProfile(no_audio=profile.a11y_no_audio, no_vision=profile.a11y_no_vision)
+
+
+def _r(m: MemoryState, now: datetime) -> float:
+    return retrievability(max((now - m.last_review).total_seconds() / 86_400, 0.0), m.stability)
 
 
 class SessionService:
@@ -94,6 +114,7 @@ class SessionService:
         self._catalog = catalog
         self._clock = clock
         self._ix = _indexes(catalog)
+        self._a11y = NO_PROFILE
 
     # ------------------------------------------------------------------- reads
 
@@ -117,11 +138,17 @@ class SessionService:
     # ------------------------------------------------------------------- compose
 
     async def compose(
-        self, learner_id: UUID, minutes: int, node_id: str | None, tier: int | None
+        self,
+        learner_id: UUID,
+        minutes: int,
+        node_id: str | None,
+        tier: int | None,
+        a11y: A11yProfile | None = None,
     ) -> Composed:
         profile = await LearnerRepository(self._session).profile(learner_id)
         if profile is None:
             raise SessionError("gone", "this account no longer exists")
+        self._a11y = a11y if a11y is not None else saved_profile(profile)
         now = self._clock.now()
         states = {
             m.memory_item_id: m
@@ -149,6 +176,7 @@ class SessionService:
         allowance = max(0, cap - new_today) if bl.new_allowed else 0
 
         lesson: list[cp.Card] = []
+        withheld: list[str] = []
         node_share: float | None = None
         if node_id is not None:
             node = self._catalog.nodes.get(node_id)
@@ -173,7 +201,17 @@ class SessionService:
                     ),
                     available_at=gate.available_at,
                 )
-            lesson = [self._card(self._catalog.items[i], seconds, seen) for i in node.tiers[want]]
+            shown = []
+            for i in node.tiers[want]:
+                if presentable(self._catalog.items[i].type_id, self._a11y):
+                    shown.append(i)
+                else:
+                    withheld.append(i)
+            if not shown:
+                raise SessionError(
+                    "not_found", "this tier has nothing your accessibility settings can show"
+                )
+            lesson = [self._card(self._catalog.items[i], seconds, seen) for i in shown]
             fresh: set[str] = set()
             for c in lesson:
                 fresh |= c.new_targets
@@ -207,15 +245,26 @@ class SessionService:
             (r for r in built if r is not None),
             key=lambda r: (-r.priority, r.memory_item_id),
         )[: bl.queue_cap]
-        warm = [
-            r
-            for r in (
-                self._review(m, now, seconds, level, seen, {})
+        # well-known memory items, surest first: the warm-up and the recovery items come from
+        # them (p(correct) is their retrievability now)
+        known = sorted(
+            (
+                (r_now, m)
                 for m in states.values()
-                if m.due > now and m.state in ("young", "retained", "durable")
-            )
-            if r is not None and r.retrievability >= cp.WARMUP_MIN_P
-        ][:20]
+                if m.due > now
+                and m.state in ("young", "retained", "durable")
+                and (r_now := _r(m, now)) >= cp.WARMUP_MIN_P
+            ),
+            key=lambda x: (-x[0], x[1].memory_item_id),
+        )[:WELL_KNOWN]
+        warm = [
+            r for _, m in known if (r := self._review(m, now, seconds, level, seen, {})) is not None
+        ]
+        recovery = [
+            r
+            for _, m in known
+            if (r := self._review(m, now, seconds, level, seen, {}, ("choice",))) is not None
+        ]
         close_cards = {
             r.memory_item_id: alt
             for r in reviews
@@ -231,6 +280,7 @@ class SessionService:
                 new_allowance=allowance,
                 node_share=node_share,
                 close_cards=close_cards,
+                recovery=recovery,
             )
         )
         row = LearnerSession(
@@ -240,7 +290,7 @@ class SessionService:
             minutes=minutes,
             node_id=node_id,
             tier=tier,
-            plan=_plan_json(plan, self._catalog),
+            plan=_plan_json(plan, self._catalog, self._a11y, withheld),
             status="open",
             created_at=now,
             completed_at=None,
@@ -284,12 +334,13 @@ class SessionService:
         level: str,
         seen: frozenset[str],
         failed_types: dict[str, list[str]],
+        families: tuple[str, ...] | None = None,
     ) -> cp.Review | None:
-        item_id = self._pick_item(m, seen, failed_types.get(m.memory_item_id, []))
+        item_id = self._pick_item(m, seen, failed_types.get(m.memory_item_id, []), families)
         if item_id is None:
             return None
         item = self._catalog.items[item_id]
-        r = retrievability(max((now - m.last_review).total_seconds() / 86_400, 0.0), m.stability)
+        r = _r(m, now)
         return cp.Review(
             card=self._card(item, seconds, seen),
             memory_item_id=m.memory_item_id,
@@ -308,13 +359,21 @@ class SessionService:
         )
 
     def _pick_item(
-        self, m: MemoryState, seen: frozenset[str], failed_types: Sequence[str] = ()
+        self,
+        m: MemoryState,
+        seen: frozenset[str],
+        failed_types: Sequence[str] = (),
+        families: tuple[str, ...] | None = None,
     ) -> str | None:
         """An exercise suited to the state, never the type used last time (docs/08 §5.1); for a
         leech, none of the types of its last three failures (forced variation). An exercise that
-        would introduce an unseen target is used only when nothing else reviews the item."""
+        would introduce an unseen target is used only when nothing else reviews the item. Only
+        types the accessibility profile can show; a degraded route only when nothing else will
+        do. With ``families``, only those families, and None when none fits."""
         candidates = [
-            i for i in self._ix.items_for.get(m.memory_item_id, ()) if i in self._catalog.items
+            i
+            for i in self._ix.items_for.get(m.memory_item_id, ())
+            if i in self._catalog.items and presentable(self._catalog.items[i].type_id, self._a11y)
         ]
         if not candidates:
             return None
@@ -325,23 +384,36 @@ class SessionService:
             state = MasteryState(m.state)
         except ValueError:
             state = MasteryState.LEARNING
-        for family in FAMILIES_FOR.get(state, ("choice",)):
-            for item_id in pool:
-                t = self._catalog.items[item_id].type_id
-                if FAMILY.get(t) == family and t not in avoid:
-                    return item_id
-        different = [i for i in pool if self._catalog.items[i].type_id not in avoid]
-        return (different or pool)[0]
+        full = [i for i in pool if not degraded(self._catalog.items[i].type_id, self._a11y)]
+        groups = [g for g in (full, [i for i in pool if i not in full]) if g]
+        for group in groups:
+            for family in families or FAMILIES_FOR.get(state, ("choice",)):
+                for item_id in group:
+                    t = self._catalog.items[item_id].type_id
+                    if FAMILY.get(t) == family and t not in avoid:
+                        return item_id
+        if families is not None:
+            return None
+        for group in groups:
+            different = [i for i in group if self._catalog.items[i].type_id not in avoid]
+            if different:
+                return different[0]
+        return groups[0][0]
 
     def _other_card(
         self, r: cp.Review, seconds: dict[str, float], seen: frozenset[str]
     ) -> cp.Card | None:
+        fallback: ItemRecord | None = None
         for item_id in self._ix.items_for.get(r.memory_item_id, ()):
             item = self._catalog.items.get(item_id)
             if item is None or item.type_id == r.card.type_id or self._introduces(item_id, seen):
                 continue
-            return self._card(item, seconds, seen)
-        return None
+            if not presentable(item.type_id, self._a11y):
+                continue
+            if not degraded(item.type_id, self._a11y):
+                return self._card(item, seconds, seen)
+            fallback = fallback or item
+        return self._card(fallback, seconds, seen) if fallback is not None else None
 
     def _next_new(
         self, current: str, seen: frozenset[str], seconds: dict[str, float]
@@ -353,7 +425,10 @@ class SessionService:
             if node.kind not in ITEM_BEARING_KINDS:
                 continue
             for item_id in node.tiers.get(1, ()):
-                card = self._card(self._catalog.items[item_id], seconds, seen)
+                item = self._catalog.items[item_id]
+                if not presentable(item.type_id, self._a11y):
+                    continue
+                card = self._card(item, seconds, seen)
                 if card.new_targets:
                     out.append(card)
         return out

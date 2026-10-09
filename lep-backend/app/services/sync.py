@@ -21,6 +21,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.content.bundle import BundleFile, bundle_file
 from app.content.catalog import ContentCatalog
+from app.domain.accessibility import NO_PROFILE, A11yProfile
 from app.models.review import MemoryState
 from app.services.progress import ProgressService
 
@@ -57,6 +58,7 @@ async def sync_bundle(
     now: datetime,
     since: str | None,
     cdn_base_url: str | None,
+    a11y: A11yProfile = NO_PROFILE,
 ) -> SyncBundle:
     progress = ProgressService(session, catalog)
     tiers, done = await progress.path(learner_id)
@@ -88,7 +90,7 @@ async def sync_bundle(
     used: set[str] = set()
     entries: list[DueEntry] = []
     for m in due:
-        item_id = progress.review_item(m, used, within=reached)
+        item_id = progress.review_item(m, used, within=reached, a11y=a11y)
         if item_id is not None:
             used.add(item_id)
         entries.append(DueEntry(m, item_id))

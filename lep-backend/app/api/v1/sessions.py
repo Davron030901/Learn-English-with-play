@@ -2,15 +2,24 @@
 
 from __future__ import annotations
 
+from typing import Any
 from uuid import UUID
 
 from fastapi import APIRouter
 
 from app.deps import ContainerDep, CurrentPrincipal, DbSession
+from app.domain.accessibility import A11yProfile
+from app.domain.composer import ROLE_PHASE
 from app.errors import AppError, Conflict, InvalidToken, NotFound
 from app.models.sessions import LearnerSession
 from app.schemas.problem import problem_responses
-from app.schemas.sessions import CatchingUp, SessionOut, SessionRequest, SessionStep
+from app.schemas.sessions import (
+    A11yProfileOut,
+    CatchingUp,
+    SessionOut,
+    SessionRequest,
+    SessionStep,
+)
 from app.services.sessions import Composed, SessionError, SessionService
 
 router = APIRouter(prefix="/sessions", tags=["sessions"])
@@ -39,8 +48,14 @@ def _raise(exc: SessionError) -> AppError:
     return NotFound(detail)
 
 
+def _step(s: dict[str, Any]) -> SessionStep:
+    # a plan stored before steps carried their phase: the role's own (a lesson item is guided)
+    return SessionStep(**{"phase": ROLE_PHASE.get(s["role"], "guided"), **s})
+
+
 def _out(row: LearnerSession, composed: Composed | None = None) -> SessionOut:
     plan = row.plan
+    a11y = plan.get("a11y") or {}
     catching_up = (
         CatchingUp(
             due=composed.backlog.due,
@@ -62,9 +77,14 @@ def _out(row: LearnerSession, composed: Composed | None = None) -> SessionOut:
             "created_at": row.created_at,
             "completed_at": row.completed_at,
             "estimated_seconds": plan["estimated_seconds"],
-            "steps": [SessionStep(**s) for s in plan["steps"]],
+            "steps": [_step(s) for s in plan["steps"]],
             "new_targets": plan["new_targets"],
             "deferred": plan["deferred"],
+            "recovery": [_step(s) for s in plan.get("recovery", [])],
+            "withheld": plan.get("withheld", []),
+            "a11y_profile": A11yProfileOut(
+                no_audio=bool(a11y.get("no_audio")), no_vision=bool(a11y.get("no_vision"))
+            ),
             "catching_up": catching_up,
             "new_today": composed.new_today if composed else None,
             "new_cap": composed.new_cap if composed else None,
@@ -83,8 +103,13 @@ async def compose(
 ) -> SessionOut:
     try:
         async with session.begin():
+            a11y = (
+                A11yProfile(body.a11y_profile.no_audio, body.a11y_profile.no_vision)
+                if body.a11y_profile is not None
+                else None
+            )
             composed = await SessionService(session, container.content, container.clock).compose(
-                principal.learner_id, body.minutes, body.node_id, body.tier
+                principal.learner_id, body.minutes, body.node_id, body.tier, a11y
             )
             return _out(composed.row, composed)
     except SessionError as exc:

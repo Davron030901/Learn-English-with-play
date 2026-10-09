@@ -121,6 +121,12 @@ class SettingsPatch(BaseModel):
     data_collection_paused: bool | None = Field(
         default=None, description="While paused, no recordings or writing are accepted."
     )
+    a11y_no_audio: bool | None = Field(
+        default=None, description="Accessibility: choose exercises that need no hearing."
+    )
+    a11y_no_vision: bool | None = Field(
+        default=None, description="Accessibility: choose exercises that need no sight."
+    )
 
     @field_validator("desired_retention")
     @classmethod
@@ -144,7 +150,10 @@ class CoverageOut(Out):
         "(Zipf over the course order) until the monthly retention audit has run."
     )
     method: str
-    audited: bool
+    audited: bool = Field(
+        description="True while a memory check finished within the last 35 days: what counts "
+        "as known has been checked against what the learner recalled (docs/08 §9)."
+    )
 
 
 class UnitStatus(Out):
@@ -176,7 +185,7 @@ class GardenSummary(Out):
     due_count: int = Field(description="Words due for watering now.")
     est_minutes: int
     stages: dict[str, int] = Field(description="seed, sprout, bush, bloom, tree, leech, paused.")
-    audited: bool
+    audited: bool = Field(description="As for the coverage: a memory check in the last 35 days.")
 
 
 class Plant(Out):
