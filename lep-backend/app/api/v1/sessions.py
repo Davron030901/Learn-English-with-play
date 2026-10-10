@@ -9,7 +9,7 @@ from fastapi import APIRouter
 
 from app.deps import ContainerDep, CurrentPrincipal, DbSession
 from app.domain.accessibility import A11yProfile
-from app.domain.composer import ROLE_PHASE
+from app.domain.composer import phases_of
 from app.errors import AppError, Conflict, InvalidToken, NotFound
 from app.models.sessions import LearnerSession
 from app.schemas.problem import problem_responses
@@ -48,9 +48,12 @@ def _raise(exc: SessionError) -> AppError:
     return NotFound(detail)
 
 
-def _step(s: dict[str, Any]) -> SessionStep:
-    # a plan stored before steps carried their phase: the role's own (a lesson item is guided)
-    return SessionStep(**{"phase": ROLE_PHASE.get(s["role"], "guided"), **s})
+def _steps(stored: list[dict[str, Any]]) -> list[SessionStep]:
+    """A plan stored before steps carried their phase is labelled now, by the same rule."""
+    if all("phase" in s for s in stored):
+        return [SessionStep(**s) for s in stored]
+    phases = phases_of([(s["role"], s.get("type_id")) for s in stored])
+    return [SessionStep(**{**s, "phase": p}) for s, p in zip(stored, phases, strict=True)]
 
 
 def _out(row: LearnerSession, composed: Composed | None = None) -> SessionOut:
@@ -77,10 +80,10 @@ def _out(row: LearnerSession, composed: Composed | None = None) -> SessionOut:
             "created_at": row.created_at,
             "completed_at": row.completed_at,
             "estimated_seconds": plan["estimated_seconds"],
-            "steps": [_step(s) for s in plan["steps"]],
+            "steps": _steps(plan["steps"]),
             "new_targets": plan["new_targets"],
             "deferred": plan["deferred"],
-            "recovery": [_step(s) for s in plan.get("recovery", [])],
+            "recovery": _steps(plan.get("recovery", [])),
             "withheld": plan.get("withheld", []),
             "a11y_profile": A11yProfileOut(
                 no_audio=bool(a11y.get("no_audio")), no_vision=bool(a11y.get("no_vision"))

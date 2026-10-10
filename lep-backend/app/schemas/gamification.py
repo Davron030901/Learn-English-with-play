@@ -1,7 +1,8 @@
 """The motivation layer's responses (docs/10, docs/16 E00–E15).
 
 Coverage and progress come first (docs/10 §4.1); XP, streak and gems are secondary and are
-documented as what they measure. No response contains a rank against other learners.
+documented as what they measure. No response here contains a rank against other learners; the
+opt-in leagues (``app.schemas.leagues``) are the one place that does, for those who chose them.
 """
 
 from __future__ import annotations
@@ -111,7 +112,18 @@ class SettingsPatch(BaseModel):
         default=None, description="A preset: 0.85 relaxed, 0.90 balanced, 0.94 thorough."
     )
     rest_days: list[int] | None = Field(default=None, max_length=2)
-    leagues_opt_in: bool | None = None
+    leagues_opt_in: bool | None = Field(
+        default=None,
+        description="Weekly leagues, off by default (docs/16 E23). Refused for a learner who "
+        "might be under 18 (403 leagues_not_for_minors) and without a display name (409 "
+        "display_name_required).",
+    )
+    display_name: str | None = Field(
+        default=None,
+        max_length=64,
+        description="The name others in a league see: 2–24 letters, digits, spaces, _ - or "
+        "apostrophes. null removes it (not while in leagues).",
+    )
     perfectionist_mode: bool | None = None
     spelling_variant: Literal["us", "uk"] | None = None
     voice_consent: bool | None = Field(

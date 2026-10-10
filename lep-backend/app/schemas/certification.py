@@ -122,9 +122,8 @@ class ExamReportOut(Out):
     skills: list[SkillOut]
     error_types: list[ErrorTypeOut]
     error_norms: None = Field(
-        default=None,
         description="Level norms need answers from many learners; none exist yet, so none "
-        "are shown.",
+        "are shown (always null)."
     )
     work_on: list[WorkOnOut] = Field(description="At most five targets, most often wrong first.")
     vocabulary: VocabularyOut

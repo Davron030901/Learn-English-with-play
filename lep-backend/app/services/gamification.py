@@ -33,6 +33,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.clock import Clock
 from app.content.catalog import ITEM_BEARING_KINDS, ContentCatalog
+from app.domain import leagues as lg
 from app.domain import quests as q
 from app.domain.accessibility import A11yProfile, presentable
 from app.domain.composer import tier_gate
@@ -268,6 +269,8 @@ class GamificationService:
         )
         goal_ms = profile.daily_goal_min * 60_000
         xp_centi_total = 0
+        league_week = lg.week_of(now)
+        counts_in_league = False
         for o in accepted:
             if o.item is None or o.answered_at is None:  # filtered above; for the type checker
                 continue
@@ -290,6 +293,9 @@ class GamificationService:
             centi = round(xp * 100)
             d.xp_centi += centi
             xp_centi_total += centi
+            counts_in_league |= (
+                centi > 0 and not o.regrind and o.answered_at >= league_week.starts_at
+            )
             self._session.add(
                 XpEvent(
                     learner_id=learner_id,
@@ -323,7 +329,18 @@ class GamificationService:
         awards.streak = await self._settle_streak(learner_id, profile, now)
         if awards.goal is None:
             awards.goal = await self._goal(learner_id, profile, local_day(now, profile.tz))
+        if counts_in_league:
+            await self._join_league(learner_id, profile, awards.streak)
         return awards
+
+    async def _join_league(self, learner_id: UUID, profile: Profile, streak: StreakView) -> None:
+        """XP that counts this week puts an opted-in learner into a league (docs/16 E23)."""
+        if profile.leagues_opt_in:
+            from app.services.leagues import LeagueService
+
+            await LeagueService(self._session, self._clock).on_xp(
+                learner_id, profile, paused=streak.paused_until is not None
+            )
 
     async def credit_activity(
         self,
@@ -373,6 +390,8 @@ class GamificationService:
         awards.streak = await self._settle_streak(learner_id, profile, now)
         if awards.goal is None:
             awards.goal = await self._goal(learner_id, profile, local_day(now, profile.tz))
+        if centi > 0 and at >= lg.week_of(now).starts_at:
+            await self._join_league(learner_id, profile, awards.streak)
         return awards
 
     # --------------------------------------------------------------- days

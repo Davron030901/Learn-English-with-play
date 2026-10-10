@@ -22,7 +22,9 @@ from app.schemas.reviews import (
     Typo,
 )
 from app.services.gamification import GamificationService
+from app.services.progress import ProgressService
 from app.services.reviews import IncomingDispute, IncomingReview, Outcome, ReviewService
+from app.services.sessions import saved_profile
 
 router = APIRouter(tags=["reviews"])
 
@@ -87,7 +89,15 @@ async def _ingest(
             principal.learner_id, profile, outcomes
         )
         now = container.clock.now()
-        due = await ReviewRepository(session).due_count(principal.learner_id, now)
+        a11y = saved_profile(profile)
+        if a11y.any:
+            # what this learner can actually be asked (an item only sound-only exercises review
+            # is not due for someone who cannot hear)
+            due, _ = await ProgressService(session, container.content).due(
+                principal.learner_id, now, 0, a11y
+            )
+        else:
+            due = await ReviewRepository(session).due_count(principal.learner_id, now)
     by_id = {o.client_uuid: o for o in outcomes}
     results: list[RecordResult] = []
     seen: set[object] = set()

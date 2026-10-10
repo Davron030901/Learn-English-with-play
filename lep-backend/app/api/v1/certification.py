@@ -186,6 +186,7 @@ async def exam_report_out(
         papers=[PaperReportOut.model_validate(p, from_attributes=True) for p in r.papers],
         skills=[SkillOut.model_validate(s, from_attributes=True) for s in r.skills],
         error_types=[ErrorTypeOut.model_validate(e, from_attributes=True) for e in r.error_types],
+        error_norms=None,
         work_on=[
             WorkOnOut(
                 target=w.target,

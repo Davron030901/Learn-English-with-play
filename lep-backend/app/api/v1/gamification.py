@@ -7,10 +7,14 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Response
 
+from app.api.v1.leagues import DisplayNameRequired, LeaguesNotForMinors
 from app.deps import ContainerDep, CurrentPrincipal, DbSession
+from app.domain import leagues as lg
 from app.domain import streaks as st
+from app.domain.age_policy import is_minor
+from app.domain.display_names import InvalidDisplayName, normalise_display_name
 from app.domain.scheduling import reschedule
-from app.errors import InvalidToken, StreakRuleRefused
+from app.errors import FieldError, InvalidToken, StreakRuleRefused, ValidationFailed
 from app.models.gamification import LearnerDay, Streak
 from app.models.learner import Learner, LearnerSettings
 from app.repositories.learners import LearnerRepository, Profile
@@ -36,6 +40,7 @@ from app.services.gamification import (
     QuestView,
     StreakView,
 )
+from app.services.leagues import LeagueService
 
 router = APIRouter(tags=["gamification"])
 
@@ -288,14 +293,23 @@ async def patch_settings(
     body: SettingsPatch, principal: CurrentPrincipal, session: DbSession, container: ContainerDep
 ) -> GamificationSummary:
     """Lowering the daily goal never costs anything (docs/10 §5). A new retention preset
-    re-derives every due date from the stored stability, so a replay still matches."""
+    re-derives every due date from the stored stability, so a replay still matches.
+
+    Leagues (docs/16 E23) are joined here, never by the server: refused for a learner who might
+    be under 18, and only with a display name, which may come in the same request. Leaving takes
+    the learner out of this week's group at once and keeps their tier for four weeks."""
     if body.rest_days is not None and (
         len(set(body.rest_days)) != len(body.rest_days)
         or not all(1 <= d <= 7 for d in body.rest_days)
     ):
-        from app.errors import FieldError, ValidationFailed
-
         raise ValidationFailed([FieldError("rest_days", "at most two distinct ISO weekdays (1–7)")])
+    name_given = "display_name" in body.model_fields_set
+    display_name = None
+    if name_given and body.display_name is not None:
+        try:
+            display_name = normalise_display_name(body.display_name)
+        except InvalidDisplayName as exc:
+            raise ValidationFailed([FieldError("display_name", str(exc))]) from None
     async with session.begin():
         learner = await session.get(Learner, principal.learner_id, with_for_update=True)
         settings = await session.get(LearnerSettings, principal.learner_id, with_for_update=True)
@@ -305,8 +319,26 @@ async def patch_settings(
             learner.daily_goal_min = body.daily_goal_min
         if body.rest_days is not None:
             settings.rest_days = sorted(body.rest_days)
-        if body.leagues_opt_in is not None:
+        if name_given:
+            learner.display_name = display_name
+        if body.leagues_opt_in is not None and body.leagues_opt_in != settings.leagues_opt_in:
+            now = container.clock.now()
+            leagues = LeagueService(session, container.clock)
+            if body.leagues_opt_in:
+                if is_minor(learner.birth_year, st.local_day(now, learner.tz)):
+                    raise LeaguesNotForMinors("Leagues are not offered on this account.")
+                # a result still waiting is applied first, so the four weeks count from it
+                await leagues.catch_up(principal.learner_id)
+                settings.league_tier = lg.tier_on_return(
+                    settings.league_tier, settings.leagues_left_at, now
+                )
+                settings.leagues_left_at = None
+            else:
+                settings.leagues_left_at = now
+                await leagues.leave(principal.learner_id)
             settings.leagues_opt_in = body.leagues_opt_in
+        if settings.leagues_opt_in and learner.display_name is None:
+            raise DisplayNameRequired("Others in a league see a display name; choose one.")
         if body.perfectionist_mode is not None:
             settings.perfectionist_mode = body.perfectionist_mode
         if body.spelling_variant is not None:

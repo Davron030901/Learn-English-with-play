@@ -10,6 +10,7 @@ from sqlalchemy import func, select
 
 from app.content.catalog import ContentCatalog
 from app.deps import ContainerDep, CurrentPrincipal, DbSession
+from app.domain.accessibility import NO_PROFILE
 from app.errors import InvalidToken
 from app.models.gamification import NodeProgress, XpEvent
 from app.models.review import ReviewAttempt
@@ -119,8 +120,10 @@ async def garden_summary(
     now = container.clock.now()
     async with session.begin():
         service = ProgressService(session, container.content)
+        profile = await LearnerRepository(session).profile(principal.learner_id)
+        a11y = saved_profile(profile) if profile is not None else NO_PROFILE
         lexemes = await service.lexemes(principal.learner_id, now)
-        total_due, _ = await service.due(principal.learner_id, now, limit=0)
+        total_due, _ = await service.due(principal.learner_id, now, 0, a11y)
         audited = await service.audited(principal.learner_id, now)
     return GardenSummary(
         as_of=now,

@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import math
 from collections import defaultdict
-from collections.abc import Sequence
+from collections.abc import Container, Sequence
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Final
@@ -272,7 +272,9 @@ class ProgressService:
         states = [
             m
             for m in await self._states(learner_id)
-            if m.due <= now and m.state not in ("suspended", "retired")
+            if m.due <= now
+            and m.state not in ("suspended", "retired")
+            and self.reviewable(m.memory_item_id, a11y)
         ]
 
         def r_now(m: MemoryState) -> float:
@@ -316,20 +318,58 @@ class ProgressService:
             candidates = reached or candidates
         if not candidates:
             return None
-        families = FAMILIES_FOR.get(MasteryState(m.state), ("choice",))
-        full = [i for i in candidates if not degraded(self._catalog.items[i].type_id, a11y)]
-        groups = [g for g in (full, [i for i in candidates if i not in full]) if g]
-        for group in groups:
-            for family in families:
-                for item_id in group:
-                    item = self._catalog.items[item_id]
-                    if FAMILY.get(item.type_id) == family and item.type_id != m.last_type_id:
-                        return item_id
-        for group in groups:
-            different = [i for i in group if self._catalog.items[i].type_id != m.last_type_id]
-            if different:
-                return different[0]
-        return groups[0][0]
+        return choose_item(
+            candidates,
+            self._catalog,
+            FAMILIES_FOR.get(MasteryState(m.state), ("choice",)),
+            {m.last_type_id},
+            a11y,
+        )
+
+    def reviewable(self, memory_item_id: str, a11y: A11yProfile) -> bool:
+        """Can anything review this memory item for this profile? Without a profile, every
+        memory item counts as before; with one, an item only sound-only exercises review is not
+        due for this learner — it could never be asked, and must not grow the backlog."""
+        if not a11y.any:
+            return True
+        return any(
+            presentable(self._catalog.items[i].type_id, a11y)
+            for i in self._ix.items_for.get(memory_item_id, ())
+            if i in self._catalog.items
+        )
+
+
+def choose_item(
+    pool: Sequence[str],
+    catalog: ContentCatalog,
+    families: Sequence[str],
+    avoid: Container[str],
+    a11y: A11yProfile,
+    *,
+    strict: bool = False,
+) -> str | None:
+    """The exercise to review a memory item with, from ``pool`` (all presentable).
+
+    The whole choice — a family suited to the state, else any type not to ``avoid``, else the
+    first — is made among the full routes; a degraded route (a listening item read from its
+    transcript, a visual game as a list) only when there is no full route at all. ``strict``:
+    only the given families count, and None when nothing fits them."""
+    full = [i for i in pool if not degraded(catalog.items[i].type_id, a11y)]
+    taken = set(full)
+    rest = [i for i in pool if i not in taken]
+    for group in (full, rest):
+        if not group:
+            continue
+        for family in families:
+            for item_id in group:
+                t = catalog.items[item_id].type_id
+                if FAMILY.get(t) == family and t not in avoid:
+                    return item_id
+        if strict:
+            continue
+        different = [i for i in group if catalog.items[i].type_id not in avoid]
+        return (different or group)[0]
+    return None
 
 
 def est_minutes(due_memory_items: int) -> int:

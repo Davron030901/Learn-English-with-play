@@ -72,17 +72,20 @@ async def sync_bundle(
         MemoryState.due <= until,
         MemoryState.state.not_in(_IDLE),
     )
-    total = int((await session.execute(select(func.count()).where(*in_window))).scalar_one())
-    due = list(
-        (
-            await session.execute(
-                select(MemoryState)
-                .where(*in_window)
-                .order_by(MemoryState.due, MemoryState.memory_item_id)
-                .limit(MAX_DUE)
-            )
-        ).scalars()
+    ordered = (
+        select(MemoryState).where(*in_window).order_by(MemoryState.due, MemoryState.memory_item_id)
     )
+    if a11y.any:
+        # a memory item nothing can review for this profile is not due (it could never be asked)
+        every = [
+            m
+            for m in (await session.execute(ordered)).scalars()
+            if progress.reviewable(m.memory_item_id, a11y)
+        ]
+        total, due = len(every), every[:MAX_DUE]
+    else:
+        total = int((await session.execute(select(func.count()).where(*in_window))).scalar_one())
+        due = list((await session.execute(ordered.limit(MAX_DUE))).scalars())
     # each review gets the exercise the device will show offline, chosen as the online queue
     # chooses it but from the units the learner has reached (up to the end of the window), so
     # nothing later in the course is spoiled; the bundle names the units those exercises are in

@@ -28,7 +28,7 @@ from app.services.speech import all_recordings
 
 #: never exported: credentials and token material
 SECRET_COLUMNS: Final = frozenset({"password_hash", "token_hash", "family_id_hash"})
-SKIPPED_TABLES: Final = frozenset({"auth_sessions", "refresh_tokens"})
+SKIPPED_TABLES: Final = frozenset({"auth_sessions", "refresh_tokens", "password_reset_tokens"})
 
 
 def _plain(value: Any) -> Any:

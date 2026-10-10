@@ -576,30 +576,32 @@ def compose(req: Request) -> Plan:
     )
 
 
-def label_phases(steps: Sequence[Step]) -> list[Step]:
-    """Each step with its docs/07 §3.2 phase: a lesson item is production when it is speaking or
-    free writing, else guided practice for the first 60 % of the lesson's practice items and
-    integration after them."""
+def phases_of(steps: Sequence[tuple[str, str | None]]) -> list[Phase]:
+    """The docs/07 §3.2 phase of each ``(role, type_id)``: a lesson item is production when it
+    is speaking or free writing, else guided practice for the first 60 % of the lesson's practice
+    items and integration after them; every other role has its own."""
     practice = sum(
-        1
-        for s in steps
-        if s.role == "lesson" and s.card is not None and s.card.type_id not in PRODUCTION_TYPES
+        1 for role, t in steps if role == "lesson" and t is not None and t not in PRODUCTION_TYPES
     )
     guided = math.ceil(practice * GUIDED_SHARE)
     seen = 0
-    out: list[Step] = []
-    for s in steps:
-        phase: Phase
-        if s.role == "lesson" and s.card is not None:
-            if s.card.type_id in PRODUCTION_TYPES:
-                phase = "production"
+    out: list[Phase] = []
+    for role, t in steps:
+        if role == "lesson" and t is not None:
+            if t in PRODUCTION_TYPES:
+                out.append("production")
             else:
-                phase = "guided" if seen < guided else "integration"
+                out.append("guided" if seen < guided else "integration")
                 seen += 1
         else:
-            phase = ROLE_PHASE[s.role]
-        out.append(replace(s, phase=phase))
+            out.append(ROLE_PHASE.get(role, "review"))
     return out
+
+
+def label_phases(steps: Sequence[Step]) -> list[Step]:
+    """Each step with its phase (``phases_of``)."""
+    phases = phases_of([(s.role, s.card.type_id if s.card else None) for s in steps])
+    return [replace(s, phase=p) for s, p in zip(steps, phases, strict=True)]
 
 
 def _recovery(candidates: Iterable[Review], steps: Sequence[Step]) -> tuple[Step, ...]:
@@ -615,11 +617,13 @@ def _recovery(candidates: Iterable[Review], steps: Sequence[Step]) -> tuple[Step
         card = r.card
         if r.retrievability < WARMUP_MIN_P or card.new_targets or card.type_id in types:
             continue
-        if card.item_id in items or r.memory_item_id in memory:
+        # nothing the plan asks about: an item over several memory items is checked on all
+        tests = {r.memory_item_id, *card.memory_items}
+        if card.item_id in items or tests & memory:
             continue
         out.append(Step("recovery", card, card.seconds, r.memory_item_id, phase="integration"))
         items.add(card.item_id)
-        memory.add(r.memory_item_id)
+        memory |= tests
         types.add(card.type_id)
     return tuple(out)
 
@@ -652,6 +656,7 @@ __all__ = [
     "expected_seconds",
     "label_phases",
     "modality",
+    "phases_of",
     "new_cap_per_day",
     "split",
     "target_of",

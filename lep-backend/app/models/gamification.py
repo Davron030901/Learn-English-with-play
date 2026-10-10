@@ -85,6 +85,8 @@ class XpEvent(Base):
         ),
         CheckConstraint("xp_centi >= 0", name="xp_non_negative"),
         Index("ix_xp_events_learner_id_session_id", "learner_id", "session_id"),
+        # a league's weekly XP: its members' events in one week
+        Index("ix_xp_events_learner_id_ts", "learner_id", "ts"),
     )
 
 
@@ -183,3 +185,61 @@ class Cosmetic(Base):
     item_id: Mapped[str] = mapped_column(Text, primary_key=True)
     acquired_at: Mapped[datetime]
     equipped: Mapped[bool] = mapped_column(server_default=text("false"))
+
+
+class League(Base):
+    """One weekly group of at most 30 opted-in learners of one tier (docs/16 E23)."""
+
+    __tablename__ = "leagues"
+
+    id: Mapped[UUID] = mapped_column(primary_key=True)
+    week_starts_at: Mapped[datetime]
+    tier: Mapped[int] = mapped_column(SmallInteger)
+    #: the first member's XP the week before, in whole XP: who this group is matched for
+    seed_xp: Mapped[int] = mapped_column(Integer)
+    created_at: Mapped[datetime]
+    settled_at: Mapped[datetime | None]
+
+    __table_args__ = (
+        CheckConstraint("tier BETWEEN 1 AND 10", name="tier_range"),
+        CheckConstraint("seed_xp >= 0", name="seed_non_negative"),
+        Index("ix_leagues_week_starts_at_tier", "week_starts_at", "tier"),
+        Index(
+            "ix_leagues_unsettled", "week_starts_at", postgresql_where=text("settled_at IS NULL")
+        ),
+    )
+
+
+class LeagueMember(Base):
+    """A learner's week in a league. The weekly XP is read from ``xp_events`` until the week is
+    settled; then the result is kept here, and applied to the learner's tier on their next
+    request (``tier_applied``)."""
+
+    __tablename__ = "league_members"
+
+    league_id: Mapped[UUID] = mapped_column(
+        ForeignKey("leagues.id", ondelete="CASCADE"), primary_key=True
+    )
+    learner_id: Mapped[UUID] = mapped_column(_fk(), primary_key=True)
+    #: the league's week, repeated so a learner is in one league a week at most
+    week_starts_at: Mapped[datetime]
+    joined_at: Mapped[datetime]
+    final_xp_centi: Mapped[int | None] = mapped_column(Integer)
+    final_rank: Mapped[int | None] = mapped_column(SmallInteger)
+    moved: Mapped[int | None] = mapped_column(SmallInteger)
+    tier_after: Mapped[int | None] = mapped_column(SmallInteger)
+    tier_applied: Mapped[bool] = mapped_column(server_default=text("false"))
+    #: the week's result was shown in the app
+    result_seen: Mapped[bool] = mapped_column(server_default=text("false"))
+
+    __table_args__ = (
+        UniqueConstraint(
+            "learner_id", "week_starts_at", name="uq_league_members_learner_id_week_starts_at"
+        ),
+        CheckConstraint("moved IN (-1, 0, 1)", name="moved_valid"),
+        CheckConstraint("tier_after BETWEEN 1 AND 10", name="tier_after_range"),
+        CheckConstraint(
+            "(final_rank IS NULL) = (moved IS NULL) AND (moved IS NULL) = (tier_after IS NULL)",
+            name="result_complete",
+        ),
+    )

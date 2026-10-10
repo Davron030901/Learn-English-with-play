@@ -68,6 +68,12 @@ def test_beat_schedules_the_auth_purge_and_the_task_exists() -> None:
     assert "lep.assessment.bias_audit" in app.tasks
     for name in ("purge-expired-recordings", "seed-media-assets", "tts-drafts"):
         assert app.conf.beat_schedule[name]["task"] in app.tasks
+    # league weeks end on Sunday 20:00 in Tashkent (UTC+5): settled just after, at 15:02 UTC
+    leagues = app.conf.beat_schedule["settle-league-weeks"]
+    assert leagues["task"] == "lep.leagues.settle"
+    assert "lep.leagues.settle" in app.tasks
+    assert leagues["schedule"].day_of_week == {0}
+    assert (leagues["schedule"].hour, leagues["schedule"].minute) == ({15}, {2})
     assert app.conf.result_expires is None  # no result backend, so nothing to clean up
 
 

@@ -124,6 +124,8 @@ async def send_reset_link(
             if credentials is None or credentials.status != "active":
                 metrics.mail_events.labels(kind="password_reset", outcome="no_account").inc()
                 return
+            # two requests at once must not both leave a working link
+            await learners.lock_password_hash(credentials.learner_id)
             profile = await learners.profile(credentials.learner_id)
             if profile is None:
                 return
@@ -184,6 +186,10 @@ class PasswordService:
         password_hash = await self._screened_hash(new_password, profile.email, "new_password")
         now = self._clock.now()
         async with self._session.begin():
+            # the learner row first, as sign-in takes it: a sign-in that verified the old
+            # password either ends before this (and its session is revoked below) or sees the
+            # new hash and is refused
+            await LearnerRepository(self._session).lock_password_hash(learner_id)
             if await self._valid(token_hash) != learner_id:
                 raise ResetLinkInvalid
             await LearnerRepository(self._session).set_password_hash(learner_id, password_hash)
@@ -233,7 +239,13 @@ class PasswordService:
         password_hash = await self._screened_hash(new_password, profile.email, "new_password")
         at = now or self._clock.now()
         async with self._session.begin():
-            await LearnerRepository(self._session).set_password_hash(learner_id, password_hash)
+            learners = LearnerRepository(self._session)
+            if await learners.lock_password_hash(learner_id) != credentials.password_hash:
+                # reset or changed elsewhere meanwhile: the password given is no longer current
+                raise ValidationFailed(
+                    [FieldError("current_password", "this is not your current password")]
+                )
+            await learners.set_password_hash(learner_id, password_hash)
             await PasswordResetRepository(self._session).void_all(learner_id, at=at)
             ended = await AuthSessionRepository(self._session).revoke_all(
                 learner_id, reason="password_change", at=at, keep=session_id

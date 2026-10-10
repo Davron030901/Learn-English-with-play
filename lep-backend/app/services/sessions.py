@@ -36,7 +36,7 @@ from app.models.gamification import NodeProgress
 from app.models.review import MemoryState, ReviewAttempt, ReviewLog
 from app.models.sessions import LearnerSession
 from app.repositories.learners import LearnerRepository, Profile
-from app.services.progress import FAMILIES_FOR, ProgressService, _indexes
+from app.services.progress import FAMILIES_FOR, ProgressService, _indexes, choose_item
 from app.services.reviews import POPULATION_MEDIAN_RT_MS
 
 #: the learner's own median per family needs this many answers in that family
@@ -164,10 +164,14 @@ class SessionService:
         current = progress.current_unit(tiers, done)
         level = self._catalog.units[current].cefr
 
+        # a memory item nothing can review for this profile is not due: it could never be asked
         due = [
             m
             for m in states.values()
-            if m.due <= now and m.state not in ("suspended", "retired") and not m.suspended
+            if m.due <= now
+            and m.state not in ("suspended", "retired")
+            and not m.suspended
+            and progress.reviewable(m.memory_item_id, self._a11y)
         ]
         normal = max(1, profile.daily_goal_min * 60 // SECONDS_PER_REVIEW)
         bl = cp.backlog(len(due), normal)
@@ -256,15 +260,21 @@ class SessionService:
                 and (r_now := _r(m, now)) >= cp.WARMUP_MIN_P
             ),
             key=lambda x: (-x[0], x[1].memory_item_id),
-        )[:WELL_KNOWN]
-        warm = [
-            r for _, m in known if (r := self._review(m, now, seconds, level, seen, {})) is not None
-        ]
-        recovery = [
-            r
-            for _, m in known
-            if (r := self._review(m, now, seconds, level, seen, {}, ("choice",))) is not None
-        ]
+        )
+        warm: list[cp.Review] = []
+        recovery: list[cp.Review] = []
+        # surest first, up to WELL_KNOWN of each that an exercise can actually review
+        for _, m in known:
+            if len(warm) < WELL_KNOWN:
+                w = self._review(m, now, seconds, level, seen, {})
+                if w is not None:
+                    warm.append(w)
+            if len(recovery) < WELL_KNOWN:
+                rv = self._review(m, now, seconds, level, seen, {}, ("choice",))
+                if rv is not None:
+                    recovery.append(rv)
+            if len(warm) == len(recovery) == WELL_KNOWN:
+                break
         close_cards = {
             r.memory_item_id: alt
             for r in reviews
@@ -384,21 +394,14 @@ class SessionService:
             state = MasteryState(m.state)
         except ValueError:
             state = MasteryState.LEARNING
-        full = [i for i in pool if not degraded(self._catalog.items[i].type_id, self._a11y)]
-        groups = [g for g in (full, [i for i in pool if i not in full]) if g]
-        for group in groups:
-            for family in families or FAMILIES_FOR.get(state, ("choice",)):
-                for item_id in group:
-                    t = self._catalog.items[item_id].type_id
-                    if FAMILY.get(t) == family and t not in avoid:
-                        return item_id
-        if families is not None:
-            return None
-        for group in groups:
-            different = [i for i in group if self._catalog.items[i].type_id not in avoid]
-            if different:
-                return different[0]
-        return groups[0][0]
+        return choose_item(
+            pool,
+            self._catalog,
+            families or FAMILIES_FOR.get(state, ("choice",)),
+            avoid,
+            self._a11y,
+            strict=families is not None,
+        )
 
     def _other_card(
         self, r: cp.Review, seconds: dict[str, float], seen: frozenset[str]
