@@ -139,4 +139,3 @@ lep-backend/app/api/v1/leagues.py
 lep-backend/app/domain/display_names.py
 lep-backend/app/domain/leagues.py
 lep-backend/app/schemas/leagues.py
-lep-backend/app/services/leagues.py
