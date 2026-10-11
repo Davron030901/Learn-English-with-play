@@ -136,4 +136,3 @@ lep-backend/app/mail/
 lep-backend/app/repositories/password_resets.py
 lep-backend/app/security/
 lep-backend/app/api/v1/leagues.py
-lep-backend/app/domain/display_names.py
