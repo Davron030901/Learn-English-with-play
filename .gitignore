@@ -134,4 +134,3 @@ lep-backend/app/domain/accessibility.py
 lep-backend/app/domain/exam_report.py
 lep-backend/app/mail/
 lep-backend/app/repositories/password_resets.py
-lep-backend/app/security
