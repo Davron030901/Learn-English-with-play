@@ -130,4 +130,3 @@ lep-backend/app/services/media.py
 lep-backend/app/services/progress.py
 lep-backend/app/services/reviews.py
 lep-backend/app/api/v1/capabilities.py
-lep-backend/app/domain/accessibility.py
