@@ -123,4 +123,3 @@ lep-backend/app/schemas/certification.py
 lep-backend/app/schemas/sync.py
 lep-backend/app/services/ai.py
 lep-backend/app/services/assessment.py
-lep-backend/app/services/certification.py
