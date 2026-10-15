@@ -125,4 +125,3 @@ lep-backend/app/services/ai.py
 lep-backend/app/services/assessment.py
 lep-backend/app/services/certification.py
 lep-backend/app/services/data.py
-lep-backend/app/services/gamification.py
