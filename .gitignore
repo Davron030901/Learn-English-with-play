@@ -121,4 +121,3 @@ lep-backend/app/repositories/reviews.py
 lep-backend/app/schemas/ai.py
 lep-backend/app/schemas/certification.py
 lep-backend/app/schemas/sync.py
-lep-backend/app/services/ai.py
