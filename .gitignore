@@ -118,4 +118,3 @@ lep-backend/app/models/ai.py
 lep-backend/app/models/certification.py
 lep-backend/app/models/media.py
 lep-backend/app/repositories/reviews.py
-lep-backend/app/schemas/ai.py
