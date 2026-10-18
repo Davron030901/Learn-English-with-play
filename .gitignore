@@ -115,4 +115,3 @@ lep-backend/app/domain/pronunciation.py
 lep-backend/app/domain/rubric.py
 lep-backend/app/media/ports.py
 lep-backend/app/models/ai.py
-lep-backend/app/models/certification.py
