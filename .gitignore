@@ -110,4 +110,3 @@ lep-backend/app/content/catalog.py
 lep-backend/app/content/bundle.py
 lep-backend/app/domain/composer.py
 lep-backend/app/domain/conversation.py
-lep-backend/app/domain/exam.py
