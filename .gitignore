@@ -108,4 +108,3 @@ lep-backend/app/api/v1/media.py
 lep-backend/app/api/v1/sync.py
 lep-backend/app/content/catalog.py
 lep-backend/app/content/bundle.py
-lep-backend/app/domain/composer.py
