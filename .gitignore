@@ -103,4 +103,3 @@ lep-backend/app/ai/partner.py
 lep-backend/app/ai/rater.py
 lep-backend/app/api/v1/ai.py
 lep-backend/app/api/v1/certification.py
-lep-backend/app/api/v1/content.py
