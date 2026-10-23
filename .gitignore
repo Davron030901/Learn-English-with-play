@@ -93,4 +93,3 @@ lep-backend/openapi.json
 lep-backend/pyproject.toml
 lep-backend/scripts/__init__.py
 lep-backend/scripts/export_openapi.py
-lep-backend/scripts/init-local-secrets.sh
