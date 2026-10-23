@@ -100,4 +100,3 @@ lep-backend/tests/integration/__init__.py
 lep-backend/tests/integration/api.py
 .gitignore
 lep-backend/app/ai/partner.py
-lep-backend/app/ai/rater.py
