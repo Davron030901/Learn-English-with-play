@@ -97,4 +97,3 @@ lep-backend/scripts/init-local-secrets.sh
 lep-backend/tests/__init__.py
 lep-backend/tests/factories.py
 lep-backend/tests/integration/__init__.py
-lep-backend/tests/integration/api.py
