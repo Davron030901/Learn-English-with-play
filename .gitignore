@@ -90,4 +90,3 @@ lep-backend/migrations/env.py
 lep-backend/migrations/script.py.mako
 lep-backend/migrations/versions/0001_identity_baseline.py
 lep-backend/openapi.json
-lep-backend/pyproject.toml
