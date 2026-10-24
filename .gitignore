@@ -92,4 +92,3 @@ lep-backend/migrations/versions/0001_identity_baseline.py
 lep-backend/openapi.json
 lep-backend/pyproject.toml
 lep-backend/scripts/__init__.py
-lep-backend/scripts/export_openapi.py
