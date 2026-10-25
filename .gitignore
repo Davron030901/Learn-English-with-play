@@ -87,4 +87,3 @@ lep-backend/deploy/postgres/init/10-roles.sql
 lep-backend/docker-compose.yml
 lep-backend/docs/ERD.md
 lep-backend/migrations/env.py
-lep-backend/migrations/script.py.mako
