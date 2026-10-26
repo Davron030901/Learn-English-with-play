@@ -84,4 +84,3 @@ lep-backend/app/workers/celery_app.py
 lep-backend/app/workers/main.py
 lep-backend/app/workers/tasks.py
 lep-backend/deploy/postgres/init/10-roles.sql
-lep-backend/docker-compose.yml

@@ -1,0 +1,178 @@
+# Local stack. Once:  make secrets        Then:  docker compose up --build
+#
+# postgres, redis → migrate (runs once, exits) → api, worker, beat, demo (runs once, exits)
+# Secrets are files in ./.secrets mounted at /run/secrets; nothing secret is an
+# environment variable, and none of them is in this file.
+name: lep
+
+x-app-env: &app-env
+  LEP_ENV: dev
+  LEP_LOG_JSON: "true"
+  LEP_CONTENT_DIR: /srv/content
+  LEP_DB_HOST: postgres
+  LEP_DB_NAME: lep
+  LEP_DB_USER: lep_app
+  LEP_DB_SSL_MODE: disable
+  LEP_REDIS_HOST: redis
+
+x-app-image: &app-image
+  build:
+    context: .
+  image: lep-backend:dev
+
+# The packed course is a separate artefact (a content release), not part of the image: it is
+# mounted read-only, and a malformed bundle stops the API and worker at start-up.
+x-content: &content
+  - type: bind
+    source: "../Claude outputs/new-in-tashkent/data"
+    target: /srv/content
+    read_only: true
+
+x-after-migrations: &after-migrations
+  migrate:
+    condition: service_completed_successfully
+  redis:
+    condition: service_healthy
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: lep
+      POSTGRES_USER: lep_owner
+      POSTGRES_PASSWORD_FILE: /run/secrets/lep_db_migrator_password
+    secrets: [lep_db_migrator_password, lep_db_password]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./deploy/postgres/init:/docker-entrypoint-initdb.d:ro
+    ports: ["127.0.0.1:5432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lep_owner -d lep"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    command:
+      - sh
+      - -c
+      - exec redis-server --requirepass "$$(cat /run/secrets/lep_redis_password)" --appendonly yes
+    secrets: [lep_redis_password]
+    volumes: [redisdata:/data]
+    ports: ["127.0.0.1:6379:6379"]
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - redis-cli -a "$$(cat /run/secrets/lep_redis_password)" --no-auth-warning ping | grep -q PONG
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  migrate:
+    <<: *app-image
+    command: ["alembic", "upgrade", "head"]
+    environment:
+      <<: *app-env
+      LEP_DB_MIGRATOR_USER: lep_owner
+    secrets: [lep_db_migrator_password]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  api:
+    <<: *app-image
+    environment:
+      <<: *app-env
+      LEP_CORS_ORIGINS: http://localhost:8081,http://localhost:4173,http://127.0.0.1:8081
+      # password-reset letters are written to the mail volume, not sent:
+      #   make mail   prints the newest one (its link opens the web app's reset page)
+      LEP_MAIL_BACKEND: file
+      LEP_MAIL_OUTBOX_DIR: /srv/mail
+      LEP_MAIL_FROM: Learn English <no-reply@localhost>
+      LEP_PASSWORD_RESET_URL: http://localhost:8081/reset-password
+    secrets: [lep_db_password, lep_redis_password, lep_jwt_secret]
+    volumes:
+      - type: bind
+        source: "../Claude outputs/new-in-tashkent/data"
+        target: /srv/content
+        read_only: true
+      - type: volume
+        source: mail
+        target: /srv/mail
+    ports: ["127.0.0.1:8000:8000"]
+    depends_on: *after-migrations
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import sys, urllib.request; sys.exit(urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2).status != 200)"
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    stop_grace_period: 30s
+    restart: unless-stopped
+
+  # the demo learner (dev only, idempotent): password in ./.secrets/lep_demo_password
+  demo:
+    <<: *app-image
+    command: ["python", "-m", "scripts.seed_demo"]
+    environment: *app-env
+    secrets: [lep_db_password, lep_redis_password, lep_jwt_secret, lep_demo_password]
+    volumes: *content
+    depends_on: *after-migrations
+    restart: "no"
+
+  worker:
+    <<: *app-image
+    command:
+      - celery
+      - --quiet
+      - -A
+      - app.workers.main:celery_app
+      - worker
+      - --loglevel=INFO
+      - --concurrency=2
+      - --without-gossip
+      - --without-mingle
+    environment: *app-env
+    secrets: [lep_db_password, lep_redis_password]
+    volumes: *content
+    depends_on: *after-migrations
+    stop_grace_period: 60s
+    restart: unless-stopped
+
+  beat:
+    <<: *app-image
+    command:
+      - celery
+      - --quiet
+      - -A
+      - app.workers.main:celery_app
+      - beat
+      - --loglevel=INFO
+      - --schedule=/tmp/celerybeat-schedule
+    environment: *app-env
+    secrets: [lep_db_password, lep_redis_password]
+    volumes: *content
+    depends_on: *after-migrations
+    restart: unless-stopped
+
+secrets:
+  lep_db_password:
+    file: ./.secrets/lep_db_password
+  lep_db_migrator_password:
+    file: ./.secrets/lep_db_migrator_password
+  lep_redis_password:
+    file: ./.secrets/lep_redis_password
+  lep_jwt_secret:
+    file: ./.secrets/lep_jwt_secret
+  lep_demo_password:
+    file: ./.secrets/lep_demo_password
+
+volumes:
+  pgdata:
+  redisdata:
+  mail:
