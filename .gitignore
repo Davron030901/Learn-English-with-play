@@ -82,4 +82,3 @@ lep-backend/app/services/auth.py
 lep-backend/app/workers/__init__.py
 lep-backend/app/workers/celery_app.py
 lep-backend/app/workers/main.py
-lep-backend/app/workers/tasks.py
