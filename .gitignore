@@ -75,4 +75,3 @@ lep-backend/app/schemas/learner.py
 lep-backend/app/schemas/problem.py
 lep-backend/app/security/__init__.py
 lep-backend/app/security/passwords.py
-lep-backend/app/security/rate_limit.py
