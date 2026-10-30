@@ -71,4 +71,3 @@ lep-backend/app/repositories/auth_sessions.py
 lep-backend/app/repositories/learners.py
 lep-backend/app/schemas/__init__.py
 lep-backend/app/schemas/auth.py
-lep-backend/app/schemas/learner.py
