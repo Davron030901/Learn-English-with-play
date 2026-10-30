@@ -73,4 +73,3 @@ lep-backend/app/schemas/__init__.py
 lep-backend/app/schemas/auth.py
 lep-backend/app/schemas/learner.py
 lep-backend/app/schemas/problem.py
-lep-backend/app/security/__init__.py
