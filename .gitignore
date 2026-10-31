@@ -69,4 +69,3 @@ lep-backend/app/redis_client.py
 lep-backend/app/repositories/__init__.py
 lep-backend/app/repositories/auth_sessions.py
 lep-backend/app/repositories/learners.py
-lep-backend/app/schemas/__init__.py
