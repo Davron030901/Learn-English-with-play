@@ -65,4 +65,3 @@ lep-backend/app/observability/__init__.py
 lep-backend/app/observability/logs.py
 lep-backend/app/observability/metrics.py
 lep-backend/app/observability/tracing.py
-lep-backend/app/redis_client.py
