@@ -60,4 +60,3 @@ lep-backend/app/middleware/security_headers.py
 lep-backend/app/models/__init__.py
 lep-backend/app/models/auth.py
 lep-backend/app/models/base.py
-lep-backend/app/models/learner.py
