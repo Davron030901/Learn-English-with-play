@@ -62,4 +62,3 @@ lep-backend/app/models/auth.py
 lep-backend/app/models/base.py
 lep-backend/app/models/learner.py
 lep-backend/app/observability/__init__.py
-lep-backend/app/observability/logs.py
