@@ -56,4 +56,3 @@ lep-backend/app/ids.py
 lep-backend/app/main.py
 lep-backend/app/middleware/__init__.py
 lep-backend/app/middleware/request_context.py
-lep-backend/app/middleware/security_headers.py
