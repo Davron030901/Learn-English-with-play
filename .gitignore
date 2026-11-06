@@ -51,4 +51,3 @@ lep-backend/app/db.py
 lep-backend/app/deps.py
 lep-backend/app/domain/__init__.py
 lep-backend/app/domain/age_policy.py
-lep-backend/app/errors.py
