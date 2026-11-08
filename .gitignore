@@ -47,4 +47,3 @@ lep-backend/app/api/v1/router.py
 lep-backend/app/clock.py
 lep-backend/app/config.py
 lep-backend/app/container.py
-lep-backend/app/db.py
