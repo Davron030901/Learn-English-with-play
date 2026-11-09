@@ -42,4 +42,3 @@ lep-backend/app/api/health.py
 lep-backend/app/api/v1/__init__.py
 lep-backend/app/api/v1/auth.py
 lep-backend/app/api/v1/me.py
-lep-backend/app/api/v1/presenters.py
