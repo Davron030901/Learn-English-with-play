@@ -40,4 +40,3 @@ lep-backend/app/__init__.py
 lep-backend/app/api/__init__.py
 lep-backend/app/api/health.py
 lep-backend/app/api/v1/__init__.py
-lep-backend/app/api/v1/auth.py
