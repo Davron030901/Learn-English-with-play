@@ -38,4 +38,3 @@ lep-backend/README.md
 lep-backend/alembic.ini
 lep-backend/app/__init__.py
 lep-backend/app/api/__init__.py
-lep-backend/app/api/health.py
