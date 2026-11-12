@@ -33,4 +33,3 @@ lep-backend/tests/
 lep-backend/.dockerignore
 lep-backend/DECISIONS.md
 lep-backend/Dockerfile
-lep-backend/Makefile
