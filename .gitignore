@@ -34,4 +34,3 @@ lep-backend/.dockerignore
 lep-backend/DECISIONS.md
 lep-backend/Dockerfile
 lep-backend/Makefile
-lep-backend/README.md
