@@ -35,4 +35,3 @@ lep-backend/DECISIONS.md
 lep-backend/Dockerfile
 lep-backend/Makefile
 lep-backend/README.md
-lep-backend/alembic.ini
