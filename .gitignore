@@ -31,4 +31,3 @@ lep-frontend/
 lep-backend/migrations/
 lep-backend/tests/
 lep-backend/.dockerignore
-lep-backend/DECISIONS.md
