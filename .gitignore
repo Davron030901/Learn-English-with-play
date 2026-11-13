@@ -30,4 +30,3 @@ lep-frontend/
 
 lep-backend/migrations/
 lep-backend/tests/
-lep-backend/.dockerignore
