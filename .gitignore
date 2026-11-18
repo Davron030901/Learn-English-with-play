@@ -28,5 +28,3 @@ celerybeat-schedule*
 # lep-backend — har bir fayl alohida (yuklagan faylingiz qatorini o'chiring)
 # Frontend source belongs in version control. Its own .gitignore excludes dependencies and builds.
 
-lep-backend/migrations/
-
