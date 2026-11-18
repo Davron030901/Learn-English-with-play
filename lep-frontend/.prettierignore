@@ -1,0 +1,6 @@
+node_modules
+dist
+assets/content
+src/**/*.generated.ts
+openapi/openapi.json
+design-system
